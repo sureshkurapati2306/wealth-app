@@ -1,0 +1,65 @@
+<div class="card-wrapper">
+  <div class="card">
+    <h5>{{ cardAccountTitle }}</h5>
+    <div class="wrapper">
+      <div class="autocomplete-block">
+        <em class="icon-arrow-down" (click)="inputDownArrowClick($event)"></em>
+        <input
+          type="text"
+          placeholder="{{ cardAccountSelectionPlaceholder }}"
+          [formControl]="account"
+          [matAutocomplete]="accountList"
+          class="input-autocomplete custom-input"
+          [ngClass]="{ error: isInActiveSelected || isJointAndAccountSelected || isExternalError }"
+          (click)="inputDownArrowClick($event)"
+        />
+        <em
+          class="icon-error"
+          *ngIf="isInActiveSelected || isJointAndAccountSelected"
+        ></em>
+        <mat-autocomplete
+          #accountList="matAutocomplete"
+          class="{{ customClass }}"
+          backdropClass="dd-overlay"
+          (optionSelected)="getAccount($event.option.value)"
+          (opened)="autocompleteOpened()"
+          (closed)="autocompleteClosed()"
+        >
+          <div class="mat-menu-content">
+            <div class="panel-header">
+              <button
+                mat-icon-button
+                class="btn-close"
+                (click)="closeOptions()"
+              >
+                <em class="icon-close"></em>
+              </button>
+            </div>
+            <!-- Input within a dropdown panel - for mobile -->
+            <div class="panel-input hide-input" *ngIf="!isForAsnb">
+              <input type="text" placeholder="Select" [formControl]="account" (click)="inputDownArrowClick($event)"/>
+            </div>
+            <div class="panel-content">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option.casa_account_format"
+                disableRipple="true"
+                [ngClass]="{ 'account-dropdown':  isForAsnb }"
+              >
+                <span [disabled]="!isActiveState"  [innerHTML]="option.casa_account_format" [ngClass]="{ 'asnb-account-list':  isForAsnb }"></span>
+              </mat-option>
+            </div>
+          </div>
+        </mat-autocomplete>
+      </div>
+      <mat-error *ngIf="isInActiveSelected">
+        This account is inactive. For assistance, please visit your nearest CIMB branch.
+      </mat-error>
+      <mat-error *ngIf="isJointAndAccountSelected && !isInActiveSelected">
+        This is a joint account. You will need all the joint account holders to transact/agree when using this account.
+        <strong><a (click)="goToConsumerContactCentreLink()">Contact us for further assistance.</a></strong>
+      </mat-error>
+      <mat-error *ngIf="externalErrorMsg">{{externalErrorMsg}}</mat-error>
+    </div>
+  </div>
+</div>

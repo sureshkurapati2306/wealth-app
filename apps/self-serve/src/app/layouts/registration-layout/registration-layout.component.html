@@ -1,0 +1,25 @@
+<cimb-header
+    *ngIf="userType"
+    [headerLogoUrl]="headerLogoUrl"
+    [totalFundsCount]="totalFundsCountVal"
+    [userType]="userType"
+    [showCartIcon]="showCartIconValue"
+    [customerName]="customerName"
+    (pageRedirectEvent)="pageRedirectEvent($event)"
+    (logoutEvent)="logoutEvent()"
+    (viewMyCart)="viewMyCartClick()"
+></cimb-header>
+<div class="content-wrapper">
+    <router-outlet></router-outlet>
+</div>
+<cimb-footer></cimb-footer>
+<cimb-footer-cart
+    *ngIf="cartFooterToggle"
+    [totalAmount]="totalAmountVal"
+    [totalFundsCount]="totalFundsCountVal"
+    (viewMyCart)="viewMyCartClick()"
+    [flow]="flowText"
+    [totalUnit]="totalUnitVal"
+    [userType]="userType"
+    [accountStatus]="accountStatus | async"
+></cimb-footer-cart>

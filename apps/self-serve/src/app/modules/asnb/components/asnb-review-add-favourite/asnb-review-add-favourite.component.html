@@ -1,0 +1,41 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="true"
+    (backButtonEvent)="backButtonEvent()"
+    [noProgressStep]="noProgressStep"
+></cimb-progress-sub-header>
+<div class="container">
+    <h3 class="section-head">Review and Add to Favourite</h3>
+    <div class="section-content">
+        <div class="card-container">
+            <cimb-asnb-card-account-details
+                [accountDetails]="favouriteDetails"
+                [idTypes]="idTypes$ | async"
+                [relationships]="relationships$ | async"
+                [fundTypes]="fundTypes$ | async"
+            ></cimb-asnb-card-account-details>
+        </div>
+        <cimb-card-tac
+            [disableConfirmButtonPage]="!(fatcaEnabled && tagEntredCompleted)"
+            [canEnableConfirmButton]="true"
+            [disableConfirmButton]="disableConfirmButtonComponent"
+            [mobileNumber]="customerMobileNumber"
+            [tagError]="showTacError"
+            [factaEnabled]="factaEnabled"
+            [isForFavourite]="isForFavourite"
+            [tagErrorMessage]="tacErrorMessageText"
+            (confirmAndProceedEvent)="confirmAndProceed($event)"
+            (fatcaDeclaratonErrorEvent)="fatcaDeclaratonEvent()"
+            (requestTACEvent)="requestTAC()"
+            (tagEntredCompletely)="tagEntredCompletedEvent($event)"
+            (requestTagCanEnable)="requestTagCanEnableEvent($event)"
+            [enableRequestNumber]="enableRequestNumber"
+            [isForAsnbFatca]="false"
+            [hideForAsnbCheckout]="true"
+            [flow]="flow"
+            [isASNB]="true"
+            (fatcaToggleEvent)="fatcaToggleEvent($event)"
+        ></cimb-card-tac>
+        <cimb-asnb-footer></cimb-asnb-footer>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<cimb-asnb-card-with-heading [heading]="heading" [withoutContentContainer]="true">
+  <div class="invoice-container">
+      <div class="fund-details" *ngIf="fund">
+          <p class="fund-name">{{ fund.name }}</p>
+          <p class="fund-type">{{ fund.type | uppercase }}</p>
+      </div>
+      <div class="invoice-section">
+          <p *ngFor="let item of invoiceItems" class="invoice-item">
+              <span class="item">{{ item.name }}</span>
+              <span class="item">{{
+                  item.isNotAvailable
+                      ? item.amount
+                      : item.hideCurrency
+                      ? (item.amount | number: item.decimalFormat)
+                      : (item.amount | currency: 'MYR ':'symbol':item.decimalFormat)
+              }}</span>
+          </p>
+      </div>
+  </div>
+  <div *ngIf="totalAmount !== undefined">
+      <hr class="divider" />
+      <p class="invoice-container invoice-item">
+          <span class="item">Total amount</span>
+          <span class="total-amount"
+              ><span class="currency">MYR</span>{{ totalAmount | number: '1.2-2' }}</span
+          >
+      </p>
+  </div>
+</cimb-asnb-card-with-heading>

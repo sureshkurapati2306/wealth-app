@@ -1,0 +1,46 @@
+<div>
+
+  <div class="right">
+    <button mat-flat-button class="btn-custom btn-red btn-xs" type="submit" (click)="addRefConfig()">
+      Add
+    </button>
+  </div>
+
+  <div>
+
+
+    <form [formGroup]="myForm" (submit)="submit($event)" class="block-filter">
+
+
+      <div class="block-filter-input">
+        <div class="field">
+          <mat-form-field>
+            <mat-label>Config Id</mat-label>
+            <input type="text" matInput placeholder="Config Id" formControlName="configId" />
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <mat-form-field>
+            <mat-label>Config Name</mat-label>
+            <input type="text" matInput placeholder="Config Name" formControlName="configName" />
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <mat-form-field>
+            <mat-label>Config Value</mat-label>
+            <input type="text" matInput placeholder="Config Value" value="" formControlName="configValue" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="block-filter-cta">
+        <button mat-flat-button class="btn-custom btn-text btn-xs" type="button" (click)="clear()">
+          Clear
+        </button>
+        <button mat-flat-button class="btn-custom btn-red btn-xs" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

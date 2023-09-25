@@ -1,0 +1,351 @@
+<div class="list-header">
+  <p *ngIf="!isFilteredFundsNotAvailable" class="mat-dialog-wrapper mat-dialog-filter">
+
+    <cimb-pagination-bounds-indicator
+      [totalRecords]="purchaseDetailData?.length"
+      [currentPageNumber]="currentPageNumber"
+      [itemsPerPage]="itemsPerPage"
+    >
+      Showing <span #lowerBounds></span>-<span #upperBounds></span> of <span #totalRecords></span> transactions
+    </cimb-pagination-bounds-indicator>
+
+  </p>
+  <p *ngIf="isFilteredFundsNotAvailable || isSortBySuccessfulStatus ||
+  isSortByUnsuccessfulStatus || isSortByProcessingStatus || isSortByCancelStatus || isSortByAllStatus">
+  </p>
+  <div *ngIf="!isFilteredFundsNotAvailable || isSortBySuccessfulStatus ||
+  isSortByUnsuccessfulStatus || isSortByProcessingStatus || isSortByCancelStatus || isSortByAllStatus" class="mat-dialog-wrapper mat-dialog-filter">
+    <mat-dialog-content>
+      <button class="btn-dd" [matMenuTriggerFor]="Sort">
+        <span
+          *ngIf="isSortBySuccessfulStatus"
+          >Successful</span
+        >
+        <span *ngIf="isSortByUnsuccessfulStatus"
+          >Unsuccessful</span
+        >
+        <span *ngIf="isSortByCancelStatus"
+          >Cancelled</span
+        >
+        <span *ngIf="isSortByProcessingStatus"
+          >Processing</span
+        >
+        <span *ngIf="isSortByAllStatus"
+          >All Status</span
+        >
+        <em class="icon-arrow-down"></em>
+      </button>
+
+      <mat-menu
+        #Sort="matMenu"
+        class="custom-menu-panel with-divider no-scroll"
+        backdropClass="dd-overlay"
+        xPosition="before"
+        yPosition="below"
+      >
+      <div class="panel-header with-text hide-lg">
+        <button mat-icon-button class="btn-close">
+          <em class="icon-close"></em>
+        </button>
+      </div>
+      <div class="panel-content">
+        <!-- Please use class .selected for selected item -->
+        <button
+          *ngIf="isSortByAllStatus" class ="selected"
+          (click)="sortByAllStatus()"
+          mat-menu-item
+          disableRipple="true"
+        >
+          All Status
+        </button>
+        <button
+        *ngIf="!isSortByAllStatus"
+        (click)="sortByAllStatus()"
+        mat-menu-item
+        disableRipple="true"
+      >
+        All Status
+      </button>
+        <button *ngIf="isSortBySuccessfulStatus" class ="selected"
+          disableRipple="true"
+          mat-menu-item
+          (click)="isSortBySuccessfulStatus()"
+        >
+          Successful
+        </button>
+        <button *ngIf="!isSortBySuccessfulStatus"
+          disableRipple="true"
+          mat-menu-item
+          (click)="sortBySuccessfulStatus()"
+        >
+          Successful
+        </button>
+        <button *ngIf="isSortByUnsuccessfulStatus" class ="selected"
+          (click)="sortByAllUnsuccessfulStatus()"
+          disableRipple="true"
+          mat-menu-item
+        >
+          Unsuccessful
+        </button>
+        <button *ngIf="!isSortByUnsuccessfulStatus"
+          (click)="sortByAllUnsuccessfulStatus()"
+          disableRipple="true"
+          mat-menu-item
+        >
+          Unsuccessful
+        </button>
+        <button *ngIf="isSortByCancelStatus" class ="selected"
+          (click)="sortByCancelStatus()"
+          disableRipple="true"
+          mat-menu-item
+        >
+          Cancelled
+        </button>
+        <button *ngIf="!isSortByCancelStatus"
+          (click)="sortByCancelStatus()"
+          disableRipple="true"
+          mat-menu-item
+        >
+          Cancelled
+        </button>
+        <button *ngIf="isSortByProcessingStatus" class ="selected"
+          mat-menu-item
+          (click)="sortByAllProcessingStatus()"
+          disableRipple="true"
+        >
+          Processing
+        </button>
+        <button *ngIf="!isSortByProcessingStatus"
+          mat-menu-item
+          (click)="sortByAllProcessingStatus()"
+          disableRipple="true"
+        >
+          Processing
+        </button>
+      </div>
+      </mat-menu>
+    </mat-dialog-content>
+  </div>
+
+</div>
+
+<div *ngIf="!isFilteredFundsNotAvailable">
+  <div
+    class="list-tab list-transaction"
+    *ngFor="let item of purchaseDetailData | paginate: {
+      id: 'transaction-history',
+      itemsPerPage: itemsPerPage,
+      currentPage: currentPageNumber
+    }"
+  >
+    <div *ngIf="item.displayFlag" class="list-tab-date">
+      <h6 *ngIf="item.displayFlag">{{ item.transactionDt | date:'EEE d MMM y' }}</h6>
+    </div>
+    <div *ngIf="!item.displayFlag"></div>
+    <div class="list-tab-block">
+      <div class="list-tab-content">
+        <mat-accordion>
+          <mat-expansion-panel
+            class="custom-expansion-panel"
+            *ngIf="item.transactionTypeDesc !== 'Purchase'"
+            disabled
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="side">
+                <div class="title-block">
+                  <h6>
+                    {{ item.transactionTm }} |
+                    {{ item.transactionTypeDesc | uppercase }}
+                  </h6>
+                  <p>
+                    <strong>{{ item.fundName }}</strong>
+                    <span *ngIf="item.transactionTypeDesc === 'Redemption'" >Reference No: {{ item.referenceNo }}</span>
+
+                    <span *ngIf="item.transactionTypeDesc === 'Switch'" class="hide-lg">Reference No: {{ item.referenceNo }}</span>
+                  </p>
+                </div>
+                <div *ngIf="item.transactionTypeDesc === 'Switch'" class="title-block">
+                  <p>
+                    <strong>{{item.toFundName | titlecase}}</strong>
+                    <span class="show-lg">Reference No: {{ item.referenceNo }}</span>
+                  </p>
+                </div>
+              </mat-panel-title>
+              <mat-panel-description>
+                <h6 *ngIf="item.transactionTypeDesc === 'Switch'">
+                  SWITCH OUT UNITS
+                </h6>
+                <h6 *ngIf="item.transactionTypeDesc === 'Redemption'">
+                  REDEMPTION UNITS
+                </h6>
+                <h4
+                  *ngIf="
+                    item.transactionTypeDesc === 'Switch' ||
+                    item.transactionTypeDesc === 'Redemption'
+                  "
+                >
+                  {{ item.transactionUnitStr }}
+                </h4>
+
+                <h6 *ngIf="item.transactionTypeDesc === 'Purchase'">
+                  TOTAL AMOUNT
+                </h6>
+                <h4 *ngIf="item.transactionTypeDesc === 'Purchase'">
+                  <sup>MYR</sup> {{ item.totalInvestmentStr }}
+                </h4>
+                <p
+                  *ngIf="item.transactionStatus === 'Unsuccessful'"
+                  class="status Unsuccessful"
+                >
+                  Unsuccessful
+                </p>
+                <p
+                  *ngIf="item.transactionStatus === 'Cancelled'"
+                  class="status Cancelled"
+                >
+                  Cancelled
+                </p>
+                <p
+                  *ngIf="item.transactionStatus === 'Transaction Pending' || item.transactionStatus ==='Processing'"
+                  class="status processing"
+                >
+                  Processing
+                </p>
+                <p
+                  *ngIf="item.transactionStatus === 'Successful'"
+                  class="status success"
+                >
+                  Successful
+                </p>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            {{ item.transactionStatus }}
+            <div
+              *ngIf="item.transactionStatus === 'Successful'"
+              class="expansion-panel-content"
+            >
+              <ul class="list-details">
+                <li>
+                  <h6><sup>MYR</sup> {{ item.chargesAmountStr }}</h6>
+                </li>
+                <li>
+                  <p>Net Investment Amount</p>
+                  <h6><sup>MYR</sup> {{ item.netInvestment }}</h6>
+                </li>
+              </ul>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            class="custom-expansion-panel"
+            *ngIf="item.transactionTypeDesc === 'Purchase'"
+            enabled
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="side">
+                <div class="title-block">
+                  <h6>
+                    {{ item.transactionTm }} |
+                    {{ item.transactionTypeDesc | uppercase }}
+                  </h6>
+                  <p>
+                    <strong>{{ item.fundName }}</strong>
+                    <span>Reference No: {{ item.referenceNo }}</span>
+                  </p>
+                </div>
+              </mat-panel-title>
+              <mat-panel-description>
+                <h6 *ngIf="item && item.transactionTypeDesc === 'Redemption'">
+                  REDEMPTION UNITS
+                </h6>
+                <h6 *ngIf="item && item.transactionTypeDesc === 'Switch'">
+                  SWITCH OUT UNITS
+                </h6>
+
+                <h4
+                  *ngIf="
+                    item.transactionTypeDesc === 'Switch' ||
+                    item.transactionTypeDesc === 'Redemption'
+                  "
+                >
+                  {{ item.transactionUnit }}
+                </h4>
+
+                <h6 *ngIf="item && item.transactionTypeDesc === 'Purchase'">
+                  TOTAL AMOUNT
+                </h6>
+
+                <h4 *ngIf="item.transactionTypeDesc === 'Purchase'">
+                  <sup>MYR</sup> {{ item.totalInvestmentStr }}
+                </h4>
+
+                <p
+                  *ngIf="item && item.transactionStatus === 'Successful'"
+                  class="status success"
+                >
+                  Successful
+                </p>
+                <p
+                  *ngIf="item && (item.transactionStatus === 'Transaction Pending' ||
+                          item.transactionStatus === 'Processing')"
+                  class="status processing"
+                >
+                  Processing
+                </p>
+                <p
+                  *ngIf="item && item.transactionStatus === 'Unsuccessful'"
+                  class="status Unsuccessful"
+                >
+                  Unsuccessful
+                </p>
+                <p
+                  *ngIf="item && item.transactionStatus === 'Cancelled'"
+                  class="status Cancelled"
+                >
+                  Cancelled
+                </p>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="expansion-panel-content">
+              <ul class="list-details">
+                <li>
+                  <p>Sales Charges ({{ item.chargesPercentageStr }}) %</p>
+                  <h6><sup>MYR</sup> {{ item.chargesAmountStr }}</h6>
+                </li>
+                <li>
+                  <p>Net Investment Amount</p>
+                  <h6><sup>MYR</sup> {{ item.netInvestmentStr }}</h6>
+                </li>
+              </ul>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="!isTransactionDataLoaded">
+  <div
+  *ngIf="isFilteredFundsNotAvailable || isFilerByStatusFundsNotAvailable"
+  class="no-result"
+>
+  <div class="image">
+    <img src="./assets/images/no-result-found.svg" alt="No Search Reuslt" />
+  </div>
+  <div class="content text-center">
+    <h4>No Transaction Available</h4>
+    <p class="lead">
+        You can keep track of your transaction status here once you
+        made a Unit Trust transaction with us.
+    </p>
+  </div>
+</div>
+</ng-container>
+
+
+<div *ngIf="isFilteredFundsNotAvailable && stopSpinnerWhenNoData" class="d-flex justify-content-center overlay">
+  <div class="spinner-border" role="status">
+      <span class="sr-only" id="loading"></span>
+  </div>
+</div>

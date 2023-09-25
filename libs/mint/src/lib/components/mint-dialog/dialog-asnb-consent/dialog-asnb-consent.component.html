@@ -1,0 +1,56 @@
+<mat-dialog-content class="mat-typography" class="asnb-consent">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-consent-content">
+        <img src="assets/images/link-account.svg" alt="link-account" />
+        <p class="asnb-link-account">Link your ASNB account with us</p>
+        <div class="asnb-link-account-description">
+            <p>
+                By clicking <span>‘Yes, I agree’</span>, your ASNB account(s) will be linked with
+                us.
+            </p>
+            <br />
+            <p>
+                I have read, understood and agreed to be bound by the 
+                <span class="asnb-link-popup" (click)="redirectConfirmation(data.prospectusLink)">Prospectus</span> & 
+                <span class="asnb-link-popup" (click)="asnbTermsAndConditionsModal()">Terms and Conditions</span> 
+                as specified on the ASNB website.
+            </p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close class="asnb-consent-cancel" disableRipple>
+        Cancel
+    </button>
+    <button
+        mat-flat-button
+        [mat-dialog-close]="{ isMobile: true }"
+        cdkFocusInitial
+        class="asnb-consent-agree hide-lg"
+        disableRipple
+    >
+        Yes, I agree
+    </button>
+    <button
+        mat-flat-button
+        [mat-dialog-close]="{ isMobile: false }"
+        cdkFocusInitial
+        class="asnb-consent-agree show-lg"
+        disableRipple
+    >
+        Yes, I agree
+    </button>
+</mat-dialog-actions>

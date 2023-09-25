@@ -1,0 +1,180 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [noProgressStep]="true"
+    [userType]="customerType"
+    [isBackButtonEnabled]="isBackButtonEnabled"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="box">
+            <div class="box-heading">
+                <h5>List of Asset Class Breakdown and Funds</h5>
+                <p>
+                    The funds shown are selected from CIMB Focus Funds and other available funds.
+                    <a (click)="dialogLearnMore()">Learn more</a>
+                </p>
+                <p class="details">
+                    You may follow the asset class allocation percentage based on your risk profile,
+                    or you can decide to invest based on your own allocation. Happy investing!
+                </p>
+            </div>
+            <div class="flex">
+                <div class="box-left">
+                    <div class="box-left-heading">
+                        <h5>Compare Asset Class Breakdown</h5>
+                        <p>
+                            See your selected investments against your risk profile’s recommended
+                            asset class breakdown.
+                        </p>
+                    </div>
+                    <div class="chart">
+                        <div class="label1">
+                            <span>Selected</span>
+                        </div>
+                        <div class="label2">
+                            <span>Recommended</span>
+                        </div>
+                        <!--Dounut chart here-->
+                        <cimb-chart
+                            [recommendedData]="myRecommendedChartValue"
+                            [holdingData]="myHoldingChartValue"
+                        ></cimb-chart>
+                        <!--end chart-->
+                    </div>
+                    <p class="details">
+                        You may follow the asset class allocation percentage based on your risk
+                        profile, or you can decide to invest based on your own allocation. Happy
+                        investing!
+                    </p>
+                    <div class="asset-classes">
+                        <h6>Asset Classes</h6>
+                        <cimb-table-asset-class
+                            [tableData]="assetClassList | async"
+                        ></cimb-table-asset-class>
+                    </div>
+                </div>
+                <div class="box-right">
+                    <div class="box-right-heading">
+                        <!-- Copy from available-funds.component.html -->
+                        <div class="compliance-checkbox">
+                            <mat-checkbox #syariahCompliantSelected (change)="onChange($event)"
+                                >Shariah Compliant
+                            </mat-checkbox>
+                            <span class="esg-fund">
+                                <mat-checkbox #esgFundSelected (change)="onEsgFundChange($event)"
+                                    >ESG Funds
+                                </mat-checkbox>
+                                <span class="tooltiForEsg" *ngIf="!mediaQueryList.matches">
+                                    <em class="icon-help  portfolio-esg-fund-tooltip" 
+                                        (keypress)="openESGFundsOnlyBottomSheetForPortfolioWeb()"
+                                        matTooltip="The fund strategy invested in securities with a high sustainability score and would exclude companies with poor records related to ESG. The strategy will contribute to the long-term viability of our environment and way of life. It enable investors to pursue their financial goals while supporting a better future for humanity."
+                                        matTooltipPosition="right"
+                                    >
+                                    </em>
+                                </span>
+                                <span class="tooltiForEsg" *ngIf="mediaQueryList.matches">
+                                    <em class="icon-help  portfolio-esg-fund-tooltip" 
+                                        (click)="openESGFundsOnlyBottomSheetForPortfolioMobile()"
+                                    >
+                                    </em>
+                                </span>
+                            </span>
+                            <ng-template #esgToolTipMsgPortfolio >
+                                <div class="portfolio-action-sheet-wrapper">
+                                    <div class="portfolio-action-sheet-header">
+                                        <button mat-icon-button
+                                                class="btn-close"
+                                                (click)="_bottomSheet.dismiss()">
+                                            <em class="icon-close"></em>
+                                        </button>
+                                    </div>
+                                    <div class="portfolio-action-sheet-content">
+                                        <h5>{{esgtooltipheading}}</h5>
+                                        <div>
+                                            <p>{{esgtoolTipMsg}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <!-- Copy From chart-fund-performance.component.html -->
+                        <div class="toggle">
+                            <p class="show-md">Fund Past Performance</p>
+                            <mat-button-toggle-group value="1mnth">
+                                <mat-button-toggle
+                                    value="1mnth"
+                                    (change)="onToggleChange($event.value)"
+                                    >1-mth</mat-button-toggle
+                                >
+                                <mat-button-toggle
+                                    value="3mnth"
+                                    (change)="onToggleChange($event.value)"
+                                    >3-mth</mat-button-toggle
+                                >
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+
+                    <mat-accordion multi *ngFor="let item of grouped_funds">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <h5>
+                                    <strong class="label" style="border-color: {{ item.color }}">{{
+                                        item.className
+                                    }}</strong>
+                                    <small
+                                        >WE RECOMMENDED {{ item.recommended }}%
+                                        <ng-container *ngIf="assetClassList | async">
+                                            <ng-container
+                                                *ngFor="let assetClass of assetClassList | async"
+                                            >
+                                                <span
+                                                    *ngIf="
+                                                        item.className ===
+                                                        assetClass.asset_class_name
+                                                    "
+                                                    style="color: {{ item.color }}"
+                                                    >(YOU SELECTED {{ assetClass.holding }}%)</span
+                                                >
+                                            </ng-container>
+                                        </ng-container>
+                                    </small>
+                                </h5>
+                                <a class="pointer"
+                                    (click)="
+                                        openFundSelectModal(
+                                            item.className,
+                                            item.color,
+                                            item.fundList
+                                        )
+                                    "
+                                    >See all {{ item.fundsLength }} funds</a
+                                >
+                            </mat-expansion-panel-header>
+                            <div
+                                class="custom-table"
+                                *ngFor="let fund of item?.fundList | filterByStatus: shariah : esgFund; let i = index"
+                            >
+                                <cimb-fund-list
+                                    [index]="i"
+                                    [fund]="fund"
+                                    [perfMonthInd]="monthFilterInd"
+                                    [staff]="userData?.cimb_staff"
+                                    [cartUTAccount]="cartUTAccount"
+                                    [selectedAccounts]="selectedAccounts"
+                                    [fundHouse]="item.className"
+                                    (addItem)="onAddItem($event, i, item.className)"
+                                    (removeItem)="onRemoveItem($event, i, item.className)"
+                                    (updateItem)="onUpdateItem($event)"
+                                    [customerType]="customerType"
+                                    (clearAndAddNewToCart)="clearCartAndContinueDataEvent($event, i, fund)"
+                                ></cimb-fund-list>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

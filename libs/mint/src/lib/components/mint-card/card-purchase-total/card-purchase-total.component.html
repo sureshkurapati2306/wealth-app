@@ -1,0 +1,97 @@
+<div class="card-wrapper total-card">
+  <div class="card">
+    <h5>{{ cardTitle }}</h5>
+    <div class="wrapper">
+      <div class="inner-wrapper" [ngClass]="{'switch-total' : flow === '003'}">
+
+        <p *ngIf="totalFund">
+          Total Fund: <span class="total-fund">{{ totalFund }}</span>
+        </p>
+
+        <ng-container *ngIf="flow === '001'">
+          <p class="flex">
+            Total Sales Charge
+            <span>MYR {{ totalSalesCharge | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex">
+            Total Net Investment Amount<span
+              >MYR {{ totalNetInvestmentAmount | number: '1.2-2':'en-US' }}</span
+            >
+          </p>
+          <p class="flex total-amount">
+            Total Amount
+            <span><sup>MYR</sup>{{ totalAmount | number: '1.2-2':'en-US' }}</span>
+          </p>
+        </ng-container>
+
+        <ng-container *ngIf="flow === '002'">
+          <p class="flex mb">
+            Total Redemption Units
+            <span>{{ totalRedemptionUnits | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex total-amount">
+            <small>Total Redemption Amount <span>*</span></small
+            >
+            <span
+              ><sup>MYR</sup
+              >{{ totalRedemptionAmount | number: '1.2-2':'en-US' }}</span
+            >
+          </p>
+        </ng-container>
+        
+        <ng-container *ngIf="flow === '003'">
+          <div class="flex">
+            <h2>
+              <small>Total Switch Out Units</small>
+              {{ totalSwitchOutUnits | number: '1.2-2':'en-US' }}
+            </h2>
+            <em class="icon-right"></em>
+            <h2>
+              <small>Total Switch In Units <span>*</span></small
+              >
+              {{ totalSwitchInUnits | number: '1.2-2':'en-US' }}
+            </h2>
+          </div>
+          
+        </ng-container>
+
+        <ng-container *ngIf="flow === 'asnb-purchase'">
+            <ng-container *ngIf="isForAsnbCheckout">
+              <div class="fund-name">
+                <h5>
+                  {{asnbFundName}}
+                  <small>
+                    {{asnbFundCategory}}
+                  </small>
+                </h5>
+              </div>
+            </ng-container>
+            
+          <p class="flex">
+            Total Sales Charge (0.00%)
+            <span>MYR {{ totalSalesCharge | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex">
+            Total Bank Charge
+            <span>MYR {{ totalBankCharge | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex">
+            Total Net Investment Amount<span
+              >MYR {{ totalNetInvestmentAmount | number: '1.2-2':'en-US' }}</span
+            >
+          </p>
+          <p class="flex total-amount">
+            Total Amount
+            <span><sup>MYR</sup>{{ totalAmount | number: '1.2-2':'en-US' }}</span>
+          </p>
+        </ng-container>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+<span class="Description BodySmall-Regular" *ngIf="flow === '002' || flow === '003'">
+  <span class="BodySmall-Regular">*</span>
+  These are indicative amounts only. The actual amount may differ based on the closing NAV price.
+</span>

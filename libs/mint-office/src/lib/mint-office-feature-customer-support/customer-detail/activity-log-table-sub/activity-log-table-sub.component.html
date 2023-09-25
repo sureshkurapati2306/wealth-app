@@ -1,0 +1,99 @@
+<ng-container
+    *ngIf="(loadingState$ | async) === 'success' && (smsDeliveryLogRecord$ | async) as smsDelLog"
+>
+    <table *ngIf="row.moduleId === 11" aria-describedby="SMS Delivery Log Details">
+        <tr>
+            <th scope="row">Contact Number</th>
+            <td>{{ smsDelLog.contactNumber }}</td>
+        </tr>
+        <tr>
+            <th scope="row">ID Number</th>
+            <td>{{ smsDelLog.clientId }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Unit Trust Account Number</th>
+            <td>{{ smsDelLog.utAccountNo }}</td>
+        </tr>
+        <tr>
+            <th scope="row">SMS Content</th>
+            <td>{{ smsDelLog.smsContent }}</td>
+        </tr>
+    </table>
+</ng-container>
+<ng-container
+    *ngIf="(loadingState$ | async) === 'success' && (utActivityRecord$ | async) as utLines"
+>
+    <table class="table-sub" *ngIf="row.moduleId === 5" aria-describedby="Purchase Details Table">
+        <thead>
+            <tr>
+                <th scope="col">Fund Name</th>
+                <th scope="col">Fund Amount</th>
+                <th scope="col">Sales Charge Amount</th>
+                <th scope="col">Net Investment Amount</th>
+                <th scope="col">Transaction Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let line of utLines">
+                <td>{{ line.fundName }}</td>
+                <td>{{ line.totalInvestment | currency: 'MYR ' }}</td>
+                <td>{{ line.chargesAmount | currency: 'MYR ' }} ({{ line.chargesPercentage }}%)</td>
+                <td>{{ line.netInvestment | currency: 'MYR ' }}</td>
+                <td>{{ line.transactionStatus }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    Total Purchase Amount:<br />{{
+                        utLines | sum: 'totalInvestment' | currency: 'MYR '
+                    }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <table class="table-sub" *ngIf="row.moduleId === 7" aria-describedby="Redemption Details Table">
+        <thead>
+            <tr>
+                <th scope="col">Fund Name</th>
+                <th scope="col">No. of Units Redeemed</th>
+                <th scope="col">Total Redeem Amount</th>
+                <th scope="col">Transaction Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let line of utLines">
+                <td>{{ line.fundName }}</td>
+                <td>{{ line.transactionUnit | number: '1.2-2' }}</td>
+                <td>{{ line.totalInvestment | currency: 'MYR ' }}</td>
+                <td>{{ line.transactionStatus }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table-sub" *ngIf="row.moduleId === 6" aria-describedby="Switching Details Table">
+        <thead>
+            <tr>
+                <th scope="col">Switch Out Name</th>
+                <th scope="col">Switch In Name</th>
+                <th scope="col">No. of Units Switched</th>
+                <th scope="col">Total Switch Amount</th>
+                <th scope="col">Switching Fee</th>
+                <th scope="col">Net Switch Amount</th>
+                <th scope="col">Transaction Status</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let line of utLines">
+            <tr>
+                <td>{{ line.fundName }}</td>
+                <td>{{ line.toFundName }}</td>
+                <td>{{ line.transactionUnit | number: '1.2-2' }}</td>
+                <td>{{ line.totalInvestment | currency: 'MYR '}}</td>
+                <td>{{ line.chargesAmount | currency: 'MYR ' }} ({{ line.chargesPercentage }}%)</td>
+                <td>{{ line.netInvestment | currency: 'MYR '}}</td>
+                <td>{{ line.transactionStatus }}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>

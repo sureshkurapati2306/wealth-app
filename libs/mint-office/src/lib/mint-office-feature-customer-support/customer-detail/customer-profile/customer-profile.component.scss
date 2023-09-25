@@ -1,0 +1,37 @@
+.block-profile {
+  background: var(--n0);
+  box-shadow: 0rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5rem;
+  padding: 2.25rem 0;
+
+  .block {
+    max-width: 47rem;
+    padding: 0 2rem;
+    margin:0 auto;
+
+    &:not(:last-child) {
+      margin-bottom: 2.75rem;
+    }
+    h5 {
+      font-weight: var(--regular);
+      font-size: .875rem;
+      line-height: 1.25rem;
+      color: var(--c100);
+      margin: 0 0 1rem;
+    }
+    h6 {
+      font-size: .75rem;
+      line-height: 1rem;
+      font-weight: var(--medium);
+      margin-bottom: .25rem;
+      text-transform: none;
+      color: var(--c100);
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.375rem;
+      color: var(--c100);
+      margin:0;
+    }
+  }
+}

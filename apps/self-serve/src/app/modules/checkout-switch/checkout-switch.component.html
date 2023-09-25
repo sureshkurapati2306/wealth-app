@@ -1,0 +1,50 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-head">
+      <h4>Review and Complete Switch</h4>
+    </div>
+
+    <div class="section-content">
+      <div class="account-info">
+        <p>
+          Unit Trust Account <span class="hide-md"></span>
+          <strong>{{ unitTrustAccount }}</strong>
+        </p>
+      </div>
+
+      <cimb-card-switch-investment
+        [cardTitle]="cardTitleInvestment"
+        [switchOutAssetType]="switchOutAssetType"
+        [switchOutFundName]="switchOutFundName"
+        [switchOutUnits]="switchOutUnits"
+        [switchOutAmount]="switchOutAmount"
+        [switchInAssetType]="switchInAssetType"
+        [switchInFundName]="switchInFundName"
+        [switchInUnits]="switchInUnits"
+        [switchInAmount]="switchInAmount"
+        [netSwitchInAmount]="netSwitchInAmount"
+        [switchingFee]="switchingFee"
+      ></cimb-card-switch-investment>
+
+      <cimb-card-switch-summary
+        [totalSwitchOutUnits]="totalSwitchOutUnits"
+        [totalSwitchInUnits]="totalSwitchInUnits"
+        [totalFund]="totalFund"
+        [totalCardTitle]="totalCardTitle"
+      ></cimb-card-switch-summary>
+
+      <p class="foot-legend">
+        <span>*</span> These are indicative amounts only. The actual amount may
+        differ based on the closing NAV price.
+      </p>
+
+      <!-- Confirmation -->
+      <cimb-card-tac></cimb-card-tac>
+    </div>
+  </div>
+</div>

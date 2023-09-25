@@ -1,0 +1,33 @@
+#Footer {
+  border-top: .0625rem solid var(--n5h);
+}
+.btn-scroll {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  position:absolute;
+  top:-0.75rem;
+  left:50%;
+  transform: translateX(-50%);
+  padding:0;
+  border-radius: 50%;
+  cursor:pointer;
+  color: var(--r100);
+  font-size: 1.25rem;
+  background: var(--n0);
+  box-shadow: 0rem .125rem .25rem -0.125rem rgba(24, 39, 75, 0.12), 0rem .25rem .25rem -0.125rem rgba(24, 39, 75, 0.08);
+
+  &:hover {
+    background: var(--n0);
+  }
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+  em {
+    transform: rotate(180deg);
+    margin:0;
+    display: block;
+  }
+}

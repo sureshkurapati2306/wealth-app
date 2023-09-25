@@ -1,0 +1,59 @@
+<div class="card-wrapper {{addClass}}">
+    <div [ngClass] = "switchFundPopup === true ? 'cardPopup' : 'card'">
+      <h4>Fund Performance</h4>
+      <div [ngClass] = "switchFundPopup === true ? 'wrapperPopup' : 'wrapper'">
+        <h5>Past Performance</h5>
+        <div class="block">
+          <div class="col">
+            <p>1-Month</p>
+            <p class="value">
+              <strong>{{ past1MnthPrc }}%</strong>
+            </p>
+          </div>
+          <div class="col">
+            <p>3-Month</p>
+            <p class="value">
+
+              <strong>{{ past3MnthPrc }}%</strong>
+            </p>
+          </div>
+        </div>
+        <div class="pre-chart">
+          <div class="flex">
+            <h5 class="show-md">Performance Chart</h5>
+            <div class="toggle">
+              <p class="show-md">Fund Past Performance</p>
+              <mat-button-toggle-group value="1mnth">
+                <mat-button-toggle (click)="toogleData('1mnth')" value="1mnth">1-mth</mat-button-toggle>
+                <mat-button-toggle (click)="toogleData('3mnth')" value="3mnth">3-mth</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="renderChart" class="chart">
+          <div [ngClass] = "switchFundPopup === true ? 'chart-vaxis-popup' : 'chart-vaxis'">NAV Price (MYR)</div>
+            <google-chart [type]="chartType"
+            [columns]="columns"
+            [data]="graphData"
+            [options]="options"
+            [formatters]="myFormatters"></google-chart>
+          <div class="chart-haxis">Date</div>  
+          <p>
+            Disclaimer: Past performance of a fund is not an indication of its
+            future performance.
+          </p>
+        </div>
+        <div *ngIf="!renderChart" class="chart-nodata">
+          <div class="no-result">
+            <div class="image">
+              <img src="./assets/images/no-result-found.svg" alt="No Search Reuslt" />
+            </div>
+            <div class="content text-center">
+              <h4>No Data Found</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

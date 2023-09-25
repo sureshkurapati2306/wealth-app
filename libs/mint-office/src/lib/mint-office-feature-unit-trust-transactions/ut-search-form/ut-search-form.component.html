@@ -1,0 +1,89 @@
+<form #searchForm="ngForm" [formGroup]="myForm" (submit)="submit($event)" class="block-filter">
+    <div class="block-filter-input">
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Transaction Date *</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="startDate" placeholder="Start date" />
+                    <input matEndDate formControlName="endDate" placeholder="End date" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                    class="datetimepicker-icon"
+                    matSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field floatLabel="always">
+                <mat-label>Transaction Status</mat-label>
+                <mat-select
+                    panelClass="custom-select-panel basic-select"
+                    placeholder="Transaction Status"
+                    formControlName="status"
+                >
+                    <mat-option
+                        *ngFor="let transactionStat of transactionStats"
+                        [value]="transactionStat.value"
+                    >
+                        {{ transactionStat.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Unit Trust Account Number</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Unit Trust Account Number"
+                    formControlName="utAccNumber"
+                />
+            </mat-form-field>
+        </div>
+        <div class="field" *ngIf="!isSMSPage">
+            <mat-form-field>
+                <mat-label>Customer Name</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Customer Name"
+                    formControlName="customerName"
+                />
+            </mat-form-field>
+        </div>
+        <div class="field" *ngIf="!isSMSPage">
+            <mat-form-field>
+                <mat-label>ID Number</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="ID Number"
+                    value="700101-14-5001"
+                    formControlName="idNumber"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="block-filter-cta">
+        <button
+            mat-flat-button
+            class="btn-custom btn-text btn-xs"
+            [disabled]="myForm.invalid || loadingState === 'loading'"
+            type="button"
+            (click)="clear()"
+        >
+            Clear
+        </button>
+        <button
+            mat-flat-button
+            class="btn-custom btn-red btn-xs"
+            [disabled]="myForm.invalid || loadingState === 'loading'"
+            type="submit"
+        >
+            Search
+        </button>
+    </div>
+</form>

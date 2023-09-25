@@ -1,0 +1,5 @@
+@mixin font($font-size) {
+    font-size: $font-size;
+    line-height: 150%;
+    font-family: 'Noto Sans', sans-serif !important;
+}

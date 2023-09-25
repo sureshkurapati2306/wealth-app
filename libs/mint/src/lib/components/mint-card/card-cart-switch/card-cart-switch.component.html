@@ -1,0 +1,192 @@
+<div class="single-card">
+  <div
+    class="card-wrapper"
+    *ngFor="let item of investments"
+    [ngClass]="{ fade: item.isHoliday }"
+  >
+    <div class="card card-switch-out">
+      <div class="wrapper">
+        <h4>Switch Out</h4>
+
+        <div class="fund-holiday-detail" *ngIf="item.isHoliday">
+          <h5>Temporarily Not Available</h5>
+          <p>
+            The fund is currently not available for transactions due to the fund
+            holiday declared by the fund house. Pricing of the funds will resume
+            on the following business day.
+          </p>
+        </div>
+        <div class="top">
+          <div class="col-wrapper">
+            <div class="col">
+              <p>{{ item.assetType }}</p>
+              <h5>{{ item.fundName }}</h5>
+              <h6 *ngIf="item.isCompliant">Shariah Compliant</h6>
+            </div>
+            <div class="col show-md">
+              <div
+                class="action"
+                [ngClass]="{ 'disable-spacing': item.isHoliday === true }"
+              >
+                <a
+                  *ngIf="item.isHoliday !==true"
+                  (click)="item.canEdit = true; edit(item)"
+                  [ngClass]="{ hide: item.canEdit }"
+                  >Edit</a
+                >
+                <a (click)="removeModal()" [ngClass]="{ hide: item.canEdit }"
+                  >Remove</a
+                >
+
+                <a
+                  *ngIf="item.isHoliday !==true"
+                  (click)="item.canEdit = false"
+                  class="toggle"
+                  [ngClass]="{ 'active show': item.canEdit }"
+                  >Cancel</a
+                >
+                <a
+                  (click)="item.canEdit = false"
+                  [ngClass]="{ 'update show': item.canEdit }"
+                  class="toggle"
+                  >Done</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="redeem-section"
+            *ngIf="hasSwitchOption && item.canEdit"
+            [ngClass]="{ show: item.canEdit }"
+          >
+            <cimb-dashboard-slider 
+            [checkboxLabel]="checkboxLabel"></cimb-dashboard-slider>
+
+            <div class="option-info">
+              <p>
+                Indicative Amount
+                <span class="tips">
+                  <em
+                    class="icon-help hide-lg"
+                    (click)="openIndicativeAmountActionSheet()"
+                  ></em>
+                  <em
+                    class="icon-help show-lg"
+                    matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+                    matTooltipPosition="right"
+                  ></em>
+                </span>
+              </p>
+              <h6><sup _ngcontent-tca-c160="">MYR</sup> 1,440.00</h6>
+              <strong>(Based on 3 Sept 2020 NAV)</strong>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <p class="flex mb" *ngIf="switchOutUnits">
+            Switch Out Units
+            <span [ngClass]="{ hide: item.canEdit }">{{
+              switchOutUnits | number: '1.2-2':'en-US'
+            }}</span>
+
+            <mat-form-field *ngIf="item.canEdit">
+              <input
+                *ngIf="item.canEdit"
+                type="text"
+                class="form-control custom-input"
+                matInput
+                [formControl]="redeem"
+                [ngClass]="{
+                  error: redeem.hasError('min') || redeem.hasError('max')
+                }"
+              />
+
+              <em
+                class="icon-error"
+                *ngIf="redeem.hasError('min') || redeem.hasError('max')"
+              ></em>
+              <mat-error *ngIf="redeem.invalid">
+                {{ getRedeemMessage(item.id) }}
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p class="flex mb" *ngIf="switchOutAmount">
+            <small>Switch Out Amount <span>*</span></small>
+            <span class="amount"
+              ><sup>MYR</sup
+              >{{ switchOutAmount | number: '1.2-2':'en-US' }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card card-switch">
+      <div class="wrapper">
+        <h4>Switch In</h4>
+
+        <div class="top"  *ngIf="!item.canEdit">
+          <div class="col-wrapper">
+            <div class="col">
+              <p>Regional Equity</p>
+              <h5>Affin Hwang Select Income</h5>
+              <h6>Conservative</h6>
+            </div>
+          </div>
+        </div>
+
+        <cimb-dashboard-switch
+          [fundDetailLink]="fundDetailLink"
+          *ngIf="item.canEdit"
+        ></cimb-dashboard-switch>
+        <div class="bottom">
+          <p class="flex mb">
+            <small>Switch In Units <span>*</span></small>
+            <span>{{ switchInUnits | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex mb">
+            <small>Switch In Amount <span>*</span></small>
+            <span>MYR {{ switchInAmount | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex mb">
+            <small>Switching Fee (0.50%) <span>*</span></small>
+            <span>MYR {{ switchingFee | number: '1.2-2':'en-US' }}</span>
+          </p>
+          <p class="flex mb">
+            <small>Net Switch In Amount<span>*</span></small>
+            <span class="amount"
+              ><sup>MYR</sup
+              >{{ netSwitchInAmount | number: '1.2-2':'en-US' }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="action mob-action"
+      [ngClass]="{ 'disable-spacing': item.isHoliday === true }"
+    >
+      <a
+        *ngIf="item.isHoliday !==true"
+        (click)="item.canEdit = true; edit(item)"
+        [ngClass]="{ hide: item.canEdit }"
+        >Edit</a
+      >
+      <a (click)="removeModal()" [ngClass]="{ hide: item.canEdit }">Remove</a>
+
+      <a
+        *ngIf="item.isHoliday !==true"
+        (click)="item.canEdit = false"
+        class="toggle"
+        [ngClass]="{ 'active show': item.canEdit }"
+        >Cancel</a
+      >
+      <a
+        (click)="item.canEdit = false"
+        [ngClass]="{ 'update show': item.canEdit }"
+        class="toggle"
+        >Done</a
+      >
+    </div>
+  </div>
+</div>

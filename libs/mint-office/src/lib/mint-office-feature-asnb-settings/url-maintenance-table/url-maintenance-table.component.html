@@ -1,0 +1,31 @@
+<button disableRipple="true" mat-flat-button class="btn-custom btn-red btn-new" (click)="addUrl()">
+    <em class="icon-add"></em> New
+</button>
+<table mat-table [dataSource]="urlList$ | async" aria-describedby="URL maintenance table">
+    <ng-container matColumnDef="urlShortCode">
+        <th mat-header-cell *matHeaderCellDef id="urlShortCode">SHORT CODE</th>
+        <td mat-cell *matCellDef="let item">{{ item.shortCode }}</td>
+    </ng-container>
+    <ng-container matColumnDef="urlLabel">
+        <th mat-header-cell *matHeaderCellDef id="urlLabel">LABEL</th>
+        <td mat-cell *matCellDef="let item">{{ item.label }}</td>
+    </ng-container>
+    <ng-container matColumnDef="urlLink">
+        <th mat-header-cell *matHeaderCellDef id="urlLink">URL</th>
+        <td mat-cell *matCellDef="let item">{{ item.link }}</td>
+    </ng-container>
+    <ng-container matColumnDef="urlAction">
+        <th mat-header-cell *matHeaderCellDef [ngClass]="'col-th-action'" id="urlAction">ACTION</th>
+        <td mat-cell *matCellDef="let item" [ngClass]="'col-td-action'">
+            <button
+                mat-flat-button
+                class="btn-custom btn-text btn-action"
+                (click)="editUrl(item.shortCode)"
+            >
+                <span class="icon-edit"></span> <strong class="edit-label">Edit</strong>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

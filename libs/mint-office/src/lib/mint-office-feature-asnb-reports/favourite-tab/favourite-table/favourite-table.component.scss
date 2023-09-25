@@ -1,0 +1,69 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+
+.block-table {
+    background: var(--n0);
+    box-shadow: 0rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-detail-inner {
+    > tr {
+        > th {
+            width: 10%;
+        }
+    }
+}
+th.mat-column-position {
+    text-align: right !important;
+
+    @media (min-width: 62rem) {
+        width: 5.625rem !important;
+    }
+}
+
+.table-detail-wrapper {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    .detail-card {
+        display: flex;
+        align-items: flex-start;
+
+        table {
+            width: auto;
+        }
+    }
+}
+
+.mat-column-expand {
+    flex: 0 0 8% !important;
+    width: 10% !important;
+    text-align: right;
+}
+
+th.mat-header-cell {
+    border-bottom: 0.0625rem solid var(--c20)
+}
+
+.mat-column-indexNumber {
+    width: 10%;
+}
+
+.mat-column-transactionDatetime {
+    width: 20%;
+}
+
+.mat-column-favouriteClientName {
+    width: 25%;
+}
+
+.mat-column-favouriteClientId {
+    width: 15%;
+}
+
+.mat-column-favouriteTransactionType {
+    width: 20%;
+}

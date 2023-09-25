@@ -1,0 +1,229 @@
+.card-total {
+  background: var(--n100);
+  border-radius: 1rem;
+  position: relative;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 60rem) {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 2rem;
+  }
+
+  .image {
+    display: none;
+
+    @media (min-width: 60rem) {
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+  }
+  .inner {
+    @media (min-width: 60rem) {
+      background: var(--n100);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem 1.5rem 9.1875rem;
+      margin-left: 5.5rem;
+    }
+  }
+  p {
+    color: var(--n0);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    font-weight: var(--medium);
+    margin-bottom: 0.5rem;
+
+    strong {
+      @media (min-width: 60rem) {
+        font-size: 0.875rem;
+        line-height: 1.1875rem;
+      }
+    }
+  }
+  .top {
+    p {
+      &:first-child {
+        display: block;
+      }
+      a {
+        color: var(--w100);
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+        font-weight: var(--medium);
+        cursor: pointer;
+      }
+    }
+    .switching-text-small {
+      font-size: 0.625rem;
+      line-height: 1rem;
+      font-weight: var(--regular);
+
+      @media (min-width: 48rem) {
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+        font-weight: var(--medium);
+      }
+    }
+  }
+  .bottom {
+    border-top: 0.0625rem solid var(--n20);
+    padding-top: 0.5rem;
+
+    @media (min-width: 60rem) {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+    }
+
+    p {
+      margin-bottom: 0;
+      align-items: center;
+
+      sup {
+        font-size: 0.625rem;
+        letter-spacing: 0.04em;
+        line-height: 1rem;
+        font-weight: normal;
+        margin-right: 0.25rem;
+
+        @media (min-width: 60rem) {
+          top: -0.875rem;
+        }
+      }
+      strong {
+        font-size: 1.125rem;
+        line-height: 1.625rem;
+
+        @media (min-width: 60rem) {
+          font-size: 2rem;
+          line-height: 2.875rem;
+        }
+      }
+    }
+  }
+
+  .cart-switching {
+    display: flex;
+    align-items: center;
+
+    p {
+      display: block;
+      font-size: 0.75rem;
+      line-height: 1rem;
+
+      strong {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        display: block;
+        margin-top: 0.3125rem;
+      }
+    }
+
+    .col {
+      text-align: right;
+
+      p {
+        font-size: 0.625rem;
+        line-height: 1rem;
+
+        @media (min-width: 48rem) {
+          font-size: 0.75rem;
+          line-height: 1.125rem;
+        }
+      }
+    }
+    .col-arrow {
+      padding-left: 0.5625rem;
+      padding-right: 0.4375rem;
+
+      img {
+        width: 3.125rem;
+      }
+    }
+  }
+  .custom-flex {
+    @media (min-width: 48rem) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .col-arrow {
+      @media (min-width: 48rem) {
+        padding-left: 3.4375rem;
+        padding-right: 3.4375rem;
+      }
+      img {
+        width: 3.125rem;
+
+        @media (min-width: 48rem) {
+          width: 6.25rem;
+        }
+      }
+    }
+
+    p {
+      @media (min-width: 48rem) {
+        font-size: 0.75rem;
+      }
+
+      strong {
+        @media (min-width: 48rem) {
+          font-size: 2rem;
+          line-height: 2.875rem;
+        }
+      }
+    }
+  }
+}
+.cart-total-action {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (min-width: 48rem) {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 60rem) {
+    padding-left: 5.625rem;
+  }
+  .foot-legend {
+    margin-bottom: 0.75rem;
+
+    @media (min-width: 48rem) {
+      display: none;
+    }
+  }
+  button {
+    order: 1;
+    width: 100%;
+    margin-bottom: 0.75rem;
+
+    @media (min-width: 48rem) {
+      order: 2;
+      width: 19.0625rem;
+      margin-bottom: 0;
+    }
+  }
+  p {
+    order: 2;
+    font-weight: var(--regular);
+    font-size: 0.625rem;
+    line-height: 1rem;
+
+    &.alert {
+        font-size: 0.875rem;
+    }
+    @media (min-width: 48rem) {
+      order: 1;
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      margin-bottom: 0;
+    }
+  }
+}

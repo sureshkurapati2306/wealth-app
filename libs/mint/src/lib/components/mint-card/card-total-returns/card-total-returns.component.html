@@ -1,0 +1,24 @@
+<mat-card class="card-amount">
+  <h6>{{ title }}</h6>
+  <span class="tips" *ngIf="toolTip && toolTip.length > 0">
+    <em class="icon-help hide-lg" (click)="openBottomSheet()"></em>
+    <em
+      class="icon-help show-lg"
+      matTooltip="{{ toolTip }}"
+      matTooltipPosition="right"
+    ></em>
+  </span>
+
+  <h2>
+    <img
+      *ngIf="gainOrLoss"
+      src="./assets/images/chart-increase.svg"
+      alt="Increase"
+    />
+    <img
+      *ngIf="!gainOrLoss"
+      src="./assets/images/chart-decrease.svg"
+      alt="Decrease"
+    />{{ percentage }} <span>(MYR {{ amount }})</span>
+  </h2>
+</mat-card>

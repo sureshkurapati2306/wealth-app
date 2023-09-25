@@ -1,0 +1,9 @@
+<h6>{{filterName}}</h6>
+
+<mat-button-toggle-group appearance="standard" name="fontStyle" aria-label="Font Style" class="custom-btn-group filter-sort-buttons">
+  <mat-button-toggle class="btn-custom btn-ghost-white"
+    *ngFor="let toggle of filters"
+    [value]="toggle.value"
+    [disableRipple]="true"
+  >{{ toggle.label }}</mat-button-toggle>
+</mat-button-toggle-group>

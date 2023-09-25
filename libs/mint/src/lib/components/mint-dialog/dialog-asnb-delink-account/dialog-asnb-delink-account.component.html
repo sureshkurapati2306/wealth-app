@@ -1,0 +1,38 @@
+<mat-dialog-content class="mat-typography asnb-delink-account">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-delink-account-content">
+        <img src="assets/images/delink.svg" alt="delink-account" />
+        <p class="asnb-delink-account-title">Are You Sure?</p>
+        <div class="asnb-delink-account-description">
+            <p>Are you sure you want to De-link your account?</p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close class="asnb-delink-account-cancel" disableRipple>
+        Cancel
+    </button>
+    <button
+        mat-flat-button
+        [mat-dialog-close]="false"
+        cdkFocusInitial
+        class="asnb-delink-account-agree"
+        disableRipple
+        (click)="confirmDelinkAccount()"
+    >
+        Yes, Continue
+    </button>
+</mat-dialog-actions>

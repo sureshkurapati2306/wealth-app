@@ -1,0 +1,103 @@
+.custom-paginator {
+  padding: 1.75rem 0;
+
+  ul {
+    display: flex;
+    margin: 0 -0.125rem;
+
+    li {
+      padding: 0 0.125rem;
+
+      a {
+        font-size: 0.875rem;
+        padding: 0;
+        border-bottom: 0.125rem solid transparent;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        height: 2.5rem;
+        line-height: 2.375rem;
+        width: 3.125rem;
+        // background: var(--n5h);
+        color: var(--n60);
+
+        @media (min-width: 48rem) {
+          width: 2.125rem !important;
+          height: 2rem;
+          line-height: 1.875rem;
+        }
+
+        @media (max-width: 47.9375rem) {
+            width: 2.125rem !important;
+            height: 2rem;
+            line-height: 1.875rem;
+        }
+        em {
+          color: var(--n20);
+        }
+        &:not(.disabled) {
+          &:hover {
+            color: var(--r60);
+            border-bottom-color: var(--r60);
+            font-weight: bold;
+
+            em {
+              color: var(--n60);
+            }
+          }
+        }
+        &:active {
+          color: var(--n0);
+          background-color: var(--r100);
+        }
+        &.disabled {
+          cursor: pointer;
+        }
+      }
+      &.current {
+        a {
+          color: var(--r100);
+          font-weight: var(--bold);
+          border-bottom-color: var(--r100);
+
+          &:active {
+            background: var(--n5h);
+          }
+        }
+      }
+      &.prev {
+        a {
+          background: none;
+          width: 2rem;
+
+          &:hover {
+            border-bottom: 0;
+          }
+        }
+      }
+      &.next {
+        a {
+          background: none;
+          width: 2rem;
+
+          &:hover {
+            border-bottom: 0;
+          }
+          em {
+            &:before {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+      &.total-pages {
+        display: none;
+
+        @media (min-width: 37.5rem) {
+          display: inline-block;
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+}

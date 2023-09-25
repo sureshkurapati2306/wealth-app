@@ -1,0 +1,230 @@
+.btn-datepicker {
+  @media (min-width: 48rem) {
+    display: inline-flex;
+    border: 0.0625rem solid var(--n60);
+    border-radius: 0.5rem;
+    padding: 0 0.875rem;
+    align-items: center;
+  }
+  input {
+    display: none;
+
+    @media (min-width: 48rem) {
+      display: block;
+      border: 0 none;
+      padding: 0;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    &::placeholder {
+      color: var(--n40);
+      opacity: 1;
+    }
+  }
+}
+::ng-deep {
+  .custom-datepicker {
+    &.custom-menu-panel {
+      // @media (min-width: 48rem) {
+      //   height: 26.75rem !important;
+      //   max-height: 26.75rem !important;
+      // }
+
+      .mat-calendar-body {
+        tr {
+          &[aria-hidden="true"] {
+            display: none !important;
+          }
+          &:first-child {
+            display: contents;
+
+            td {
+              &.mat-calendar-body-label {
+                padding: 0 !important;
+                text-indent: -999999px;
+              }
+            }
+          }
+          td {
+            height: 2rem;
+            padding-top: .25rem !important;
+            padding-bottom: .25rem !important;
+          }
+        }
+      }
+      .mat-calendar-body-cell-content {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+  }
+}
+.panel-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .panel-header {
+    padding: 1.5rem 2rem;
+
+    @media (min-width: 48rem) {
+      display: block;
+      border-bottom: 0 none;
+      padding-bottom: 1rem;
+    }
+    h6 {
+      font-size: 0.75rem;
+      line-height: normal;
+      letter-spacing: 0.08rem;
+      font-weight: var(--medium);
+      text-transform: uppercase;
+      color: var(--n80);
+      margin-bottom: 1.5rem;
+
+      @media (min-width: 48rem) {
+        color: var(--n100);
+      }
+    }
+    .input-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      padding-left: 1.875rem;
+      padding-right: 1.875rem;
+
+      @media (min-width: 48rem) {
+        justify-content: space-between;
+      }
+      input {
+        height: 3rem;
+        // max-width: 8.75rem;
+        padding: 0.75rem;
+        // flex: 1 1 8.75rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        color: var(--n100);
+
+        // @media (min-width: 48rem) {
+        //   max-width: 11.9375rem;
+        //   flex: 1 1 11.9375rem;
+        // }
+        &::placeholder {
+          color: var(--n100);
+          opacity: 1;
+        }
+        // &:last-child {
+        //   margin-left: 0.75rem;
+
+        //   @media (min-width: 48rem) {
+        //     margin: 0;
+        //   }
+        // }
+        &.date-readonly-input {
+          border: none;
+          font-weight: var(--medium);
+          font-size: 0.75rem;
+          line-height: 1.125rem;
+          color: var(--n100);
+          background: transparent;
+          height: 1.125rem;
+          padding: 0;
+          text-transform: uppercase;
+          width: 5.3125rem;
+        }
+      }
+      span {
+        display: none;
+
+        &.to {
+          display: inline-block;
+          font-weight: var(--medium);
+          color: var(--n100);
+          font-size: 0.75rem;
+          line-height: 1.125rem;
+          letter-spacing: 8%;
+          text-transform: uppercase;
+          margin-left: 2rem;
+          margin-right: 2rem;
+        }
+
+        @media (min-width: 48rem) {
+          display: inline-block;
+          font-size: 0.75rem;
+          font-weight: var(--medium);
+          text-transform: uppercase;
+          letter-spacing: 0.08rem;
+        }
+      }
+    }
+  }
+  .panel-content {
+    padding-left: 2rem;
+    // padding-right: 2rem;
+    padding-right: 1rem;
+    flex: 1;
+
+    @media (min-width: 48rem) {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      padding: 0 1rem;
+      position: relative;
+    }
+    .btn-controls {
+      display: none;
+
+      @media (min-width: 48rem) {
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: var(--n0);
+        box-shadow: 0rem 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12),
+          0rem 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08);
+        border-radius: 1rem;
+        text-align: center;
+        line-height: 1.5rem;
+        font-size: 0.75rem;
+        position: absolute;
+        top: 1.4375rem;
+      }
+      &.btn-prev {
+        @media (min-width: 48rem) {
+          left: 2rem;
+        }
+      }
+      &.btn-next {
+        @media (min-width: 48rem) {
+          right: 2rem;
+        }
+      }
+    }
+  }
+  .panel-footer {
+    height: 5rem;
+    padding: 1rem;
+    display: flex;
+    margin-left: -0.46875rem;
+    margin-right: -0.46875rem;
+    background: var(--n0);
+    box-shadow: 0rem 0rem 1rem -0.125rem rgba(24, 39, 75, 0.08),
+      0rem 0.625rem 2rem -0.25rem rgba(24, 39, 75, 0.1);
+    border-radius: 1rem 1rem 0rem 0rem;
+
+    @media (min-width: 48rem) {
+      margin: 0;
+      padding: 0 1rem;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .btn-custom {
+      flex: 1 1 50%;
+      margin-left: 0.46875rem;
+      margin-right: 0.46875rem;
+
+      @media (min-width: 48rem) {
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+}

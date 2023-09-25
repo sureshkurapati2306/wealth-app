@@ -1,0 +1,102 @@
+<mat-form-field appearance="classic" class="fw">
+  <label class="custom-label" *ngIf="hasLabel">{{ inputLabel }}</label>
+  
+ <!-- <ng-container *ngIf="!isPaymentAccount">
+    <div class="input-wrapper ml-12">
+      <mat-select
+        class="custom-select"
+        [ngClass]="{ 'custom-inline-select': selectInline }"
+        panelClass="custom-select-panel {{ panelClass }}"
+        placeholder="{{ selectPlaceholder }}"
+        disableRipple
+        
+        [(value)]="selectedValue"
+        [(ngModel)]="selectedValue"
+      >
+        <div class="mat-menu-content">
+          <div class="panel-header">
+            <button mat-icon-button class="btn-close" (click)="closeSelect()">
+            <em class="icon-close"></em>
+            </button>
+          </div>
+          <div class="panel-content">
+            <mat-option *ngFor="let option of selectOption" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </div>
+        </div>
+      </mat-select>
+    </div>
+  </ng-container>-->
+
+  <ng-container *ngIf="accountOpeningFields">
+    <div class="input-wrapper ml-12">
+      <mat-select
+        class="custom-select"
+        [ngClass]="{ 'custom-inline-select': selectInline }"
+        panelClass="custom-select-panel {{ panelClass }}"
+        placeholder="{{ selectPlaceholder }}"
+        disableRipple
+        (selectionChange)="getSelectedValue($event)"
+        [(value)]="selectedValue"
+        [(ngModel)]="selectedValue"
+      >
+        <div class="mat-menu-content">
+          
+          <div class="panel-content">
+            <mat-option *ngFor="let option of selectOption" [value]="option.settlementAcctType">
+              {{ option.accountNumber }}
+            </mat-option>
+          </div>
+        </div>
+      </mat-select>
+    </div>
+  </ng-container>
+
+  
+
+  <ng-container *ngIf="isPaymentAccount">
+    <div class="input-wrapper">
+      <div
+        [ngClass]="{
+          'error-field-wrapper': isInActiveSelected || isJointAccountSelected
+        }"
+      >
+        <div class="select-wrapper">
+          <mat-select
+            class="custom-select"
+            [ngClass]="{ 'custom-inline-select': selectInline }"
+            panelClass="custom-select-panel {{ panelClass }}"
+            placeholder="{{ selectPlaceholder }}"
+            disableRipple
+            
+            [(value)]="selectedValue"
+            (selectionChange)="getAccount($event, accounts)"
+            [(ngModel)]="selectedValue"
+          >
+            <mat-option
+              *ngFor="let option of accounts"
+              [value]="option.id"
+              [disabled]="option.isActive === false"
+            >
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+          <em
+            class="icon-error"
+            *ngIf="isInActiveSelected || isJointAccountSelected"
+          ></em>
+        </div>
+
+        <mat-error *ngIf="isInActiveSelected">
+          This account is inactive. Contact us at +603 6204 7788 to know the
+          next steps.
+        </mat-error>
+        <mat-error *ngIf="isJointAccountSelected">
+          You need all joint account holders signatories to transact using this
+          account. Contact us at +603 6204 7788 for assistance.
+        </mat-error>
+      </div>
+    </div>
+  </ng-container>
+</mat-form-field>

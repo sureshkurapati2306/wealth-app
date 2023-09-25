@@ -1,0 +1,113 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin';
+
+.asnb-service-hours {
+    p {
+        margin: 0;
+    }
+
+    max-width: 37.5rem;
+
+    @media (min-width: $asnbDesktop) {
+        width: 37.5rem;
+    }
+
+    .close-section {
+        display: flex;
+        justify-content: flex-end;
+
+        img:hover {
+            cursor: pointer;
+        }
+
+        .desktop-close {
+            display: none;
+            @media (min-width: $asnbDesktop) {
+                display: block;
+            }
+        }
+
+        .mobile-close {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 1.5rem 1rem;
+
+            @media (min-width: $asnbDesktop) {
+                display: none;
+            }
+        }
+    }
+
+    .asnb-service-hours-content {
+        text-align: center;
+        padding-top: 1.5rem !important;
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .asnb-service-hours-title {
+            @include font(1.5rem);
+            font-weight: 700;
+            margin-top: 1.5rem;
+            color: #333739;
+            @media (max-width: 60rem) {
+                @include font(1.25rem);
+            }
+        }
+
+        .asnb-service-hours-description {
+            margin-top: 0.25rem;
+
+            p {
+                @include font(1rem);
+                color: #575a5c;
+            }
+
+            span {
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+::ng-deep .mat-dialog-actions {
+    padding: 0;
+    gap: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+
+    button {
+        width: 100%;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        @include font(1rem);
+        border-radius: 0.5rem;
+        border: 1px solid #cc0000;
+
+        &.asnb-service-hours-agree {
+            background-color: #cc0000;
+            color: #ffffff;
+            margin-left: 0 !important;
+            width: 100%;
+
+            @media (min-width: 768px) {
+                width: 16.25rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+}
+
+::ng-deep .cdk-overlay-backdrop.cdk-overlay-backdrop-showing.asnb-service-hours {
+    background-color: $baseColor;
+    opacity: 0.6;
+}

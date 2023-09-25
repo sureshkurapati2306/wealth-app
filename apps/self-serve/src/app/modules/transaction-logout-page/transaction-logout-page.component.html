@@ -1,0 +1,258 @@
+<div class="page-wrapper">
+    <div class="container">
+        <a class="logo">
+            <img
+                [src]="headerLogoUrl"
+                onerror="this.onerror=null; this.src='./assets/images/CIMB MyWealth Beta.png'"
+                alt="CIMB MyWealth"
+            />
+        </a>
+
+        <div class="section-content">
+            <div class="error-msg">
+                <h4>You are now logged out</h4>
+
+                <ng-container *ngIf="isTimeout">
+                    <span class="inactivityText">Your session has expired due to inactivity.</span>
+                    <span class="inactivityText marginBtm">
+                        Please login again through CIMB Clicks to continue.
+                    </span>
+                </ng-container>
+
+                <span class="myWealth"> Thank you for using My Wealth. </span>
+                <span class="dateTime">
+                    <!-- 04 Sep 2020, 10:35:50 AM, -->
+                    {{ dateTime | date: 'dd MMM y, hh:mm:ss a':'UTC+8' }},
+                </span>
+                <span class="dateTime"> Login session {{ LoginSession }} </span>
+            </div>
+
+            <div class="background">
+                <p class="transactionActivity"><strong>Your Transaction Activity</strong></p>
+                <div class="card-wrapper show-lg">
+                    <div class="card">
+                        <mat-table
+                            [dataSource]="dataSource"
+                            class="mat-elevation-z8 transactionActivityTable"
+                        >
+                            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Date & Time Column -->
+                            <ng-container matColumnDef="dateTime">
+                                <mat-header-cell *matHeaderCellDef class="DateTime">
+                                    Date & Time
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element" class="DateTime DateTimeCell">
+                                    {{ element.dateTime | date: 'dd MMM y hh:mm:ss a' }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Transaction Type Column -->
+                            <ng-container matColumnDef="referenceNo">
+                                <mat-header-cell *matHeaderCellDef class="transactionType">
+                                    Transaction Type
+                                </mat-header-cell>
+                                <mat-cell
+                                    *matCellDef="let element"
+                                    class="transactionType transactionTypeCell"
+                                >
+                                    <span
+                                        ><strong
+                                            >{{ element.purchaseType }} :
+                                            {{ element.transactionType }}</strong
+                                        ></span
+                                    >
+                                    <p>Reference No : {{ element.referenceNo }}</p>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Details Column -->
+                            <ng-container matColumnDef="fundName">
+                                <mat-header-cell *matHeaderCellDef class="details">
+                                    Details
+                                </mat-header-cell>
+
+                                <mat-cell *matCellDef="let element" class="details detailsCell">
+                                    <span>{{ element.fundName | titlecase }}</span>
+                                    <span *ngIf="element.toFundName"
+                                        ><img
+                                            src="./assets/images/ic_arrow_downward_48px.svg"
+                                            alt="Arrow"
+                                            style="margin: auto"
+                                    /></span>
+                                    <p>{{ element.toFundName | titlecase }}</p>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef class="status-title">
+                                    Status
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element" class="status-title statusCell">
+                                    <span
+                                        ><strong>{{ element.status }}</strong>
+                                    </span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Amount/Units Column -->
+                            <ng-container matColumnDef="amount">
+                                <mat-header-cell *matHeaderCellDef class="amount">
+                                    Amount/Units
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element" class="amount amountCell">
+                                    <span>
+                                        <strong *ngIf="element.transactionTypeCode === '01'"
+                                            >MYR
+                                            {{ element.amount | number: '1.2-2':'en-US' }}</strong
+                                        >
+                                        <strong *ngIf="element.transactionTypeCode === '02'"
+                                            >{{
+                                                element.units | number: '1.2-2':'en-US'
+                                            }}
+                                            Units</strong
+                                        >
+                                        <strong *ngIf="element.transactionTypeCode === '03'"
+                                            >{{
+                                                element.units | number: '1.2-2':'en-US'
+                                            }}
+                                            Units</strong
+                                        >
+                                    </span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row
+                                *matHeaderRowDef="displayedColumns; sticky: true"
+                            ></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="card-wrapper hide-lg"
+                        *ngFor="let list of transactionArray; let index = index"
+                    >
+                        <div class="card">
+                            <p class="headingStyle">
+                                <strong>{{ list.transactionType }}</strong>
+                            </p>
+                            <div class="list-tab list-transaction">
+                                <div class="list-tab-block">
+                                    <div class="list-tab-content">
+                                        <mat-accordion>
+                                            <mat-expansion-panel
+                                                class="custom-expansion-panel"
+                                                disabled
+                                            >
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title class="side">
+                                                        <div
+                                                            class="title-block"
+                                                            style="padding: 0 0.45rem"
+                                                        >
+                                                            <p>
+                                                                <strong>
+                                                                    {{
+                                                                        list.fundName | titlecase
+                                                                    }}</strong
+                                                                >
+                                                                <span class="alignSpan">
+                                                                    <span style="float: left"
+                                                                        >Reference No :
+                                                                        {{ list.referenceNo }}
+                                                                    </span>
+                                                                    <span style="float: left">{{
+                                                                        list.dateTime
+                                                                    }}</span>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            class="title-block"
+                                                            style="padding-top: 0rem !important"
+                                                            *ngIf="list.toFundName"
+                                                        >
+                                                            <p>
+                                                                <strong>{{
+                                                                    list.toFundName | titlecase
+                                                                }}</strong>
+                                                            </p>
+                                                        </div>
+                                                    </mat-panel-title>
+
+                                                    <mat-panel-description>
+                                                        <div class="Line"></div>
+                                                        <div class="row1">
+                                                            <div class="column">
+                                                                <p class="status1">
+                                                                    <strong>Status</strong>
+                                                                </p>
+                                                                <p class="status1 processing">
+                                                                    <strong>{{
+                                                                        list.status
+                                                                    }}</strong>
+                                                                </p>
+                                                            </div>
+                                                            <div class="columnright">
+                                                                <p
+                                                                    class="units"
+                                                                    *ngIf="
+                                                                        list.transactionType !==
+                                                                        'Purchase'
+                                                                    "
+                                                                >
+                                                                    <strong>Units</strong>
+                                                                </p>
+                                                                <p
+                                                                    class="units"
+                                                                    *ngIf="
+                                                                        list.transactionType ===
+                                                                        'Purchase'
+                                                                    "
+                                                                >
+                                                                    <strong>Amount</strong>
+                                                                </p>
+                                                                <p class="units value">
+                                                                    MYR
+                                                                    {{
+                                                                        list.amount
+                                                                            | number
+                                                                                : '1.2-2'
+                                                                                : 'en-US'
+                                                                    }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="column column1">
+                            <img src="./assets/images/octopus.png" alt="Snow" style="width: 100%" />
+                        </div>
+                        <div class="column column2">
+                            <img
+                                src="./assets/images/Illustration_Logout.svg"
+                                alt="Mountains"
+                                style="width: 100%"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

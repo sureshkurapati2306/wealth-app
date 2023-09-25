@@ -1,0 +1,30 @@
+# ignore snyk vulnerability
+ignore:
+  'SNYK-JS-ANSIREGEX-1583908':
+    - '* > ansi-regex':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-UNSETVALUE-2400660':
+    - '* > unset-value':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-LOADERUTILS-3043105':
+    - '* > loader-utils':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-DECODEURICOMPONENT-3149970':
+    - '* > decode-uri-component':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-YAML-5458867':
+    - '* > yaml':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-SEMVER-3247795':
+    - '* > semver':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'
+  'SNYK-JS-WORDWRAP-3149973':
+    - '* > word-wrap':
+        reason: 'No remediation available'
+        expires: '2023-10-18T00:00:00.000Z'

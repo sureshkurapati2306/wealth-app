@@ -1,0 +1,23 @@
+<cimb-header
+    [headerLogoUrl]="headerLogoUrl"
+    [totalFundsCount]="totalFundsCountVal"
+    [userType]="userType"
+    [showCartIcon]="showCartIconValue"
+    [customerName]="customerName"
+    [canNavigateToDashboard]="riskProfileDataReceived"
+    [canNavigateToAsnbDashboard]="asnbAccountIsLinked"
+    (pageRedirectEvent)="pageRedirectEvent($event)"
+    (logoutEvent)="logoutEvent()"
+    (viewMyCart)="viewMyCartClick()"
+    *ngIf="userType"
+></cimb-header>
+<router-outlet></router-outlet>
+<cimb-footer></cimb-footer>
+<cimb-footer-cart
+    *ngIf="cartFooterToggle"
+    [totalAmount]="totalAmountVal"
+    [totalFundsCount]="totalFundsCountVal"
+    (viewMyCart)="viewMyCartClick()"
+    [flow]="flowText"
+    [totalUnit]="totalUnitVal"
+></cimb-footer-cart>

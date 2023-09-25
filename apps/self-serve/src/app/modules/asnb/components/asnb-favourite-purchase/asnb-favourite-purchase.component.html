@@ -1,0 +1,88 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="true"
+    (redirectEvent)="redirectEvent()"
+    [noProgressStep]="false"
+></cimb-progress-sub-header>
+<div class="container">
+    <h3 class="section-head">Account Details</h3>
+    <div class="section-content">
+        <div class="field-container">
+            <p class="field-label">ASNB Membership Number</p>
+            <p class="field-details">{{ favouriteData?.asnbAccountNo }}</p>
+        </div>
+        <div class="field-container">
+            <p class="field-label">Nickname</p>
+            <p class="field-details">{{ favouriteData?.nickname }}</p>
+        </div>
+        <div class="field-container">
+            <p class="field-label">Member's ID Type</p>
+            <p class="field-details">{{ favouriteData?.memberIdType }}</p>
+        </div>
+        <div class="field-container">
+            <p class="field-label">ID Number</p>
+            <p class="field-details">{{ favouriteData?.beneClientId }}</p>
+        </div>
+        <div class="field-container">
+            <p class="field-label">Relationship</p>
+            <p class="field-details">{{ favouriteData?.relationship }}</p>
+        </div>
+        <div class="input-field-container">
+            <div class="input-field-label">Reason For Transfer</div>
+            <cimb-common-dropdown
+                [listItems]="transferReasons"
+                class="transfer-reason"
+                placeholderText="Reason"
+                [selection]="transferReasons[0]"
+                (selectedDropdownItem)="onTransferReasonSelect($event)"
+            ></cimb-common-dropdown>
+        </div>
+    </div>
+
+    <hr class="divider-line" />
+
+    <h3 class="section-head">Fund Details</h3>
+    <div class="section-content">
+        <div class="field-container">
+            <p class="field-label">Fund Name</p>
+            <p class="field-details">{{ favouriteData?.fundDesc }}</p>
+        </div>
+        <div class="input-container"></div>
+
+        <div class="input-field-container">
+            <div class="input-field-label">Transfer Amount</div>
+            <cimb-input-amount-key
+                *ngIf="isInitialState"
+                class="top-up-input"
+                [inputForm]="fundTopUpForm"
+                [inputFormControlName]="'amount'"
+                [inputPlaceholder]="'1.00'"
+                [minAmount]="1"
+                [maxAmount]="currentTransactionLimit"
+                [errorMessageMinAmount]="'The minimum amount is MYR 1.00'"
+                [errorMessageMaxAmount]="
+                    'You’ve exceeded the maximum allotted amount of RM' +
+                    ((transactionLimit$ | async)?.maxLimit | number: '.2') +
+                    ' daily'
+                "
+                value="1"
+                [isRoundNumber]="true"
+                [isAsnbFavouritePurchase]="true"
+            >
+            </cimb-input-amount-key>
+        </div>
+    </div>
+
+    <div class="btn-row">
+        <button
+            mat-flat-button
+            class="btn-custom"
+            [disabled]="!isButtonEnabled"
+            (click)="onSubmit()"
+        >
+            Proceed
+        </button>
+    </div>
+
+    <cimb-asnb-footer></cimb-asnb-footer>
+</div>

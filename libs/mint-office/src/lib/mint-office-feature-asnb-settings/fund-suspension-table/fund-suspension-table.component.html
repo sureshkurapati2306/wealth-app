@@ -1,0 +1,75 @@
+<table
+    mat-table
+    [dataSource]="fundSuspensionData$ | async"
+    class="tbl-recent-transcation"
+    aria-describedby="Fund suspension table"
+>
+    <!-- Date Column -->
+    <ng-container matColumnDef="fsId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header id="fundId">Fund ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.asnbFundId }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="asnbFundId">
+        <th mat-header-cell *matHeaderCellDef id="asnbFundId">Fund Name</th>
+        <td mat-cell *matCellDef="let element">
+            {{ (fundTypeMap$ | async)[element.asnbFundId].fundLongName }}
+        </td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="suspensionReason">
+        <th mat-header-cell *matHeaderCellDef id="suspensionReason">Suspension Status</th>
+        <td mat-cell *matCellDef="let element" class="amount">
+            {{ element.suspensionReason === '0' || element.suspensionReason === '3' ? 'Y' : 'N' }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="noticeReason">
+        <th mat-header-cell *matHeaderCellDef id="fullySubscribed">Fully Subscribed</th>
+        <td mat-cell *matCellDef="let element" class="amount">
+            {{ element.suspensionReason === '0' || element.suspensionReason === '2' ? 'Y' : 'N' }}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef id="startDateTime">Suspension Timeline</th>
+        <td mat-cell *matCellDef="let element" class="amount">
+            <strong>Start: </strong
+            >{{ element.startDate ? (element.startDate | date: 'dd MMM yy hh:mm a') : 'N/A' }}
+            <br />
+            <strong>End: </strong
+            >{{
+                element.noticeReason === '0'
+                    ? (element.endDate | date: 'dd MMM yy hh:mm a')
+                    : element.noticeReason === 'N/A'
+                    ? 'N/A'
+                    : 'Until further notice'
+            }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef id="endDateTime" [ngClass]="'col-th-action'">
+            Action
+        </th>
+        <td mat-cell *matCellDef="let row" [ngClass]="'col-td-action'">
+            <button
+                mat-flat-button
+                class="btn-custom btn-text btn-action"
+                (click)="editFundSuspension(row); $event.stopPropagation()"
+            >
+                <span class="icon-edit"></span> <strong>Edit</strong>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell cell-empty" colspan="9999" style="text-align: center">
+            Click <a (click)="goToPage()"><em class="icon-add"></em> Add</a> to add batch file
+            scheduler
+        </td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

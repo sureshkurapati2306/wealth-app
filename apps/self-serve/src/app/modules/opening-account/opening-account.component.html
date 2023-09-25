@@ -1,0 +1,22 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [noProgressStep]="true"
+    [userType]="customerType"
+    [isBackButtonEnabled]="isBackButtonEnabled"
+>
+</cimb-progress-sub-header>
+
+<cimb-personal-account (btnSubmit)="step1Submited($event)" *ngIf="step1"> </cimb-personal-account>
+<cimb-other-account-details
+    (btnSubmit)="step2Submited($event)"
+    (previousPage)="goToStepOne()"
+    *ngIf="step2"
+>
+</cimb-other-account-details>
+<cimb-account-details-review
+    (btnSubmit)="step3Submited($event)"
+    [accountOpeningValues]="accountOpeningPostObject"
+    [otherDetailsList]="odFieldsList"
+    (previousPage)="goToSteps($event)"
+    *ngIf="step3"
+></cimb-account-details-review>

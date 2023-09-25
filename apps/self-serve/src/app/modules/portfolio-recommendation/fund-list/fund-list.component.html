@@ -1,0 +1,243 @@
+
+
+<div class="fund-row"
+  [ngClass]="{
+    highlighted: highlightedRow === fund?.fund_name || isAmountRemoved || isAmountEdited,
+    holiday: fund?.fund_status === 'I',
+    disabled_row: fund?.fund_indicator === 'I' || fund?.fund_status === 'I' || fund?.esg_fund === 'Y'
+  }"
+  (click)="onSelectRow(fund)"
+>
+  <div class="fund-name">
+    <!-- <h6>{{fund?.fund_name}}</h6> -->
+    <a (click)="showDetailPage(fund)">
+      <strong>{{ fund?.fund_name }}</strong>
+    </a>
+    <p>{{fund?.risk_name}}
+      <span *ngIf="fund?.fund_indicator === 'I'">|
+      Shariah Compliant </span>
+      <span *ngIf="fund?.esg_fund === 'Y'">|
+        Esg Fund </span>
+      <span class="current-holding" *ngIf="fund?.current_holding === 'Y'">
+        | Current Holding</span>
+    </p>
+    <div class="fund-holiday-label" *ngIf="fund?.fund_status === 'I'">
+      Fund Holiday
+      <span class="tips">
+        <em class="icon-help hide-lg" (click)="openFundHolidayBottomSheet()"></em>
+        <em class="icon-help show-lg"
+          matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+          matTooltipPosition="below"></em>
+      </span>
+    </div>
+  </div>
+  <div class="fund-details">
+    <div class="row show-desktop">
+      <p>Performance</p>
+      <div *ngIf="perfMonthInd === '1mnth'">
+        <h6>
+          <img src="./assets/images/chart-increase.svg" alt="Increase"
+          *ngIf="fund?.one_month_ind === 'UP'" />
+
+          <img src="./assets/images/chart-equal.svg" alt="Equal"
+            *ngIf="fund?.one_month_ind === 'EQUAL'" />
+
+          <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+            *ngIf="fund?.one_month_ind === 'DOWN'" />
+          <strong>{{ fund?.one_month}}%</strong>
+        </h6>
+        <span>1 Month</span>
+
+      </div>
+      <div *ngIf="perfMonthInd === '3mnth'">
+        <h6>
+          <img src="./assets/images/chart-increase.svg" alt="Increase"
+          *ngIf="fund?.three_month_ind === 'UP'" />
+
+          <img src="./assets/images/chart-equal.svg" alt="Equal"
+            *ngIf="fund?.three_month_ind === 'EQUAL'" />
+
+          <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+            *ngIf="fund?.three_month_ind === 'DOWN'" />
+          <strong>{{ fund?.three_month}}%</strong>
+        </h6>
+        <span>3 Month</span>
+      </div>
+    </div>
+    <div class="row">
+      <p>Nav Price
+        <span class="tips">
+          <em class="icon-help hide-lg" (click)="openNavBottomSheet()"></em>
+          <em class="icon-help show-lg"
+            matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+            matTooltipPosition="right"></em>
+        </span>
+      </p>
+      <h4>
+        <sup>MYR</sup>
+        {{fund?.nav_price | number:'1.2-2'}}
+      </h4>
+      <p class="latest-date">(As of
+        {{fund?.close_date}})</p>
+    </div>
+    <div class="row show-mobile">
+      <p>Perf. 1-mth</p>
+      <h4>
+        <img src="./assets/images/chart-increase.svg" alt="Increase"
+          *ngIf="fund?.one_month_ind === 'UP'" />
+
+        <img src="./assets/images/chart-equal.svg" alt="Equal"
+          *ngIf="fund?.one_month_ind === 'EQUAL'" />
+
+        <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+          *ngIf="fund?.one_month_ind === 'DOWN'" />
+        {{ fund?.one_month}}%
+      </h4>
+    </div>
+    <div class="row show-mobile">
+      <p>Perf. 3-mth</p>
+      <h4>
+        <img src="./assets/images/chart-increase.svg" alt="Increase"
+          *ngIf="fund?.three_month_ind === 'UP'" />
+
+        <img src="./assets/images/chart-equal.svg" alt="Equal"
+          *ngIf="fund?.three_month_ind === 'EQUAL'" />
+
+        <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+          *ngIf="fund?.three_month_ind === 'DOWN'" />
+        {{ fund?.three_month}}%
+      </h4>
+    </div>
+    <div class="row row-input">
+      <form [formGroup]="productForm">
+        <mat-form-field
+          [ngClass]="{'field-error': productForm.get('investmentAmount').hasError('min') || productForm.get('investmentAmount').hasError('max')
+          || (productForm.get('investmentAmount').dirty && productForm.get('investmentAmount').value === '0.00') ||
+          (!productForm.get('investmentAmount').dirty && isAmountEdited && isFocus && productForm.valid), 'mat-form-field-disabled': fund?.fund_indicator === 'I'
+          }"
+        >
+          <span class="currency" [ngClass]="hasValue ? 'show' : 'hide'" matPrefix [ngStyle]="{'display': hasValue || isFocus  ? 'block' : 'none'}">MYR&nbsp;</span>
+          <input
+            placeholder="Min MYR {{currentHoldingFlag}}"
+            type="text"
+            formControlName="investmentAmount"
+            [ngClass]="hasValue || isFocus ? 'focus' : ''"
+            cimbShowInputPrefix
+            autocomplete="off"
+            (input)="onInput()"
+            (focus)="onFocus()"
+            (focusout)="onFocusOut()"
+            (keydown)="onKeyDown()"
+            (keyup)="onAmountEnter($event)"
+            (keypress)="acceptNumbersOnly($event)"
+            matInput
+            class="custom-input"
+            [ngStyle]="{'caret-color': productForm.invalid ? 'red' : '#2096d9' }"
+
+          />
+          <em class="icon-error"></em>
+        </mat-form-field>
+      </form>
+      <div class="block-button">
+        <button class="btn-custom btn-red" disableRipple="true"
+          (click)="onAddItem(fund, index)"
+          type="button"
+          *ngIf="!hasValue"
+          [disabled]="productForm.invalid || fund?.fund_status === 'I' || productForm.get('investmentAmount').value === '0.00' || isAmountEnteredValid"
+          mat-flat-button>
+          Add to cart
+        </button>
+
+        <button
+          class="btn-custom btn-red"
+          disableRipple="true"
+          [disabled]="productForm.invalid || fund?.fund_status === 'I'
+          || (productForm.get('investmentAmount').value === '0.00' || productForm.get('investmentAmount').value === '0.0' ||
+          productForm.get('investmentAmount').value === '0.' || productForm.get('investmentAmount').value === '.00' ||
+          productForm.get('investmentAmount').value === '0'  || productForm.get('investmentAmount').value === '' ||
+          productForm.get('investmentAmount').value === '000')"
+          *ngIf="isAmountEdited"
+          (click)="onUpdateCart(fund)"
+          mat-flat-button
+        >Done</button>
+        <button
+          mat-flat-button
+          *ngIf="isAmountRemoved"
+          class="btn-custom btn-red"
+          disableRipple="true"
+          (click)="onRemovedItem(fund, index)"
+        >
+          Remove
+        </button>
+      </div>
+      <ng-container *ngIf="!productForm.valid || productForm.get('investmentAmount').value === '0.00' || (!productForm.get('investmentAmount').dirty && isAmountEdited && isFocus)
+        ">
+        <ng-container *ngIf="(productForm.get('investmentAmount').hasError('min')|| (productForm.get('investmentAmount').dirty && productForm.get('investmentAmount').value === '0.00') || (!productForm.get('investmentAmount').dirty && isAmountEdited && isFocus && productForm.valid)) &&
+        !productForm.get('investmentAmount').hasError('max')">
+          <div class="msg">
+            <mat-error>Minimum amount is MYR {{minAmount}}</mat-error>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="productForm.get('investmentAmount').hasError('max')">
+          <div class="msg">
+            <mat-error [ngClass]="{'max-error': productForm.get('investmentAmount').hasError('max')}">Maximum amount is MYR {{maxAmount}}</mat-error>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="productForm.valid &&
+      (productForm.get('investmentAmount').value !== '0.00' && productForm.get('investmentAmount').value !== '0.0' &&
+      productForm.get('investmentAmount').value !== '0.' && productForm.get('investmentAmount').value !== '.00' &&
+      productForm.get('investmentAmount').value !== '0'  && productForm.get('investmentAmount').value !== '' &&
+      productForm.get('investmentAmount').value !== '000') &&  fund?.fund_status !== 'I'">
+
+        <div class="msg">
+          <p class="charges">
+            Includes sales charge</p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-template #toolTipFH>
+    <div class="action-sheet-wrapper">
+        <div class="action-sheet-header">
+          <button
+            mat-icon-button
+            class="btn-close"
+            (click)="_bottomSheet.dismiss()"
+            >
+            <em class="icon-close"></em>
+          </button>
+        </div>
+        <div class="action-sheet-content">
+          <h5>Fund Holiday</h5>
+          <div>
+              <p>The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund.</p>
+          </div>
+        </div>
+      </div>
+</ng-template>
+
+<ng-template #toolTipNavPrice>
+  <div class="action-sheet-wrapper">
+      <div class="action-sheet-header">
+        <button
+          mat-icon-button
+          class="btn-close"
+          (click)="_bottomSheet.dismiss()"
+          >
+          <em class="icon-close"></em>
+        </button>
+      </div>
+      <div class="action-sheet-content">
+        <h5>NAV Price</h5>
+        <div>
+            <p>Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date.</p>
+        </div>
+      </div>
+    </div>
+</ng-template>

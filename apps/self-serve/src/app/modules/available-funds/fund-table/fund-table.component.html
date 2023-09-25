@@ -1,0 +1,309 @@
+<div class="tab-box">
+  <div class="list-header">
+    <div class="inner-container">
+      <p> Showing {{this.startIndex}} - {{this.endIndex}} of {{this.pageLength}} funds</p>
+    </div>
+  </div>
+
+  <div class="custom-table">
+    <form [formGroup]="productForm">
+
+      <mat-table [dataSource]="tableDetails" formArrayName="productsArray"
+       matSort matSortActive="fundName" matSortDirection="asc">
+        <!-- Fund Name -->
+        <ng-container matColumnDef="fundName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fund Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="fund-name">
+              <h6 class="hide-lg">
+                {{ element.value.class_name }}
+              </h6>
+              <a (click)="showDetailPage(element.value)">
+                <strong>{{ element.value.fund_name }}</strong>
+              </a>
+              <p class="compliance">
+                <span>{{ element.value.risk_name }}</span>
+
+                <span *ngIf="element.value.fund_indicator === 'I'">|
+                  Shariah Compliant </span>
+                  <span *ngIf="element.value.esg_fund === 'Y'"> | Esg Fund</span>
+                <span class="current-holding" *ngIf="element.value.current_holding === 'Y'">
+                  | Current Holding</span>
+              </p>
+              <div class="fund-holiday-label" *ngIf="element.value.fund_status === 'I'">
+                Fund Holiday
+                <span class="tips">
+                  <em class="icon-help hide-lg" (click)="openFundHolidayBottomSheet()"></em>
+                  <em class="icon-help show-lg"
+                    matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+                    matTooltipPosition="below"></em>
+                </span>
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Asset Class -->
+        <ng-container matColumnDef="className" class="show-md">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Asset Class
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <p class="show-lg asset-class">{{element.value.class_name}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="navPrice">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            NAV Price
+            <span class="tips show-lg">
+              <em class="icon-help"
+                matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                matTooltipPosition="right"></em>
+            </span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div>
+              <span class="hide-lg">NAV Price</span>
+              <span class="tips">
+                <em class="icon-help hide-lg" (click)="openNavBottomSheet()"></em>
+              </span>
+
+              <small class="latest-date">(As of
+                {{element.value.close_date}})</small>
+            </div>
+            <strong><sup>MYR</sup>{{ element.value.nav_price }}</strong>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Perf. 1-mth -->
+        <ng-container matColumnDef="perFirstMonth">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Perf. 1-mth
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="hide-lg">Perf. 1-mth</span>
+            <div class="flex">
+              <img src="./assets/images/chart-increase.svg" alt="Increase"
+                *ngIf="element.value.one_month_ind === 'UP'" />
+
+              <img src="./assets/images/chart-equal.svg" alt="Equal" *ngIf="element.value.one_month_ind === 'EQUAL'" />
+
+              <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+                *ngIf="element.value.one_month_ind === 'DOWN'" />
+              <strong>{{ element.value.one_month }}%</strong>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="perThirdMonth">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Perf. 3-mth
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="cell-wrapper">
+              <div class="cell-inner-wrapper">
+                <span class="hide-lg">Perf. 3-mth</span>
+                <div class="flex">
+                  <img src="./assets/images/chart-increase.svg" alt="Increase"
+                    *ngIf="element.value.three_month_ind === 'UP'" />
+
+                  <img src="./assets/images/chart-equal.svg" alt="Equal"
+                    *ngIf="element.value.three_month_ind === 'EQUAL'" />
+
+                  <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+                    *ngIf="element.value.three_month_ind === 'DOWN'" />
+                  <strong>{{ element.value.three_month
+                    }}%</strong>
+
+                </div>
+
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="amount" *ngIf="!hideAmountField">
+          <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+
+          <mat-cell *matCellDef="let element; let rowindex = dataIndex"
+            [formGroupName]="tableDetails.data.indexOf(element)">
+            <div class="action-wrapper">
+              <mat-form-field  class="mat-form-bordered" floatLabel="never"
+                [ngClass]="{'field-error': element.get('investmentAmount').hasError('min') || element.get('investmentAmount').hasError('max')
+                || (element.get('investmentAmount').dirty && element.get('investmentAmount').value === '0.00') ||
+                (!element.get('investmentAmount').dirty && element.value.isAmountEdited && isFocus && productForm.get('productsArray').at(tableDetails.data.indexOf(element)).valid)
+                }">
+                  <span [ngClass]="element.value.hasValue ? 'show' : 'hide'" matPrefix [ngStyle]="{'display': (element.value.hasValue &&
+                element.get('investmentAmount').value === '0.00' || element.get('investmentAmount').value >'0.00')  || (isFocus  &&
+                (element.get('investmentAmount').value === '0.00' || element.get('investmentAmount').value >'0.00' )) ? 'block' : 'none'}">MYR&nbsp;</span>
+                <input [ngStyle]="{'caret-color':(productForm.get('productsArray').at(tableDetails.data.indexOf(element)).invalid) || (element.get('investmentAmount').dirty && element.get('investmentAmount').value === '0.00')
+                || (!element.get('investmentAmount').dirty && element.value.isAmountEdited && isFocus && productForm.get('productsArray').at(tableDetails.data.indexOf(element)).valid)
+                 ? 'red' : '#2096d9' }" matInput 
+                formControlName="investmentAmount"
+                (input)="onInput($event.target.value, tableDetails.data.indexOf(element))"
+                (keydown) = "onKeyDown(tableDetails.data.indexOf(element))"
+                (keyup) = "onAmountEnter(tableDetails.data.indexOf(element), $event)"
+                (focus)="onFocus(tableDetails.data.indexOf(element))"
+                (focusout)="onFocusOut(tableDetails.data.indexOf(element))"
+                (keypress)="acceptNumbersOnly($event)"
+                cimbShowInputPrefix
+                autocomplete="off"
+                type="text" />
+
+                <mat-placeholder attr.aria-placeholder="Min MYR {{element.value.currentHoldingFlag}}" class="placeholder">Min MYR {{element.value.currentHoldingFlag}}
+                </mat-placeholder>
+
+                <em class="icon-error"
+                  *ngIf="element.get('investmentAmount').hasError('min') || element.get('investmentAmount').hasError('max')
+                  || (element.get('investmentAmount').dirty && element.get('investmentAmount').value === '0.00')
+                  || (!element.get('investmentAmount').dirty && element.value.isAmountEdited && isFocus &&
+                  productForm.get('productsArray').at(tableDetails.data.indexOf(element)).valid )"></em>
+              </mat-form-field>
+              <button class="btn-custom btn-red" disableRipple="true"
+                [disabled]="productForm.get('productsArray').at(tableDetails.data.indexOf(element)).invalid || element.value.fund_status === 'I'
+                || element.get('investmentAmount').value === '0.00' || isAmountEnteredValid"
+                *ngIf="!element.value.hasValue && !hideAmountField" (click)="onAddItem(element, tableDetails.data.indexOf(element))"
+                mat-flat-button>
+                Add to cart
+              </button>
+              <button class="btn-custom btn-red" disableRipple="true"
+              [disabled]="productForm.get('productsArray').at(tableDetails.data.indexOf(element)).invalid || element.value.fund_status === 'I'
+              || (element.get('investmentAmount').value === '0.00' || element.get('investmentAmount').value === '0.0' ||
+              element.get('investmentAmount').value === '0.' || element.get('investmentAmount').value === '.00' ||
+              element.get('investmentAmount').value === '0'  || element.get('investmentAmount').value === '' ||
+              element.get('investmentAmount').value === '000')"
+
+              *ngIf="element.value.isAmountEdited" (click)="onUpdateCart(element, tableDetails.data.indexOf(element))"
+              mat-flat-button>
+              Done
+            </button>
+              <button mat-flat-button *ngIf="element.value.isAmountRemoved" class="btn-custom btn-red"
+                disableRipple="true" (click)="onRemovedItem(element, tableDetails.data.indexOf(element))">
+                Remove
+              </button>
+            </div>
+            <ng-container *ngIf="productForm.get('productsArray').at(tableDetails.data.indexOf(element)).invalid || (element.get('investmentAmount').dirty && element.get('investmentAmount').value === '0.00') || (!element.get('investmentAmount').dirty && element.value.isAmountEdited && isFocus)
+            ">
+              <ng-container *ngIf="(element.get('investmentAmount').hasError('min')|| (element.get('investmentAmount').dirty && element.get('investmentAmount').value === '0.00') || (!element.get('investmentAmount').dirty && element.value.isAmountEdited && isFocus && productForm.get('productsArray').at(tableDetails.data.indexOf(element)).valid)) &&
+              !element.get('investmentAmount').hasError('max')">
+             <mat-error>Minimum amount is MYR {{element.value.minAmount}}
+                </mat-error>
+              </ng-container>
+              <ng-container *ngIf="element.get('investmentAmount').hasError('max')">
+                <mat-error [ngClass]="{'max-error': element.get('investmentAmount').hasError('max')}">
+                  Maximum amount is MYR {{element.value.maxAmount}}
+                </mat-error>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="productForm.get('productsArray').at(tableDetails.data.indexOf(element)).valid &&
+            (element.get('investmentAmount').value !== '0.00' && element.get('investmentAmount').value !== '0.0' &&
+            element.get('investmentAmount').value !== '0.' && element.get('investmentAmount').value !== '.00' &&
+            element.get('investmentAmount').value !== '0'  && element.get('investmentAmount').value !== '' &&
+            element.get('investmentAmount').value !== '000') &&  element.value.fund_status !== 'I'">
+
+
+              <p class="charges">
+                Includes sales charge</p>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayedColumns">
+        </mat-header-row>
+
+        <mat-row *matRowDef="let row;
+                      columns: displayedColumns;
+                      let i = index" [ngClass]="{
+                          hovered: row.hovered,
+                          highlighted: highlightedRow === row.value.fund_name || row.value.isAmountRemoved || row.value.isAmountEdited,
+                          holiday: row.isHoliday,
+                          disabled_row: row.fund_indicator === 'N' || row.value.fund_status === 'I'
+                      }"
+                      (click)="onSelectRow(row)"
+                      >
+        </mat-row>
+      </mat-table>
+    </form>
+  </div>
+</div>
+<div class="pager">
+ <!-- <cimb-pagination-bounds-indicator
+      [totalRecords]="tableDetails?.data?.length"
+      [currentPageNumber]="currentPageNumber"
+      [itemsPerPage]="pageSize"
+      class="pager-text"
+      >
+    <div class="page-size-wrapper">
+      <span class="indicator">Showing <span #lowerBounds></span>-<span #upperBounds></span> of <span
+          #totalRecords></span> funds</span>
+      <div class="option-wrapper">
+        <mat-select (selectionChange)="onPageSizeChange($event)" [(value)]="pageSize" panelClass="page-size-options" disableOptionCentering disableRipple class="testing">
+          <mat-option *ngFor="let size of pageSizes" [value]="size">{{size}}</mat-option>
+        </mat-select>
+      </div>
+      funds per page
+    </div>
+  </cimb-pagination-bounds-indicator>
+
+  <cimb-numbered-paginator
+      class="dashboard-paginator pager-nav"
+      paginatorId="fund-list"
+      *ngIf="tableDetails?.data?.length"
+      (pageChange)="currentPageNumber = $event"
+  ></cimb-numbered-paginator> -->
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 30, 40, 50]"
+    [pageSize]="10"
+    (page)="onPaginateChange($event)"
+    [pageIndex]="currentPageNumber"
+  >
+  </mat-paginator>
+</div>
+
+<ng-template #toolTipNav>
+    <div class="action-sheet-wrapper">
+        <div class="action-sheet-header">
+          <button
+            mat-icon-button
+            class="btn-close"
+            (click)="_bottomSheet.dismiss()"
+            >
+            <em class="icon-close"></em>
+          </button>
+        </div>
+        <div class="action-sheet-content">
+          <h5>NAV Price</h5>
+          <div>
+              <p>Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date.</p>
+          </div>
+        </div>
+      </div>
+</ng-template>
+
+
+<ng-template #toolTipFundHoliday>
+    <div class="action-sheet-wrapper">
+        <div class="action-sheet-header">
+          <button
+            mat-icon-button
+            class="btn-close"
+            (click)="_bottomSheet.dismiss()"
+            >
+            <em class="icon-close"></em>
+          </button>
+        </div>
+        <div class="action-sheet-content">
+          <h5>Fund Holiday</h5>
+          <div>
+              <p>The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund.</p>
+          </div>
+        </div>
+      </div>
+</ng-template>
+

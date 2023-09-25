@@ -1,0 +1,10 @@
+<router-outlet></router-outlet>
+<cimb-mat-spinner-overlay
+    *ngIf="loadingSpinner$ | async"
+    value="100"
+    diameter="100"
+    mode="indeterminate"
+    strokeWidth="10"
+    overlay="true"
+    color="primary">
+</cimb-mat-spinner-overlay>

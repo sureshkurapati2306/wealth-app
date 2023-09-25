@@ -1,0 +1,46 @@
+.option-slider {
+  margin-bottom: 1.125rem;
+
+  @media (min-width: 37.5rem) {
+    display: flex;
+    margin-bottom: 0;
+  }
+  &-left {
+    @media (min-width: 37.5rem) {
+      flex: 1;
+      max-width: 29.5rem;
+    }
+  }
+  &-right {
+    @media (min-width: 37.5rem) {
+      flex: 0 0 8.625rem;
+      margin-left: 2rem;
+      margin-top: 1rem;
+
+      .mat-checkbox-label {
+        font-weight: var(--regular);
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.option-info {
+  em {
+    font-size: 1rem;
+
+    &.show-lg {
+      @media (min-width: 62rem) {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}

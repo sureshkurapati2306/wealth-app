@@ -1,0 +1,560 @@
+<div
+    class="confirmation-section-wrapper"
+    [ngClass]="{ 'asnb-section-wrapper': isASNB && isTransaction }"
+>
+    <ng-container *ngIf="isTransaction">
+        <div class="section-fundcutoff">
+            <p *ngIf="isForAsnbFatca">
+                If the value is labeled as <strong>‘N/A’ (not available),</strong> the fund’s value
+                has yet to be calculated and processed. To find out why, please refer to the<br />
+                <a class="asnb-link" (click)="asnbCustomerDeclarationModal()"
+                    >ASNB Service Hours and Fund Cut Off Time</a
+                >
+            </p>
+        </div>
+        <div class="top-section">
+            <div class="confirmation-description">
+                <p *ngIf="factaEnabled">
+                    <strong>FATCA/CRS:</strong> I confirm that I am solely/only a tax resident of
+                    Malaysia and do not have any foreign tax residency nor US residency status (tax
+                    or otherwise).
+                </p>
+                <p class="fatca-inline-error" *ngIf="showFactaInlineError">
+                    <span
+                        class="warnning-text-normal"
+                        [ngClass]="{ 'asnb-text-normal': isForAsnbFatca }"
+                        >For foreign tax residents, please visit your nearest branch for
+                        assistance.</span
+                    >
+                </p>
+            </div>
+            <div class="confirmation-action" *ngIf="factaEnabled">
+                <mat-button-toggle-group
+                    [value]="fatcaToggle"
+                    class="mat-btn-group-action"
+                    (change)="toggleShow($event)"
+                >
+                    <mat-button-toggle class="doubleBtnBorder" value="yes">Yes</mat-button-toggle>
+                    <mat-button-toggle value="no">No</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+
+        <ng-container *ngIf="!hideForAsnbCheckout">
+            <p class="lead" *ngIf="!mediaQueryList.matches">
+                <strong
+                    >To make an informed decision, please take the time to read the product
+                    highlight sheet(s), the prospectus(es), and click on the links to the documents
+                    listed below before you proceed.</strong
+                >
+            </p>
+            <p class="lead" *ngIf="mediaQueryList.matches">
+                <strong
+                    >To make an informed decision, please take the time to read the product
+                    highlight sheet(s), the prospectus(es), and click on the links to the documents
+                    listed below before you proceed.</strong
+                >
+            </p>
+        </ng-container>
+    </ng-container>
+    <div class="tac-section" [ngClass]="{ 'asnb-tac-section': isASNB }">
+        <div class="flex inner-wrapper">
+            <div *ngIf="!isASNB" class="image">
+                <img src="./assets/images/request-tac.svg" alt="Request TAC" />
+            </div>
+            <div *ngIf="isASNB && !isTransaction" class="image">
+                <img src="./assets/images/requestTAC.svg" alt="Request TAC" />
+            </div>
+            <div
+                class="process"
+                [ngClass]="{
+                    'asnb-process': isASNB && !isTransaction,
+                    'asnb-checkout': isASNB && isTransaction
+                }"
+            >
+                <div class="flex">
+                    <div *ngIf="isASNB && isTransaction" class="image-asnb-transaction">
+                        <img src="./assets/images/requestTAC.svg" alt="Request TAC" />
+                        <div class="mobile-msg">
+                            <p class="hide-lg">
+                                To proceed, please click "Request TAC" and enter your TAC.
+                                <br />
+                                TAC will be sent to <strong>{{ phoneNumber }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p class="show-lg" *ngIf="!autoRequestTAC">
+                            To proceed, please click "Request TAC" and enter your TAC.
+                            <br />
+                            TAC will be sent to <strong>{{ phoneNumber }}</strong>
+                        </p>
+                        <p class="show-lg" *ngIf="autoRequestTAC">
+                            A TAC has been sent to <strong>{{ phoneNumber }}</strong> for
+                            verification
+                        </p>
+                        <div [ngClass]="{ 'section-otp-form': isASNB }">
+                            <div class="code">
+                                <div class="otp" [ngClass]="{ 'linking-otp': !isTransaction }">
+                                    <input
+                                        #digitOne
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp"
+                                        [formControl]="otp"
+                                        [ngClass]="{
+                                            error: otp.hasError('min') || (tagError && submited)
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <input
+                                        #digitTwo
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp2"
+                                        [formControl]="otp2"
+                                        [ngClass]="{
+                                            error: (otp2.hasError('min') || tagError) && submited
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <input
+                                        #digitThree
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp3"
+                                        [formControl]="otp3"
+                                        [ngClass]="{
+                                            error: (otp3.hasError('min') || tagError) && submited
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <input
+                                        #digitFour
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp4"
+                                        [formControl]="otp4"
+                                        [ngClass]="{
+                                            error: (otp4.hasError('min') || tagError) && submited
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <input
+                                        #digitFive
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp5"
+                                        [formControl]="otp5"
+                                        [ngClass]="{
+                                            error: (otp5.hasError('min') || tagError) && submited
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <input
+                                        #digitSix
+                                        matInput
+                                        placeholder="-"
+                                        class="otp-input custom-input"
+                                        type="password"
+                                        name="otp6"
+                                        [formControl]="otp6"
+                                        [ngClass]="{
+                                            error: (otp6.hasError('min') || tagError) && submited
+                                        }"
+                                        maxlength="1"
+                                        (keyup)="onDigitInput($event)"
+                                        [attr.disabled]="disableOTPInput ? '' : null"
+                                    />
+                                    <div
+                                        *ngIf="!isTransaction"
+                                        class="
+                                            confirm-action-text confirm-action-asnb-mobile
+                                            hide-sm
+                                            show-lg
+                                        "
+                                        layout="row"
+                                        layout-align="right center"
+                                    >
+                                        <button
+                                            mat-flat-button
+                                            class="btn-custom btn-asnb-red"
+                                            disableRipple="true"
+                                            [disabled]="
+                                                !disableConfirmButton || disableConfirmButtonPage
+                                            "
+                                            (click)="confirmAndProceed()"
+                                        >
+                                            Continue
+                                        </button>
+                                    </div>
+                                </div>
+                                <mat-error *ngIf="tagError">{{ tagErrMessage }}</mat-error>
+                                <div class="request-otp" *ngIf="!isTransaction">
+                                    <ng-container *ngIf="flow === '005'">
+                                        <a *ngIf="isChecked" class="active" (click)="requestTag()"
+                                            >Request TAC</a
+                                        >
+                                        <a *ngIf="!isChecked">Request TAC</a>
+                                    </ng-container>
+                                    <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                                </div>
+                                <div class="code-action hide-lg">
+                                    <ng-container *ngIf="flow === '001' || flow === '002'">
+                                        <a
+                                            *ngIf="isChecked && accountSelected"
+                                            class="active"
+                                            (click)="requestTag()"
+                                        >
+                                            Request TAC</a
+                                        >
+                                        <a *ngIf="!isChecked || (isChecked && !accountSelected)"
+                                            >Request TAC</a
+                                        >
+                                    </ng-container>
+
+                                    <ng-container *ngIf="flow === '003'">
+                                        <a *ngIf="isChecked" class="active" (click)="requestTag()">
+                                            Request TAC</a
+                                        >
+                                        <a *ngIf="!isChecked">Request TAC</a>
+                                    </ng-container>
+
+                                    <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="single-action show-lg" *ngIf="isTransaction">
+                        <ng-container *ngIf="flow === '001' || flow === '002'">
+                            <a
+                                *ngIf="isChecked && accountSelected"
+                                class="active"
+                                (click)="requestTag()"
+                                >Request TAC</a
+                            >
+                            <a *ngIf="!isChecked || (isChecked && !accountSelected)">Request TAC</a>
+                        </ng-container>
+
+                        <ng-container *ngIf="flow === '003'">
+                            <a *ngIf="isChecked" class="active" (click)="requestTag()"
+                                >Request TAC</a
+                            >
+                            <a *ngIf="!isChecked">Request TAC</a>
+                        </ng-container>
+                        <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="code">
+            <div class="mobile-msg" *ngIf="!isTransaction">
+                <p class="hide-lg">
+                    A TAC has been sent to <strong>{{ phoneNumber }}</strong> for verification
+                </p>
+            </div>
+            <div class="otp">
+                <input
+                    #digitOne
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp"
+                    [ngClass]="{ error: otp.hasError('min') || (tagError && submited) }"
+                    maxlength="1"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+                <input
+                    #digitTwo
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp2"
+                    [ngClass]="{ error: (otp2.hasError('min') || tagError) && submited }"
+                    maxlength="1"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+                <input
+                    #digitThree
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp3"
+                    [ngClass]="{ error: (otp3.hasError('min') || tagError) && submited }"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+                <input
+                    #digitFour
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp4"
+                    [ngClass]="{ error: (otp4.hasError('min') || tagError) && submited }"
+                    maxlength="1"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+                <input
+                    #digitFive
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp5"
+                    [ngClass]="{ error: (otp5.hasError('min') || tagError) && submited }"
+                    maxlength="1"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+                <input
+                    #digitSix
+                    matInput
+                    placeholder="-"
+                    class="otp-input custom-input"
+                    type="password"
+                    [formControl]="otp6"
+                    [ngClass]="{ error: (otp6.hasError('min') || tagError) && submited }"
+                    maxlength="1"
+                    (keyup)="onDigitInput($event)"
+                    [attr.disabled]="disableOTPInput ? '' : null"
+                />
+            </div>
+            <!-- <mat-error *ngIf="tagError">{{ getErrorMessage() }}</mat-error> -->
+            <mat-error *ngIf="tagError">{{ tagErrMessage }}</mat-error>
+            <div class="code-action">
+                <ng-container *ngIf="flow === '001' || flow === '002'">
+                    <a *ngIf="isChecked && accountSelected" class="active" (click)="requestTag()"
+                        >Request TAC</a
+                    >
+                    <a *ngIf="!isChecked || (isChecked && !accountSelected)">Request TAC</a>
+                    <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                </ng-container>
+
+                <ng-container *ngIf="flow === '003'">
+                    <a *ngIf="isChecked" class="active" (click)="requestTag()">Request TAC</a>
+                    <a *ngIf="!isChecked">Request TAC</a>
+                    <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                </ng-container>
+                <div class="request-otp" *ngIf="!isTransaction">
+                    <ng-container *ngIf="flow === '005'">
+                        <a *ngIf="isChecked" class="active" (click)="requestTag()">Request TAC</a>
+                        <a *ngIf="!isChecked">Request TAC</a>
+                    </ng-container>
+                    <span *ngIf="counter > 0">{{ counter | formatTime }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-notes" *ngIf="isForFavourite">
+        <div class="confirm-action-text" layout="row" layout-align="right center">
+            <button
+                mat-flat-button
+                class="btn-custom btn-red"
+                disableRipple="true"
+                [disabled]="!disableConfirmButton || disableConfirmButtonPage"
+                (click)="confirmAndProceed()"
+            >
+                Confirm and Proceed
+            </button>
+        </div>
+    </div>
+    <div class="bottom-notes" *ngIf="isTransaction && !isForAsnbFatca && !isForFavourite">
+        <p>By clicking ‘<strong>Confirm and Proceed</strong>’, I confirm that:</p>
+        <p>1. I have read, understood and agree to be bound by the following:</p>
+        <p>
+            <span class="roman-num">(i)</span>
+            <a (click)="termsAndConditionModal()"
+                >Terms and Conditions Governing the Operation of the Unit Trust Account and
+                Custodial Services</a
+            >;
+        </p>
+        <p>
+            <span class="roman-num">(ii)</span>
+            <a (click)="customerDeclarationModal()">Customer Declaration</a>;<span
+                class="warnning-text-normal"
+            ></span>
+        </p>
+        <p>
+            <span class="roman-num">(iii)</span> <a (click)="investorSuitabilityAssessmentDeclarationModal()">Investor
+                Suitability Assessment Declaration</a>; and
+        </p>
+        <p>
+            <span class="roman-num">(iv)</span>
+            <a (click)="cimbGroupPrivacyNoticetModal()">CIMB Group Privacy Notice </a>
+        </p>
+        <p>
+            2. The key contract terms affecting my obligations in relation to the unit trust fund(s)
+            have been adequately explained to me; and
+        </p>
+        <p>
+            3. CIMB may proceed to debit my Settlement Account for the purchase of the unit trust
+            fund(s).
+        </p>
+
+        <p *ngIf="userType === 'NTP'">
+            Transactions performed after 2pm will be executed on the next business day, which refer
+            to the days on which banks in Kuala Lumpur are open.
+        </p>
+
+        <p *ngIf="schedulerMsg && userType === 'ETP'">
+            {{ schedulerMsg }}, which refer to the days on which banks in Kuala Lumpur are open.
+        </p>
+        <p>
+            If you have any concerns or enquiries on unit trust funds, please call our
+            <a (click)="goToConsumerContactCentreLink()"
+                >Consumer Contact Centre or visit any CIMB branch</a
+            >
+            for assistance.
+        </p>
+
+        <div class="confirm-action-text" layout="row" layout-align="right center">
+            <button
+                mat-flat-button
+                class="btn-custom btn-red"
+                disableRipple="true"
+                [disabled]="!disableConfirmButton || disableConfirmButtonPage"
+                (click)="confirmAndProceed()"
+            >
+                Confirm and Proceed
+            </button>
+        </div>
+    </div>
+    <div
+        *ngIf="!isTransaction"
+        class="confirm-action-text-mobile hide-lg"
+        layout="row"
+        layout-align="right center"
+    >
+        <button
+            mat-flat-button
+            class="btn-custom btn-asnb-red"
+            disableRipple="true"
+            [disabled]="!disableConfirmButton || disableConfirmButtonPage"
+            (click)="confirmAndProceed()"
+        >
+            Continue
+        </button>
+    </div>
+    <div class="bottom-notes" *ngIf="isForAsnbFatca">
+        <p>
+            Please take the time to read the Product Highlight Sheet(s), the Prospectus(es), and
+            click on the link to the documents listed before you proceed.
+        </p>
+        <p>By clicking ‘<strong>Confirm and Proceed</strong>’, I confirm that:</p>
+        <p>1. I have read, understood and agreed to be bound by the following:</p>
+        <p>
+            <span class="roman-num">(i)</span>
+            <a class="asnb-link" (click)="asnbCustomerDeclarationModal()"
+                >ASNB Service Hours and Fund Cut Off Time;</a
+            >
+        </p>
+        <p>
+            <span class="roman-num">(ii)</span>
+            <a
+                class="asnb-link"
+                href="https://www.cimb.com.my/en/personal/privacy-policy.html"
+                target="_blank"
+                rel="noopener"
+                >CIMB Group Privacy Notice: and
+            </a>
+        </p>
+        <p>
+            <span class="roman-num">(iii)</span>
+            <a class="asnb-link" (click)="asnbTermsAndConditionsModal()"
+                >ASNB Terms and Conditions.
+            </a>
+        </p>
+        <p>
+            2. I understand that ASNB has the absolute right to cancel the online registration of
+            the ASNB account and to cancel or withdraw any units so purchased if any statement in
+            this application is subsequently discovered to be untrue or false.
+        </p>
+        <p>
+            3. I agree that CIMB may disclose any information to ASNB relating to this
+            purchase/investment of the ASNB funds including information on myself or my account.
+        </p>
+        <p>
+            4. The key contract terms affecting my obligations in relation to the ASNB have been
+            adequately explained to me
+        </p>
+        <p>
+            5. The online transaction is only limited to the purchase of selected ASNB funds. The
+            subscription is subject to the individual’s investment eligibility limit and fund
+            availability.
+        </p>
+        <p>
+            6. Only subscription service is available in the CIMB digital platform. If I wish to
+            redeem, switch or transfer, I may proceed to any CIMB branch or ASNB agent.
+        </p>
+        <p>7. CIMB may deduct my Current or Savings Account for the fund purchased.</p>
+        <p>
+            8. The investment product(s) that you wish to purchase may not be suitable for you
+            because it may carry a higher risk rating than your risk profile. To find out your risk
+            profile, you may perform the investor’s suitability assessment at any CIMB branch (only
+            applicable for Variable Price Investment Product(s)).
+        </p>
+        <p>
+            For any other enquiries, I can contact
+            <a
+                class="asnb-link"
+                href="https://www.cimb.com.my/en/personal/help-support/contact-us.html"
+                target="_blank"
+                rel="noopener"
+            >
+                CIMB Consumer Contact Centre at +603 6204 7788</a
+            >
+            or
+            <a
+                class="asnb-link"
+                href="https://www.cimb.com.my/en/personal/help-support/contact-us.html"
+                target="_blank"
+                rel="noopener"
+            >
+                visit any CIMB branch
+            </a>
+            for assistance.
+        </p>
+
+        <div class="confirm-action-text" layout="row" layout-align="right center">
+            <button
+                mat-flat-button
+                class="btn-custom btn-red"
+                disableRipple="true"
+                [disabled]="!disableConfirmButton || disableConfirmButtonPage"
+                (click)="confirmAndProceed()"
+            >
+                Confirm and Proceed
+            </button>
+        </div>
+    </div>
+</div>

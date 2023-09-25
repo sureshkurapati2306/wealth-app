@@ -1,0 +1,347 @@
+<div class="mat-dialog-wrapper">
+    <div class="mat-dialog-pad">
+      <div class="block-close">
+        <button mat-icon-button class="btn-close" (click)="cancel()" mat-dialog-close disableRipple="true">
+          <em class="icon-close"></em>
+        </button>
+      </div>
+      <mat-dialog-content>
+        <div class="top">
+					<div class="asset">
+						<h6 style="border-color: {{data.color}}">{{data.assetClassName}}</h6>
+						<p>Select one or more funds from all our available funds for this asset class.</p>
+					</div>
+          <div class="fund-listing">
+            <div *ngFor="let item of tempArray, let i = index" class="fund-row" [ngClass]="{'selected': isSelected}">
+              <div class="fund-name">
+                <h6>{{item.fund_name}}</h6>
+                <p>{{item.risk_name}}
+                  <span *ngIf="item.fund_indicator === 'I'">|
+                  Shariah Compliant </span>
+				  <span *ngIf="item.esg_fund === 'Y'">|
+					Esg Fund </span>
+                  <span class="current-holding" *ngIf="item.current_holding === 'Y'">
+                  Current Holding</span>
+                </p>
+              </div>
+              <div class="fund-details">
+                <div class="row">
+                  <p class="navPrice">Nav Price
+                    <span class="tips">
+                      <em class="icon-help hide-lg" (click)="openNavBottomSheet()"></em>
+                      <em class="icon-help show-lg"
+                        matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                        matTooltipPosition="right"></em>
+                    </span>
+                  </p>
+                  <h4>
+                    <sup>MYR</sup>
+                    {{ item.nav_price }}
+                  </h4>
+                  <p class="latest-date">
+                    (As of {{item.close_date}})
+                  </p>
+                </div>
+                <div class="perf-1month row">
+                  <p class="show-mobile">Perf. 1-mth</p>
+                  <h4>
+                    <img src="./assets/images/chart-increase.svg" alt="Increase"
+                      *ngIf="item.one_month_ind === 'UP'" />
+      
+                    <img src="./assets/images/chart-equal.svg" alt="Equal" *ngIf="item.one_month_ind === 'EQUAL'" />
+      
+                    <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+                      *ngIf="item.one_month_ind === 'DOWN'" />
+                    <strong>{{ item.one_month }}%</strong>
+                  </h4>
+                </div>
+                <div class="perf-3month row">
+                  <p class="show-mobile">Perf. 1-mth</p>
+                  <h4>
+                    <img src="./assets/images/chart-increase.svg" alt="Increase"
+                      *ngIf="item.three_month_ind === 'UP'" />
+      
+                    <img src="./assets/images/chart-equal.svg" alt="Equal" *ngIf="item.three_month_ind === 'EQUAL'" />
+      
+                    <img src="./assets/images/chart-decrease.svg" alt="Decrease"
+                      *ngIf="item.three_month_ind === 'DOWN'" />
+                    <strong>{{ item.three_month }}%</strong>
+                  </h4>
+                </div>
+                <div class="action">
+                  <button 
+                      class="btn-custom btn-red" 
+                      disableRipple="true"  
+                      mat-flat-button
+                      (click)="onRemove(item, i)"
+					  [disabled]="tempArray.length === 1"
+                    >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+			<div class="fund-row placeholder" [ngClass]="{'hide': arrCounter === 2 || arrCounter === 3 }">
+				Select Fund 2
+			</div>
+			<div class="fund-row placeholder" [ngClass]="{'hide': arrCounter === 3 }">
+				Select Fund 3
+			</div>
+          </div>
+		</div>
+		<div class="bottom">
+			<div class="filter" *ngIf="!mediaQueryList.matches">
+				<mat-checkbox (change)="filterByShariah($event)" [checked]="shariahFilterApplied">Shariah Compliant</mat-checkbox>
+				<mat-checkbox (change)="filterByEsg($event)" [checked]="esgFilterApplied">ESG Funds</mat-checkbox>
+				<em 
+					class="icon-help  esg-fund-tooltip" 
+					(keypress)="openESGFundsOnlyBottomSheetSeeAllFundsWeb()"
+					matTooltip="The fund strategy invested in securities with a high sustainability score and would exclude companies with poor records related to ESG. The strategy will contribute to the long-term viability of our environment and way of life. It enable investors to pursue their financial goals while supporting a better future for humanity."
+					matTooltipPosition="right"
+				>
+				</em>
+			</div>
+			<div *ngIf="mediaQueryList.matches">
+				<div>
+					<mat-checkbox (change)="filterByShariah($event)" [checked]="shariahFilterApplied">Shariah Compliant</mat-checkbox>
+				</div>
+				<div>
+					<mat-checkbox (change)="filterByEsg($event)" [checked]="esgFilterApplied">ESG Funds</mat-checkbox>                         
+					<em 
+						class="icon-help esg-filter" 
+						(click)="openESGFundsOnlyBottomSheetForSeeAllFundsMobile()"
+					>
+					</em>
+				</div>
+			</div>
+			<ng-template #esgToolTipMsgPortfolioSeelAllFunds>
+				<div class="see-all-action-sheet-wrapper">
+					<div class="see-all-action-sheet-header">
+						<button mat-icon-button
+								class="btn-close"
+								(click)="_bottomSheet.dismiss()">
+							<em class="icon-close"></em>
+						</button>
+					</div>
+					<div class="see-all-action-sheet-content">
+						<h5>{{esgHeading}}</h5>
+						<div>
+							<p>{{esgContent}}</p>
+						</div>
+					</div>
+				</div>
+			</ng-template>
+			<div class="custom-table">
+				<mat-table [dataSource]="tableDetails" matSort>
+					<!-- Fund Name -->
+					<ng-container matColumnDef="fundName">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							Fund Name
+						</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<div class="fund-name">
+								<a (click)="showDetailPage(element)">
+									<strong>{{ element.fund_name }}</strong>
+								</a>
+								<p class="compliance">
+									<span>{{ element.risk_name }}</span>
+	
+									<span *ngIf="element.fund_indicator === 'I'">|
+										Shariah Compliant </span>
+										<span *ngIf="element.esg_fund === 'Y'">|
+											Esg Fund </span>
+									<span class="current-holding" *ngIf="element.current_holding === 'Y'">
+										| Current Holding</span>
+								</p>
+								<p class="sales-charge show-lg" *ngIf="staff === 'N'">Sales charge
+									({{element.sales_charge_nonstaff | number :
+									'1.2-2'}}%)</p>
+								<p class="sales-charge show-lg" *ngIf="staff === 'Y'">Sales charge
+									({{element.sales_charge_staff | number :
+									'1.2-2'}}%)
+								</p>
+								<div class="fund-holiday-label" *ngIf="element.fund_status === 'I'">
+									Fund Holiday
+									<span class="tips">
+										<em class="icon-help hide-lg" (click)="openFundHolidayBottomSheet()"></em>
+										<em class="icon-help show-lg"
+											matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+											matTooltipPosition="below"></em>
+									</span>
+								</div>
+							</div>
+						</mat-cell>
+					</ng-container>
+	
+	
+					<ng-container matColumnDef="navPrice">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							NAV Price
+							<span class="tips show-lg">
+								<em class="icon-help"
+									matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+									matTooltipPosition="right"></em>
+							</span>
+						</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<div>
+								<span class="hide-lg">NAV Price</span>
+								<span class="tips">
+									<em class="icon-help hide-lg" (click)="openNavBottomSheet()"></em>
+								</span>
+	
+								<small class="latest-date">(As of
+									{{element.close_date}})</small>
+							</div>
+							<strong><sup>MYR</sup>{{ element.nav_price }}</strong>
+						</mat-cell>
+					</ng-container>
+	
+					<!-- Perf. 1-mth -->
+					<ng-container matColumnDef="perFirstMonth">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							Perf. 1-mth
+						</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<span class="hide-lg">Perf. 1-mth</span>
+							<div class="flex">
+								<img src="./assets/images/chart-increase.svg" alt="Increase"
+									*ngIf="element.one_month_ind === 'UP'" />
+	
+								<img src="./assets/images/chart-equal.svg" alt="Equal" *ngIf="element.one_month_ind === 'EQUAL'" />
+	
+								<img src="./assets/images/chart-decrease.svg" alt="Decrease"
+									*ngIf="element.one_month_ind === 'DOWN'" />
+								<strong>{{ element.one_month }}%</strong>
+							</div>
+						</mat-cell>
+					</ng-container>
+	
+					<ng-container matColumnDef="perThirdMonth">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							Perf. 3-mth
+						</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<div class="cell-wrapper">
+								<div class="cell-inner-wrapper">
+									<span class="hide-lg">Perf. 3-mth</span>
+									<div class="flex">
+										<img src="./assets/images/chart-increase.svg" alt="Increase"
+											*ngIf="element.three_month_ind === 'UP'" />
+	
+										<img src="./assets/images/chart-equal.svg" alt="Equal"
+											*ngIf="element.three_month_ind === 'EQUAL'" />
+	
+										<img src="./assets/images/chart-decrease.svg" alt="Decrease"
+											*ngIf="element.three_month_ind === 'DOWN'" />
+										<strong>{{ element.three_month
+											}}%</strong>
+	
+									</div>
+	
+								</div>
+								<p class="sales-charge hide-lg" *ngIf="staff === 'N'">Sales charge
+									({{element.sales_charge_nonstaff | number :
+									'1.2-2'}}%)</p>
+								<p class="sales-charge hide-lg" *ngIf="staff === 'Y'">Sales charge
+									({{element.sales_charge_staff | number :
+									'1.2-2'}}%)
+								</p>
+							</div>
+						</mat-cell>
+					</ng-container>
+	
+					<!--Amount-->
+					<ng-container matColumnDef="action">
+						<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<button 
+								class="btn-custom btn-red" 
+								disableRipple="true"  
+								mat-flat-button
+								(click)="onSelect(element, rowindex)"
+								[disabled]="element.fund_status === 'I' ||  arrCounter === 3"
+							>
+							Select
+						</button>
+						
+						</mat-cell>
+					</ng-container>
+	
+					<!-- Header and Row Declarations -->
+					<mat-header-row *matHeaderRowDef="displayedColumns">
+					</mat-header-row>
+	
+					<mat-row *matRowDef="let row;
+						columns: displayedColumns;
+						let i = index" [ngClass]="{
+							hovered: row.hovered,
+							highlighted: highlightedRow === row.fund_name,
+							holiday: row.isHoliday,
+							disabled_row: row.fund_indicator === 'N' || row.fund_status === 'I' || row.esg_fund === 'Y'
+					}"
+
+						>
+					</mat-row>
+				</mat-table>
+
+				<!-- Place no record here -->
+				<div *ngIf="tableDetails?.data?.length === 0" class="empty">
+		<img src="./assets/images/no-result.svg" alt="No More Fund" />
+		<h2>No Results Found</h2>
+		<p>We could not find any funds matching your searched or filters selected. Use other terms or filters and try again.</p>
+	</div>
+
+				<div  class="pager">
+					<mat-paginator 
+						[pageSizeOptions]="[5, 10, 15, 20, 25, 30]"
+						[pageSize]="5"
+					></mat-paginator>
+				</div>
+			</div>
+		</div>
+      </mat-dialog-content>
+    </div>
+  </div>
+
+
+<ng-template #Nav>
+	<div class="action-sheet-wrapper">
+			<div class="action-sheet-header">
+				<button
+					mat-icon-button
+					class="btn-close"
+					(click)="_bottomSheet.dismiss()"
+					>
+					<em class="icon-close"></em>
+				</button>
+			</div>
+			<div class="action-sheet-content">
+				<h5>NAV Price</h5>
+				<div>
+						<p>Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date.</p>
+				</div>
+			</div>
+		</div>
+</ng-template>
+
+
+<ng-template #FH>
+	<div class="action-sheet-wrapper">
+			<div class="action-sheet-header">
+				<button
+					mat-icon-button
+					class="btn-close"
+					(click)="_bottomSheet.dismiss()"
+					>
+					<em class="icon-close"></em>
+				</button>
+			</div>
+			<div class="action-sheet-content">
+				<h5>Fund Holiday</h5>
+				<div>
+						<p>The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund.</p>
+				</div>
+			</div>
+		</div>
+</ng-template>

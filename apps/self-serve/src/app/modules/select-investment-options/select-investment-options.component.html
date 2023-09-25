@@ -1,0 +1,48 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="isBackButtonEnabled"
+    [noProgressStep]="true"
+    [userType]="customerType"
+    (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="section-content">
+            <h1>Choose how you like to invest</h1>
+
+            <mat-tab-group
+                animationDuration="0ms"
+                class="custom-tab select-investment-tab curve-last"
+                [disableRipple]="true"
+            >
+                <mat-tab label="{{ boxGuideTitle }}" #firstTab></mat-tab>
+                <mat-tab label="{{ boxSearchTitle }}" #secondTab></mat-tab>
+            </mat-tab-group>
+            <div class="box-wrapper investment-box">
+                <div class="box-outer" [ngStyle]="{ display: !firstTab.isActive ? 'none' : null }">
+                    <div classs="box">
+                        <cimb-box-select
+                            [boxTitle]="boxGuideTitle"
+                            [boxText]="boxGuideText"
+                            [boxButtonLabel]="boxGuideButtonLabel"
+                            [featureList]="featureGuideList"
+                            (buttonClick)="guideButtonClick()"
+                        ></cimb-box-select>
+                    </div>
+                </div>
+                <div class="box-outer" [ngStyle]="{ display: !secondTab.isActive ? 'none' : null }">
+                    <div classs="box">
+                        <cimb-box-select
+                            [boxTitle]="boxSearchTitle"
+                            [boxText]="boxSearchText"
+                            [boxButtonLabel]="boxSearchButtonLabel"
+                            [featureList]="featureSearchList"
+                            (buttonClick)="searchButtonClick()"
+                        ></cimb-box-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

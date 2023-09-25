@@ -1,0 +1,28 @@
+<div class="option-slider">
+  <div class="option-slider-left">
+    <div class="slider-container">
+      <ul class="slider-steps">
+        <li>0.00</li>
+        <li>{{middleAmount | number: '1.2-2':'en-US'}}</li>
+        <li>{{maxUnit | number: '1.2-2':'en-US'}}</li>
+      </ul>
+      <mat-slider
+        class="custom-slider"
+        step="{{sliderStep}}"
+        min="{{minUnit}}"
+        max="{{maxUnit}}"
+        [value]="value"
+        [(ngModel)]="value"
+        (input)="onInputChange($event)"
+        [disabled]="disabled"
+      ></mat-slider>
+    </div>
+  </div>
+  <div class="option-slider-right">
+    <mat-checkbox
+    (change)="toggle($event)" [checked]="isRedeemAll" [disabled]="disabled">{{checkboxLabel}}</mat-checkbox>
+  </div>
+
+  <!-- <cimb-dashboard-redeem [disabled]="disabled"></cimb-dashboard-redeem> -->
+</div>
+

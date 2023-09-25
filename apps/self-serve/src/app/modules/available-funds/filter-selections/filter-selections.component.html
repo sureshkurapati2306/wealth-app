@@ -1,0 +1,26 @@
+<h6>{{label}}</h6>
+<button class="filter-button"
+        (click)="onOpenSelection()">
+    <span *ngIf="!totalSelectionOption">{{placeholder}}</span>
+    <span *ngIf="totalSelectionOption" class="selected-text">{{totalSelectionOption}} {{label}}</span>
+    <em class="icon-arrow-down"></em>
+</button>
+
+<ng-template #selectionTemplate>
+    <section class="action-sheet-head">
+        <div class="dismiss"
+             (click)="_bottomSheet.dismiss()">
+            <em class="icon-close"></em>
+        </div>
+    </section>
+    <mat-selection-list #fundItems
+                        name="optionSelection"
+                        [formControl]="control"
+                        (selectionChange)="onFundSelectionChange($event)">
+        <mat-list-option *ngFor="let item of selections"
+                         checkboxPosition="before"
+                         [value]="item.name">
+            {{item.name}}
+        </mat-list-option>
+    </mat-selection-list>
+</ng-template>

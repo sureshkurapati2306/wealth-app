@@ -1,0 +1,81 @@
+<div class="page-wrapper">
+  <div class="container">
+    <div class="inner-container">
+      <div class="section-header">
+        <h6>Welcome to My Wealth</h6>
+        <h1>Start investing in Unit Trust with 4 simple steps.</h1>
+      </div>
+      <div class="section-content">
+        <div class="grid-wrapper">
+          <mat-card>
+            <div>
+              <strong>1</strong>
+              <p>
+                <strong>Find out your Risk Profile</strong>
+              </p>
+              <p>
+                Answer some questions to understand your risk appetite and get
+                investment recommendations!
+              </p>
+              <img
+                src="./assets/images/landing-image-1.svg"
+                alt="Image 1"
+                class="img-1"
+              />
+            </div>
+          </mat-card>
+          <mat-card>
+            <div>
+              <strong>2</strong>
+              <p>
+                <strong>Select Investment</strong>
+              </p>
+              <p>
+                Invest based on your risk profile's asset allocation or search and select your own funds.
+              </p>
+              <img
+                src="./assets/images/landing-image-2.svg"
+                alt="Image 2"
+                class="img-2"
+              />
+            </div>
+          </mat-card>
+          <mat-card>
+            <div>
+              <strong>3</strong>
+              <p>
+                <strong>Open Unit Trust Account</strong>
+              </p>
+              <p>Open an account to start investing.</p>
+              <img
+                src="./assets/images/landing-image-3.svg"
+                alt="Image 3"
+                class="img-3"
+              />
+            </div>
+          </mat-card>
+          <mat-card>
+            <div>
+              <strong>4</strong>
+              <p>
+                <strong>Make Payment</strong>
+              </p>
+              <p>
+                Make payment for your investments and start growing your
+                wealth!
+              </p>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="btn-wrapper">
+      <button class="btn-custom mat-flat-button btn-red" (click)="openRiskProfileSection()" mat-button>
+        Get Started
+      </button>
+      <div class="browse-link">
+        <label (click)="redirectToSearchFunds()" class="label-search-funds">Browse CIMB Unit Trust funds</label>
+      </div>
+    </div>
+  </div>
+</div>

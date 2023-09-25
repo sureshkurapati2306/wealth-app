@@ -1,0 +1,29 @@
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+.no-investment-container {
+    text-align: center;
+    margin-top: 44px;
+    margin-bottom: 94px;
+
+    img {
+        @media (max-width: 768px) {
+            max-width: 189px;
+            height: auto;
+        }
+        margin: 0 auto;
+    }
+
+    .no-investment-message {
+        font-weight: 700;
+        @include font(1.75rem);
+        line-height: 42px;
+        margin-top: 32px;
+        margin-bottom: 48px;
+        color: #333739;
+
+        @media (max-width: 768px) {
+            @include font(1.25rem);
+            line-height: 30px;
+        }
+    }
+}

@@ -1,0 +1,238 @@
+<div class="transaction-header">
+    <cimb-office-table-header-panel
+        [tabName]="tabName"
+        [hasSearched]="hasSearched"
+        [reportData]="transactionRows"
+        [filter]="filter"
+    ></cimb-office-table-header-panel>
+</div>
+
+<div class="transaction block-table">
+    <cimb-office-mint-office-ui-no-result
+        *ngIf="!hasSearched"
+    ></cimb-office-mint-office-ui-no-result>
+</div>
+
+<ng-container *ngIf="loadingState !== 'pending'">
+    <div class="block-table transaction-result">
+        <cimb-office-mint-office-ui-no-search-result
+            *ngIf="hasSearched && !dataSource.data.length"
+        ></cimb-office-mint-office-ui-no-search-result>
+        <table
+            mat-table
+            multiTemplateDataRows
+            [dataSource]="dataSource"
+            class="tbl-transcations table-responsive table-stripe"
+            *ngIf="dataSource.data.length"
+            aria-describedby="Transactions Table"
+        >
+            <ng-container matColumnDef="expand">
+                <th scope="col" mat-header-cell *matHeaderCellDef>NO.</th>
+                <td mat-cell *matCellDef="let row; let i = dataIndex">
+                    <span class="expand-icon icon-arrow-right-regular showAll"></span>
+                    {{
+                        this.paginator?.pageIndex === 0
+                            ? i + 1
+                            : 1 + i + this.paginator?.pageIndex * this.paginator?.pageSize
+                    }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="transactionDatetime">
+                <th mat-header-cell *matHeaderCellDef id="transactionDatetime">
+                    TRANS. DATE & TIME
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.transactionDatetime | date: 'dd MMM yyyy hh:mm a' }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="transId">
+                <th mat-header-cell *matHeaderCellDef id="transId">BANK REF. NO.</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.transId }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="txnNum">
+                <th mat-header-cell *matHeaderCellDef id="txnNum">ASNB REF. NO.</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.txnNum }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef id="clientName">CUSTOMER NAME</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.clientName }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="clientId">
+                <th mat-header-cell *matHeaderCellDef id="clientId">CUSTOMER ID</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.clientId }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="transactionType">
+                <th mat-header-cell *matHeaderCellDef id="transactionType">ACTION</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.transactionType }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="fundName">
+                <th mat-header-cell *matHeaderCellDef id="fundName">FUND NAME</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.fundName ?? '-' }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="transactionStatus">
+                <th mat-header-cell *matHeaderCellDef id="transactionStatus">STATUS</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.transactionStatus }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expandedDetail">
+                <td
+                    mat-cell
+                    *matCellDef="let row"
+                    [attr.colspan]="columnsToDisplayWithExpand.length"
+                    class="cell-detail"
+                >
+                    <div
+                        class="table-detail showAll"
+                        [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'"
+                    >
+                        <div class="table-detail-wrapper">
+                            <div class="detail-card col-one">
+                                <table
+                                    class="table-detail-inner"
+                                    aria-describedby="Customer activity log summary"
+                                >
+                                    <tr>
+                                        <th scope="row">MEMBERSHIP NUMBER:</th>
+                                        <td>{{ row?.clientAsnbAccountNo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">CUSTOMER ID TYPE:</th>
+                                        <td>{{ row?.clientIdTypeDesc }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">CONTACT NO:</th>
+                                        <td>{{ row?.phoneNo ?? '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">SETTLEMENT ACCOUNT:</th>
+                                        <td>{{ row.settlementAccount ?? '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">AMOUNT:</th>
+                                        <td>{{ row.totalInvestment | number: '.2' }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="detail-card col-two">
+                                <table
+                                    class="table-detail-inner"
+                                    aria-describedby="Customer activity log summary"
+                                >
+                                    <tr>
+                                        <th scope="row">BANK CHARGES:</th>
+                                        <td>{{ row.chargesAmount | number: '.2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">SALES CHARGES:</th>
+                                        <td>
+                                            {{
+                                                row.fundType === 'fixed'
+                                                    ? (row.salesCharge | number: '.2')
+                                                    : row.transactionStatus === 'Successful' &&
+                                                      row.salesCharge !== 0 &&
+                                                      row.salesCharge !== null
+                                                    ? (row.salesCharge | number: '.2')
+                                                    : 'N/A'
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">SALES PERCENTAGE %:</th>
+                                        <td>
+                                            {{
+                                                row.salesPercentage === null
+                                                    ? 'N/A'
+                                                    : (row.salesPercentage | number: '.2')
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">NET INVESTMENT AMOUNT:</th>
+                                        <td>
+                                            {{
+                                                row.netInvestmentAmount === null
+                                                    ? 'N/A'
+                                                    : (row.netInvestmentAmount | number: '.2')
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">TRANSACTION TYPE:</th>
+                                        <td>{{ row.asnbInvestmentType }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="detail-card col-three">
+                                <table
+                                    class="table-detail-inner"
+                                    aria-describedby="Customer activity log summary"
+                                >
+                                    <tr>
+                                        <th scope="row">MINOR NAME:</th>
+                                        <td>{{ row.minorName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">MINOR MEMBERSHIP NUMBER:</th>
+                                        <td>{{ row.minorAsnbAccountNo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">BENEFICIARY NAME:</th>
+                                        <td>{{ row.thirdPartyName || 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">BENEFICIARY MEMBERSHIP NO:</th>
+                                        <td>{{ row.thirdPartyAsnbAccountNo || 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">ERROR MESSAGE:</th>
+                                        <td>{{ row.remarks || 'N/A' }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: columnsToDisplayWithExpand; let i = dataIndex"
+                class="table-row"
+                [class.table-expanded-row]="expandedRow === row"
+                (click)="expandedRow = expandedRow === row ? null : row; clickRow(expandedRow)"
+                [ngClass]="{
+                    rowEven: i % 2,
+                    rowOdd: !(i % 2)
+                }"
+            ></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: ['expandedDetail']"
+                class="table-detail-row"
+            ></tr>
+        </table>
+    </div>
+    <cimb-office-table-paginator
+        [dataSourceRows]="dataSource"
+        [getLoadingState]="loadingState"
+        (pageChange)="paginator = $event"
+        [pageIndex]="this.paginator?.pageIndex"
+        [pageSize]="this.paginator?.pageSize"
+    >
+    </cimb-office-table-paginator>
+</ng-container>

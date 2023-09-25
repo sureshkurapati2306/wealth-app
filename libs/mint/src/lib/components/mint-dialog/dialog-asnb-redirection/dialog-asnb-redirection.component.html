@@ -1,0 +1,45 @@
+<mat-dialog-content class="mat-typography asnb-redirection">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-redirection-content">
+        <img src="assets/images/redirection.svg" alt="redirection" />
+        <p class="asnb-redirection-title">Redirection to Third Party Website</p>
+        <div class="asnb-redirection-description">
+            <p>
+                Your are about to access a third party website & CIMB Group's Privacy Policy will not apply to the website. 
+                This link is provided for your convenience only and shall not be considered or construed as an endorsement or verification of such linked website or its content by CIMB Group.
+            </p>
+            <br />
+            <p>
+                CIMB Group makes no warranties as to the status of this link or information in the website you are about to access.
+            </p>
+            <p>
+                Do you wish to proceed?
+            </p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button
+        mat-flat-button
+        [mat-dialog-close]="false"
+        cdkFocusInitial
+        class="asnb-redirection-agree"
+        disableRipple
+        (click)="redirectToLink()"
+    >
+        Yes, please proceed
+    </button>
+</mat-dialog-actions>

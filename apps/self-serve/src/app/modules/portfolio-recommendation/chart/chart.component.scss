@@ -1,0 +1,11 @@
+.highcharts {
+  display: block;
+  margin: 0 auto;
+  width: 15.625rem;
+  height: 15.625rem;
+
+  @media (min-width: 61.9375rem) {
+    width: 14.0625rem;
+    height: 14.0625rem;
+  }
+}

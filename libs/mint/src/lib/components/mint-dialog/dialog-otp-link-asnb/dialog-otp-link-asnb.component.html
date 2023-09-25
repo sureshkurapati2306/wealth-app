@@ -1,0 +1,35 @@
+<mat-dialog-content class="mat-typography">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/back-close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="flex inner-wrapper asnb-tac-wrapper">
+        <cimb-card-tac
+            [factaEnabled]="factaEnabled"
+            [disableConfirmButtonPage]="false"
+            [canEnableConfirmButton]="false"
+            [disableConfirmButton]="tagEntredCompleted"
+            [enableRequestNumber]="enableRequestNumber"
+            [mobileNumber]="customerMobileNumber"
+            (requestTACEvent)="requestTAC()"
+            [tagErrorMessage]="tacErrorMessageText"
+            [tagError]="showTacError"
+            [flow]="flow"
+            [isTransaction]="false"
+            [isASNB]="true"
+            (confirmAndProceedEvent)="confirmAndProceed($event)"
+            (tagEntredCompletely)="tagEntredCompletedEvent($event)"
+            [autoRequestTAC]="true"
+        ></cimb-card-tac>
+    </div>
+</mat-dialog-content>

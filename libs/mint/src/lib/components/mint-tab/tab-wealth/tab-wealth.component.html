@@ -1,0 +1,148 @@
+<mat-tab-group
+    #tabGroup
+    (selectedTabChange)="tabChanged()"
+    animationDuration="250ms"
+    class="custom-tab tab-dashboard curve-last tab-al"
+    [disableRipple]="true"
+    [selectedIndex]="selectedTabIndex"
+>
+    <mat-tab label="Assets">
+        <div class="tab-header">
+            <div class="chartCenter">
+                <div>
+                    <div class="chart-percentage left">
+                        <div *ngIf="_accountSummary.totalDeposits > 0">
+                            <span>My Deposit</span>
+                            <span class="oval oval1">
+                                {{ _accountSummary.myDepositPct }}%
+                                <small>MYR {{ _accountSummary.totalDeposits | number:'1.2-2' }}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chart-percentage right">
+                        <div *ngIf="_accountSummary.totalInvestments > 0">
+                            <span class="oval oval2">
+                                {{ _accountSummary.myInvestmentPct }}%
+                                <small>MYR {{ _accountSummary.totalInvestments | number:'1.2-2' }}</small>
+                            </span>
+                            <span>My Investment</span>
+                        </div>
+                    </div>
+                    <cimb-chart-holdings
+                        [holdingData]="assetSummary"
+                        [pieHole]="0.55"
+                        [donutColor]="donutColorAssets"
+                        [refreshSignal]="selectedTabIndex"
+                        class="center"
+                    >
+                    </cimb-chart-holdings>
+                </div>
+            </div>
+            <div class="hide-md divMobile">
+                <div class="chartDetails">
+                    <div class="listStyle1 listStyle2">
+                        <div id="circle"></div>
+                        <span class="investment">My Investment</span>
+                    </div>
+                    <div class="listStyle1">
+                        <div id="circle1"></div>
+                        <span class="investment"> My Money</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="liability-content">
+                <div class="liability-content-box" *ngFor="let item of assetDetails">
+                    <cimb-box-investment
+                        (callRiskProfileEvent)="openRiskProfilePopup($event)"
+                        [holdingDetails]="item"
+                        [canNavigateToDashboard]="canNavigateToDashboard"
+                        [enableApplyNowAtMyInvestmentDAshboard]="enableApplyNowAtMyInvestmentDAshboard"
+                        [isOnScheduledMaintenance]="isOnScheduledMaintenance"
+                        [maintenanceStartTime]="maintenanceStartTime"
+                        [maintenanceEndTime]="maintenanceEndTime"
+                        [maintenanceStartDate]="maintenanceStartDate"
+                        [maintenanceEndDate]="maintenanceEndDate"
+                        [hasASNBDowntime]="hasASNBDowntime"
+                    >
+                    </cimb-box-investment>
+                </div>
+            </div>
+
+            <cimb-carousel-wealth-banners
+                bannerMode="assets"
+                [holdingDetails]="_accountSummary.assetLiabilities"
+                [refreshSignal]="selectedTabIndex"
+            >
+            </cimb-carousel-wealth-banners>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Liabilities">
+        <div class="tab-header">
+            <div class="chartCenter">
+                <div>
+                    <div class="chart-percentage left">
+                        <div *ngIf="_accountSummary.totalLoans > 0">
+                            <span class="lbl-myloans">My Loans / Financing</span>
+                            <span class="oval oval3">
+                                {{ _accountSummary.myLoansPct }}%
+                                <small>MYR {{ _accountSummary.totalLoans | number:'1.2-2' }}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class="chart-percentage right">
+                        <div *ngIf="_accountSummary.myCreditCardsPct > 0">
+                            <span class="oval oval4">
+                                {{ _accountSummary.myCreditCardsPct }}%
+                                <small>MYR {{ (_accountSummary.myCreditCardsPct / 100) * _accountSummary.totalLiability | number:'1.2-2' }}</small>
+                            </span>
+                            <span>My Credit Cards</span>
+                        </div>
+                    </div> -->
+
+                    <cimb-chart-holdings
+                        [holdingData]="liabilitiesSummary"
+                        [pieHole]="0.55"
+                        [donutColor]="donutColorLiabilities"
+                        [refreshSignal]="selectedTabIndex"
+                        class="center"
+                    >
+                    </cimb-chart-holdings>
+                </div>
+            </div>
+            <div class="hide-md divMobile">
+                <div class="chartDetails">
+                    <div class="listStyle1 listStyle2">
+                        <div id="circle2"></div>
+                        <span class="investment">My Loans / Financing</span>
+                    </div>
+                    <!-- <div class="listStyle1">
+                        <div id="circle3"></div>
+                        <span class="investment"> My Credit Cards</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div>
+                <div class="liability-content-box" *ngFor="let item of liabilitiesDetails">
+                    <cimb-box-investment
+                        (callRiskProfileEvent)="openRiskProfilePopup($event)"
+                        [holdingDetails]="item"
+                    >
+                    </cimb-box-investment>
+                </div>
+            </div>
+
+            <cimb-carousel-wealth-banners
+                bannerMode="liabilities"
+                [holdingDetails]="_accountSummary.assetLiabilities"
+                [refreshSignal]="selectedTabIndex"
+            >
+            </cimb-carousel-wealth-banners>
+        </div>
+    </mat-tab>
+</mat-tab-group>

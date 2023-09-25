@@ -1,0 +1,59 @@
+.overall-bar {
+  display: inline-flex;
+  width: 100%;
+  margin-bottom: .25rem;
+  border-radius: .5rem;
+  overflow: hidden;
+
+  > div {
+    &:before {
+      height: 1rem;
+      display: block;
+      content:'';
+    }
+  }
+  > span {
+    width: .125rem;
+  }
+  &-left {
+    &:before {
+      background: var(--s100);
+    }
+  }
+  &-right {
+    &:before {
+      background: var(--azb70);
+    }
+  }
+}
+.overall-label {
+  display: inline-flex;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  h4 {
+    display: inline-block;
+    padding: .125rem .5rem;
+    line-height: 1rem;
+    margin: 0;
+    font-size: .625rem;
+    font-weight: var(--bold);
+    color: var(--n0);
+    border-radius: 1rem;
+    white-space: nowrap;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &-left {
+    h4 {
+      background: var(--s100);
+    }
+  }
+  &-right {
+    margin-right: 25px;
+    h4 {
+      background: var(--azb70);
+    }
+  }
+}

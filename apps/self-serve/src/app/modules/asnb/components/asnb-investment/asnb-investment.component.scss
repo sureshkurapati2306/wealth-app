@@ -1,0 +1,98 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+.asnb-investment-box {
+    box-shadow: 0px 0px 16px -2px rgba(24, 39, 75, 0.08), 0px 10px 32px -4px rgba(24, 39, 75, 0.1);
+    background: $whiteBackground;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-top: -3.375rem;
+
+    @media (max-width: $asnbDesktop) {
+        margin-top: -7.625rem;
+    }
+
+    @media (min-width: 60rem) {
+        padding: 1.5rem 1rem;
+    }
+
+    @media (min-width: 64rem) {
+        padding: 1.5rem;
+    }
+    &-header {
+        h5 {
+            font-size: 0.625rem;
+            font-weight: 400 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.04rem;
+            line-height: 1rem;
+            margin-bottom: 0.5rem;
+
+            @media (min-width: 48rem) {
+                @include font(1rem);
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .membership-name {
+        font-weight: 700;
+        color: var(--n100);
+        @include font(1rem);
+
+        @media (max-width: $asnbDesktop) {
+            @include font(0.875rem);
+        }
+    }
+
+    .membership-number {
+        font-weight: 600;
+        color: var(--n80);
+        @include font(0.75rem);
+
+        @media (max-width: $asnbDesktop) {
+            @include font(0.625rem);
+        }
+    }
+
+    .investment-value {
+        margin-top: 2rem;
+
+        @media (max-width: $asnbDesktop) {
+            margin-top: 1.5rem;
+        }
+
+        .investment-value-wording,
+        .investment-desc-wording {
+            font-weight: 400;
+            color: var(--n100);
+            @include font(0.875rem);
+
+            @media (max-width: $asnbDesktop) {
+                @include font(0.75rem);
+            }
+        }
+
+        .value {
+            font-weight: 700;
+            color: var(--n100);
+            @include font(1.5rem);
+
+            @media (max-width: $asnbDesktop) {
+                @include font(1.25rem);
+            }
+        }
+    }
+
+    .hide-lg {
+        @media (max-width: 60rem) {
+            display: block !important;
+        }
+
+        display: none !important;
+    }
+}

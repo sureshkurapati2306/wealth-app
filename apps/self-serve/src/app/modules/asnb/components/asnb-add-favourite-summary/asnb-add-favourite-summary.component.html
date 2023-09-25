@@ -1,0 +1,29 @@
+<cimb-progress-sub-header
+    [pageTitle]="'Add New Favourite Request Completed'"
+    [isBackButtonEnabled]="false"
+    [noProgressStep]="false"
+></cimb-progress-sub-header>
+<div class="container">
+    <cimb-asnb-transaction-status-card-template
+        [status]="'Successful'"
+        [heading]="'We have successfully added your new favourite'"
+        [receiptHeading]="'Add New Favourite Request Completed'"
+        [hideNotAvailableDisclaimer]="true"
+        [membershipName]="membershipName"
+        [membershipDetails]="membershipDetails"
+        [receiptFirstHalfItems]="receiptFirstHalfItems"
+        [receiptSecondHalfItems]="receiptSecondHalfItems"
+        [rawTimestamp]="rawTimestamp"
+    ></cimb-asnb-transaction-status-card-template>
+    <div class="transaction-btns">
+        <button
+            class="btn-custom mat-flat-button btn-red"
+            disableRipple="true"
+            mat-flat-button
+            (click)="goToDashboard()"
+        >
+            Go to Dashboard
+        </button>
+    </div>
+    <cimb-asnb-footer></cimb-asnb-footer>
+</div>

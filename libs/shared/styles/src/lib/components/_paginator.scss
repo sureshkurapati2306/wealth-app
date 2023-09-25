@@ -1,0 +1,157 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.375rem 0;
+
+  .mat-paginator-range-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mat-paginator-range-label {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    color: var(--n100);
+    flex: 1 0 100%;
+    text-align: center;
+    margin-bottom: .75rem;
+
+    @media (min-width: 37.5rem) {
+      margin:0 1.25rem;
+      flex: 1 1 auto;
+    }
+  }
+  .mat-paginator {
+    background: none;
+  }
+  .mat-button-wrapper {
+    display: none;
+  }
+  .mat-icon-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    margin: 0 .5rem;
+  }
+}
+.pager {
+  padding-top: 1.75rem;
+  padding-left: 1.125rem;
+  padding-right: 1.125rem;
+
+  @media (min-width: 48rem) {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 1rem 0 1rem;
+    align-items: center;
+  }
+  @media (min-width: 62rem) {
+    padding-left: 1.625rem;
+    padding-right: 1.625rem;
+  }
+  .pager-text {
+    display: none;
+    
+    @media (min-width: 48rem) {
+      display: block;
+      color: var(--n60);
+    }
+    select {
+      height: 3rem;
+      background: var(--n0);
+      border:.0625rem solid var(--n60);
+      border-radius: .5rem;
+      outline: none;
+      width: 4.5rem;
+      padding: .75rem;
+      margin: 0 .25rem;
+      font-size: 1rem;
+      color: var(--n100);
+    }
+  }
+  .pager-nav {
+    @media (min-width: 48rem) {
+      padding:0;
+    }
+    .custom-paginator {
+      @media (min-width: 48rem) {
+        padding-top:0;
+      }
+    }
+  }
+  .mat-paginator {
+    background: none;
+
+    @media (min-width: 48rem) {
+      width: 100%;
+    }
+    .mat-paginator-container {
+      justify-content: flex-end;
+      padding:0;
+    }
+    .mat-paginator-range-label {
+      font-size: .875rem;
+      line-height: 1.375rem;
+      color: var(--n60);
+      margin-right:0;
+      margin-left: .5rem;
+    }
+    .mat-paginator-page-size {
+      display: none;
+
+      @media (min-width: 48rem) {
+        display: flex;
+      }
+      .mat-paginator-page-size-label {
+        @media (min-width: 48rem) {
+          font-size: .875rem;
+          line-height: 1.375rem;
+          color: var(--n60);
+          margin-left:0;
+          margin-right: .5rem;
+        }
+      }
+      .mat-form-field-wrapper {
+        @media (min-width: 48rem) {
+          padding:0;
+          border: .0625rem solid var(--n60);
+          background: var(--n0);
+          border-radius: .5rem;
+        }
+        .mat-form-field-underline {
+          display: none;
+        }
+        .mat-form-field-infix  {
+          @media (min-width: 48rem) {
+            padding:0;
+            margin-left: .25rem;
+          }
+        }
+      }
+      .mat-paginator-page-size-select {
+        @media (min-width: 48rem) {
+          margin:0;
+          width: 4.5rem;
+        }
+        .mat-select-value {
+          font-size: 1rem;
+        }
+      }
+    }
+    .mat-paginator-range-actions {
+      .mat-button-disabled {
+        color: var(--n20);
+      }
+    }
+    .mat-icon-button {
+      width: 1.5rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      margin-left: .75rem;
+
+      .mat-paginator-icon {
+        width: 1.25rem;
+      }
+    }
+  }
+}

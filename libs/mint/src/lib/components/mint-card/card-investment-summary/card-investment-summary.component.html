@@ -1,0 +1,80 @@
+<div class="card-wrapper card-investment">
+  <div class="card">
+    <h5>
+      {{ cardTitle }}
+      <span *ngIf="totalInvestmentItems"
+        >({{ totalInvestmentItems + ' Funds' }})</span
+      >
+    </h5>
+    <div class="wrapper">
+      <ul class="investment-list" [ngClass]="{'switch_list' : flow === '003'}">
+        <li *ngFor="let item of investments">
+
+          <ng-container *ngIf="item.flow === '001'">
+            <div class="inner-block">
+              <div class="top">
+                <p *ngIf="showRiskProfile">{{ item.class_name }}</p>
+                <h5>{{ item.fund_name }}</h5>
+                <h6 *ngIf="showAssetClass">{{ item.risk_name }}<span *ngIf="item.risk_name && item.fund_indicator === 'I'"> | </span> <span *ngIf="item.fund_indicator === 'I'"> Shariah Compliant</span><span *ngIf="item.esgFund === 'Y'"> | Esg Fund</span></h6>
+              </div>
+              <div class="bottom">
+                <p class="flex">
+                  Sales charge ({{
+                    (item.totalSalesPercentage
+                    ) | number: '1.2-2':'en-US'
+                }}%)
+                  <span>MYR {{ item.card_sale_charge | number: '1.2-2':'en-US' }}</span>
+                </p>
+                <p class="flex">
+                  Net Investment Amount
+                  <span
+                    >MYR
+                    {{ item.card_net_amount | number: '1.2-2':'en-US' }}</span
+                  >
+                </p>
+                <p class="flex">
+                  Amount
+                  <span class="amount"
+                    ><sup>MYR</sup>{{ item.card_amount | number: '1.2-2':'en-US' }}</span
+                  >
+                </p>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="item.flow === '002'">
+            <div class="inner-block">
+              <div class="top">
+                <p *ngIf="showRiskProfile">{{ item.class_name }}</p>
+                <h5>{{ item.fund_name }}</h5>
+                <h6 *ngIf="showAssetClass">{{ item.risk_name }}<span *ngIf="item.risk_name && item.fund_indicator === 'I'"> | </span> <span *ngIf="item.fund_indicator === 'I'"> Shariah Compliant</span><span *ngIf="item.esgFund === 'Y'"> | Esg Fund</span></h6>
+              </div>
+              <div class="bottom">
+                <p class="flex mb">
+                  Redemption Units
+                  <span>{{ item.card_redemption_units | number: '1.2-2':'en-US' }}</span>
+                </p>
+                <p class="flex mb">
+                  <small>Redemption Amount <span>*</span></small>
+                  <span class="amount redemption-amount"
+                    ><sup>MYR</sup
+                    >{{ item.card_redemption_amount | number: '1.2-2':'en-US' }}</span
+                  >
+                </p>
+              </div>
+            </div>
+          </ng-container>
+
+          <cimb-card-switch-summary
+            *ngIf="item.flow === '003'"
+            [item]="item"
+            [showAssetClass]="showAssetClass"
+            [showRiskProfile]="showRiskProfile"
+          >
+          </cimb-card-switch-summary>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

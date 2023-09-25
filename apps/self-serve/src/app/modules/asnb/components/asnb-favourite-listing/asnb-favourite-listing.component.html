@@ -1,0 +1,29 @@
+<div class="favourite-list">
+    <ng-container
+        *ngIf="favouriteList && favouriteList.asnbFavouriteDetails.length; else noFavourite"
+    >
+        <p class="favourite-list-heading">{{ paginationHeading }}</p>
+        <div class="favourite-list-container">
+            <cimb-asnb-favourite
+                *ngFor="let item of favouriteList.asnbFavouriteDetails"
+                [favouriteData]="item"
+                (purchaseClick)="onPurchaseClick($event)"
+            >
+            </cimb-asnb-favourite>
+        </div>
+        <mat-paginator
+            hidePageSize
+            [pageSize]="pageSize"
+            (page)="onPageClick($event)"
+            [length]="favouriteList.totalAsnbFavourites"
+            *ngIf="favouriteList.totalAsnbFavourites > pageSize"
+        ></mat-paginator>
+    </ng-container>
+    <ng-template #noFavourite>
+        <div class="no-asnb-favourite">
+            <img src="assets/images/no-asnb-favourite.svg" alt="No Favourite" />
+            <p class="no-asnb-favourite-heading">No Favourite Account</p>
+            <p class="no-asnb-favourite-description">Click on “Add New Favourite” to start.</p>
+        </div>
+    </ng-template>
+</div>

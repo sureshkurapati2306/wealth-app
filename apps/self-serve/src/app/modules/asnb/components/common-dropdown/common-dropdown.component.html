@@ -1,0 +1,40 @@
+<mat-form-field *ngIf="listItems.length" class="common-dropdown" floatLabel="always">
+    <mat-label></mat-label>
+    <mat-select
+        [disabled]="listItems.length === 1"
+        disableRipple
+        panelClass="asnb-member-selection custom-select-panel"
+        (selectionChange)="onSelect(selection)"
+        disableOptionCentering
+        [placeholder]="placeholderText"
+        (closed)="onClosed()"
+        [(value)]="selection"
+        [compareWith]="verifySelected"
+    >
+        <mat-select-trigger>
+            <div class="dropdown-selection">
+                <p *ngIf="selection" class="selected-value">
+                    {{ selection.value }}
+                </p>
+            </div>
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let listItem of listItems" [value]="listItem">
+            <div class="common-dropdown-options">
+                <p class="selected-name">{{ listItem.value }}</p>
+            </div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div *ngIf="listItems.length" class="common-mobile-dropdown">
+    <div class="selection" (click)="openDialog()">
+        <div>
+            <p class="selected-name" *ngIf="selection; else placeholder">{{ selection.value }}</p>
+            <ng-template #placeholder>
+                <p class="placeholder">{{ placeholderText }}</p>
+            </ng-template>
+        </div>
+        <img class="dropdown-arrow" alt="dropdown-arrow" src="assets/images/dropdown-arrow.svg" />
+    </div>
+</div>

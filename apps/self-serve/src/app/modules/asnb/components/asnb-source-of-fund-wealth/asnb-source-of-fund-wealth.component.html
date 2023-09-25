@@ -1,0 +1,93 @@
+<div class="mint-dialog-container" >
+    <!-- Dismiss button -->
+    <ng-container>
+        <div class="dismissible">
+            <button mat-icon-button class="close-btn" (click)="onClose()">
+                <mat-icon><img src="./assets/images/icon-close.svg" alt="icon-close" /></mat-icon>
+            </button>
+        </div>
+    </ng-container>
+    <!-- Content -->
+    <div class="content">
+        <ng-container>
+            <div class="body" [formGroup]="sourceofWealthAndFundsData">
+                <h3 class="title">
+                    Source of funds {{ data.showSow ? '& Source of wealth' : '' }}
+                </h3>
+                <!-- Note -->
+                <div>
+                    <p class="sof-sow-heading" *ngIf="data.showSow">
+                        {{ 'Source of Fund' | uppercase }}
+                    </p>
+                    <cimb-common-dropdown
+                        [listItems]="sourceOfWealthAndFunds"
+                        class="source-of-wealth"
+                        placeholderText="Select source of funds"
+                        (selectedDropdownItem)="onSofSelect($event)"
+                    ></cimb-common-dropdown>
+                </div>
+                <div *ngIf="showSofOthers">
+                    <cimb-input-basic
+                        [inputForm]="sourceofWealthAndFundsData"
+                        [maxLength]="maxLength"
+                        [isForAsnb]="true"
+                        inputFormControlName="sofOthers"
+                        inputPlaceholder="Enter source of funds"
+                        inputLabel="OTHERS"
+                        class="input"
+                    >
+                    </cimb-input-basic>
+                </div>
+
+                <div *ngIf="data.showSow">
+                    <p class="sof-sow-heading">{{ 'Source of Wealth' | uppercase }}</p>
+                    <cimb-common-dropdown
+                        [listItems]="sourceOfWealthAndFunds"
+                        class="source-of-wealth"
+                        placeholderText="Select source of wealth"
+                        (selectedDropdownItem)="onSowSelect($event)"
+                    ></cimb-common-dropdown>
+                </div>
+
+                <div *ngIf="showSowOthers">
+                    <cimb-input-basic
+                        [inputForm]="sourceofWealthAndFundsData"
+                        [maxLength]="maxLength"
+                        [isForAsnb]="true"
+                        inputFormControlName="sowOthers"
+                        inputPlaceholder="Enter source of wealth"
+                        inputLabel="OTHERS"
+                        class="input"
+                    >
+                    </cimb-input-basic>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Actions -->
+    <ng-container>
+        <div class="actions">
+            <!-- Cancel -->
+            <ng-container>
+                <button mat-stroked-button class="mint-cancel-button" (click)="onClose()">
+                    Cancel
+                </button>
+            </ng-container>
+
+            <!-- Confirm -->
+            <ng-container>
+                <button
+                    mat-flat-button
+                    class="btn-custom"
+                    [ngClass]="{
+                        'btn-custom-disabled': !isButtonEnabled
+                    }"
+                    (click)="onSubmit()"
+                >
+                    Continue
+                </button>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

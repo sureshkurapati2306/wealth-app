@@ -1,0 +1,27 @@
+<div class="app-container">
+    <div class="header">
+        <div class="container">
+            <div class="inline-flex">
+                <a class="logo" routerLink="/home">
+                    <img src="./assets/back-office/logo.svg" alt="CIMB" />
+                </a>
+                <a class="logo-secondary" routerLink="/home">
+                    <img src="./assets/back-office/logo-islamic.svg" alt="CIMB Islamic" />
+                </a>
+                <button
+                    *ngIf="isAuthenticated | async"
+                    mat-flat-button
+                    class="btn-custom btn-text btn-lg"
+                    disableRipple="true"
+                    (click)="logout()"
+                >
+                    <img src="./assets/back-office/logout.svg" alt="Logout" /> <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+    <cimb-footer class="{{ footerClassName$ | async }}"></cimb-footer>
+</div>

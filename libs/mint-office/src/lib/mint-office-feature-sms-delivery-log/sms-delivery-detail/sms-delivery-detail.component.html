@@ -1,0 +1,35 @@
+<div class="page-wrapper">
+  <div class="container">
+    <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+    <div class="section">
+      <div class="section-head">
+        <button mat-flat-button class="btn-custom btn-text" routerLink="/sms-delivery-log"><em class="icon-arrow-back"></em></button>
+      </div>
+      <div class="section-content">
+        <div class="section-box">
+          <div class="section-box-head">
+            <h5>Customer Details</h5>
+          </div>
+          <div class="section-box-content">
+            <div>
+              <h6>Contact Number</h6>
+              <p>{{ smsRecord?.contactNumber }}</p>
+            </div>
+            <div>
+              <h6>ID Number</h6>
+              <p>{{ smsRecord?.clientId }}</p>
+            </div>
+            <div>
+              <h6>Unit Trust Account Number</h6>
+              <p>{{ smsRecord?.utAccountNo }}</p>
+            </div>
+            <div>
+              <h6>SMS content</h6>
+              <p>{{ smsRecord?.smsContent }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

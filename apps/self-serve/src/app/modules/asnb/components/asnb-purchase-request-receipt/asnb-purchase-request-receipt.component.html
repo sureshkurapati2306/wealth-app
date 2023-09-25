@@ -1,0 +1,63 @@
+<cimb-progress-sub-header
+    [pageTitle]="'Purchase Request Completed'"
+    [isBackButtonEnabled]="false"
+    [noProgressStep]="false"
+></cimb-progress-sub-header>
+
+<div class="container">
+    <cimb-asnb-transaction-status-card-template
+        [status]="status"
+        [heading]="
+            status === 'Unsuccessful'
+                ? 'Your transaction request is unsuccessful'
+                : status === 'Accepted For Processing'
+                ? 'Your transaction request has been placed'
+                : 'We have successfully received your transaction request'
+        "
+        [receiptHeading]="'Purchase Request Completed'"
+        [membershipName]="membershipName"
+        [membershipDetails]="membershipDetails"
+        [rawTimestamp]="rawTimestamp"
+        [errorCode]="errorCode"
+        [errorMessage]="errorMessage"
+        [totalAmount]="totalAmount"
+        [receiptFirstHalfItems]="receiptFirstHalfItems"
+        [receiptSecondHalfItems]="receiptSecondHalfItems"
+    ></cimb-asnb-transaction-status-card-template>
+    <cimb-asnb-summary-card-template
+        [heading]="'Transaction Summary'"
+        [fund]="fund"
+        [invoiceItems]="transactionSummaryItems"
+    ></cimb-asnb-summary-card-template>
+    <!-- View fund price and view prospectus and sales charge -->
+    <div class="utility-btn">
+        <span (click)="redirectConfirmation(fundPriceLink)">
+            <span>View fund price</span> <mat-icon>open_in_new</mat-icon>
+        </span>
+        <span>&nbsp;&nbsp;</span>
+        <span (click)="redirectConfirmation(prospectusLink)">
+            <span>View propectus & sales charge</span> <mat-icon>open_in_new</mat-icon>
+        </span>
+    </div>
+    <cimb-asnb-summary-card></cimb-asnb-summary-card>
+    <div>
+        <p class="service-hours-desc">
+            If the value is labeled as <strong>'N/A' (not available)</strong>, the fund's value has
+            yet to be calculated and processed. To find out why, please refer to the
+        </p>
+        <span class="service-hours-link" (click)="openServiceHoursDialog()"
+            >ASNB Service Hours and Fund Cut Off Time</span
+        >
+    </div>
+    <div class="transaction-btns">
+        <button
+            class="btn-custom mat-flat-button btn-red"
+            disableRipple="true"
+            mat-flat-button
+            (click)="goToDashboard()"
+        >
+            Go to Dashboard
+        </button>
+    </div>
+    <cimb-asnb-footer></cimb-asnb-footer>
+</div>

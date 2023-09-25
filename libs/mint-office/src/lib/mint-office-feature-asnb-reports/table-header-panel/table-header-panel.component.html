@@ -1,0 +1,20 @@
+<div 
+    *ngIf="hasSearched && reportData.length"
+    class="block-info"
+>
+    <div class="block-info-left">
+        <p class="transaction-period" *ngIf="filter?.startDate && reportData.length">
+            <strong>Transaction Period:</strong> {{ filter.startDate | date: 'dd MMM yyyy' }} to
+            {{ filter.endDate | date: 'dd MMM yyyy' }}
+        </p>
+    </div>
+    <div class="block-info-right">
+        <button
+            mat-flat-button
+            class="btn-custom btn-red btn-ghost btn-xs btn-dl-report"
+            (click)="downloadReport()"
+        >
+            <span class="icon-download-alt"></span> Download Report
+        </button>
+    </div>
+</div>

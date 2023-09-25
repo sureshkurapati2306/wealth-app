@@ -1,0 +1,82 @@
+.input-wrapper-error-missing {
+  margin: 0;
+
+}
+@mixin dropdown-box {
+  max-width: 100%;
+  .mat-option-text{
+    line-height: 20px;
+  }
+  @media only screen and (max-width: 640px) and (min-width: 600px) {
+    width: 89% !important;
+  }
+  @media only screen and (max-width: 599px) and (min-width: 400px) {
+    width: 85% !important;
+  }
+  &::-webkit-scrollbar{
+    width: 0 !important;
+  }
+}
+::ng-deep .mat-select-panel.custom-select-panel {
+  transform: translateX(7px) translateY(46px) !important;
+  width: 34.7rem !important;
+  @include dropdown-box;
+}
+::ng-deep .mat-select-panel.input-dropdown{
+  .mat-option-text{
+    white-space: break-spaces !important;
+  }
+}
+::ng-deep .mat-select-panel.industry{
+  transform: translateX(24px) translateY(88px) !important;
+}
+::ng-deep .mat-select-panel.country {
+  transform: translateX(6px) translateY(155px) !important;
+  width: 29.7rem !important;
+}
+::ng-deep .mat-select-panel.state {
+  width: 13rem !important;
+  min-width: 100% !important;
+}
+::ng-deep .mat-select-panel.nationality {
+  transform: translateX(6px) translateY(155px) !important;
+  width: 31.2rem !important;
+}
+
+.mobile-dropdown-input {
+  display: contents;
+}
+::ng-deep .dropdown-mobile-form-field{
+  .mat-form-field-label-wrapper{
+      overflow: visible;
+      top:-25px;
+  }
+}
+::ng-deep .autocomplete-form {
+  .mat-form-field {
+    .mat-form-field-wrapper{
+      .mat-form-field-flex{
+        .mat-form-field-infix{
+          .mat-select{
+            height: auto;
+            .mat-select-placeholder{
+              height: 25px;
+            }
+            .mat-select-min-line{
+              display: inline-block;
+              width: 34.7rem;
+              white-space: nowrap;
+              overflow: hidden !important;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }  
+}
+::ng-deep .cdk-overlay-pane {
+  .mat-select-panel-wrap{
+    max-width: 100% !important;
+  }
+}

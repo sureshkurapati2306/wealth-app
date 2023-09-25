@@ -1,0 +1,120 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+.container {
+    padding: 0 1rem;
+    margin-top: 2rem;
+
+    @media (min-width: $asnbDesktop) {
+        margin: 2rem auto 0;
+        max-width: 1104px;
+    }
+
+    .section-head {
+        margin-bottom: 2rem;
+        @include font(1rem);
+        @media (min-width: $asnbDesktop) {
+            @include font(1.25rem);
+            padding: 0 2rem;
+        }
+    }
+
+    .section-content {
+        max-width: 37rem;
+        margin: 0 auto 2rem;
+    }
+
+    .field-container {
+        padding: 0 0.75rem;
+        margin-bottom: 1.5rem;
+        @media (min-width: $asnbDesktop) {
+            margin-bottom: 2rem;
+        }
+
+        .field-label {
+            color: $grey;
+            @include font(0.875rem);
+            margin-bottom: 0.25rem;
+        }
+
+        .field-details {
+            color: $baseColor;
+            @include font(1rem);
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+    }
+
+    .input-field-container {
+        .input-field-label {
+            padding: 0 0.75rem;
+            color: $grey20;
+            @include font(0.75rem);
+            font-weight: 600;
+            letter-spacing: 0.06rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field-details {
+            height: 3rem;
+            background-color: white;
+        }
+    }
+
+    .divider-line {
+        height: 0.0625rem;
+        background-color: $background20;
+        margin-top: 0;
+        margin-bottom: 2rem;
+        border: 0;
+    }
+
+    .btn-row {
+        display: flex;
+        padding: 0;
+        margin-bottom: 0.5rem;
+        @media (min-width: $asnbDesktop) {
+            padding: 0 2rem;
+        }
+
+        .btn-custom {
+            background-color: var(--r120);
+            color: var(--n0);
+
+            width: 100%;
+
+            &:hover {
+                background: var(--r60);
+            }
+
+            @media (min-width: $asnbDesktop) {
+                width: 17.25rem;
+                margin-left: auto;
+            }
+
+            &:disabled {
+                background-color: var(--n20);
+                color: var(--n0);
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+::ng-deep .transfer-reason {
+    display: block;
+    border-radius: 0.5rem;
+    border: 1px solid $grey;
+    padding: 0.75rem;
+    background-color: white;
+    color: $baseColor;
+
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-form-field-infix {
+        padding: 0;
+    }
+}

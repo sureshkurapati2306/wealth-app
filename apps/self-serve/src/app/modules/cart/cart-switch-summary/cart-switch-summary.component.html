@@ -1,0 +1,48 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-head">
+      <h4>Switch Summary</h4>
+    </div>
+    <div class="section-content">
+      <div class="purchase-header">
+        <p>
+          <span
+            >Unit Trust Account <small>-</small> <strong>{{ unitTrustAccount }}</strong></span
+          >
+          <span>1 item in total</span>
+        </p>
+      </div>
+      <!-- cart list -->
+      <cimb-card-cart-switch
+        [investments]="investments"
+        [switchOutUnits]="switchOutUnits"
+        [switchOutAmount]="switchOutAmount"
+        [switchInUnits]="switchInUnits"
+        [switchInAmount]="switchInAmount"
+        [switchingFee]="switchingFee"
+        [netSwitchInAmount]="netSwitchInAmount"
+        [hasSwitchOption]="hasSwitchOption"
+      ></cimb-card-cart-switch>
+
+      <p class="foot-legend">
+        <span>* </span>These are indicative amounts only. The actual amount may
+        differ based on the closing NAV price.
+      </p>
+
+      <cimb-card-cart-default-total
+        [totalFund]="totalFund"
+        [totalSwitchOutUnits]="totalSwitchOutUnits"
+        [totalSwitchInUnits]="totalSwitchInUnits"
+        [isForCartSwitching]="isForCartSwitching"
+        [showIndicativeAmountLegendOnMobile]="showIndicativeAmountLegendOnMobile"
+        [schedulerMsg]="scheduler_msg"
+      ></cimb-card-cart-default-total>
+    </div>
+  </div>
+</div>

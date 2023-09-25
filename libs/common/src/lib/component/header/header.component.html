@@ -1,0 +1,125 @@
+<header id="Header">
+    <div class="container">
+        <button
+            *ngIf="hamburgerMenu"
+            class="btn-panel"
+            #trigger="matMenuTrigger"
+            (menuOpened)="openedMenu = trigger.menuOpen"
+            (menuClosed)="openedMenu = trigger.menuOpen"
+            [matMenuTriggerFor]="profile"
+        >
+            <img src="./assets/images/icon-menu.svg" alt="CIMB Clicks" />
+        </button>
+        <mat-menu
+            #profile="matMenu"
+            backdropClass="dd-overlay"
+            class="custom-menu-panel with-divider menu-side"
+        >
+            <div class="panel-header">
+                <button mat-icon-button class="btn-close">
+                    <em class="icon-close"></em>
+                </button>
+
+                <div class="user">
+                    <p>
+                        <em class="icon-user"></em>
+                        <span class="user-name"> {{ customerName }} </span>
+                    </p>
+                </div>
+            </div>
+            <div class="panel-content" *ngIf="userType === 'ETP'">
+                <button
+                    mat-menu-item
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'wealthdashboard' }"
+                    (click)="pageRedirect($event)"
+                >
+                    My Wealth Dashboard
+                </button>
+                <h6>Investment</h6>
+
+                <button
+                    *ngIf="canNavigateToAsnbDashboard"
+                    mat-menu-item
+                    class="sidemenu"
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'asnbDashboard' }"
+                    (click)="pageRedirect($event)"
+                >
+                    ASNB
+                </button>
+
+                <button
+                    *ngIf="canNavigateToDashboard"
+                    mat-menu-item
+                    class="sidemenu"
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'dashboard' }"
+                    (click)="pageRedirect($event)"
+                    [disabled]="!canNavigateToDashboard"
+                >
+                    Unit Trust
+                </button>
+
+                <button
+                    *ngIf="!canNavigateToDashboard"
+                    mat-menu-item
+                    class="sidemenu"
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'dashboard' }"
+                    (click)="openDialogUnableToProceed($event)"
+                >
+                    Unit Trust
+                </button>
+            </div>
+            <div class="panel-content" *ngIf="userType === 'NTP'">
+                <button
+                    mat-menu-item
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'wealthdashboard' }"
+                    (click)="pageRedirect($event)"
+                >
+                    My Wealth Dashboard
+                </button>
+
+                <h6 *ngIf="canNavigateToAsnbDashboard">Investment</h6>
+
+                <button
+                    *ngIf="canNavigateToAsnbDashboard"
+                    mat-menu-item
+                    class="sidemenu"
+                    disableRipple="false"
+                    [ngClass]="{ 'mat-active': currentRoute === 'asnbDashboard' }"
+                    (click)="pageRedirect($event)"
+                >
+                    ASNB
+                </button>
+            </div>
+            <div [class.addPaddingBottom]="applyHeightProperty" class="panel-bottom">
+                <div class="btn-wrapper">
+                    <button (click)="contactUs()">
+                        <em class="icon-call"></em>
+                    </button>
+                    <button (click)="Logout()">
+                        <em class="icon-logout"></em>
+                    </button>
+                </div>
+            </div>
+        </mat-menu>
+        <a href="#" class="logo">
+            <img
+                [src]="headerLogoUrl"
+                onerror="this.onerror=null; this.src='./assets/images/CIMB MyWealth Beta.png'"
+                alt="CIMB MyWealth"
+            />
+        </a>
+        <div class="utility">
+            <button mat-icon-button (click)="viewMyCartClick()" *ngIf="showCartIcon" disableRipple>
+                <cimb-icons iconGroup="action" iconName="cart"></cimb-icons
+                ><span class="cart-item" *ngIf="this.totalFundsCount > 0">{{
+                    totalFundsCount
+                }}</span>
+            </button>
+        </div>
+    </div>
+</header>

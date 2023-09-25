@@ -1,0 +1,34 @@
+.dashboard-amount {
+  background: var(--n0);
+  margin-top: -7.625rem;
+  margin-bottom: 1.5rem;
+  padding: 1.625rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0rem 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12),
+    0rem 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08);
+
+  @media (min-width: 48rem) {
+    display: flex;
+    background: none;
+    padding: 0;
+    justify-content: space-between;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-top: -4rem;
+    box-shadow: none;
+  }
+  .cols {
+    margin-bottom: 1.5rem;
+
+    @media (min-width: 48rem) {
+      flex: 0 0 33.3333%;
+      padding: 0 1rem;
+      margin-bottom: 0;
+    }
+  }
+  p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--n60);
+  }
+}

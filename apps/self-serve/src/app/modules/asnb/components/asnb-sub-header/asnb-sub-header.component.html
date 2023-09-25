@@ -1,0 +1,32 @@
+<div class="subheader">
+    <div class="container">
+        <div class="content">
+            <div class="back">
+                <a (click)="goToWealthDashboard()">
+                    <em class="icon-arrow-left"></em>
+                    <span class="back-text">{{ content.goToWealthDashboardText }}</span>
+                </a>
+            </div>
+            <div class="details">
+                <h3 class="title">{{ content.title }}</h3>
+                <div class="info">
+                    <p class="description">{{ content.description }}</p>
+                    <p class="last-update">{{ content.lastUpdate }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="content-mobile">
+            <div class="back">
+                <a (click)="goToWealthDashboard()">
+                    <em class="icon-arrow-left"></em>
+                </a>
+            </div>
+            <div class="details">
+                <h3 class="title">{{ content.title }}</h3>
+                <div class="info">
+                    <p class="last-update">{{ content.lastUpdate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

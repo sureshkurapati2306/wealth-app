@@ -1,0 +1,10 @@
+<div class="paginator" [style.display]="dataSource.data.length ? '' : 'none'">
+   <mat-paginator
+     [pageSizeOptions]="pageSizeOptions"
+     showFirstLastButtons
+     hidePageSize
+     aria-label="Select page"
+     (page)="emitPageChangeEvent($event)"
+   >
+   </mat-paginator>
+ </div>

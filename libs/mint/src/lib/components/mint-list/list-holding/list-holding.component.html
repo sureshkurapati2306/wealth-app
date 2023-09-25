@@ -1,0 +1,492 @@
+<div class="list-header">
+
+  <p *ngIf="myHoldings?.length">
+    <cimb-pagination-bounds-indicator
+      [totalRecords]="myHoldings.length"
+      [currentPageNumber]="currentPageNumber"
+      [itemsPerPage]="itemsPerPage"
+    >
+      Showing <span #lowerBounds></span>-<span #upperBounds></span> of <span #totalRecords></span> funds
+    </cimb-pagination-bounds-indicator>
+  </p>
+
+  <div *ngIf="myHoldings?.length" class="mat-dialog-wrapper mat-dialog-filter">
+    <mat-dialog-content>
+      <button class="btn-dd" [matMenuTriggerFor]="Sort">
+        Sort by <em class="icon-arrow-down"></em>
+      </button>
+      <mat-menu
+        #Sort="matMenu"
+        class="custom-menu-panel with-divider no-scroll"
+        backdropClass="dd-overlay"
+        xPosition="before"
+        yPosition="below"
+      >
+        <div class="panel-header with-text">
+          <p>
+            Funds will be according to your choice below within the respective
+            Asset Class.
+          </p>
+          <button mat-icon-button class="btn-close">
+            <em class="icon-close"></em>
+          </button>
+        </div>
+        <div class="panel-content">
+          <!-- Please use class .selected for selected item -->
+          <button *ngIf="!isSortByAlphabetAtoZ"
+            (click)="sortByAlphabetAtoZ() "
+            mat-menu-item
+            disableRipple="true"
+          >
+            Alphabet (A-Z)
+          </button>
+          <button *ngIf="isSortByAlphabetAtoZ" class ="selected"
+            (click)="sortByAlphabetAtoZ()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Alphabet (A-Z)
+          </button>
+
+          <button *ngIf="!isSortByAlphabetZtoA"
+            (click)="sortByAlphabetZtoA()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Alphabet (Z-A)
+          </button>
+          <button *ngIf="isSortByAlphabetZtoA" class ="selected"
+            (click)="sortByAlphabetZtoA()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Alphabet (Z-A)
+          </button>
+          <button *ngIf="!isSortByReturnPercentageHighToLow"
+            (click)="sortByReturnPercentageHighToLow()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by percentages (High-Low)
+          </button>
+          <button *ngIf="isSortByReturnPercentageHighToLow" class ="selected"
+            (click)="sortByReturnPercentageHighToLow()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by percentages (High-Low)
+          </button>
+          <button *ngIf="!isSortByReturnPercentageLowToHigh"
+            (click)="sortByReturnPercentageLowToHigh()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by percentages (Low- High)
+          </button>
+          <button *ngIf="isSortByReturnPercentageLowToHigh" class ="selected"
+          (click)="sortByReturnPercentageLowToHigh()"
+          mat-menu-item
+          disableRipple="true"
+        >
+          Returns by percentages (Low- High)
+        </button>
+          <button *ngIf="!isSortByReturnValueHighToLow"
+            (click)="sortByReturnValueHighToLow()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by value (MYR) (High-Low)
+          </button>
+          <button *ngIf="isSortByReturnValueHighToLow" class ="selected"
+            (click)="sortByReturnValueHighToLow()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by value (MYR) (High-Low)
+          </button>
+          <button *ngIf="!isSortByReturnValueLowToHigh"
+            (click)="sortByReturnValueLowToHigh()"
+            mat-menu-item
+            disableRipple="true"
+          >
+            Returns by value (MYR) (Low-High)
+          </button>
+          <button *ngIf="isSortByReturnValueLowToHigh" class ="selected"
+          (click)="sortByReturnValueLowToHigh()"
+          mat-menu-item
+          disableRipple="true"
+        >
+          Returns by value (MYR) (Low-High)
+        </button>
+        </div>
+      </mat-menu>
+    </mat-dialog-content>
+  </div>
+</div>
+<mat-accordion #accordion="matAccordion" [multi]="true">
+<div class="list-tab">
+  <div
+    class="list-tab-block"
+    *ngFor="let item of myHoldings | paginate: {
+      id: 'my-holdings',
+      itemsPerPage: itemsPerPage,
+      currentPage: currentPageNumber
+    }; let index = index; trackBy: trackItem"
+    id="{{ 'list_tab_block_' + index }}"
+  >
+    <div *ngIf="item.displayFlag" class="list-tab-header">
+      <h5
+        class="label"
+        [ngStyle]="{'border-color': item.classHexa }"
+      >
+        {{ item.asset_class }}
+        <span *ngFor="let portfolio of portfolioDatalist">
+            <span *ngIf="item.asset_class.toUpperCase() === portfolio.asset_class_name.toUpperCase()">
+                {{ portfolio.description1 }}
+              </span>
+        </span>
+      </h5>
+    </div>
+    <div class="list-tab-content" id="{{ 'list_tab_content_' + index }}">
+        <mat-expansion-panel class="custom-expansion-panel"
+          (opened)="panelOpenState[index] = true"
+          (closed)="panelOpenState[index] = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p>
+                <strong>{{ item.fund_name }}</strong>
+              </p>
+              <h6 *ngIf="item.risk_name">
+                {{ item.risk_name }}
+                <span *ngIf="item.syariah_complaint === 'I'">
+                  | Shariah Compliant</span
+                >
+                <span *ngIf="item.esg_fund === 'Y'">
+                  | Esg Fund</span
+                >
+              </h6>
+              <span
+                *ngIf="
+                  solePropIndicator !== 'P' &&
+                  item.wholesale_ind === 'N' &&
+                  item.fund_status === 'I'
+                "
+                class="fund-holiday-label lg-screen"
+              >
+                Fund Holiday
+                <span class="tips">
+                  <em
+                    class="icon-help"
+                    matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+                    matTooltipPosition="right"
+                  ></em>
+                </span>
+              </span>
+              <span
+                *ngIf="
+                  solePropIndicator !== 'P' &&
+                  item.wholesale_ind === 'N' &&
+                  item.fund_status === 'I'
+                "
+                class="fund-holiday-label sm-screen"
+                (click)="openBottomSheet()"
+              >
+                Fund Holiday
+                <span class="tips">
+                  <em
+                    class="icon-help"
+                  ></em>
+                </span>
+              </span>
+            </mat-panel-title>
+            <mat-panel-description>
+              <h6>Returns</h6>
+              <h4>
+                <img src="{{ item.fundImg }}" alt="{{ item.fundPosition }}" />
+                {{ item.total_percentage }}
+              </h4>
+              <p>
+                {{ item.total_return_type }}MYR {{ item.total_return_value }}
+              </p>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="expansion-panel-content">
+            <ul class="list-details">
+              <li>
+                <p>Units Held</p>
+                <h6>{{ item.unit_held }}</h6>
+              </li>
+
+              <li>
+                <p>Average NAV Cost</p>
+                <h6>
+                  <sup>MYR </sup>{{ item.average_nav_price }}
+                </h6>
+              </li>
+
+              <li>
+                <p>
+                  NAV Price
+                  <span class="tips">
+                    <em
+                      class="icon-help hide-lg"
+                      (click)="openNAVactionSheet()"
+                    ></em>
+                    <em
+                      class="icon-help show-lg-inline-block"
+                      matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                      matTooltipPosition="right"
+                    ></em>
+                  </span>
+                </p>
+                <h6><sup>MYR </sup>{{ item.nav_price }}</h6>
+                <span>(As of {{ item.close_date }})</span>
+              </li>
+
+              <li>
+                <p>Total Invested</p>
+                <h6><sup>MYR </sup>{{ item.total_invested }}</h6>
+              </li>
+
+              <li>
+                <p>Current Investment Value</p>
+                <h6><sup>MYR </sup>{{ item.current_investment }}</h6>
+              </li>
+            </ul>
+            <div
+              class="notice"
+              *ngIf="solePropIndicator !== 'P' && item.wholesale_ind !== 'N'"
+            >
+              <p>
+                For assistance on wholesale or close-ended fund transactions,
+                please contact your <strong>Relationship Manager</strong> (RM)
+                or visit your nearest <strong>CIMB branch.</strong>
+              </p>
+            </div>
+
+            <div
+              class="notice"
+              *ngIf="isEPFAccount"
+            >
+              <p>
+                For Unit Trust Account Type EPF transactions,
+                <strong>please visit any CIMB branch.</strong>
+              </p>
+            </div>
+
+            <div class="notice" *ngIf="solePropIndicator === 'P'">
+              <p>
+                For Unit Trust transactions as a sole proprietor customer,
+                <strong>please visit any CIMB branch</strong>.
+              </p>
+            </div>
+            <div class="notice" *ngIf="joinOrUtAccountIndicator">
+              <p>Only the primary account holder can transact using this Unit Trust account. For assistance, please call our
+                <a  (click)="goToConsumerContactCentreLink()">Consumer Contact Centre or visit any CIMB branch.</a>
+
+              </p>
+            </div>
+            <div class="notice" *ngIf="joinAndUtAccountIndicator">
+              <p>
+                You need all joint account holders signatories to transact using this Unit Trust account. For assistance, please call our
+                <a (click)="goToConsumerContactCentreLink()">Consumer Contact Centre or visit any CIMB branch.</a>
+
+              </p>
+            </div>
+            <div class="notice" *ngIf="casaIndicator === 'Y'">
+              <p>
+                You need to open a current or savings account (CASA) with CIMB Bank to make a unit trust transaction. You may apply via CIMB Clicks. For assistance, please call our
+                <a (click)="goToConsumerContactCentreLink()">Consumer Contact Centre or visit any CIMB branch.</a>
+              </p>
+            </div>
+            <div
+              *ngIf="
+                solePropIndicator !== 'P' &&
+                item.wholesale_ind === 'N' &&
+                item.fund_status !== 'I' &&
+                !joinOrUtAccountIndicator &&
+                !joinAndUtAccountIndicator &&
+                casaIndicator === 'N' &&
+                !isEPFAccount
+              "
+            >
+
+          <button
+           class="mat-flat-button btn-custom btn-text"
+             (click)="openFundDetails(item)"
+             >
+             <u style="font-weight: normal !important;">View Fund Details </u>
+           </button>
+
+              <!-- Sole Prop code ::: -->
+              <div
+                *ngIf="
+                  item.fund_status !== 'I' &&
+                  solePropIndicator !== 'P' &&
+                  !joinOrUtAccountIndicator &&
+                  !joinAndUtAccountIndicator &&
+                  casaIndicator === 'N' &&
+                  !isEPFAccount
+                "
+                class="options"
+              >
+                <mat-radio-group
+                  [(ngModel)]="accountOptionsGroup[index]"
+                  [name]="'holding_radio_group_' + index"
+                  aria-label="Select an option"
+                  (ngModelChange)="onTransactionGroupChange($event)"
+                >
+                  <mat-radio-button
+                    value="1"
+                    disableRipple="true"
+                    [name]="'mat_radio_button_topup_' + index"
+                    >Top Up
+                  </mat-radio-button>
+                  <mat-radio-button
+                    *ngIf="enableRedeemAtInvestmentDashboard"
+                    value="2"
+                    disableRipple="true"
+                    [name]="'mat_radio_button_redeem_' + index"
+                    [ngClass]="{'hide-md hide-lg hide-sm hide-mobile': !r2Enabled}"
+                    >Redeem
+                  </mat-radio-button>
+                  <mat-radio-button
+                    *ngIf="enableSwitchAtInvestmentDashboard"
+                    value="3"
+                    disableRipple="true"
+                    [name]="'mat_radio_button_switch_' + index"
+                    [ngClass]="{'hide-md hide-lg hide-sm hide-mobile': !r2Enabled}"
+                    >Switch
+                    <span class="tips">
+                      <em
+                        class="icon-help hide-lg"
+                        (click)="openSwitchActionSheet()"
+                      ></em>
+                      <em
+                        class="icon-help show-lg-inline-block"
+                        matTooltip="Switch allows you to sell an existing fund's units and buy new units from another fund in a single transaction.
+                        
+                        Switching is faster as you do not have to wait to receive the money from your unit trust redemption before purchasing another fund. You can only switch funds within the same fund house."
+                        matTooltipPosition="right"
+                      ></em>
+                    </span>
+                  </mat-radio-button>
+                </mat-radio-group>
+                <!-- Top Up Block -->
+                <div class="options-block" *ngIf="accountOptionsGroup[index] === '1'">
+                  <cimb-dashboard-topup
+                    [amlResult]="amlResult"
+                    [enableAddToCart]="enableAddToCartForTopup"
+                    (addToCart)="addToCartEvent($event)"
+                    (removeFromCart)="removeFromCartEvent($event)"
+                    [minimumAmount]="item.min_sub_amt"
+                    [maximumAmount]="item.max_sub_amt"
+                    [card_amount]="item.card_amount"
+                    [salesCharge]="
+                      cimbStaff === 2
+                        ? item.sales_charge_nonstaff
+                        : item.sales_charge_staff
+                    "
+                    [fundStatus]="item.fund_status"
+                    [indexVal]="index"
+                    [item]="item"
+                    [salesChargesNonstaff]="item.sales_charge_nonstaff"
+                    [salesChargeStaff]="item.sales_charge_staff"
+                    [fundName]="item.fund_name"
+                    [cimbStaff]="cimbStaff"
+                    [flowText]="flowText"
+                    [flowText]="flowText"
+                    [redeemValue]="redeemValue"
+                    [cartFundCount]="cartFundCount"
+                    (clearAndAddNewToCart)="
+                      clearAndAddNewToCartTopupEvent($event)
+                    "
+                    [clearAllData]="clearAllDataList"
+                    [cartUTAccount]="cartUTAccount"
+                    [selectedAccount]="selectedAccount"
+                    (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+                    (clearCartAndContinueEvent)="clearAllCart($event)"
+                    (selectAccountChange)="selectedAccountChange($event)"
+                    (updateAmountInCart)="updateAmountInCartTopUpEvent($event)"
+                  ></cimb-dashboard-topup>
+                </div>
+                <!-- Redeem Block -->
+                <div class="options-block" *ngIf="accountOptionsGroup[index] === '2' && enableRedeemAtInvestmentDashboard">
+                  <!-- <p>item.indicativeAmount :: {{ indicativeAmount }}</p> -->
+                  <cimb-dashboard-redeem-value
+                    [amlResult]="amlResult"
+                    [enableAddToCart]="enableAddToCartInRedeemTnx"
+                    [disabled]="false"
+                    [minimumUnit]="item.min_redem_amt"
+                    [maximumUnit]="item.max_redem_amt"
+                    [indexVal]="index"
+                    [unit]="redeemAmount"
+                    [salesCharge]="
+                      cimbStaff === 'N'
+                        ? item.sales_charges_nonstaff
+                        : item.sales_charge_staff
+                    "
+                    [indicativeDate]="item.close_date"
+                    [dataItem]="item"
+                    [cardUnit]="item.card_amount"
+                    [cardIndicativeAmount]="item.card_amount"
+                    [averageNavPrice]="item.average_nav_price"
+                    [navPrice]="item.nav_price"
+                    [item]="item"
+                    [checkboxLabel]="redeemAll"
+                    [checkboxLabel]="redeemAll"
+                    [topupValue]="topupValue"
+                    (redeemSliderValueChange)="
+                      redeemSliderValueChangeEvent($event)
+                    "
+                    (redeemSliderValueChange)="
+                      calculateIndicativeRate($event, item)
+                    "
+                    (addToCart)="addToCartEvent($event)"
+                    (removeFromCart)="removeFromCartEvent($event)"
+                    [flowText]="flowText"
+                    [cartFundCount]="cartFundCount"
+                    (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+                    [clearAllData]="clearAllDataList"
+                    [cartUTAccount]="cartUTAccount"
+                    [selectedAccount]="selectedAccount"
+                    (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+                    (clearCartAndContinueEvent)="clearAllCart($event)"
+                    (selectAccountChange)="selectedAccountChange($event)"
+                    [showAmountToFund]="false"
+                    [cartListObject]="item && item.cart_list && item.cart_list.length >=1 && item.cart_list[0]"
+                    [foreignerInd]="foreignerInd"
+                    [occupationInd]="occupationInd"
+                    (updateCartDataInRedeem)="updateRedeem($event)"
+                  >
+                  </cimb-dashboard-redeem-value>
+                </div>
+                <!-- Switch Block -->
+                <div class="options-block" *ngIf="accountOptionsGroup[index] === '3' && enableSwitchAtInvestmentDashboard">
+                  <cimb-dashboard-switch
+                    [amlResult]="amlResult"
+                    [enableAddToCart]="enableAddToCartInSwitchTnx"
+                    [item]="item"
+                    [isPanelOpen]="panelOpenState[index]"
+                    (addToCart)="addToCartEvent($event)"
+                    (updateCart)="updateAmountInCartTopUpEvent($event)"
+                    (removeFromCart)="removeFromCartEvent($event)"
+                    [cartUTAccount]="cartUTAccount"
+                    [selectedAccount]="selectedAccount"
+                    [cartFundCount]="cartFundCount"
+                    [flowText]="flowText"
+                    (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+                    [foreignerInd]="foreignerInd"
+                    [occupationInd]="occupationInd"
+                    [indexVal]="index"
+                  ></cimb-dashboard-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+    </div>
+  </div>
+</div>
+</mat-accordion>

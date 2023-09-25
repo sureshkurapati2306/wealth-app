@@ -1,0 +1,20 @@
+<div>
+    <div class="close-section">
+        <img src="assets/images/close-icon.svg" alt="close-icon" (click)="onClose()" />
+    </div>
+    <div class="dialog-content">
+        <div
+            *ngFor="let item of dialogData"
+            class="options-item"
+            (click)="onClose(item)"
+            [ngClass]="{ isSelected: item.membershipNumber === selectedItem.membershipNumber }"
+        >
+            <div class="membership-dropdown-options">
+                <p class="selected-name">
+                    {{ item.name }}
+                </p>
+                <p class="selected-membership-number">{{ item.membershipNumber }}</p>
+            </div>
+        </div>
+    </div>
+</div>

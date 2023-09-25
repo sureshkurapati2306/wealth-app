@@ -1,0 +1,204 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+[class] {
+    &:not(.mat-icon):not(.mat-error) {
+        font-family: $notoSans !important;
+    }
+}
+
+.asnb-favourite-container {
+    height: 243px;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--n20);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .purchase {
+        width: 100%;
+        margin-top: auto;
+        font-weight: 700;
+        color: var(--r120);
+        @include font(1rem);
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--r120);
+    }
+}
+
+.nickname-container {
+    display: flex;
+    align-items: center;
+
+    .nickname {
+        margin: 0;
+        width: 100%;
+        font-weight: 700;
+        color: var(--n100);
+        @include font(1rem);
+    }
+
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+        flex-shrink: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.membership-number,
+.fund-desc {
+    margin: 0;
+    @include font(0.75rem);
+}
+
+.fund-desc {
+    margin-top: 0.75rem;
+}
+
+.overlay-container {
+    width: calc(100% - 3rem);
+    height: 1.5rem;
+    position: absolute;
+
+    .field-container {
+        width: 100%;
+        height: inherit;
+        position: absolute;
+    }
+    .overlay {
+        width: calc(100% - 1.5rem);
+        height: inherit;
+        position: absolute;
+    }
+}
+
+p {
+    margin: 0;
+}
+.mat-select-disabled .mat-select-value {
+    color: $baseColor;
+}
+
+.fav-dropdown {
+    @include font(1rem);
+    font-family: $notoSans !important;
+    width: 100% !important;
+    user-select: none;
+
+    display: block;
+
+    p {
+        margin: 0;
+    }
+
+    .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+    }
+
+    .mat-form-field-infix {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-select-arrow-wrapper {
+        display: none;
+    }
+
+    .mat-select-trigger {
+        width: 100%;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+}
+
+.cdk-overlay-container .cdk-overlay-pane .fav-dropdown-selection {
+    p {
+        margin: 0;
+    }
+
+    border-radius: 1rem;
+    min-width: 100% !important;
+    max-height: 21.6875rem;
+    overflow: auto;
+    padding: 1rem 0;
+    box-shadow: 0px 4px 4px -2px rgba(51, 55, 57, 0.08), 0px 2px 4px -2px rgba(51, 55, 57, 0.12);
+
+    .mat-option {
+        height: 100%;
+        min-height: auto;
+        padding: 0;
+        color: var(--n100);
+        width: 100%;
+
+        &:hover {
+            background-color: #ff6666;
+            color: #ffffff;
+            .list-item__primary-text {
+                color: #ffffff;
+                font-weight: 700;
+            }
+
+            .asnb-favourite-options {
+                border-bottom: 1px solid transparent;
+
+                p {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .mat-option-text {
+            padding: 0 1rem;
+        }
+    }
+
+    .list-item__primary-text {
+        display: block;
+        width: 100%;
+    }
+
+    .mat-active {
+        @include font(0.875rem);
+        background-color: var(--n0);
+        color: var(--n100);
+    }
+}
+
+::ng-deep .cdk-overlay-pane:not(.mat-select-panel-above) .menu-surface.mat-select-panel {
+    border-top-right-radius: 1rem !important;
+    border-top-left-radius: 1rem !important;
+}
+
+.asnb-favourite-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+    @include font(0.875rem);
+    align-items: left;
+    border-bottom: 1px solid #d5d6d7;
+
+    .selected-name {
+        font-weight: 400;
+        overflow: hidden;
+        margin-right: 0.5rem;
+        text-overflow: ellipsis;
+        padding-right: 1rem;
+    }
+}
+
+.custom-overlay-pane {
+    transform: translateY(24px) !important;
+}

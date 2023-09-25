@@ -1,0 +1,33 @@
+<button
+  class="btn-dd"
+  [matMenuTriggerFor]="menu"
+  [matMenuTriggerData]="menuOptions"
+>
+  {{ menuOptions?.triggerText }} <em class="icon-arrow-down"></em>
+</button>
+<mat-menu
+  #menu="matMenu"
+  class="custom-menu-panel with-divider"
+  backdropClass="dd-overlay"
+>
+  <div class="panel-header" [ngClass]="{ 'with-text': menuOptions?.panelTitle }">
+    <p *ngIf="menuOptions?.panelTitle">{{ menuOptions?.panelTitle }}</p>
+    <button mat-icon-button class="btn-close">
+      <em class="icon-close"></em>
+    </button>
+  </div>
+  <div class="panel-content">
+    <ng-template matMenuContent let-items="menuItems">
+      <ng-container *ngFor="let item of items; let i = index">
+        <button
+          mat-menu-item
+          disableRipple="true"
+          (click)="selected(item, i)"
+          [ngClass]="{ selected: i ===selectedItem }"
+        >
+          {{ item.option }}
+        </button>
+      </ng-container>
+    </ng-template>
+  </div>
+</mat-menu>

@@ -1,0 +1,156 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+[class] {
+    &:not(.mat-icon) {
+        font-family: $notoSans !important;
+    }
+}
+
+.container {
+    max-width: 1040px;
+    margin-top: 2rem;
+}
+
+.heading {
+    @include font(1rem);
+    margin: 0;
+    @media (min-width: $asnbDesktop) {
+        @include font(1.25rem);
+        padding: 0 2rem;
+    }
+}
+
+.section-container {
+    max-width: 592px;
+    margin: 2rem auto;
+    width: 100%;
+}
+
+.form-section {
+    display: grid;
+    gap: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        gap: 2rem;
+    }
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-label {
+    padding: 0 0.75rem;
+    @include font(0.75rem);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+input {
+    width: 100%;
+    height: 3rem;
+    @include font(1rem);
+    border-radius: 0.5rem;
+    border: 1px solid var(--n60);
+    padding: 0.75rem;
+    caret-color: var(--information);
+}
+
+input:focus {
+    border: 1px solid var(--information);
+}
+
+::ng-deep .dropdown-field {
+    background-color: $whiteBackground;
+    border: 1px solid var(--n60);
+    border-radius: 0.5rem;
+    padding: 0.6875rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-form-field-infix {
+        padding: 0;
+    }
+}
+
+.id-section {
+    display: grid;
+    gap: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+::ng-deep .common-mobile-dropdown {
+    width: 100%;
+    .selection {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        .placeholder {
+            margin: 0;
+        }
+        .selected-name {
+            margin: 0;
+        }
+    }
+}
+
+.field-error {
+    border-color: var(--danger);
+}
+
+.input-error-icon {
+    position: absolute;
+    right: 0.75rem;
+    color: var(--danger);
+}
+
+.dropdown-error-icon {
+    right: 2.75rem;
+}
+
+.error-message {
+    color: var(--danger);
+    margin-top: 0.25rem;
+    padding: 0 0.75rem;
+}
+
+.btn-container {
+    display: flex;
+    @media (min-width: $asnbDesktop) {
+        justify-content: end;
+        padding: 0 2rem;
+    }
+}
+
+.btn-validate {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--r120) !important;
+    margin-bottom: 0.5rem;
+    @media (min-width: $asnbDesktop) {
+        width: 17.25rem;
+    }
+}
+
+.btn-disabled {
+    background-color: var(--n20) !important;
+}

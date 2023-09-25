@@ -1,0 +1,31 @@
+<div class=""> 
+  <div class="" style="background-color: #d7e4f3; border-radius: 5px; position: relative; left: 30%; padding: 15px; width: 40%; font-weight: 20px;">
+    This system is restricted to <strong>CIMB authorised user only.</strong> Illegal and/or unauthorised access is <br> 
+      strictly prohibited. All activities on this system will be monitored and appropriate action will be <br>
+      taken against unauthorised users.
+  </div>
+  <div class="container" style="margin-top: 4rem !important;">
+    <div class="inner">
+      <img src="./assets/back-office/octo-welcome.svg" alt="Login">
+      <h1>Login</h1>
+      <form [formGroup]="authForm" class="login-form"  autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+        <p class="error-msg" *ngIf="errorMessage$ | async as errorMessage">
+          {{errorMessage}}
+        </p>
+        <mat-form-field [ngClass]="{'has-error': errorMessage$ | async}">
+          <mat-label><span>Enter your </span>LAN ID</mat-label>
+          <input matInput placeholder="LAN ID" formControlName="username">
+          <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+          <span class="mat-icon-error icon-danger-1" *ngIf="errorMessage$ | async"></span>
+        </mat-form-field>
+        <mat-form-field [ngClass]="{'has-error': errorMessage$ | async}">
+          <mat-label><span>Enter your </span>Password</mat-label>
+          <input matInput type="password" placeholder="Password" formControlName="password">
+          <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+          <span class="mat-icon-error icon-danger-1" *ngIf="errorMessage$ | async"></span>
+        </mat-form-field>
+        <button class="btn-custom btn-red" mat-flat-button type="button" (click)="login()" [disabled]="!authForm.valid">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

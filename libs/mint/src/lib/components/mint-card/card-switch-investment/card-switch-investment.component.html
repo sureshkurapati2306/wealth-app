@@ -1,0 +1,61 @@
+<div class="card-wrapper card-investment">
+  <div class="card">
+    <h5>{{ cardTitle }}</h5>
+    <div class="wrapper">
+      <ul class="investment-list">
+        <li>
+          <div class="top">
+            <h4>Switch Out</h4>
+            <p>{{ switchOutAssetType }}</p>
+            <h5>{{ switchOutFundName }}</h5>
+          </div>
+          <div class="bottom">
+            <p class="flex">
+              Switch Out Units
+              <span>{{ switchOutUnits | number: '1.2-2':'en-US' }}</span>
+            </p>
+            <p class="flex">
+              <small>Switch Out Amount <span>*</span></small>
+              <span class="amount redemption-amount"
+                ><sup>MYR</sup
+                >{{ switchOutAmount | number: '1.2-2':'en-US' }}</span
+              >
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="top">
+            <h4>Switch In</h4>
+            <p>{{ switchOutAssetType }}</p>
+            <h5>{{ switchOutFundName }}</h5>
+          </div>
+          <div class="bottom">
+            <p class="flex">
+              <small>Switch In Units <span>*</span></small>
+              <span>{{ switchInUnits | number: '1.2-2':'en-US' }}</span>
+            </p>
+            <p class="flex">
+              <small>Switch In Amount <span>*</span></small>
+              <span class="text-md"
+                >MYR {{ switchInAmount | number: '1.2-2':'en-US' }}</span
+              >
+            </p>
+            <p class="flex">
+              <small>Switching Fee (0.50%)<span>*</span></small>
+              <span class="text-md"
+                >MYR {{ switchingFee | number: '1.2-2':'en-US' }}</span
+              >
+            </p>
+            <p class="flex">
+              <small>Net Switch In Amount <span>*</span></small>
+              <span class="amount"
+                ><sup>MYR</sup
+                >{{ netSwitchInAmount | number: '1.2-2':'en-US' }}</span
+              >
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

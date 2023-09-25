@@ -1,0 +1,40 @@
+<mat-dialog-content class="mat-typography asnb-remove-favourite">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-remove-favourite-content">
+        <img src="assets/images/ic_trashcan.svg" alt="remove-favourite" />
+        <p class="asnb-remove-favourite-title">Are You Sure?</p>
+        <div class="asnb-remove-favourite-description">
+            <p>
+                Do you want to remove <span>{{ favouriteData.nickname }}</span> from your favourite
+                list? You can add them back again if you change your mind
+            </p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close class="asnb-remove-favourite-cancel" disableRipple>
+        Cancel
+    </button>
+    <button
+        mat-flat-button
+        cdkFocusInitial
+        class="asnb-remove-favourite-agree"
+        disableRipple
+        (click)="confirmRemoveFavourite()"
+    >
+        Yes, remove
+    </button>
+</mat-dialog-actions>

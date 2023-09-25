@@ -1,0 +1,63 @@
+.toast-wrapper {
+  border-radius: 1rem;
+  padding: 1rem;
+  position: relative;
+
+  @media (min-width: 62rem) {
+    padding: 1.5625rem;
+  }
+
+  &.toast {
+    &-danger {
+      background: #ff5630;
+    }
+    &-success {
+      background: var(--s100);
+    }
+    &-warning {
+      background: var(--w100);
+    }
+    &-info {
+      background: #2096d9;
+    }
+  }
+
+  .inner-wrapper {
+    display: flex;
+    padding-right: 5rem;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+      font-weight: var(--bold);
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      color: var(--n0);
+
+      @media (min-width: 48rem) {
+        font-size: 0.875rem;
+        line-height: 1.3125rem;
+      }
+    }
+    em {
+      margin-right: 0.875rem;
+      color: var(--n0);
+      font-size: 1.25rem;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1.3125rem;
+    cursor: pointer;
+
+    em {
+      font-size: 1.5625rem;
+      color: var(--n0);
+    }
+  }
+}

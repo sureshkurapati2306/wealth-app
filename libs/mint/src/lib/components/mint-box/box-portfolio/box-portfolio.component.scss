@@ -1,0 +1,66 @@
+.box {
+  box-shadow: 0 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12),
+    0 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08);
+  background: var(--n0);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 60rem) {
+    padding: 1.5rem;
+  }
+  &-header {
+    margin-bottom: 1.5rem;
+
+    h5 {
+      font-size: 1rem;
+      letter-spacing: 0.08rem;
+      font-weight: var(--medium);
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  &-portfolio {
+    .chart {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+.portfolio-chart {
+  position: relative;
+  max-width: 20.4375rem;
+  margin: 0 auto;
+
+  .label1 {
+    position: absolute;
+    z-index: 2;
+    top: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: -6.975rem;
+
+    img {
+      height: 1.625rem;
+      max-width: none;
+    }
+  }
+  .label2 {
+    position: absolute;
+    z-index: 1;
+    bottom: 2.1875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 91px;
+
+    img {
+      height: 2.4375rem;
+      max-width: none;
+    }
+  }
+  .highcharts {
+    width: 15.625rem;
+    height: 15.625rem;
+  }
+}

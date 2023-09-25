@@ -1,0 +1,30 @@
+<label class="autocomplete-label" attr.aria-label="{{ inputLabel }}">{{ inputLabel }}</label>
+<span 
+    *ngIf="isForAsnb" 
+    class="counter-label" 
+    [ngClass]=" input.value?.length > maxLength ? 'counter-overlimit' : ''"
+>
+    {{ input.value?.length || 0}}/{{ maxLength }}
+</span>
+<form [formGroup]="inputForm" class="autocomplete-form">
+    <mat-form-field
+        [class.errorborder]="isFormValid()"
+        class="example-full-width"
+        floatLabel="never"
+    >
+        <input
+            matInput
+            formControlName="{{ inputFormControlName }}"
+            (focusout)="onFocusOutEvent()"
+            #input
+        />
+        <mat-placeholder attr.aria-placeholder="{{ inputPlaceholder }}" class="placeholder"
+            >{{ inputPlaceholder }}
+        </mat-placeholder>
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix></mat-icon>
+
+        <mat-error *ngIf="isFormValid()">
+            {{ errorMessage }}
+        </mat-error>
+    </mat-form-field>
+</form>

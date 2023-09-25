@@ -1,0 +1,19 @@
+.compliance-checkbox {
+  .mat-checkbox-layout {
+    margin-bottom: 0;
+    .mat-checkbox-label {
+      @media (min-width: 48rem) {
+        white-space: normal;
+        line-height: normal;
+        color: var(--n80);
+        font-size: 0.875rem;
+        font-weight: var(--regular);
+        padding-right: 0.6875rem;
+      }
+      @media (min-width: 62rem) {
+        font-size: 1rem;
+        padding-right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<div class="asnb-favourite-container">
+    <div class="nickname-container">
+        <p class="nickname">{{ favouriteData.nickname }}</p>
+        <img src="assets/images/ic_more_vert_48px.svg" alt="action-icon" />
+    </div>
+    <p class="membership-number">ASNB Membership Number : {{ favouriteData.asnbAccountNo }}</p>
+    <p class="fund-desc">{{ favouriteData.fundDesc }}</p>
+    <div class="overlay-container">
+        <div class="field-container">
+            <mat-form-field class="fav-dropdown">
+                <mat-select
+                    disableRipple
+                    panelClass="fav-dropdown-selection custom-select-panel"
+                    disableOptionCentering
+                    (selectionChange)="openAction($event.value)"
+                    #favSelectRef
+                >
+                    <mat-option *ngFor="let option of dropdownOptions" [value]="option.action">
+                        <div class="asnb-favourite-options">
+                            <p class="selected-name">{{ option.description }}</p>
+                        </div>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="overlay"></div>
+    </div>
+    <button mat-stroked-button class="purchase" (click)="onPurchaseClick()">Purchase</button>
+</div>

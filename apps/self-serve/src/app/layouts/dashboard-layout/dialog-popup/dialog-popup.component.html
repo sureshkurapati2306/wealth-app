@@ -1,0 +1,15 @@
+<button class="close-button" mat-icon-button (click)="onClosePopup()">
+    <img class="test-close" src="./assets/images/ic_close_48px.svg" alt="close" />
+</button>
+<div class="preview-pane" style="height:auto">
+    <div>
+        <div class="popup-image">
+            <img class="upload-preview" src="{{imageSrc}}" alt="">
+        </div>
+        <div class="content">
+            <p class="popup-title">{{ titleComments }}</p>
+            <p class="popup-subtitle">{{ subtitleComments }}</p>
+            <p class="popup-content">{{ contentComments }}</p>
+        </div>
+    </div>
+</div>

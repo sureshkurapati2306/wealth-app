@@ -1,0 +1,167 @@
+<div class="main-section">
+  <cimb-ut-subheader
+  [name]="customerName"
+  [lastUpdated]="lastUpdated"
+   (wealthDashboardClickEvent)="wealthDashboardClickEvent()"></cimb-ut-subheader>
+
+  <div class="container">
+    <!-- <div class="section-title hide-mobile">
+      <h2>My Dashboard</h2>
+      <p class="lead">
+        This is an overview of all your investments from all of your Unit Trust
+        accounts.
+      </p>
+    </div> -->
+    <div class="section-content">
+      <div class="dashboard-amount">
+        <div class="cols">
+          <cimb-card-total-returns
+            [title]="totalReturnsvalue"
+            [gainOrLoss]="totalReturnsGainOrLoss"
+            [amount]="totalReturnsAmount"
+            [percentage]="totalReturnsPercentage"
+            [toolTip]="totalReturnsToolTip"
+          >
+          </cimb-card-total-returns>
+        </div>
+        <div class="cols">
+          <cimb-card-current-value
+            [title]="currentInverstmentvalue"
+            [currency]="currentInverstmentCurrency"
+            [amount]="currentInverstmentAmount"
+            [toolTip]="currentInverstmentToolTip"
+          ></cimb-card-current-value>
+        </div>
+        <div class="cols">
+          <!-- <cimb-card-total-invested></cimb-card-total-invested> -->
+          <cimb-card-current-value
+            [title]="totalInvestedvalue"
+            [currency]="totalInvestedCurrency"
+            [amount]="totalInvestedAmount"
+          ></cimb-card-current-value>
+        </div>
+        <p class="show-mobile">
+          This is an overview of all your investments from all of your Unit Trust accounts
+          excluding foreign currency funds.
+        </p>
+      </div>
+      <cimb-button-portfolio
+        class="hide-lg"
+        [rishProfile]="riskProfile"
+        A
+        [rishProfileMessage]="riskProfileDescription"
+        [riskProfileRedoAllowed]="riskProfileRedoAllowed"
+        (riskRedoClickEvent)="riskRedoClickEvent()"
+        (learnMoreClickEvent)="learnMoreClickEvent()"
+        [casaIndicator]="casaIndicator"
+        [showChart]="displayPortfolioChart"
+        [portfoliolist]="portfolioDatalist"
+        [chartsData]="chartsPlotData"
+        [messages]="portfolioWarningMaessage"
+        (navigateEvent)="navigateEventRisk($event)"
+        [showRedoRiskProfile]="showRedoRiskProfile"
+        [showLearnMore]="showLearnMore"
+        [casaIndicator]="casaIndicator"
+        [solePropIndicator]="solePropIndicator"
+        [amlCheckResult]="amlCheckResult"
+      ></cimb-button-portfolio>
+      <div class="dashboard-content">
+        <div class="dashboard-portfolio show-lg">
+          <cimb-box-portfolio
+            [showChart]="displayPortfolioChart"
+            [portfoliolist]="portfolioDatalist"
+            [chartsData]="chartsPlotData"
+            [messages]="portfolioWarningMaessage"
+          ></cimb-box-portfolio>
+          <cimb-box-risk-profile
+            [rishProfile]="riskProfile"
+            [casaIndicator]="casaIndicator"
+            [solePropIndicator]="solePropIndicator"
+            [amlCheckResult]="amlCheckResult"
+            [rishProfileMessage]="riskProfileDescription"
+            [eligibleForRedoProfilling]="eligibleForRedoProfilling"
+            [riskProfileRedoAllowed]="riskProfileRedoAllowed"
+            (riskRedoClickEvent)="riskRedoClickEvent()"
+            (learnMoreClickEvent)="learnMoreClickEvent()"
+            [showRedoRiskProfile]="showRedoRiskProfile"
+            [showLearnMore]="showLearnMore"
+          >
+          </cimb-box-risk-profile>
+        </div>
+        <div class="dashboard-tab">
+          <cimb-tab-dashboard
+            [amlCheckResult]="amlCheckResult"
+            [addNewInvestmentEnabled]="addNewInvestmentEnabled"
+            [enableAddToCartForTopup]="enableAddToCartForTopup"
+            [enableAddToCartInRedeemTnx]="enableAddToCartInRedeemTnx"
+            [enableAddToCartInSwitchTnx]="enableAddToCartInSwitchTnx"
+            [enableRedeemAtInvestmentDashboard]="enableRedeemAtInvestmentDashboard"
+            [enableSwitchAtInvestmentDashboard]="enableSwitchAtInvestmentDashboard"
+            [selectedTabIndex]="selectedTabIndex"
+            [dashBoard]="dashboardFlow"
+            [account]="portfolioAccount"
+            [selectedAccount]="selectedAccounts"
+            [myHoldings]="myHoldingsDisplayList"
+            [myHoldingsLength]="myHoldingsLength"
+            [solePropIndicator]="solePropIndicator"
+            [portfolioDatalist]="portfolioDatalist"
+            [purchaseDetailData]="purchaseDetailData"
+            [flowText]="flowText"
+            [cartFundCount]="totalFundsCount"
+            [casaIndicator]="casaIndicator"
+            [cimbStaff]="cimbStaff"
+            [joinOrUtAccountIndicator]="joinOrUtAccountIndicator"
+            [joinAndUtAccountIndicator]="joinAndUtAccountIndicator"
+            (sortingChangeEvent)="
+              sortingValueChanged(
+                $event,
+                $event,
+                $event,
+                $event,
+                $event,
+                $event,
+                $event,
+                $event
+              )
+            "
+            (addToCart)="addToCartEvent($event)"
+            (removeFromCart)="removeFromCartEvent($event)"
+            (accountListChange)="accountListChangeEvent($event)"
+            (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+            (clearCartAndContinueEvent)="clearAllCart($event)"
+            (selectAccountChange)="selectedAccountChange($event)"
+            (tabChangeEvent)="selectedTabChange($event)"
+            [selectedUnittrustAccountNumber]="selectedUnittrustAccountNumber"
+            [flowObj]="cartFlow"
+            [accountOptions]="accountOptions"
+            [unitTrustAccountNumberChanged]="unitTrustAccountNumberChanged"
+            [cartUTAccount]="cartUTAccount"
+            (updateAmountInCart)="updateAmountItem($event)"
+            [transactionProcessingIndicator] = "transactionProcessingIndicator"
+            (dateFilteredPurchaseDetailData)="dateFilteredPurchaseDetailDataEvent($event)"
+            [r2Enabled]="r2Enabled"
+            [customerType]="customerType"
+            [foreignerInd]="foreignerInd"
+            [occupationInd]="occupationInd"
+            (updateRedeemAmount)="updateDashboardRedeemAmount($event)"
+            [isTransactionDataLoaded]="isTransactionDataLoaded"
+          ></cimb-tab-dashboard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="btn-add-mobile" *ngIf="selectedTabIndex !== 1">
+  <cimb-button-add *ngIf="addNewInvestmentEnabled"
+    [amlCheckResult]="amlCheckResult"
+    [buttonEnabled]="addNewInvestmentEnabled"
+    [accounts]="portfolioAccount"
+    [selectedAccount]="selectedAccounts"
+    [casaIndicator]="casaIndicator"
+    [cimbStaff]="cimbStaff"
+    [joinOrUtAccountIndicator]="joinOrUtAccountIndicator"
+    [joinAndUtAccountIndicator]="joinAndUtAccountIndicator"
+    [solePropIndicator]="solePropIndicator"
+  ></cimb-button-add>
+</div>

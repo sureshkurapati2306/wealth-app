@@ -1,0 +1,36 @@
+<div class="main-section">
+    <cimb-asnb-sub-header
+        [asnbOverallInvestment]="asnbOverview"
+        [asnbSummary]="asnbSummary"
+    ></cimb-asnb-sub-header>
+    <div class="container">
+        <div class="dashboard-amount hide-lg">
+            <cimb-asnb-investment></cimb-asnb-investment>
+        </div>
+        <div class="section-content">
+            <div class="dashboard-content">
+                <div class="dashboard-portfolio show-lg">
+                    <cimb-asnb-investment></cimb-asnb-investment>
+                    <cimb-asnb-prospectus-sales-charge
+                        class="prospectus"
+                    ></cimb-asnb-prospectus-sales-charge>
+                    <cimb-asnb-delink-account></cimb-asnb-delink-account>
+                </div>
+                <div class="dashboard-tab">
+                    <cimb-asnb-tab-dashboard
+                        [fixedFunds]="fixedFunds"
+                        [variableFunds]="variableFunds"
+                        [asnbMemberList]="asnbMemberList"
+                        (selectedMemberShip)="onChangeMemberShip($event)"
+                        (getPastTransaction)="fetchPastTransaction($event)"
+                    ></cimb-asnb-tab-dashboard>
+                    <cimb-asnb-prospectus-sales-charge
+                        class="hide-lg prospectus"
+                    ></cimb-asnb-prospectus-sales-charge>
+                    <cimb-asnb-delink-account class="hide-lg"></cimb-asnb-delink-account>
+                </div>
+            </div>
+        </div>
+    </div>
+    <cimb-asnb-footer></cimb-asnb-footer>
+</div>

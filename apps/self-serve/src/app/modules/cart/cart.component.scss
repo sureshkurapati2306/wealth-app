@@ -1,0 +1,119 @@
+.section-head {
+  h4 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--n100);
+
+    @media (min-width: 48rem) {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.section-content {
+  @media (min-width: 75rem) {
+    max-width: 63rem;
+    margin: 0 auto;
+  }
+  .purchase-header {
+    p {
+      color: var(--n60);
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      span {
+        &:first-child {
+          @media (min-width: 62rem) {
+            visibility: visible !important;
+          }
+        }
+      }
+
+      @media (min-width: 48rem) {
+        font-size: 0.875rem;
+        line-height: 1.3125rem;
+      }
+
+      strong {
+        font-weight: var(--regular);
+
+        @media (min-width: 48rem) {
+          display: block;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          font-weight: var(--bold);
+        }
+      }
+    }
+  }
+  .cart-empty {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    @media (min-width: 48rem) {
+      padding-top: 2rem;
+    }
+    img {
+      max-height: 7.5rem;
+      margin: 0 auto 1.5rem;
+
+      @media (min-width: 48rem) {
+        max-height: none;
+        margin-bottom: .5rem;
+      }
+    }
+    h2 {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      margin-bottom: 0.5rem;
+
+      @media (min-width: 48rem) {
+        font-size: 1.75rem;
+        line-height: 2.4375rem;
+      }
+    }
+    p {
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      margin-bottom: 7.1875rem;
+
+      @media (min-width: 48rem) {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin-bottom: 4rem;
+      }
+    }
+    button {
+      width: 100%;
+
+      @media (min-width: 48rem) {
+        width: 24rem;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+:host ::ng-deep {
+  .amount-key-form {
+    .mat-form-field {
+      .mat-form-field-subscript-wrapper {
+        width: 280px !important;
+        margin-top:0 !important;
+
+      }
+    }
+    &.ng-invalid {
+      .mat-form-field-wrapper {
+        padding-bottom: 20px;
+      }
+    }
+  }
+}

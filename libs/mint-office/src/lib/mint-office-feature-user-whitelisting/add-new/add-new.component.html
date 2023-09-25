@@ -1,0 +1,53 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" routerLink="/user-whitelisting">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>New</h1>
+            </div>
+            <div class="section-content">
+                <div class="new-form-title">Upload whitelisting list (.csv file only)</div>
+                <div class="new-form-content">
+                    <form #addNewForm="ngForm" [formGroup]="addNewFb" (submit)="submit()">
+                        <div class="block-filter-input">
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>Upload File</mat-label>
+                                    <div class="input-with-button">
+                                        <input type="text" matInput placeholder="Upload File"
+                                            [formControl]="addNewFb.get('uploadfile')" />
+                                        <input type="file" style="display: none" accept=".csv"
+                                            (change)="onFileSelected($event)" #fileInput />
+                                        <button mat-icon-button type="button" class="upload-button" (click)="fileInput.click()">
+                                            <mat-icon class="icon-upload"><img  src="./assets/images/icon-upload.svg"
+                                                alt="icon-upload"></mat-icon>
+                                        </button>
+                                    </div>
+                                    <mat-error *ngIf="addNewFb.get('uploadfile').hasError('required')">
+                                        This field is mandatory
+                                    </mat-error>
+                                    <mat-error *ngIf="addNewFb.get('uploadfile').hasError('invalidCsv')">
+                                        File not supported
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="block-filter-cta">
+                            <button mat-flat-button class="btn-custom btn-text btn-xs clear-button"
+                                [disabled]="addNewForm.invalid" type="button" (click)="clear()">
+                                Clear
+                            </button>
+                            <button mat-flat-button class="btn-custom btn-red btn-xs save-button"
+                                [disabled]="addNewForm.invalid" type="submit">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

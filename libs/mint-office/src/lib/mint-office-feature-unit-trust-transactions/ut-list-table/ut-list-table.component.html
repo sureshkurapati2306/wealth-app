@@ -1,0 +1,359 @@
+<div class="empty" *ngIf="!hasSearched">
+    <div class="empty-inner">
+        <span><em class="icon-search"></em></span>
+        <h1>No results yet.</h1>
+        <p>Start searching by entering search values on top.</p>
+    </div>
+</div>
+
+<ng-container *ngIf="loadingState !== 'pending'">
+    <div class="block-info" *ngIf="hasSearched && dataSource.data.length">
+        <div class="block-info-left" *ngIf="!isSMSPage">
+            <button
+                (click)="clickCancelTransactions()"
+                mat-flat-button
+                [disabled]="selection.isEmpty()"
+                class="btn-custom btn-text"
+            >
+                <span class="icon-close"></span> Cancel Transaction
+            </button>
+        </div>
+        <div class="block-info-right">
+            <button
+                *ngIf="!isSMSPage"
+                mat-flat-button
+                class="btn-custom btn-red btn-ghost btn-xs"
+                (click)="download()"
+            >
+                <span class="icon-download-alt"></span> Download Report
+            </button>
+            <p>
+                <strong>{{ isSMSPage ? 'SMS Delivery Period:' : 'Transaction Period:' }}</strong>
+                {{ transactionStartDate }} to {{ transactionEndDate }}
+            </p>
+        </div>
+    </div>
+    <div class="empty" *ngIf="hasSearched && !dataSource.data.length">
+        <div class="empty-inner">
+            <h5>No matching search results.</h5>
+            <p>Please go to other tabs to check results or try another search.</p>
+        </div>
+    </div>
+
+    <table
+        mat-table
+        multiTemplateDataRows
+        [dataSource]="dataSource"
+        class="table-responsive table-stripe table-ut"
+        *ngIf="dataSource.data.length"
+        aria-describedby="List of Unit Trust Transactions"
+    >
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="checkbox">
+            <th scope="col" mat-header-cell *matHeaderCellDef>
+                <mat-checkbox
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                >
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span class="expand-icon icon-arrow-right-regular"></span>
+
+                <mat-checkbox
+                    (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [disabled]="
+                        row.transactionStatus !== 'Processing' || row.processingStatus !== 'N'
+                    "
+                >
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- No. Column -->
+        <ng-container matColumnDef="no">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="cell-number">No.</th>
+            <td mat-cell *matCellDef="let row; let i = dataIndex">
+                {{
+                    this.paginator?.pageIndex === 0
+                        ? i + 1
+                        : 1 + i + this.paginator?.pageIndex * this.paginator?.pageSize
+                }}
+            </td>
+        </ng-container>
+
+        <!-- Ref. No. Column -->
+        <ng-container matColumnDef="refNo">
+            <th scope="col" mat-header-cell *matHeaderCellDef>Ref. No.</th>
+            <td mat-cell *matCellDef="let row">{{ row.referenceNo }}</td>
+        </ng-container>
+
+        <!-- Txn. Date & Time Column -->
+        <ng-container matColumnDef="txnDateTime">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Txn. Date & Time
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.transactionDatetime | date: 'dd MMM yyyy hh:mma' }}
+            </td>
+        </ng-container>
+
+        <!-- Customer Name Column -->
+        <ng-container matColumnDef="customerName">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Customer Name
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.clientName }}
+            </td>
+        </ng-container>
+
+        <!-- ID No Column -->
+        <ng-container matColumnDef="idNumber">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">ID No.</th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.clientId }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deliveryDateTime">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Delivery DateTime
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.deliveryDateTime | date: 'dd MMM yyyy, hh:mm:ss a' }}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="smsDeliveryStatus">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                SMS Delivery Status
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.smsDeliveryStatus }}
+            </td>
+        </ng-container>
+
+        <!-- Fund Name Column -->
+        <ng-container matColumnDef="fundName">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Fund Name</th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.fundName }}
+            </td>
+        </ng-container>
+
+        <!-- Switch Out Fund Column -->
+        <ng-container matColumnDef="switchOutFund">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Switch Out Fund
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.fundName }}
+            </td>
+        </ng-container>
+
+        <!-- Switch In Fund Column -->
+        <ng-container matColumnDef="switchInFund">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Switch In Fund
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.toFundName }}
+            </td>
+        </ng-container>
+
+        <!-- Unit Trust Acc. No. Column -->
+        <ng-container matColumnDef="utAccNumber">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">
+                Unit Trust Acc. No.
+            </th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.utAccountNo }}
+            </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Status</th>
+            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                {{ row.transactionStatus }}
+            </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+                <button
+                    mat-flat-button
+                    class="btn-custom btn-text"
+                    (click)="isSMSPage ? goToSmsDetailPage(row) : goToDetailPage(row)"
+                >
+                    <span class="icon-arrow-right-1"></span>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column for Purchase and Redemption UT Transactions - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetailDefaultUtTransactions">
+            <td
+                mat-cell
+                *matCellDef="let row"
+                [attr.colspan]="displayedColumns.length"
+                class="cell-detail"
+            >
+                <div
+                    class="table-detail"
+                    [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'"
+                >
+                    <table
+                        class="table-detail-inner"
+                        aria-describedby="Unit Trust Transaction Summary"
+                    >
+                        <ng-container
+                            *ngTemplateOutlet="commonUtColumns; context: { $implicit: row }"
+                        ></ng-container>
+
+                        <tr>
+                            <th scope="row">Fund Name</th>
+                            <td>{{ row.fundName }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Unit Trust Acc. No.</th>
+                            <td>{{ row.utAccountNo }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Status</th>
+                            <td>{{ row.transactionStatus }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column for Switching UT Transactions - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetailSwitchingUtTransactions">
+            <td
+                mat-cell
+                *matCellDef="let row"
+                [attr.colspan]="displayedColumns.length"
+                class="cell-detail"
+            >
+                <div
+                    class="table-detail"
+                    [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'"
+                >
+                    <table
+                        class="table-detail-inner"
+                        aria-describedby="Unit Trust Transaction Summary"
+                    >
+                        <ng-container
+                            *ngTemplateOutlet="commonUtColumns; context: { $implicit: row }"
+                        ></ng-container>
+
+                        <tr>
+                            <th scope="row">Switch Out Fund</th>
+                            <td>{{ row.fundName }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Switch In Fund</th>
+                            <td>{{ row.toFundName }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Unit Trust Acc. No.</th>
+                            <td>{{ row.utAccountNo }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Status</th>
+                            <td>{{ row.transactionStatus }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetailSmsDeliveryLog">
+            <td
+                mat-cell
+                *matCellDef="let row"
+                [attr.colspan]="displayedColumns.length"
+                class="cell-detail"
+            >
+                <div
+                    class="table-detail"
+                    [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'"
+                >
+                    <!-- //NOSONAR -->
+                    <table
+                        class="table-detail-inner"
+                        aria-describedby="Unit Trust Transaction Summary"
+                    >
+                        <ng-container
+                            *ngTemplateOutlet="smsDelivery; context: { $implicit: row }"
+                        ></ng-container>
+                    </table>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns; let i = dataIndex"
+            class="table-row"
+            [class.table-expanded-row]="expandedRow === row"
+            (click)="expandedRow = expandedRow === row ? null : row"
+            [ngClass]="{
+                rowEven: i % 2,
+                rowOdd: !(i % 2)
+            }"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: [expandedDetail]" class="table-detail-row"></tr>
+    </table>
+
+    <cimb-office-table-paginator
+        [dataSourceRows]="dataSource"
+        [getLoadingState]="loadingState"
+        (pageChange)="paginator = $event"
+        [pageIndex]="this.paginator?.pageIndex * resetCount"
+        [pageSize]="this.paginator?.pageSize"
+    >
+    </cimb-office-table-paginator>
+</ng-container>
+
+<!-- Abstract out the common table columns to overcome the duplicate code test criteria -->
+<ng-template #commonUtColumns let-row>
+    <tr>
+        <th scope="row">Txn. Date & Time</th>
+        <td>{{ row.transactionDatetime | date: 'dd MMM yyyy, hh:mm:ss a' }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Customer Name</th>
+        <td>{{ row.clientName }}</td>
+    </tr>
+    <tr>
+        <th scope="row">ID No.</th>
+        <td>{{ row.clientId }}</td>
+    </tr>
+</ng-template>
+
+<ng-template #smsDelivery let-row>
+    <tr>
+        <th scope="row">Delivery Date & Time</th>
+        <td>{{ row.deliveryDateTime | date: 'dd MMM yyyy, hh:mm:ss a' }}</td>
+    </tr>
+    <tr>
+        <th scope="row">ID No.</th>
+        <td>{{ row.clientId }}</td>
+    </tr>
+    <tr>
+        <th scope="row">UNIT TRUST ACC. NO.</th>
+        <td>{{ row.utAccountNo }}</td>
+    </tr>
+    <tr>
+        <th scope="row">SMS DELIVERY STATUS</th>
+        <td>{{ row.smsDeliveryStatus }}</td>
+    </tr>
+</ng-template>

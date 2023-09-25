@@ -1,0 +1,55 @@
+:host {
+    width: 100%;
+}
+.empty {
+    width: 100%;
+    min-height: 30rem;
+    padding: 2.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    background: var(--n0);
+
+    span {
+        display: block;
+        margin: 0 auto 1rem auto;
+        background: #f5f7fa;
+        width: 7rem;
+        height: 7rem;
+        text-align: center;
+        border-radius: 50%;
+
+        em {
+            font-size: 3rem;
+            line-height: 7rem;
+        }
+    }
+    h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color: var(--c90);
+        font-weight: var(--regular);
+        margin: 0 0 8px 0;
+    }
+    p {
+        font-size: 1rem;
+        line-height: 1.375rem;
+        color: var(--c60);
+        margin: 0;
+    }
+    h5 {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+        color: var(--c90);
+        margin-bottom: 0.25rem;
+
+        + p {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+    }
+}
+
+.empty-inner {
+    margin: 0 auto;
+}

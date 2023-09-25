@@ -1,0 +1,94 @@
+<form
+    #searchForm="ngForm"
+    [formGroup]="transactionForm"
+    (submit)="submit($event)"
+    class="block-filter"
+>
+    <div class="block-filter-input">
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Transaction Date *</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date" />
+                    <input matEndDate formControlName="end" placeholder="End date" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                    class="datetimepicker-icon"
+                    matSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Action</mat-label>
+                <mat-select
+                    formControlName="action"
+                    multiple
+                    placeholder="Choose options"
+                    panelClass="custom-select-panel multi-select"
+                >
+                    <mat-option *ngFor="let item of transactionTypes" [value]="item.value">{{
+                        item.viewValue
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <mat-select
+                    formControlName="status"
+                    placeholder="Choose options"
+                    panelClass="custom-select-panel multi-select custom-field-adjustment"
+                >
+                    <mat-option *ngFor="let item of transactionStats" [value]="item.value">{{
+                        item.viewValue
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Customer Name</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Unit Trust Account Number"
+                    formControlName="customerName"
+                />
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Customer ID</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Unit Trust Account Number"
+                    formControlName="customerId"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="block-filter-cta">
+        <button
+            mat-flat-button
+            class="btn-custom btn-text btn-xs btn-filter-clear"
+            [disabled]="transactionForm.invalid || loadingState === 'loading'"
+            type="button"
+            (click)="clear()"
+        >
+            Clear
+        </button>
+        <button
+            mat-flat-button
+            class="btn-custom btn-red btn-xs btn-filter-search"
+            [disabled]="transactionForm.invalid || loadingState === 'loading'"
+            type="submit"
+        >
+            Search
+        </button>
+    </div>
+</form>

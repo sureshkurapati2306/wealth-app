@@ -1,0 +1,139 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+::ng-deep {
+  .col-header {
+    .t-util {
+      span {
+        @media (min-width: 1200px) {
+          display: block !important;
+        }
+      }
+    }
+  }
+
+  .insufficient-balance-icon {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 3.625rem !important;
+    height: 3.625rem !important;
+  }
+
+  .mat-dialog-wrapper {
+    .mat-dialog-pad {
+      .mat-dialog-actions {
+        padding-top: 0px !important;
+      }
+
+      .mat-dialog-content {
+        p {
+          margin: 0 !important;
+        }
+      }
+    }
+
+    .btn-red {
+      background: var(--r120) !important;
+    }
+  }
+
+  p.asnb-checkout-message {
+    padding-bottom: 40px !important;
+  }
+}
+
+[class] {
+  &:not(.mat-icon) {
+    font-family: $notoSans !important;
+  }
+}
+
+.container {
+  padding: 0 1rem;
+  margin-top: 1.5rem;
+  @media (min-width: $asnbDesktop) {
+    margin: 2rem auto 0;
+    max-width: 78rem;
+  }
+}
+
+.section-head {
+  margin-bottom: 1.5rem;
+  @include font(1rem);
+  @media (min-width: $asnbDesktop) {
+    margin-bottom: 2rem;
+    @include font(1.25rem);
+  }
+}
+
+.section-content {
+  @media (min-width: $asnbDesktop) {
+    max-width: 63rem;
+    margin: 0 auto;
+  }
+}
+
+.membership-section {
+  margin-bottom: 0.75rem;
+}
+
+.membership-heading {
+  color: $grey;
+  @include font(0.75rem);
+  margin-bottom: 0.25rem;
+  @media (min-width: $asnbDesktop) {
+    @include font(0.875rem);
+  }
+}
+
+.membership-details {
+  margin-bottom: 0;
+  @include font(0.875rem);
+  @media (min-width: $asnbDesktop) {
+    @include font(1rem);
+  }
+}
+
+.membership-name {
+  margin-right: 0.5rem;
+}
+
+.otp-section {
+  margin-top: 1rem;
+}
+
+.card-container {
+  display: grid;
+  row-gap: 1.5rem;
+  @media (min-width: $asnbDesktop) {
+    row-gap: 2rem;
+  }
+}
+
+.utility-btn {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 25px 0 0;
+
+  a {
+    color: $cimb;
+    font-family: $notoSans !important;
+    font-size: 0.875rem;
+    line-height: 1.3125rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 1.125rem;
+    margin-bottom: .625rem;
+
+    span {
+      text-decoration: underline;
+    }
+    mat-icon {
+      margin-left: 0.625rem;
+      font-size: 1.125rem;
+      width: auto;
+      height: auto;
+    }
+  }
+}

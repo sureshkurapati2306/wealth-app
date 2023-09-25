@@ -1,0 +1,12 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+::ng-deep .amount-key-form .mat-form-field .mat-form-field-subscript-wrapper{
+    margin-top: 24px !important;
+    width: 480px !important;
+  }

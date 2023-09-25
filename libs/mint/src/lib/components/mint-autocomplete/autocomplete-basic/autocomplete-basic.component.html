@@ -1,0 +1,187 @@
+<label class="custom-label" *ngIf="hasLabel">{{ inputLabel }}</label>
+<div [ngClass]="{'search-wrapper': searchWrapper, 'input-wrapper': !searchWrapper}">
+  <div class="autocomplete-block">
+    <em *ngIf="!withButton" class="icon-arrow-down"
+    (click)="openOrClosePanel($event, trigger)"></em>
+    <input
+    type="text"
+    placeholder="{{ autocompletePlaceholder }}"
+    [formControl]="switch"
+    [matAutocomplete]="switchList"
+    [(ngModel)] = "switchValue"
+    class="input-autocomplete custom-input"
+    #inputAutoComplete
+    #trigger="matAutocompleteTrigger"
+    />
+    <ng-container *ngIf="withButton">
+      <button mat-icon-button
+      (click) = "onSearchButtonClick()"
+      class="btn-search"
+      disableRipple="true" >
+        <em class="icon-search" ></em>
+      </button>
+
+      <button
+      mat-icon-button
+      (click)="resetValue()"
+      disableRipple="true"
+      class="btn-clear"
+      >
+        <em class="icon-cancel"></em>
+      </button>
+    </ng-container>
+
+    <mat-autocomplete
+    #switchList="matAutocomplete"
+    class="{{ customClass }}"
+    (opened)="autocompleteOpened()"
+      (closed)="autocompleteClosed()"
+      (optionSelected)="onSelectionChange($event)">
+      <div class="mat-menu-content">
+        <div class="panel-header" >
+          <button mat-icon-button class="btn-close" (click)="closeOptions()">
+            <em class="icon-close"></em>
+          </button>
+        </div>
+        <!-- Input within a dropdown panel - for mobile -->
+        <div class= "hide-lg">
+        <div [ngClass]="{'search-wrapper': searchWrapper, 'input-wrapper': !searchWrapper}">
+          <div class="autocomplete-block">
+        
+          <input type="text" placeholder="Select" [formControl]="switch" 
+          class="input-autocomplete custom-input"
+         />
+         
+            <button mat-icon-button
+            (click) = "onSearchButtonClick()"
+            class="btn-search"
+            disableRipple="true" >
+              <em class="icon-search" ></em>
+            </button>
+      
+            <button
+            mat-icon-button
+            (click)="resetValue()"
+            disableRipple="true"
+            class="btn-clear"
+            >
+              <em class="icon-cancel"></em>
+            </button>
+          
+        </div></div></div>
+        <div class="panel-content" *ngIf="!accountOpeningFields">
+
+          <ng-container *ngIf="isTypeAheadItems">
+            <div class="selected-items">
+              <ul>
+                <li>
+                  Malaysian
+                </li>
+                <li>
+                  Indonesian
+                </li>
+                <li>
+                  Thai
+                </li>
+                <li>
+                  Indian
+                </li>
+                <li>
+                  Chinese
+                </li>
+                <li>
+                  Australian
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+
+
+           <ng-container *ngIf="!autocompleteGroup">
+
+            <mat-option
+            *ngFor="let option of filteredOptions | async"
+            [value]="option.name"
+            disableRipple="true"
+            >
+              <span [innerHTML]="option.name | highlight: toHighlight"></span>
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompleteGroup">
+            <mat-optgroup *ngFor="let group of filteredOptions | async" [label]="group.name">
+              <mat-option
+              *ngFor="let option of group.option"
+              [value]="option.name"
+              disableRipple="true"
+              >
+                <span [innerHTML]="option.name | highlight: toHighlight"></span>
+              </mat-option>
+            </mat-optgroup>
+          </ng-container>
+        </div>
+        <div class="panel-content" *ngIf="accountOpeningFields">
+          <ng-container *ngIf="autocompletePlaceholder=== 'Title'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.salutationLongName"
+              disableRipple="true">
+              {{ option.salutationLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Nationality' || autocompletePlaceholder === 'Nationality'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.countryLongName"
+              disableRipple="true">
+              {{ option.countryLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Country' || autocompletePlaceholder === 'Country'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.countryLongName"
+              disableRipple="true">
+              {{ option.countryLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'State'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.stateLongName"
+              disableRipple="true">
+              {{ option.stateLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Citizen' || autocompletePlaceholder === 'Citizen'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.citizenLongName"
+              disableRipple="true">
+              {{ option.citizenLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Race' || autocompletePlaceholder === 'Race'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.raceLongName"
+              disableRipple="true">
+              {{ option.raceLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Religion' || autocompletePlaceholder === 'Religion'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.religionLongName"
+              disableRipple="true">
+              {{ option.religionLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Marital Status' || autocompletePlaceholder === 'Marital Status'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.maritalLongName"
+              disableRipple="true">
+              {{ option.maritalLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Profession' || autocompletePlaceholder === 'Profession'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.occupationLongName"
+              disableRipple="true">
+              {{ option.occupationLongName }}
+            </mat-option>
+          </ng-container>
+          <ng-container *ngIf="autocompletePlaceholder === 'Select Industry' || autocompletePlaceholder === 'Industry'">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.employmentShortName"
+              disableRipple="true">
+              {{ option.employmentShortName }}
+            </mat-option>
+          </ng-container>
+        </div>
+      </div>
+    </mat-autocomplete>
+  </div>
+</div>

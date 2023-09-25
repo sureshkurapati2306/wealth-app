@@ -1,0 +1,9 @@
+.page-wrapper {
+  padding-bottom: 0;
+}
+.section-content {
+  @media (min-width: 75rem) {
+    max-width: 63rem;
+    margin: 0 auto;
+  }
+}

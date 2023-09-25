@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="dialog-heading">
+    &nbsp;
+    <button mat-button class="close-icon">
+        <mat-icon (click)="closeDialog()" matSuffix>close</mat-icon>
+    </button>
+</h1>
+
+<div mat-dialog-content class="dropdown-dialog-content">
+    <form [formGroup]="mobileDropdownForm" class="mobile-autocomplete-form">
+        <mat-list *ngIf="!data.isGroupDropdown">
+            <mat-list-item *ngFor="let option of filteredDropdownOptions | async"
+                (click)="getSelectedOption(option[data.dropdownId])" [value]="option[data.dropdownId]">
+                {{option[data.dropdownValue]}}
+            </mat-list-item>
+        </mat-list>
+        <mat-list *ngIf="data.isGroupDropdown">
+            <ng-container *ngFor="let group of filteredDropdownOptions | async">
+                <h3 class="sub-header" mat-subheader>{{group.letter}}</h3>
+                <mat-list-item *ngFor="let name of group.names" (click)="getSelectedOption(name)" [value]="name">
+                    {{name}}
+                </mat-list-item>
+            </ng-container>
+        </mat-list>
+    </form>
+</div>

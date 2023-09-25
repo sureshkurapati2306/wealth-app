@@ -1,0 +1,44 @@
+<div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <mat-dialog-content>
+      <h6><span>{{topHeading}}</span></h6>
+      <h4><span>{{secondHeading}}</span></h4>
+      <ul>
+        <li [class.current]="riskProfileActive" [class.done]="riskProfileCompleted">
+          <span>Risk Profiling</span>
+        </li>
+        <li class="" [class.current]="selectInvestActive" [class.done]="selectInvestCompleted">
+          <span>Select Investment</span>
+        </li>
+        <li class="" [class.current]="openAccountActive" [class.done]="openAccountCompleted">
+          <span>Open Account</span>
+        </li>
+        <li [class.current]="confirmPurchaseActive" [class.done]="confirmPurchaseCompleted">
+          <span>Confirm Purchase</span>
+        </li>
+      </ul>
+      <small *ngIf="dialogHeadingSubText" [innerHTML]="dialogHeadingSubText"></small>
+      <div class="image" [innerHtml]="dialogImage" *ngIf="dialogImage"></div>
+      <h3 [innerHTML]="dialogHeading">
+        <small *ngIf="dialogHeadingSubText" [innerHTML]="dialogHeadingSubText"></small>
+      </h3>
+      <div *ngIf="(dialogHeading !== 'Unexpected Issue')" [innerHtml]="dialogContent"></div>
+      <div *ngIf="(dialogHeading === 'Unexpected Issue')">
+        <p>We have encountered an unexpected issue. Please try again later. If this issue persists,
+          please<strong><a href="https://www.cimb.com.my/en/personal/help-support/contact-us.html"
+              class="contactUs go_to_consumer_contact_centre_link"> contact us to report this
+              issue.</a></strong></p>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="cart-modal-actions" *ngIf="dialogButtonProceed">
+      <button mat-flat-button class="btn-custom btn-red" disableRipple="true" (click)="proceed()">
+        {{ dialogButtonProceedText }}
+      </button>
+    </mat-dialog-actions>
+    <mat-dialog-actions align="center" class="cart-modal-actions" *ngIf="dialogSecondButton">
+      <button mat-flat-button class="btn-custom" disableRipple="true" (click)="secondButtonAction()">
+        {{ dialogSecondButtonText }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

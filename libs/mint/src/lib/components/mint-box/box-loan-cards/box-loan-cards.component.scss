@@ -1,0 +1,242 @@
+.box {
+  // box-shadow: 0 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12),
+  //   0 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08);
+  background: var(--n0);
+  padding: 1rem;
+  border-radius: 1rem;
+  //margin-bottom: 2rem;
+  margin-bottom: 0;
+  border: solid 1px var(--n20);
+
+  @media (min-width: 60rem) {
+    padding: 1.5rem;
+  }
+  &-header {
+    margin-bottom: 1.5rem;
+
+    h5 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08rem;
+      font-weight: var(--medium);
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  &-risk-profile {
+    position: relative;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    // margin-top:1.688rem;
+    //padding-top: 4.25rem;
+
+    @media (max-width: 60rem) {
+      box-shadow: none;
+    }
+    @media (min-width: 60rem) {
+      // padding-top: 5.25rem;
+      margin-top: none;
+    }
+    @media (min-width: 64rem) {
+      // padding-top: 1rem;
+    }
+
+    h6 {
+      font-size: 1rem;
+      font-weight: bold;
+      color: black;
+      text-transform: none;
+      margin-bottom: 0.25rem;
+      border-color:var(--s100); 
+    }
+    .heading {
+      //border-bottom: 0.0625rem solid var(--n20);
+      // padding-bottom: 1rem;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 16px;
+    }
+    .contentSection {
+      // padding-left: 0.413rem;
+      // border-top: 0.0625rem solid var(--n20);
+      // padding-top: .713rem;
+      // margin-bottom: .913rem;
+      // margin-bottom: 0.913rem; */
+      padding-left: 32px;
+      border-top: 0.0625rem solid var(--n20);
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+    .contentSection:last-child{
+      padding-bottom: 8px;
+    }
+    .subSection {
+      @media (min-width: 60rem) {
+        margin-right: 3.125rem;
+      }
+      .subSection-heading {
+        margin: 0px;
+        padding: 2px 0;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+    .tips {
+      color: var(--n60);
+      font-size: 1rem;
+      @media (min-width: 60rem) {
+        float: right;
+      }
+    }
+    .clock {
+      float: left;
+      margin-right: 0.35rem;
+      color: var(--n50);
+      font-size: 0.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: var(--n100);
+
+      @media (min-width: 64rem) {
+        padding-right: 9.375rem;
+      }
+    }
+    .btn-text {
+      @media (min-width: 60rem) {
+        font-size: 0.875rem;
+      }
+    }
+
+    button {
+      margin-right: 1.5rem;
+    }
+  }
+  .label {
+    padding-left: 0.313rem !important;
+  }
+  .accountNo {
+    background-color: var(--n5);
+    color: var(--n80);
+    font-weight: bold;
+    font-size: 0.625rem;
+  
+  }
+  .date-time-content-small{
+    padding: 6px 0;
+  }
+  .investmentValue {
+    // font-weight: bold;
+    color: var(--n60); 
+    // font-size: 0.75rem;
+    // margin-right: 0.525rem;
+    font-weight: normal;
+    font-size: 12px;
+    margin-right: 0.525rem;
+    @media (min-width: 60rem) {
+      float: right;
+    }
+    @media (max-width: 60rem) {
+      margin-top: 6px;
+    }
+  }
+  .date-time-content {
+    padding: 2px 0;
+  }
+  .dateTime {
+    color: var(--n50);
+    font-size: 10px;
+    // font-weight: bold;
+    // font-size: 0.625rem;
+    @media (max-width: 60rem) {
+      margin-right: 33px;
+    }
+  }
+  .amount {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-right: 0.525rem;
+    @media (min-width: 60rem) {
+      float: right;
+    }
+  }
+  .top {
+    font-size: 0.625rem;
+    font-weight: bold;
+    padding-top: 0.563rem;
+    @media (min-width: 60rem) {
+      float: right;
+    }
+  }
+  .redirect {
+    color: var(--r100);
+    font-weight: normal;
+    font-size: 0.75rem;
+    text-decoration: underline;
+  }
+  .nextPay {
+    padding: 5px 6px;
+    font-weight: bold;
+    // color: #d3805d;
+    // background: #FFAB00;
+    color: #ffab00;
+    background: #fff7e6;
+    font-size: 0.625rem;
+      margin-left: 0.125rem;
+      @media (max-width: 48rem) {
+
+      margin-left: 0;
+    }
+  
+  }
+  .statementDiv {
+    width: 40%;
+    text-align: left;
+    float: left;
+  }
+  .paymenttDiv {
+    width: 66%;
+  }
+  .commonDiv1 {
+    color:var(--n60);
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .commonDiv2 {
+    color: #45484a;
+    font-size: 1.5rem;
+    @media (min-width: 60rem) {
+      font-size: 0.75rem;
+    }
+    font-weight: bold;
+    display: block;
+  }
+  .commonDiv3 {
+    color:var(--n50);
+    font-size: 0.625rem;
+    font-weight: bold;
+    display: block;
+  }
+  .paymenttDiv1 {
+    text-align: left !important;
+  }
+  .thirdDiv {
+    text-align: right;
+    width: 20%;
+    float: right;
+  }
+  .investmentValueDiv {
+    margin-top: 0.625rem;
+  }
+  img {
+    width: 0.75rem;
+    padding-top: 0.313rem;
+  }
+  .divMobile {
+    margin-top: 0.625rem;
+  }
+}

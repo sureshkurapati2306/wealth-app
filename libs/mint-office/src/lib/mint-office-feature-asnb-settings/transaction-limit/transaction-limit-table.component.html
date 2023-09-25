@@ -1,0 +1,22 @@
+<div class="table-container">
+    <div class="table-filter">
+        <div class="preset-filter">
+            <mat-chip-list aria-label="Filter selection" class="chip-custom">
+                <mat-chip
+                    *ngFor="let filter of filters"
+                    [ngClass]="{ 'mat-chip-selected': filter.id === activeFilter }"
+                    (click)="activeFilter = filter.id; toggleFilterStatus(filter.id)"
+                    [selected]="filter.id === activeFilter"
+                >
+                    {{ filter.name }}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+    <div *ngIf="activeFilter === 1">
+        <cimb-office-table-all-funds></cimb-office-table-all-funds>
+    </div>
+    <div *ngIf="activeFilter === 2">
+        <cimb-office-table-individual-funds></cimb-office-table-individual-funds>
+    </div>
+</div>

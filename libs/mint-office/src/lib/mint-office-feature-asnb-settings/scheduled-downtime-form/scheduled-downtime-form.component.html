@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+    <div class="container">
+      <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+      <div class="section">
+        <div class="section-head">
+          <button mat-flat-button class="btn-custom btn-text" routerLink="/asnb-settings">
+            <em class="icon-arrow-back"></em>
+          </button>
+          <h1>New</h1>
+        </div>
+        <div class="section-content section-middle">
+            <div class="section-content-left">
+
+                <div class="tips">
+                  <h6>TIPS</h6>
+                  <ul>
+                    <li>
+                        Make sure the <strong>Date/Time and Subject are not overlapped</strong> with other scheduled downtime.
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+              <div class="section-content-right">
+                <form [formGroup]="schedulerForm">
+                    <mat-form-field>
+                        <mat-label>Start Date & Time</mat-label>
+                        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                            formControlName="startDateTime" ngDefaultControl [min]="now"
+                            [readonly]="true"
+                            (click)="picker._selected = convertDateToMoment(schedulerForm.get('startDateTime')?.value); picker.open()"
+                        >
+                        <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                        <mat-datepicker-toggle class="datetimepicker-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
+
+                        <ngx-mat-datetime-picker #picker [enableMeridian]="true" [showSeconds]="true" [defaultTime]="defaultTime">
+                        </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>End Date & Time</mat-label>
+                        <input matInput [ngxMatDatetimePicker]="endDatePicker" placeholder="Choose a date"
+                            formControlName="endDateTime" ngDefaultControl [min]="now"
+                            [readonly]="true"
+                            (click)="endDatePicker._selected = convertDateToMoment(schedulerForm.get('endDateTime')?.value); picker.open()"
+                        >
+                        <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                        <mat-datepicker-toggle class="datetimepicker-icon" matSuffix [for]="picker"></mat-datepicker-toggle>
+
+                        <ngx-mat-datetime-picker #endDatePicker [enableMeridian]="true" [showSeconds]="true" [defaultTime]="defaultTime">
+                        </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input [hidden]="true" (change)="onFileSelect($event)" type="file" accept="all/*" #fileSelect >
+                        <input readonly matInput [(ngModel)]="filename" placeholder="Upload Supporting Screenshot" formControlName="document" />
+                        <button *ngIf="this.base64File" (click)="this.base64File = null; this.filename = null" matSuffix matTooltip="Remove selected file"
+                                [matTooltipPosition]="'above'" type="button" color="warn" mat-icon-button>
+                                <mat-icon>close</mat-icon>
+                              </button>
+                        <button matSuffix mat-icon-button (click)="fileSelect.click();">
+                          <mat-icon>file_upload</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="no-underline-field">
+                        <div class="flex justify-content-between">
+                            <mat-label>Remark</mat-label>
+                            <p>{{myInput.value.length}}/{{maxChars}}</p>
+                        </div>
+                       <textarea
+                            placeholder="This is optional..."
+                            matInput
+                            formControlName="remarks"
+                            #myInput
+                            cols="10"
+                            rows="5"
+                            [maxlength]="maxChars">
+                        </textarea>
+                    </mat-form-field>
+                </form>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-cta footer-sub-page">
+    <button mat-flat-button class="btn-custom btn-red btn-xs" >
+      Save
+    </button>
+  </div>

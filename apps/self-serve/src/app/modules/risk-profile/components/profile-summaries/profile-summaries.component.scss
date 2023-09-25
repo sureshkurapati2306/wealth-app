@@ -1,0 +1,112 @@
+.page-intro {
+    @media (min-width: 48rem) {
+        padding: 2.75rem 0 5rem;
+    }
+    h4 {
+        @media (min-width: 48rem) {
+            margin-bottom: 0.25rem;
+        }
+    }
+    p {
+        @media (min-width: 48rem) {
+            margin: 0;
+        }
+        @media (min-width: 60rem) {
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+    }
+}
+.top-cta {
+    @media (min-width: 48rem) {
+        background-color: var(--n5);
+    }
+    .container {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+
+        @media (min-width: 48rem) {
+            padding-top: 0;
+            padding-bottom: 4.5rem;
+        }
+    }
+    .card-block {
+        max-width: 63rem;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media (min-width: 48rem) {
+            top: -3rem;
+            position: relative;
+        }
+    }
+    .cta {
+        @media (min-width: 48rem) {
+            margin-top: -1.5rem;
+        }
+    }
+}
+.cta {
+    p {
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+    }
+    h2 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        color: var(--n100);
+        margin-bottom: 1rem;
+
+        @media (min-width: 48rem) {
+            font-size: 1.75rem;
+            line-height: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+    .btn-custom {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        width: 100%;
+
+        @media (min-width: 30rem) {
+            width: auto;
+        }
+        @media (min-width: 48rem) {
+            height: 3.5rem;
+            line-height: 3.5rem;
+            padding-left: 4.71875rem;
+            padding-right: 4.71875rem;
+        }
+    }
+}
+.alignment {
+    text-align: center;
+}
+.webDiscription {
+    width: 59.0625rem;
+    height: 3rem;
+    flex-grow: 0;
+    font-size: 1rem;
+    font-family: var(--OpenSans);
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--emphasis-body-n-80);
+}
+.mobileDescription {
+    height: 54px;
+    margin: 1rem 1.5rem 0.5rem;
+    font-family: var(--OpenSans);
+    font-size: 0.75rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--emphasis-body-n-80);
+}

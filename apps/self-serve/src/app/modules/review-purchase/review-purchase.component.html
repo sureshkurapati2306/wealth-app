@@ -1,0 +1,100 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  (backButtonEvent)="backButtonEvent()"
+  [noProgressStep]="noProgressStep"
+  [userType]="userType"
+></cimb-progress-sub-header>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-head">
+      <h4>{{pagwTitle}}</h4>
+    </div>
+
+
+    <div class="section-content">
+      <div class="purchase-header" >
+        <p>
+          <span
+            >Unit Trust Account  <strong>{{ unitTrustAccount }}</strong></span
+          >
+        </p>
+      </div>
+      <cimb-card-payment-account
+        [cardAccountTitle]="cardAccountTitle"
+        [cardAccountSelectionPlaceholder]="cardAccountSelectionPlaceholder"
+        [accountLists]="accountLists"
+        [selectedAccount]="selectedAccountIndex"
+        [isExternalError]="isExternalError"
+        [externalErrorMsg]="externalErrorMsg"
+        (accountselected)="accountSelectedEvent($event)"
+        *ngIf="flow === '001' || flow === '002'"
+      ></cimb-card-payment-account>
+
+      <cimb-card-investment-summary
+          [cardTitle]="cardTtileSelectedInvestment"
+          [investments]="investments"
+          [cimbStaff]="cimbStaffs"
+          [showAssetClass]="true"
+          [showRiskProfile]="true"
+          [flow]="flow"
+        ></cimb-card-investment-summary>
+
+      <cimb-card-purchase-total
+        [cardTitle]="cardTitle"
+        [totalFund] ="totalFund"
+        [totalSalesCharge] ="totalSalesCharge"
+        [totalNetInvestmentAmount] ="totalNetInvestmentAmount"
+        [totalAmount] ="totalAmount"
+        [totalRedemptionUnits]="totalRedemptionUnits"
+        [totalRedemptionAmount]="totalRedemptionAmount"
+        [totalSwitchOutUnits]="totalSwitchOutUnits"
+        [totalSwitchInUnits]="totalSwitchInUnits"
+        [flow]="flow"
+      ></cimb-card-purchase-total>
+
+      <!-- Confirmation section -->
+      <cimb-card-tac
+        *ngIf="flow === '001' || flow === '002'"
+        [disableConfirmButtonPage]="enableConfirmButton"
+        [canEnableConfirmButton]="canEnableConfirmButton"
+        [disableConfirmButton]="disableConfirmButtonComponent"
+        [mobileNumber]="customerMobileNumber"
+        [tagError]="tagErrorShow"
+        (tagErrorChange)="changeTagError($event)"
+        [factaEnabled]="factaEnabled"
+        [tagErrorMessage]="tagErrorMessageText"
+        [accountSelected]="accountSelected"
+        (confirmAndProceedEvent)="confirmAndProceed($event)"
+        (fatcaDeclaratonErrorEvent)="fatcaDeclaratonEvent()"
+        (requestTACEvent)="requestTAC()"
+        (tagEntredCompletely)="tagEntredCompletedEvent($event)"
+        (requestTagCanEnable)="requestTagCanEnableEvent($event)"
+        [enableRequestNumber]="enableRequestNumber"
+        [flow]="flow"
+        [schedulerMsg]="schedulerMsg"
+      ></cimb-card-tac>
+
+      <cimb-card-tac
+        *ngIf="flow === '003'"
+        [disableConfirmButtonPage]="false"
+        [canEnableConfirmButton]="true"
+        [disableConfirmButton]="disableConfirmButtonComponent"
+        [mobileNumber]="customerMobileNumber"
+        [tagError]="tagErrorShow"
+        (tagErrorChange)="changeTagError($event)"
+        [factaEnabled]="factaEnabled"
+        [tagErrorMessage]="tagErrorMessageText"
+        [accountSelected]="accountSelected"
+        (confirmAndProceedEvent)="confirmAndProceed($event)"
+        (fatcaDeclaratonErrorEvent)="fatcaDeclaratonEvent()"
+        (requestTACEvent)="requestTAC()"
+        (tagEntredCompletely)="tagEntredCompletedEvent($event)"
+        (requestTagCanEnable)="requestTagCanEnableEvent($event)"
+        [enableRequestNumber]="enableRequestNumber"
+        [flow]="flow"
+        [schedulerMsg]="schedulerMsg"
+      ></cimb-card-tac>
+    </div>
+  </div>
+</div>

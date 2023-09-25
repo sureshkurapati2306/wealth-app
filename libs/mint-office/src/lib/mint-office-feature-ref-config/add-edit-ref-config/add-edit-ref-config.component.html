@@ -1,0 +1,41 @@
+<div class="page-wrapper">
+    <div class="container">
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" (click)="back()" routerLink="/ref-config">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>{{editScreen ? 'Edit' : 'Add'}} Ref Config</h1>
+            </div>
+            <div class="section-content">
+                <div class="section-content-left">
+                </div>
+                <div class="section-content-right">
+                    <p class="desc">Enter Details for adding Ref Config Entry</p>
+                    <form [formGroup]="schedulerForm">
+                        <div class="field">
+                            <mat-form-field>
+                                <mat-label>Ref Config Name</mat-label>
+                                <input matInput maxLength="30" formControlName="refName" />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                          
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Ref Config Value</mat-label>
+                                <input matInput maxLength="30" formControlName="refValue" />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                          
+                            </mat-form-field>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button mat-flat-button class="btn-custom btn-red btn-xs" (click)="createRefConfig()">
+        Save
+    </button>
+</div>

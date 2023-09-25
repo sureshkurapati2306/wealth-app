@@ -1,0 +1,283 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin';
+
+p {
+    margin: 0;
+}
+.mat-select-disabled .mat-select-value {
+    color: $baseColor;
+}
+::ng-deep .asnb-member {
+    font-family: $notoSans !important;
+    width: 100% !important;
+    user-select: none;
+
+    p {
+        margin: 0;
+    }
+
+    .mat-form-field-label-wrapper {
+        top: 0;
+    }
+
+    .mat-form-field-infix {
+        padding-top: 1.5rem;
+    }
+}
+
+.asnb-member {
+    font-family: $notoSans !important;
+    width: 100% !important;
+    user-select: none;
+
+    display: block;
+    @include font(0.75rem);
+
+    @media (max-width: $asnbDesktop) {
+        display: none !important;
+    }
+
+    @media (min-width: 768px) {
+        display: block;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+    }
+
+    .mat-form-field-infix {
+        padding-top: 1.5rem;
+        padding-bottom: 0;
+    }
+
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-select-arrow-wrapper {
+        display: none;
+    }
+
+    .mat-select {
+        line-height: 0;
+        margin-top: 0.25rem;
+    }
+
+    .mat-select-trigger {
+        width: 100%;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+}
+
+.cdk-overlay-container .cdk-overlay-pane .asnb-member-selection {
+    p {
+        margin: 0;
+    }
+
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    min-width: 100% !important;
+    transform: translateX(1rem) !important;
+    max-height: 21.6875rem;
+    overflow: auto;
+    padding: 1rem 0;
+    box-shadow: 0px 2px 4px -2px rgba(51, 55, 57, 0.12), 0px 4px 4px -2px rgba(51, 55, 57, 0.08);
+
+    .mat-option {
+        height: 100%;
+        min-height: auto;
+        padding: 0;
+
+        &:hover {
+            background-color: #ff6666;
+            color: #ffffff;
+            .list-item__primary-text {
+                color: #ffffff;
+                font-weight: 700;
+            }
+
+            .membership-dropdown-options {
+                border-bottom: 1px solid transparent;
+
+                p {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .mat-option-text {
+            padding: 0 1rem;
+        }
+    }
+
+    .list-item__primary-text {
+        display: block;
+        width: 100%;
+    }
+
+    .mat-active {
+        @include font(0.875rem);
+        background-color: $cimb;
+        color: #ffffff;
+        font-weight: 700;
+
+        .membership-dropdown-options {
+            border-bottom: 1px solid transparent;
+
+            p {
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+::ng-deep .cdk-overlay-pane:not(.mat-select-panel-above) .menu-surface.mat-select-panel {
+    border-top-right-radius: 1rem !important;
+    border-top-left-radius: 1rem !important;
+}
+
+.cdk-overlay-container .mobile-dropdown-container {
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%;
+    height: calc(100% - 1.5rem);
+
+    p {
+        margin: 0 !important;
+    }
+
+    .mat-dialog-container {
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+        overflow: hidden;
+        padding: 0 !important;
+    }
+
+    .close-section {
+        padding: 1.5rem 1rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .membership-dropdown-options {
+        justify-content: space-between;
+        margin: 0 1rem;
+    }
+
+    .isSelected {
+        background-color: $cimb;
+
+        .membership-dropdown-options {
+            border-bottom: 1px solid transparent;
+            color: #ffffff;
+
+            .selected-name {
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.selection {
+    p {
+        margin: 0;
+        @include font(0.75rem);
+    }
+    display: flex;
+    align-items: center;
+    @include font(0.75rem);
+    font-family: $notoSans !important;
+
+    .selected-name {
+        font-weight: 600;
+        overflow: hidden;
+        margin-right: 0.5rem;
+        width: 9.25rem;
+        text-overflow: ellipsis;
+
+        .mat-active {
+            @include font(0.875rem);
+            background-color: $cimb;
+            color: #ffffff !important;
+            font-weight: 700;
+
+            .membership-dropdown-options {
+                border-bottom: 1px solid transparent;
+
+                p {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+
+    .selected-membership-number {
+        flex-shrink: 0;
+        font-weight: 700;
+        color: $baseColor;
+        margin: 0 !important;
+
+        @media (min-width: 768px) {
+            text-align: right;
+        }
+    }
+
+    .dropdown-arrow {
+        margin-left: 0.875rem;
+    }
+}
+
+.labelText {
+    color: #7b7d7e;
+    @include font(0.875rem);
+    line-height: 1.125rem;
+}
+
+.membership-dropdown-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+    @include font(0.875rem);
+    align-items: left;
+    border-bottom: 1px solid #d5d6d7;
+
+    .selected-name {
+        font-weight: 400;
+        overflow: hidden;
+        margin-right: 0.5rem;
+        text-overflow: ellipsis;
+        padding-right: 1rem;
+    }
+
+    .selected-membership-number {
+        flex-shrink: 0;
+        font-weight: 700;
+
+        @media (min-width: 768px) {
+            text-align: left;
+        }
+    }
+}
+
+.mobile-dropdown {
+    @media (min-width: 768px) {
+        display: none;
+    }
+
+    .selection {
+        margin-top: 0.25rem;
+    }
+
+    .membership-dropdown-options {
+        gap: 0.5rem;
+    }
+}

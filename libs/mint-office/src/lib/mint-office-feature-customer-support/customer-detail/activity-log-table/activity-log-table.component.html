@@ -1,0 +1,218 @@
+<div class="block-table">
+    <div class="empty" *ngIf="!hasSearched">
+        <div class="empty-inner">
+            <span><em class="icon-search"></em></span>
+            <h1>No results yet.</h1>
+            <p>Start searching by entering search values on top.</p>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loadingState !== 'pending'">
+    <div class="block-table">
+        <div class="empty" *ngIf="hasSearched && !dataSource.data.length">
+            <div class="empty-inner">
+                <h5>No matching search results.</h5>
+                <p>Please go to other tabs to check results or try another search.</p>
+            </div>
+        </div>
+
+        <table
+            mat-table
+            multiTemplateDataRows
+            [dataSource]="dataSource"
+            class="table-responsive table-stripe"
+            *ngIf="dataSource.data.length"
+            aria-describedby="List of Unit Trust Transactions"
+        >
+            <!-- No. Column -->
+            <ng-container matColumnDef="position">
+                <th scope="col" mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let row; let i = dataIndex">
+                    <span class="expand-icon icon-arrow-right-regular showAll"></span>
+                    {{
+                        this.paginator?.pageIndex === 0
+                            ? i + 1
+                            : 1 + i + this.paginator?.pageIndex * this.paginator?.pageSize
+                    }}
+                </td>
+            </ng-container>
+
+            <!-- Date & Time Column -->
+            <ng-container matColumnDef="dateTime">
+                <th scope="col" mat-header-cell *matHeaderCellDef>Activity Date and Time</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.auditDate | date: 'dd MMM yyyy, hh:mm:ss a':'UTC+8' }}
+                </td>
+            </ng-container>
+
+            <!-- Module Column -->
+            <ng-container matColumnDef="module">
+                <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Module</th>
+                <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                    {{ row.moduleName }}
+                </td>
+            </ng-container>
+
+            <!-- Event Column -->
+            <ng-container matColumnDef="event">
+                <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Event</th>
+                <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                    {{ row.eventName }}
+                </td>
+            </ng-container>
+
+            <!-- Channel Column -->
+            <ng-container matColumnDef="channel">
+                <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Channel</th>
+                <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                    {{ row.channelName }}
+                </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th scope="col" mat-header-cell *matHeaderCellDef class="hiddenMobile">Status</th>
+                <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                    {{ statusLabels[row.statusInd] || row.statusInd }}
+                </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td
+                    mat-cell
+                    *matCellDef="let row"
+                    [attr.colspan]="columnsToDisplay.length"
+                    class="cell-detail"
+                >
+                    <div
+                        class="table-detail showAll"
+                        [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'"
+                    >
+                        <div class="table-detail-wrapper">
+                            <table
+                                class="table-detail-inner"
+                                aria-describedby="Customer activity log summary"
+                            >
+                                <tr class="hiddenDesktop">
+                                    <th scope="row">Module</th>
+                                    <td>{{ row.moduleName }}</td>
+                                </tr>
+                                <tr class="hiddenDesktop">
+                                    <th scope="row">Event</th>
+                                    <td>{{ row.eventName }}</td>
+                                </tr>
+                                <tr class="hiddenDesktop">
+                                    <th scope="row">Channel</th>
+                                    <td>{{ row.channelName }}</td>
+                                </tr>
+                                <tr class="hiddenDesktop">
+                                    <th scope="row">Status</th>
+                                    <td>
+                                        {{ statusLabels[row.statusInd] || row.statusInd }}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="row.moduleId !== 11">
+                                    <th scope="row">Unit Trust Account Number</th>
+                                    <td>{{ row.accountNo }}</td>
+                                </tr>
+                                <tr
+                                    *ngIf="
+                                        row.moduleId === 5 ||
+                                        row.moduleId === 6 ||
+                                        row.moduleId === 7
+                                    "
+                                >
+                                    <th scope="row">Reference No.</th>
+                                    <td>{{ row.referenceNo }}</td>
+                                </tr>
+
+                                <tr
+                                    *ngIf="
+                                        row.moduleId === 5 ||
+                                        row.moduleId === 6 ||
+                                        row.moduleId === 7
+                                    "
+                                >
+                                    <th scope="row" colspan="2">
+                                        <ng-container *ngIf="row.moduleId === 5"
+                                            >Purchases</ng-container
+                                        >
+                                        <ng-container *ngIf="row.moduleId === 7"
+                                            >Redemption</ng-container
+                                        >
+                                        <ng-container *ngIf="row.moduleId === 6"
+                                            >Switching</ng-container
+                                        >
+                                    </th>
+                                </tr>
+
+                                <tr
+                                    *ngIf="
+                                        row.moduleId === 5 ||
+                                        row.moduleId === 6 ||
+                                        row.moduleId === 7 ||
+                                        row.moduleId === 11
+                                    "
+                                >
+                                    <td colspan="2">
+                                        <cimb-office-activity-log-table-sub
+                                            [row]="row"
+                                        ></cimb-office-activity-log-table-sub>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="row.moduleId !== 11">
+                                    <th scope="row">Browser</th>
+                                    <td>{{ row.browserName }}</td>
+                                </tr>
+                                <tr *ngIf="row.moduleId !== 11">
+                                    <th scope="row">OS Version</th>
+                                    <td>{{ row.osVersion }}</td>
+                                </tr>
+                                <tr *ngIf="row.moduleId !== 11">
+                                    <th scope="row">IP Address</th>
+                                    <td>{{ row.ipAddress }}</td>
+                                </tr>
+                                <tr *ngIf="row.moduleId !== 11">
+                                    <th scope="row">Status Remarks</th>
+                                    <td>{{ row.statusRemark || '-' }}</td>
+                                </tr>
+                                <tr *ngIf="row.moduleId === 8 || row.moduleId === 9">
+                                    <th scope="row">Mobile Number</th>
+                                    <td>{{ row.mobileNo || '-' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: columnsToDisplay; let i = dataIndex"
+                class="table-row"
+                [class.table-expanded-row]="expandedRow === row"
+                (click)="expandedRow = expandedRow === row ? null : row; clickRow(expandedRow)"
+                [ngClass]="{
+                    rowEven: i % 2,
+                    rowOdd: !(i % 2)
+                }"
+            ></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: ['expandedDetail']"
+                class="table-detail-row"
+            ></tr>
+        </table>
+    </div>
+    <cimb-office-table-paginator
+        [dataSourceRows]="dataSource"
+        [getLoadingState]="loadingState"
+        (pageChange)="paginator = $event"
+        [pageIndex]="this.paginator?.pageIndex"
+        [pageSize]="this.paginator?.pageSize"
+    >
+    </cimb-office-table-paginator>
+</ng-container>

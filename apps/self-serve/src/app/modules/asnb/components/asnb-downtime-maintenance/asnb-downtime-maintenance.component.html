@@ -1,0 +1,31 @@
+<div class="page-wrapper">
+    <div class="container">
+        <img class="bg" src="./assets/images/maintenance-bg.svg" alt="" />
+
+        <div class="section-content">
+            <div class="error-msg">
+                <h2>Scheduled Maintenance</h2>
+                <img
+                    src="./assets/images/maintenance.svg"
+                    class="IllustrationDowntime"
+                    alt="Maintenance"
+                />
+                <p>
+                    Sorry, we’re currently undergoing scheduled maintenance to provide you with a
+                    better experience. We’ll be back once the maintenance period ends. Please check
+                    back with us later.
+                </p>
+
+                <p class="text-orange">
+                    Maintenance Period <br />
+                    From {{ maintenanceStartTime }},
+                    {{ scheduledMaintenance?.startDate | date: 'dd MMMM y' }} to
+                    {{ maintenanceEndTime }},
+                    {{ scheduledMaintenance?.endDate | date: 'dd MMMM y' }}
+                </p>
+
+                <p>We’ll be back online after the scheduled maintenance above. See you soon!</p>
+            </div>
+        </div>
+    </div>
+</div>

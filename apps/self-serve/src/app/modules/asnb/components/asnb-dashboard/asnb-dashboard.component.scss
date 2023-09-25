@@ -1,0 +1,42 @@
+.container {
+    padding: 0 1rem;
+    position: relative;
+    max-width: 78rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dashboard-amount {
+    margin-top: -2.625rem;
+
+    @media (min-width: 48rem) {
+        margin-bottom: 6rem;
+        margin-top: -4rem;
+    }
+
+    @media (min-width: 60rem) {
+        margin-top: 0;
+        background: none;
+        padding: 0;
+        justify-content: space-between;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        box-shadow: none;
+    }
+}
+
+.dashboard-content {
+    @media (min-width: 60rem) {
+        display: flex;
+    }
+    .dashboard-tab {
+        @media (min-width: 60rem) {
+            flex: 1 1 66.6666%;
+            max-width: 66.6666%;
+        }
+    }
+}
+
+.prospectus {
+    display: block;
+    margin-top: 1.5rem;
+}

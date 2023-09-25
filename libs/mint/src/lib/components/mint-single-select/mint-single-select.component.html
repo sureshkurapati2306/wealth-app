@@ -1,0 +1,52 @@
+<mat-form-field (click)="openSingleSelectForMobile()">
+    <mat-select [formControl]="control"
+                name="singleSelect"
+                panelClass="risk-select-single mint-single-select"
+                class="single-select"
+                placeholder="{{placeholder}}"
+                disableOptionCentering>
+        <mat-option *ngFor="let item of data"
+                    [value]="[item.id]">
+            {{item.value}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+
+<ng-template #singleSelectionForMobile>
+
+    <section class="action-sheet-head">
+        <div class="dismiss"
+             (click)="_bottomSheet.dismiss()">
+            <em class="icon-close"></em>
+        </div>
+    </section>
+
+    <mat-selection-list #singleSelect
+                        [multiple]="false"
+                        [formControl]="control"
+                        (selectionChange)="onSingleSelect($event)">
+        <mat-list-option *ngFor="let item of data"
+                         [value]="item.id">
+            {{item.value}}
+        </mat-list-option>
+    </mat-selection-list>
+
+    <!-- <div>dasdasd {{control.value}}</div>
+    Option selected: {{singleSelect.selectedOptions.selected[0]?.value}} -->
+
+    <!-- multiple value -->
+    <!-- <ng-container *ngIf="multiple"> -->
+    <!-- <mat-selection-list name="optionSelection"
+                        [formControl]="control"
+                        (selectionChange)="onMultiSelect($event)">
+        <mat-list-option *ngFor="let item of data"
+                         checkboxPosition="before"
+                         [value]="item.id">
+            {{item.value}}
+        </mat-list-option>
+    </mat-selection-list> -->
+    <!-- </ng-container> -->
+
+
+</ng-template>

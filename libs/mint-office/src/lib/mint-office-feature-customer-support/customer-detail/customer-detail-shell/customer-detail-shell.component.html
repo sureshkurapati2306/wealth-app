@@ -1,0 +1,32 @@
+<div class="page-wrapper" *ngIf="csRecord$ | async as customer">
+  <div class="container">
+    <cimb-office-breadcrumbs
+      [paths]="breadcrumbsPaths"
+    ></cimb-office-breadcrumbs>
+    <div class="section">
+      <div class="section-head">
+        <button
+          mat-flat-button
+          class="btn-custom btn-text"
+          routerLink="/customer-support"
+        >
+          <em class="icon-arrow-back"></em>
+        </button>
+        <h1>{{ customer?.accountName }}</h1>
+      </div>
+      <div class="tab-button">
+        <button mat-flat-button class="btn-custom" (click)="goTo('profile')" [class.btn-selected]="activePage === 'profile'">
+          <em class="icon-profile"></em>
+          <strong>Customer Profile</strong>
+        </button>
+        <button mat-flat-button class="btn-custom" (click)="goTo('activity-log')" [class.btn-selected]="activePage === 'activity-log'">
+          <em class="icon-log"></em>
+          <strong>Customer Activity Log</strong>
+        </button>
+      </div>
+      <div class="tab-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

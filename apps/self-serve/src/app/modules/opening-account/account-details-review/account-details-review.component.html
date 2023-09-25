@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+    <div class="container">
+        <div class="section-head">
+            <h4>Review and Complete Unit Trust Account Opening</h4>
+        </div>
+        <div class="section-content">
+            <!-- Personal Details -->
+            <cimb-card-account-details
+                [cardTitle]="'Personal Details'"
+                [accountDetails]="accountPersonalDetails"
+                [otherDetailsList]="otherDetailsList"
+                [personalDetails]="true"
+                (btnEdit)="editButton($event)"
+            ></cimb-card-account-details>
+
+            <!-- Contact Information -->
+            <cimb-card-account-details
+                [cardTitle]="'Contact Informations'"
+                [accountDetails]="accountPersonalDetails"
+                [otherDetailsList]="otherDetailsList"
+                [contactInformations]="true"
+                (btnEdit)="editButton($event)"
+            >
+            </cimb-card-account-details>
+
+            <!-- Other Details -->
+            <cimb-card-account-details
+                [cardTitle]="'Other Details'"
+                [accountDetails]="accountPersonalDetails"
+                [otherDetailsList]="otherDetailsList"
+                [otherDetails]="true"
+                (btnEdit)="editButton($event)"
+            >
+            </cimb-card-account-details>
+            <div class="page-nav single-btn">
+                <div class="button-wrapper">
+                    <p>
+                        <span>*</span>This information will only be updated for your Unit Trust
+                        Account profile.
+                    </p>
+                    <div class="foot-legend">
+                        <button
+                            class="btn-custom mat-flat-button btn-red"
+                            disableRipple="true"
+                            mat-flat-button
+                            [disabled]="loadingSpinner$"
+                            (click)="confirmAccountDetails()"
+                        >
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<cimb-mat-spinner-overlay
+    *ngIf="loadingSpinner$"
+    value="100"
+    diameter="100"
+    mode="indeterminate"
+    strokeWidth="10"
+    overlay="true"
+    color="primary">
+</cimb-mat-spinner-overlay>

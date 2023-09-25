@@ -1,0 +1,74 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>ASNB Settings</h1>
+            </div>
+            <div class="section-content">
+                <div class="block-tab scollable-tab">
+                    <mat-tab-group
+                        class="bo-tab"
+                        animationDuration="0ms"
+                        [disablePagination]="true"
+                        [selectedIndex]="initialTabIndex"
+                    >
+                        <mat-tab>
+                            <ng-template mat-tab-label> Operating Hours </ng-template>
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-operation-hours-table></cimb-office-operation-hours-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Suspend Funds </ng-template>
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-fund-suspension-table></cimb-office-fund-suspension-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Scheduled Downtime </ng-template>
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-scheduled-downtime-table></cimb-office-scheduled-downtime-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Fund Library </ng-template>
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-fund-library-table></cimb-office-fund-library-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Transaction Limit </ng-template>
+
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-transaction-limit-table></cimb-office-transaction-limit-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Manage URL </ng-template>
+                            <div class="tab-content-block">
+                                <div class="block-info">
+                                    <cimb-office-url-maintenance-table></cimb-office-url-maintenance-table>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label> Whitelisting </ng-template>
+                            <div class="tab-content"></div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

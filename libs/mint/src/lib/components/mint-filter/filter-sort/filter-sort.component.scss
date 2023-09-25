@@ -1,0 +1,33 @@
+h6 {
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  font-weight: var(--medium);
+  color: var(--n80);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-left: 0.75rem;
+}
+.flex-btn-filter {
+  justify-content: space-between;
+
+  button {
+    width: 50%;
+    font-size: 16px;
+    font-weight: var(--regular);
+    border-radius: 0.5rem;
+
+    &:first-child {
+      margin-right: 0.75rem;
+    }
+    &.selected-filter,
+    &:hover {
+      border: 0.0625rem solid var(--r100);
+      background: var(--r5);
+      color: var(--r100);
+      font-weight: var(--bold);
+    }
+  }
+}
+.btn-custom {
+  height: 3rem;
+}

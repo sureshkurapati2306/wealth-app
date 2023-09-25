@@ -1,0 +1,114 @@
+<ng-container *ngIf="item.switch_indicator === 'Y' else cannotSwitch">
+  <!-- Switch To dropdown -->
+  <div class="option-switch">
+    <h6>Switch to</h6>
+    <div class="option-outer-wrapper">
+      <div class="option-switch-list">
+        <cimb-autocomplete-switch-in-funds
+          [fundHouseCode]="item.fund_house_code"
+          [excludeFundName]="item.fund_name"
+          [value]="selectedSwitchToFundCode"
+          (afterOptionSelected)="optionSelected($event)"
+          *ngIf="isPanelOpen"
+        ></cimb-autocomplete-switch-in-funds>
+      </div>
+    </div>
+  </div>
+
+  <!-- Switch slider control -->
+  <cimb-dashboard-slider
+    [minUnit]="0"
+    [maxUnit]="maximumUnit"
+    (redeemSliderValueChange)="sliderValueChangeEvent($event); fieldsEdited = true;"
+    checkboxLabel="Switch All"
+    [value]="inputUnit"
+    [disabled]="disabled"
+    [isRedeemAll]="inputUnit === maximumUnit"
+    [sliderStep]="maximumUnit / 10"
+  ></cimb-dashboard-slider>
+
+  <!-- Switch Units input -->
+  <div class="option-block-input">
+    <div class="option-field">
+      <label>Units</label>
+      <cimb-input-amount-key
+        [inputForm]="unitForm"
+        [inputFormControlName]="'units'"
+        [isRequired]="true"
+        [isDisabled]="disabled"
+        [inputPlaceholder]="inputPlaceholder"
+        [minAmount]="minimumUnit"
+        [maxAmount]="maximumUnit"
+        errorMessageMinAmount="Minimum switch out is {{ minimumUnit | number: '1.2-2':'en-US' }} units."
+        (keyup)="changeValueEvent($event)"
+        [showMyrPrefix]="false"
+        [redeemAmount]="maximumUnit"
+        [errorMessageRedeem]="'Exceed available units.'"
+        [errorMessageMaxAmount]="'Exceed available units.'"
+      >
+      </cimb-input-amount-key>
+        
+      
+    </div>
+    <div class="option-info">
+      <p>
+        Indicative Amount
+        <span class="tips">
+          <em
+            class="icon-help hide-lg"
+            (click)="openIndicativeAmountActionSheet()"
+          ></em>
+          <em
+            class="icon-help show-lg"
+            matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+            matTooltipPosition="right"
+          ></em>
+        </span>
+      </p>
+      <h6><sup _ngcontent-tca-c160="">MYR</sup> {{indicativeAmountDisplay | number: '1.2-2':'en-US'}}</h6>
+      <strong>(Based on {{item.close_date}} NAV)</strong>
+    </div>
+    <div class="option-button">
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="addUnitToCart()"
+        [disabled]="!selectedSwitchToFundCode || !formValid || disabled"
+        *ngIf="!unitsAdded"
+      >
+        Add to cart
+      </button>
+
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="dialogConfirmRemoveUnitFromCart()"
+        [disabled]="!formValid"
+        *ngIf="unitsAdded && !fieldsEdited && !selectedSwitchToFundCodeChanged"
+      >
+        Remove
+      </button>
+
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="addUnitToCart(true)"
+        [disabled]="!selectedSwitchToFundCode || !formValid || disabled"
+        *ngIf="unitsAdded && (fieldsEdited || selectedSwitchToFundCodeChanged)"
+      >
+        Done
+      </button>
+      
+    </div>
+    <div class="option-text">
+      <mat-error *ngIf="!formValid">{{ getErrorMessage() }}</mat-error>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #cannotSwitch>
+  <p>The fund is not eligible for switching.</p>
+</ng-template>

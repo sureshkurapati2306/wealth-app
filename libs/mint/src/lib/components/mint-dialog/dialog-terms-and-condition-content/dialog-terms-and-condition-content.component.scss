@@ -1,0 +1,27 @@
+.dialog-terms-wrapper {
+  position: relative;
+
+  .btn-close {
+    position: absolute;
+    right: 1.25rem;
+    // top: 1.25rem;
+    color: var(--n0);
+    z-index: 10;
+
+    @media (min-width: 48rem) {
+      color: var(--n0);
+      top: -4.375rem;
+      right: 0.875rem;
+    }
+
+    @media (min-width: 62rem) {
+      right: -0.625rem;
+    }
+
+    em {
+      &:before {
+        font-size: 1.5625rem;
+      }
+    }
+  }
+}

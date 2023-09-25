@@ -1,0 +1,56 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+
+[class] {
+    &:not(.mat-icon) {
+        font-family: $notoSans !important;
+    }
+}
+
+.container {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+    display: grid;
+    gap: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        margin: 2rem auto 0;
+        max-width: 65rem;
+        gap: 2rem;
+    }
+}
+
+.utility-btn {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+
+    span {
+        color: $cimb;
+        font-family: $notoSans !important;
+        font-size: 0.875rem;
+        line-height: 1.3125rem;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        span {
+            text-decoration: underline;
+            margin-right: 0.5rem;
+        }
+        
+        a {
+            @media (min-width: 40rem) {
+                margin-left: 0.5625rem;
+            }
+        }
+    }
+}
+
+.service-hours-desc {
+    margin-bottom: 0.375rem;
+}
+
+.service-hours-link {
+    color: $cimb;
+    text-decoration: underline;
+    cursor: pointer;
+}

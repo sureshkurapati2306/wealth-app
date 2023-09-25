@@ -1,0 +1,78 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button
+                    mat-flat-button
+                    class="btn-custom btn-text"
+                    routerLink="/administrator-portal"
+                >
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>Administrator Portal</h1>
+            </div>
+            <div class="section-content">
+                <form
+                    #addUserForm="ngForm"
+                    [formGroup]="addUserFb"
+                    (submit)="submit()"
+                    class="block-filter"
+                >
+                    <div class="block-filter-input">
+                        <div class="field">
+                            <mat-form-field>
+                                <mat-label>LAN ID</mat-label>
+                                <input
+                                    type="text"
+                                    matInput
+                                    placeholder="LAN ID"
+                                    formControlName="lanId"
+                                />
+                                <mat-error>
+                                    This field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="field">
+                            <mat-form-field>
+                                <mat-label>User Role Type</mat-label>
+                                <mat-select
+                                    panelClass="custom-select-panel basic-select"
+                                    placeholder="User Role Type"
+                                    formControlName="userRoleType"
+                                >
+                                    <mat-option
+                                        *ngFor="let role of roles"
+                                        [value]="role.value"
+                                    >
+                                        {{ role.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="block-filter-cta">
+                        <button
+                            mat-flat-button
+                            class="btn-custom btn-text btn-xs"
+                            [disabled]="addUserFb.invalid"
+                            type="button"
+                            (click)="clear()"
+                        >
+                            Clear
+                        </button>
+                        <button
+                            mat-flat-button
+                            class="btn-custom btn-red btn-xs"
+                            [disabled]="addUserFb.invalid"
+                            type="submit"
+                        >
+                            Add User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

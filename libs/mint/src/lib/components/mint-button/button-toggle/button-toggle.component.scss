@@ -1,0 +1,12 @@
+.input-wrapper {
+  margin-left: -0.75rem;
+}
+.mat-button-toggle-group {
+  .btn-custom {
+    &:last-child {
+      @media (min-width: 48rem) {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+}

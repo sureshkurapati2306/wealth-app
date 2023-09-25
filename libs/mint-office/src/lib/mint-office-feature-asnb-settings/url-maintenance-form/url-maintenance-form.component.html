@@ -1,0 +1,107 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" (click)="backHandler()">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>{{ pageTitle }}</h1>
+            </div>
+            <div class="section-body">
+                <div class="section-content">
+                    <div class="section-content-right">
+                        <form [formGroup]="urlMaintenanceForm">
+                            <div class="field">
+                                <div *ngIf="pageType === 'edit'; else addField">
+                                    <p class="field-label">
+                                        <strong>Short Code:</strong> {{ pageUrlCode }}
+                                    </p>
+                                </div>
+                                <ng-template #addField>
+                                    <mat-form-field>
+                                        <mat-label>Short Code</mat-label>
+                                        <input
+                                            matInput
+                                            type="text"
+                                            formControlName="urlShortCode"
+                                            placeholder="Short Code"
+                                            value=""
+                                            maxLength="30"
+                                        />
+                                    </mat-form-field>
+                                    <mat-error class="custom-error">
+                                        <span
+                                            *ngIf="
+                                                urlMaintenanceForm.get('urlShortCode').invalid &&
+                                                urlMaintenanceForm.get('urlShortCode').touched
+                                            "
+                                        >
+                                            Short Code is required
+                                        </span>
+                                    </mat-error>
+                                </ng-template>
+                            </div>
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>Label</mat-label>
+                                    <input
+                                        matInput
+                                        type="text"
+                                        formControlName="urlLabel"
+                                        placeholder="Label"
+                                        value=""
+                                        maxLength="30"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            urlMaintenanceForm.get('urlLabel').invalid &&
+                                            urlMaintenanceForm.get('urlLabel').touched
+                                        "
+                                    >
+                                        Label is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>URL</mat-label>
+                                    <input
+                                        matInput
+                                        type="text"
+                                        formControlName="urlLink"
+                                        placeholder="URL"
+                                        value=""
+                                        maxLength="300"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            urlMaintenanceForm.get('urlLink').invalid &&
+                                            urlMaintenanceForm.get('urlLink').touched
+                                        "
+                                    >
+                                        URL is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        (click)="pageType === 'edit' ? editUrl() : addUrl()"
+        [disabled]="!urlMaintenanceForm.valid"
+    >
+        Save
+    </button>
+</div>

@@ -1,0 +1,68 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+[class] {
+    font-family: $notoSans !important;
+}
+
+:host ::ng-deep {
+    .mat-paginator-range-label {
+        @include font(0.875rem);
+    }
+
+    .mat-icon-button {
+        height: 100%;
+        line-height: 0;
+    }
+
+    .mat-paginator-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+.favourite-list-heading {
+    margin: 17.5px 0;
+
+    @media (min-width: 768px) {
+        margin: 17.5px 0.5rem;
+    }
+}
+
+.favourite-list-container {
+    gap: 1rem;
+    display: grid;
+    padding: 1.5rem 0;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: 768px) {
+        gap: 1.5rem;
+        padding: 1rem 0.5rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.no-asnb-favourite {
+    margin: 2.75rem auto 3.25rem auto;
+
+    img {
+        margin: 0 auto;
+    }
+
+    p {
+        margin: 0;
+        text-align: center;
+        color: var(--n100);
+    }
+
+    .no-asnb-favourite-heading {
+        font-weight: 700;
+        margin-top: 2rem;
+        @include font(1.75rem);
+    }
+
+    .no-asnb-favourite-description {
+        margin-top: 1.5rem;
+        @include font(1rem);
+    }
+}

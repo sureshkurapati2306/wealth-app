@@ -1,0 +1,16 @@
+<cimb-office-activity-log-search-form
+   [searchParams]="(searchQuery$ | async)"
+   [loadingState]="(loadingState$ | async)"
+   [modules]="(modules$ | async)"
+   [channels]="(channels$ | async)"
+   (submitForm)="search($event)"
+>
+</cimb-office-activity-log-search-form>
+
+<cimb-office-activity-log-table
+   [dataSourceRows]="(activityLogRecords$ | async)"
+   [getLoadingState]="(loadingState$ | async)"
+   [hasSearched]="(hasSearched$ | async)"
+   [customer]="(csRecord$ | async)"
+>
+</cimb-office-activity-log-table>

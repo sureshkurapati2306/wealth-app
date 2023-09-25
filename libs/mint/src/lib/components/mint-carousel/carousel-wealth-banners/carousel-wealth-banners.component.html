@@ -1,0 +1,126 @@
+<ng-container *ngIf="interval$ | async"></ng-container>
+
+<swiper #swiper class="mySwiper" [config]="config">
+    <ng-container *ngIf="bannerMode === 'assets'">
+        <ng-template swiperSlide>
+            <div class="slide unit-trust">
+                <h6>Have better control over your investments</h6>
+                <p>Easy steps to start investing in Unit Trust via CIMB Wealth Portal!</p>
+                <ng-container>
+                    <a
+                        *ngIf="!riskProfileInvalid"
+                        (click)="navigateDashboard($event)"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Start Investing <em class="icon-arrow-right"></em
+                    ></a>
+
+                    <a
+                        *ngIf="riskProfileInvalid"
+                        (click)="openDialogUnableToProceed($event)"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Start Investing <em class="icon-arrow-right"></em
+                    ></a>
+                </ng-container>
+                <img
+                    src="./assets/images/unit-trust.svg"
+                    alt="Have better control over your investments"
+                />
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide casa">
+                <h6>Boost Your Financial Journey With Us</h6>
+                <p>
+                    Enjoy banking convenience with a wide range of savings accounts that suit your
+                    daily banking needs.
+                </p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/accounts/savings-account.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apply Now <em class="icon-arrow-right"></em
+                ></a>
+                <img src="./assets/images/casa.svg" alt="Boost Your Financial Journey With Us" />
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide fixed-deposit">
+                <h6>CIMB Fixed Deposit</h6>
+                <p>Find our wide range of fixed deposit accounts to help you grow your money.</p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/accounts/fixed-term-deposit.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Start Investing <em class="icon-arrow-right"></em
+                ></a>
+                <img src="./assets/images/fixed-deposit.svg" alt="CIMB Fixed Deposit" />
+            </div>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="bannerMode === 'liabilities'">
+        <ng-template swiperSlide>
+            <div class="slide property-financing">
+                <h6>CIMB Property Financing</h6>
+                <p>Turn your house-buying mission into a housewarming celebration in no time.</p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/financing/property-financing.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apply Now <em class="icon-arrow-right"></em
+                ></a>
+                <img src="./assets/images/property-financing.svg" alt="CIMB Property Financing" />
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide auto-financing">
+                <h6>CIMB Auto FInancing</h6>
+                <p>
+                    Planning to buy a new car? Browse through the available Auto Financing deals of
+                    CIMB and find what suits you.
+                </p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/financing/auto-financing.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apply Now <em class="icon-arrow-right"></em
+                ></a>
+                <img src="./assets/images/auto-financing.svg" alt="CIMB Auto FInancing" />
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide personal-financing">
+                <h6>Apply Today. Cash Tomorrow.</h6>
+                <p>
+                    CIMB Personal Financing is a hassle free financing that you can use for a
+                    variety of purposes.
+                </p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/financing/personal-financing.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apply Now <em class="icon-arrow-right"></em
+                ></a>
+                <img
+                    src="./assets/images/personal-financing.svg"
+                    alt="Apply Today. Cash Tomorrow."
+                />
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide credit-card">
+                <h6>CIMB Credit Card</h6>
+                <p>Lets get you the most out of your cashless payments online or offline.</p>
+                <a
+                    href="https://www.cimb.com.my/en/personal/day-to-day-banking/cards/credit-card.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apply Now <em class="icon-arrow-right"></em
+                ></a>
+                <img src="./assets/images/credit-card.svg" alt="CIMB Credit Card" />
+            </div>
+        </ng-template>
+    </ng-container>
+</swiper>

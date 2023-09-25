@@ -1,0 +1,40 @@
+<div class="card-wrapper {{addClass}}">
+  <div [ngClass] = "switchFundPopup === true ? 'cardPopup' : 'card'">
+    <h4>About Fund</h4>
+    <div [ngClass] = "switchFundPopup === true ? 'wrapperPopup' : 'wrapper'">
+      <div class="list-tab">
+        <div class="expansion-panel-content">
+          <ul class="list-details">
+            <li>
+              <p>Risk Category</p>
+              <h6>{{ selectedFund.risk_name}}</h6>
+            </li>
+            <li>
+              <p>Asset Class</p>
+              <h6 *ngIf="selectedFund.asset_class !== undefined">{{ assetClassName}}</h6>
+              <h6 *ngIf="selectedFund.class_name !== undefined">{{selectedFund.class_name}}</h6>
+            </li>
+            <li>
+              <p>Shariah Compliant</p>
+              <h6 *ngIf="selectedFund.fund_indicator === 'I'">Yes</h6>
+              <h6 *ngIf="selectedFund.fund_indicator !== 'I'">No</h6>
+            </li>
+            <li *ngIf="switchFundPopup === true">
+              <p>
+                NAV Price
+                <span class="tips">
+                  <em class="icon-help hide-lg" (click)="openNAVactionSheet()"></em>
+                  <em class="icon-help show-lg-inline-block"
+                    matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                    matTooltipPosition="right"></em>
+                </span>
+              </p>
+              <h6><sup>MYR </sup>{{ selectedFund?.nav_price }}</h6>
+              <span>(As of {{ selectedFund?.close_date }})</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

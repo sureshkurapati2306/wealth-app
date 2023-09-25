@@ -1,0 +1,66 @@
+.btn-view {
+  margin-top: 0.75rem;
+}
+.option-switch {
+  h6 {
+    font-weight: var(--medium);
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+}
+.option-outer-wrapper {
+  @media (min-width: 48rem) {
+    display: flex;
+  }
+  .option-switch-list {
+    @media (min-width: 48rem) {
+      width: 29.5rem;
+    }
+    .btn-view {
+      padding-left: 0;
+    }
+  }
+  .section-nav {
+    padding-left: 3.25rem;
+
+    @media (min-width: 48rem) {
+      padding-left: 2.0625rem;
+    }
+    p {
+      margin-bottom: 0;
+      text-align: left;
+      padding-left: 0;
+      margin-left: 0;
+      border: none;
+
+      &.label {
+        font-size: 0.875rem;
+        line-height: 1.3125rem;
+        color: var(--n60);
+      }
+      sup {
+        font-size: 0.625rem;
+        line-height: 1rem;
+        color: var(--n100);
+        margin-right: 0.25rem;
+      }
+      span {
+        display: inline-block;
+        font-size: 1rem;
+      }
+      strong {
+        color: var(--n100);
+        font-size: 1.125rem;
+        line-height: 1.625rem;
+      }
+    }
+    small {
+      display: block;
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      color: var(--n60);
+      font-weight: var(--medium);
+    }
+  }
+}

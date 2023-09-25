@@ -1,0 +1,55 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+[class] {
+    font-family: $notoSans !important;
+}
+
+p {
+    margin: 0;
+}
+
+.account-section {
+    margin-top: -1rem;
+    display: grid;
+    row-gap: 0.75rem;
+    overflow-wrap: break-word;
+    @media (min-width: $asnbDesktop) {
+        margin-top: 2rem;
+        grid-template-columns: repeat(3, minmax(auto, 12.5rem));
+        column-gap: 5.75rem;
+    }
+}
+
+.account-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @media (min-width: $asnbDesktop) {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.account-type {
+    font-weight: var(--medium);
+    @include font(0.625rem);
+    color: var(--n60);
+    @media (min-width: $asnbDesktop) {
+        font-weight: var(--regular);
+        @include font(0.875rem);
+    }
+}
+
+.account-value {
+    font-weight: var(--medium);
+    @include font(0.625rem);
+    color: var(--n90);
+    text-align: end;
+    @media (min-width: $asnbDesktop) {
+        font-weight: var(--medium);
+        @include font(0.875rem);
+        color: var(--n80);
+        text-align: start;
+        margin-top: 0.25rem;
+    }
+}

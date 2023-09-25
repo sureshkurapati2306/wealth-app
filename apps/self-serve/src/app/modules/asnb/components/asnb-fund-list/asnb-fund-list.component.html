@@ -1,0 +1,235 @@
+<mat-accordion class="fund-list-container">
+    <mat-expansion-panel hideToggle class="fund-list-expansion-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <div class="fund-list">
+                    <div class="fund-header">
+                        <p class="fund-name">
+                            {{ (fundTypesMap$ | async)[fundList.fundId]?.fundLongName }}
+                        </p>
+                        <img
+                            src="assets/images/dropdown-arrow.svg"
+                            alt="expansion-panel-toggle"
+                            class="expansion-panel-toggle hide-lg"
+                        />
+                    </div>
+
+                    <div class="current-value" *ngIf="fundList.currentValue">
+                        <p class="current-value-heading">
+                            {{ fundList.currentValue.label | uppercase }}
+                        </p>
+                        <p class="current-value-price">
+                            <span>{{ fundList.currency }}</span>
+                            <span>{{ fundList.currentValue.value | number: '.2' }}</span>
+                        </p>
+                    </div>
+                    <img
+                        src="assets/images/dropdown-arrow.svg"
+                        alt="expansion-panel-toggle"
+                        class="expansion-panel-toggle show-lg"
+                    />
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="fund-list-content">
+            <div class="fund-list-breakdown" *ngIf="fundList.totalUnits">
+                <div class="fund-list-breakdown-item">
+                    <p class="fund-list-breakdown-heading">{{ fundList.totalUnits.label }}</p>
+                    <p class="fund-list-breakdown-data">
+                        {{ fundList.totalUnits.value | number: '1.' }}
+                    </p>
+                </div>
+                <div class="fund-list-breakdown-item" *ngIf="fundList.ubb">
+                    <p class="fund-list-breakdown-heading">
+                        {{ fundList.ubb.label }}
+                        <cimb-tooltip
+                            *ngIf="fundList.fundId === 'ASB' || fundList.fundId === 'ASB2'"
+                            [tooltipHeading]="tooltipHeading"
+                            [tooltipText]="tooltipText"
+                            class="tooltip"
+                        ></cimb-tooltip>
+                    </p>
+                    <p class="fund-list-breakdown-data">
+                        {{ fundList.ubb.value | number: '1.' }} Unit
+                    </p>
+                </div>
+                <div class="fund-list-breakdown-item" *ngIf="fundList.ubc">
+                    <p class="fund-list-breakdown-heading">
+                        {{ fundList.ubc.label }}
+                        <cimb-tooltip
+                            *ngIf="fundList.fundId === 'ASB' || fundList.fundId === 'ASB2'"
+                            [tooltipHeading]="tooltipHeading"
+                            [tooltipText]="tooltipText"
+                            class="tooltip"
+                        ></cimb-tooltip>
+                    </p>
+                    <p class="fund-list-breakdown-data">
+                        {{ fundList.ubc.value | number: '1.' }} Unit
+                    </p>
+                </div>
+            </div>
+            <div
+                class="fund-suspension-msg"
+                *ngIf="
+                    (fundTypesMap$ | async)[fundList.fundId]?.fundStatus === 'SUSPEND' &&
+                    !hasScheduledMaintenance &&
+                    !hideTopUp?.status
+                "
+            >
+                <p>
+                    Sorry, transaction currently is not available due to
+                    <strong>Fund Suspension.</strong><br />
+                    We’ll be back once the fund suspension period ends. Please check back with us
+                    later.
+                </p>
+            </div>
+            <div class="fund-maintenance-msg" *ngIf="hasScheduledMaintenance">
+                <p>
+                    Sorry, we’re currently undergoing <strong>Scheduled Maintenance</strong> to
+                    provide you with a better experience. We’ll be back once the maintenance period
+                    ends. Please check back with us later.
+                </p>
+                <h6>Maintenance Period :</h6>
+                <p class="datetime">
+                    From:
+                    <span
+                        >{{ maintenanceStartTime }},
+                        {{ scheduledMaintenance?.startDate | date: 'd MMMM y' }}</span
+                    >
+                </p>
+                <p class="datetime">
+                    To:
+                    <span
+                        >{{ maintenanceEndTime }},
+                        {{ scheduledMaintenance?.endDate | date: 'd MMMM y' }}</span
+                    >
+                </p>
+            </div>
+            <div
+                class="top-up-section"
+                *ngIf="
+                    !hideTopUp?.status &&
+                    (fundTypesMap$ | async)[fundList.fundId]?.fundStatus === 'ACTIVE' &&
+                    !hasScheduledMaintenance
+                "
+            >
+                <p class="top-up-heading">Top Up Amount</p>
+                <cimb-input-amount-key
+                    *ngIf="isInitialState"
+                    class="top-up-input"
+                    [inputForm]="fundTopUpForm"
+                    [inputFormControlName]="'amount'"
+                    [inputPlaceholder]="'Min MYR 1.00'"
+                    [minAmount]="1"
+                    [maxAmount]="currentTransactionLimit"
+                    [errorMessageMinAmount]="'The minimum amount is MYR 1.00'"
+                    [errorMessageMaxAmount]="
+                        'You’ve exceeded the maximum allotted amount of RM' +
+                        ((transactionLimit$ | async).maxLimit | number: '.2') +
+                        ' daily'
+                    "
+                    (keyup)="changeValueEvent()"
+                    value="1"
+                    [isRoundNumber]="true"
+                    [isDisabled]="disableTopUp"
+                >
+                </cimb-input-amount-key>
+                <button
+                    class="btn-custom btn-red btn-topup"
+                    disableRipple="true"
+                    mat-flat-button
+                    [disabled]="
+                        !(
+                            (topUpInfo$ | async)?.amount >= 1 &&
+                            (topUpInfo$ | async)?.fundId === fundList.fundId &&
+                            (topUpInfo$ | async)?.amount <= currentTransactionLimit
+                        )
+                    "
+                    (click)="onTopUp()"
+                >
+                    Top Up Now
+                </button>
+            </div>
+            <div
+                class="fund-list-breakdown"
+                *ngIf="hideTopUp?.status && hideTopUp?.message && !hasScheduledMaintenance"
+            >
+                <div class="hide-topup" [innerHTML]="hideTopUp?.message"></div>
+            </div>
+            <mat-accordion class="last-transactions-container">
+                <mat-expansion-panel #txnPanel (expandedChange)="showPastTransactions($event)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span id="lastFiveTransaction" class="title-last-transactions">
+                                {{
+                                    txnPanel.expanded
+                                        ? 'Hide past transactions'
+                                        : 'Show past transactions'
+                                }}
+                            </span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngIf="(status$ | async)?.status === 'loading'">
+                        <div class="inline-loading">
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="pastTxnList?.transactionalDetail?.length; else noRecord">
+                        <table
+                            mat-table
+                            [dataSource]="pastTxnList?.transactionalDetail"
+                            class="tbl-recent-transcation"
+                            aria-describedby="lastFiveTransaction"
+                        >
+                            <!-- Date Column -->
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef id="date">Date</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.transactionDate | date: 'dd MMM y' }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Description Column -->
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef id="description">
+                                    Description
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.transactionType }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Amount Column -->
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef id="amount">Amount</th>
+                                <td mat-cell *matCellDef="let element" class="amount">
+                                    MYR {{ element.transactionAmount | number: '.2' }}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                    </ng-container>
+
+                    <ng-template #noRecord>
+                        <div
+                            *ngIf="
+                                (status$ | async)?.status !== 'loading' &&
+                                !pastTxnList?.errorCode &&
+                                !pastTxnList?.errorMsg
+                            "
+                        >
+                            No transaction available under this fund.
+                        </div>
+                    </ng-template>
+                    <div *ngIf="pastTxnList?.errorCode && pastTxnList?.errorMsg">
+                        <p class="transaction-error">
+                            Error code: {{ pastTxnList?.errorCode }} [{{ pastTxnList?.errorMsg }}]
+                        </p>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

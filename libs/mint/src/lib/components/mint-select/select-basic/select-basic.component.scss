@@ -1,0 +1,20 @@
+.input-wrapper {
+  margin: 0;
+
+  &.ml-12 {
+    margin-left: -0.75rem;
+  }
+}
+.select-wrapper {
+  position: relative;
+}
+.error-field-wrapper {
+  em {
+    &.icon-error {
+      top: 50%;
+      transform: translateY(-50%);
+      right: 2.8125rem;
+      color: #ff5630;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.page-wrapper {
+  @media (min-width: 48rem) {
+    padding-top: 2.75rem;
+  }
+}
+.section-content {
+  h1 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--n100);
+
+    @media (min-width: 48rem) {
+      text-align: center;
+      font-size: 1.75rem;
+      line-height: 2.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+  .box-wrapper {
+    @media (min-width: 48rem) {
+      display: flex;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      justify-content: center;
+    }
+    .box-outer {
+      @media (min-width: 48rem) {
+        flex: 1 1 50%;
+        display: flex !important;
+        padding: 0 1rem;
+        max-width: 26rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<div class="toast-wrapper toast-{{ getToastIcon?.type }}">
+  <div class="snackbar-pad">
+    <div class="inner-wrapper">
+      <em class="icon-{{ getToastIcon?.icon }}"></em>
+      <p>{{ data.message }}</p>
+    </div>
+    <button mat-icon-button class="btn-close" (click)="closeSnackbar()">
+      <em class="icon-close"></em>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="main-section">
+    <ng-container *ngIf="accountSummary$ | async as accountSummary">
+        <cimb-subheader
+            [name]="clicksInfo.customerName"
+            [lastUpdated]="lastUpdated"
+        ></cimb-subheader>
+        <div class="container">
+            <div class="dashboard-amount hide-lg">
+                <cimb-box-wealth [accountSummary]="accountSummary"></cimb-box-wealth>
+            </div>
+
+            <div class="section-content">
+                <div class="dashboard-content">
+                    <div class="dashboard-portfolio show-lg">
+                        <cimb-box-wealth [accountSummary]="accountSummary"></cimb-box-wealth>
+                        <cimb-box-product-wealth
+                            [assetLiabilities]="accountSummary.assetLiabilities"
+                        >
+                        </cimb-box-product-wealth>
+                    </div>
+                    <div class="dashboard-tab">
+                        <cimb-tab-wealth
+                            (openRiskProfileEvent)="callRiskProfilePopup($event)"
+                            [accountSummary]="accountSummary"
+                            [canNavigateToDashboard]="riskProfileDataReceived"
+                            [customerType]="customerType"
+                            [enableApplyNowAtMyInvestmentDAshboard]="
+                                enableApplyNowAtMyInvestmentDAshboard
+                            "
+                            [asnbInvestment]="asnbInvestment"
+                            [isOnScheduledMaintenance]="isOnScheduledMaintenance"
+                            [maintenanceStartTime]="maintenanceStartTime"
+                            [maintenanceEndTime]="maintenanceEndTime"
+                            [maintenanceStartDate]="scheduledMaintenance?.startDate"
+                            [maintenanceEndDate]="scheduledMaintenance?.endDate"
+                            [hasASNBDowntime]="hasASNBDowntime"
+                        ></cimb-tab-wealth>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

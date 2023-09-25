@@ -1,0 +1,30 @@
+.notice {
+  position: relative;
+  padding: .75rem 1rem .75rem 2.75rem;
+
+  @media (min-width: 48rem) {
+    padding: 1rem 1.5rem 1rem 3.125rem;
+    display: inline-block;
+  }
+  .mat-icon {
+    position:absolute;
+    left: 1.25rem;
+    top: .875rem;
+    font-size: 1.25rem;
+  }
+  p {
+    font-size: .75rem;
+    line-height: 1rem;
+    font-weight: var(--medium);
+    margin:0;
+    letter-spacing: .0187rem;
+
+    @media (min-width: 48rem) {
+      
+    }
+  }
+  &.warning {
+    background: #FFE3DA;
+    color: #FF7547;
+  }
+}

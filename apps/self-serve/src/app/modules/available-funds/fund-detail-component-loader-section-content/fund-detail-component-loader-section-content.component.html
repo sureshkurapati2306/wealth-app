@@ -1,0 +1,62 @@
+<div class="container">
+    <p class="intro">All information shown is provided by the fund house.</p>
+    
+    <cimb-card-fund-invest *ngIf = "(!isFundHoliday && r2Enabled && selectedFund.current_holding !== 'Y') && (userType === 'ETP' || userType === 'NTP')"
+    [price]="price"
+    [isFundHoliday] = "isFundHoliday"
+    [selectedFund]="selectedFund"
+    [cartData]="cartData"
+    [cartUTAccount]="cartUTAccount"
+    [cartFundCount] = "totalFundsCount"
+    [selectedAccounts] = "selectedAccounts"
+    [closeDate] = "closeDate"
+    [cartAmount] = "cartAmount"
+    (addToCart) = "addToCartEvent($event)"
+    (removeFromCart) ="removeFromCartEvent($event)"
+    (updateAmountInCart) = "updateAmountInCartEvent($event)"
+    (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+    [enableAddToCart]="enableAddToCartForPurchase"
+    [enableAddToCartRedeem]="enableRedeemAtFundDetail"
+    ></cimb-card-fund-invest>
+
+    <cimb-chart-fund-performance-google *ngIf="r2Enabled"
+      [past1Mnth]="past1Mnth"
+      [past3Mnth]="past3Mnth"
+      [dataChart]="selectedFund"
+      [switchFundPopup] = "false"
+    ></cimb-chart-fund-performance-google>
+
+
+
+    <cimb-card-about-fund *ngIf= "r2Enabled"
+      [selectedFund]="selectedFund"
+      [switchFundPopup] = "false"
+    ></cimb-card-about-fund>
+
+    <cimb-card-fund-transact *ngIf= "r2Enabled && !isFundHoliday && solePropIndicator === 'N' && selectedFund.current_holding === 'Y' && userType === 'ETP'"
+      [fund]="selectedFund"
+      [isFundHoliday] = "isFundHoliday"
+      (addToCart)="addToCartEvent($event)"
+      (updateCart)="updateAmountInCartEvent($event)"
+      (removeFromCart)="removeFromCartEvent($event)"
+      (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+      [cartUTAccount]="cartUTAccount"
+      [cartFundCount]="totalFundsCount"
+      [flowText]="flowText"
+      [selectedAccount]="selectedAccounts"
+      [foreignerInd]="foreignerInd"
+      [occupationInd]="occupationInd"
+      (updateCartRedeem)="updateAmountInRedeemCartEvent($event)"
+      [enableAddToCartForTopup]="enableAddToCartForTopup"
+      [enableRedeemAtFundDetail]="enableRedeemAtFundDetail"
+      [enableSwitchAtFundDetails]="enableSwitchAtFundDetails"
+    ></cimb-card-fund-transact>
+
+    <cimb-card-fund-document
+      [disclaimer]="disclaimer"
+      [selectedFund] = "selectedFund"
+      [documentNames] = "documentNames"
+      (documentDownloadEmitter) = "documentDownload($event)"
+      [switchFundPopup] = "false"
+    ></cimb-card-fund-document>
+  </div>

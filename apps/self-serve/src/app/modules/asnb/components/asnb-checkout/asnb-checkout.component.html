@@ -1,0 +1,91 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="true"
+    (backButtonEvent)="backButtonEvent()"
+    [noProgressStep]="noProgressStep"
+></cimb-progress-sub-header>
+<div class="container">
+    <h3 class="section-head">Review and Complete Purchase</h3>
+
+    <div class="section-content">
+        <div class="membership-section">
+            <p class="membership-heading">ASNB Membership Number</p>
+            <p class="membership-details">
+                <span class="membership-name">{{ membership.name }}</span
+                ><strong class="membership-number">{{ membership.id }}</strong>
+            </p>
+        </div>
+
+        <cimb-card-payment-account
+            [cardAccountTitle]="card1Title"
+            [cardAccountSelectionPlaceholder]="cardAccountSelectionPlaceholder"
+            [accountLists]="bankAccountList"
+            [selectedAccount]="selectedAccountIndex"
+            [isForAsnb]="true"
+            (accountselected)="accountSelectedEvent($event)"
+        ></cimb-card-payment-account>
+        <div class="card-container">
+            <cimb-asnb-card-account-details
+                *ngIf="purchaseFavouriteDetails?.transId"
+                [purchaseFavouriteDetails]="purchaseFavouriteDetails"
+                [purchaseReason]="purchaseReason"
+            ></cimb-asnb-card-account-details>
+            <cimb-asnb-card-details-template
+                *ngIf="thirdPartyDetails.length"
+                [heading]="'Account Details'"
+                [items]="thirdPartyDetails"
+            ></cimb-asnb-card-details-template>
+            <cimb-asnb-card-details-template
+                *ngIf="sourceDetails.length"
+                [heading]="'Source Details'"
+                [items]="sourceDetails"
+            ></cimb-asnb-card-details-template>
+            <cimb-asnb-summary-card [showFund]="true"></cimb-asnb-summary-card>
+        </div>
+
+        <!-- View fund price and view prospectus and sales charge -->
+        <div class="utility-btn" id="view-prospectus">
+            <a (click)="redirectConfirmation(fundPriceLink)">
+                <span>View fund price</span>
+                <mat-icon
+                    aria-hidden="false"
+                    aria-label="Open in new"
+                    fontIcon="open_in_new"
+                ></mat-icon>
+            </a>
+            <a (click)="redirectConfirmation(prospectusLink)">
+                <span>View propectus & sales charge</span>
+                <mat-icon
+                    aria-hidden="false"
+                    aria-label="Open in new"
+                    fontIcon="open_in_new"
+                ></mat-icon>
+            </a>
+        </div>
+
+        <cimb-card-tac
+            [disableConfirmButtonPage]="!(fatcaEnabled && accountSelected && tagEntredCompleted)"
+            [canEnableConfirmButton]="true"
+            [disableConfirmButton]="disableConfirmButtonComponent"
+            [mobileNumber]="customerMobileNumber"
+            [tagError]="showTacError"
+            [factaEnabled]="factaEnabled"
+            [tagErrorMessage]="tacErrorMessageText"
+            [accountSelected]="accountSelected"
+            (confirmAndProceedEvent)="confirmAndProceed($event)"
+            (fatcaDeclaratonErrorEvent)="fatcaDeclaratonEvent()"
+            (requestTACEvent)="requestTAC()"
+            (tagEntredCompletely)="tagEntredCompletedEvent($event)"
+            (requestTagCanEnable)="requestTagCanEnableEvent($event)"
+            [enableRequestNumber]="enableRequestNumber"
+            [schedulerMsg]="schedulerMsg"
+            [isForAsnbFatca]="true"
+            [hideForAsnbCheckout]="true"
+            [flow]="flow"
+            [isASNB]="true"
+            (fatcaToggleEvent)="fatcaToggleEvent($event)"
+        ></cimb-card-tac>
+
+        <cimb-asnb-footer></cimb-asnb-footer>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+.container {
+    margin: 3.625rem 1.5rem 0 1.5rem;
+    box-shadow: 0rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    background: var(--n0);
+    padding: 3rem 1.5rem 4rem;
+    position: relative;
+
+    @media (min-width: 48rem) {
+        max-width: 42.1875rem;
+        margin: 7.8125rem auto 0 auto;
+    }
+    .inner {
+        max-width: 20.4375rem;
+        margin: 0 auto;
+    }
+    img {
+        position: absolute;
+        top: -2.7813rem;
+        right: 1.8125rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color: var(--n100);
+        margin-bottom: 3.75rem;
+    }
+    form {
+        position: relative;
+
+        .error-msg {
+            position: absolute;
+            top: -3.0625rem;
+            left: 0;
+            font-size: 0.6875rem;
+            line-height: 1rem;
+            letter-spacing: 0.0187rem;
+            margin: 0;
+            color: #ff7547;
+        }
+        .btn-custom {
+            height: 2.75rem;
+            display: block;
+            width: 100%;
+            border-radius: 0.25rem;
+            line-height: 1.25rem;
+            font-size: 0.875rem;
+            padding: 0.75rem 0;
+            margin-top: 2.4063rem;
+        }
+        .mat-form-field {
+            &-wrapper {
+                padding-right: 2.375rem;
+            }
+            input {
+                height: auto;
+                max-width: calc(100% - 2.375rem);
+            }
+            mat-icon {
+                margin-right: 0.75rem;
+            }
+            mat-label {
+                color: var(--c100);
+                font-size: 1rem;
+            }
+            + .mat-form-field {
+                padding-top: 2.1563rem;
+            }
+            &.mat-form-field-should-float {
+                mat-label {
+                    span {
+                        display: none;
+                    }
+                }
+            }       
+        }
+    }
+}

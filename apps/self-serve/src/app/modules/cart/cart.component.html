@@ -1,0 +1,79 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="isBackButtonEnabled"
+    [noProgressStep]="progressStepEnabled"
+    [userType]="customerType"
+    (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="section-head" *ngIf="cartDetailFundCount >= 1">
+            <h4>{{ pageSectionTitle }}</h4>
+        </div>
+        <div class="section-content">
+            <div class="purchase-header" *ngIf="cartDetailFundCount >= 1">
+                <p>
+                    <span *ngIf="unitTrustAccount !== 'A80111993'"
+                        >Unit Trust Account <strong>{{ unitTrustAccount }}</strong></span
+                    >
+
+                    <span *ngIf="unitTrustAccount === 'A80111993'"
+                        >Unit Trust Account <strong></strong></span
+                    >
+                    <span *ngIf="cartDetailFundCount >= 1">{{ cartDetailFundCount }} items in total</span>
+                </p>
+            </div>
+            <!-- cart list -->
+            <cimb-card-cart
+                *ngIf="cartDetailFundCount >= 1"
+                [flow]="flow"
+                [cimbStaff]="cimbStaff"
+                [investments]="investments"
+                [hasRedeemOption]="hasRedeemOption"
+                [schedulerMsg]="schedulerMsg"
+                (editItem)="editCartItem($event)"
+                (updateAmount)="updateAmountItem($event)"
+                (removeItem)="removeItemItem($event)"
+                [enableProceedToCheckOutInPurchaseTnx]="enableProceedToCheckOutInPurchaseTnx"
+                [enableRedeemTransationAtCart]="enableRedeemTransationAtCart"
+                [enableSwitchTransactionAtCart]="enableSwitchTransactionAtCart"
+            ></cimb-card-cart>
+
+            <!-- Cart total -->
+            <cimb-card-cart-default-total
+                *ngIf="cartDetailFundCount >= 1"
+                [totalFund]="totalFundsCountVal"
+                [totalSalesCharge]="totalSalesCharge"
+                [totalNetInvestmentAmount]="totalNetInvestmentAmount"
+                [totalAmount]="totalAmount"
+                [highRiskCount]="highRiskCount"
+                [switchInhighRiskCount]="switchInhighRiskCount"
+                [riskFundList]="riskFundList"
+                [unitRiskProfile]="unitRiskProfile"
+                [totalRedemptionUnits]="totalRedemptionUnits"
+                [totalRedemptionAmount]="totalRedemptionAmount"
+                [totalSwitchOutUnits]="totalSwitchOutUnits"
+                [totalSwitchInUnits]="totalSwitchInUnits"
+                [flow]="flowText"
+                [enableProceedToCheckout]="(flow === '001' && !enableProceedToCheckOutInPurchaseTnx) ||
+                (flow === '002' && !enableRedeemTransationAtCart) ||
+                (flow === '003' && !enableSwitchTransactionAtCart) ||
+                    disableProceedToCheckoutValue || disableProceedToCheckoutTaxValue ||
+                    isEditingCartItem || disableCheckoutButton
+                "
+                (proceedToCheckoutEvent)="proceedToCheckoutClick()"
+           
+                [schedulerMsg]="schedulerMsg"
+                [isFundOnHoliday]="isFundOnHoliday"
+            ></cimb-card-cart-default-total>
+
+            <!-- Use this block for empty cart -->
+            <div class="cart-empty" *ngIf="cartDetailFundCount <= 0">
+                <img src="./assets/images/cart-empty.svg" alt="Empty Cart" />
+                <h2>Your Cart is Empty</h2>
+                <p>Looks like you have not added any investments to your cart.</p>
+            </div>
+        </div>
+    </div>
+</div>

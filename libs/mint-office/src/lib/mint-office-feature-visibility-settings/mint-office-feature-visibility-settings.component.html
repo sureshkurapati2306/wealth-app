@@ -1,0 +1,145 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>SS UT Settings</h1>
+            </div>
+            <div class="section-content">
+                <div class="block-tab">
+                    <mat-tab-group class="bo-tab" animationDuration="0ms">
+                        <mat-tab label="Page Configuration" *ngIf="groups$ | async as filters">
+                            <div class="block-info">
+                                <div class="block-info-left">
+                                    <mat-chip-list
+                                        aria-label="Filter selection"
+                                        class="chip-custom"
+                                    >
+                                        <mat-chip
+                                            *ngFor="let filter of filters"
+                                            [ngClass]="{
+                                                'mat-chip-selected':
+                                                    filter.utSettingGroupId ===
+                                                    (activeFilter ?? filters[0].utSettingGroupId)
+                                            }"
+                                            (click)="
+                                                activeFilter = filter.utSettingGroupId;
+                                                changeFilter(filter.utSettingGroupId)
+                                            "
+                                            [selected]="
+                                                filter.utSettingGroupId ===
+                                                (activeFilter ?? filters[0].utSettingGroupId)
+                                            "
+                                        >
+                                            {{ filter.description }}
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </div>
+                            </div>
+
+                            <table
+                                *ngIf="listSettings$ | async as listSettings"
+                                mat-table
+                                multiTemplateDataRows
+                                [dataSource]="listSettings"
+                                class="table-responsive table-stripe"
+                                aria-describedby="List of Purchase"
+                            >
+                                <ng-container matColumnDef="Function">
+                                    <th scope="col" mat-header-cell *matHeaderCellDef>FUNCTION</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.description }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Action">
+                                    <th scope="col" mat-header-cell *matHeaderCellDef class="text-right">
+                                        ACTION
+                                    </th>
+                                    <td mat-cell *matCellDef="let row" class="text-right">
+                                        <mat-slide-toggle
+                                            color="warn"
+                                            [checked]="row.enabled"
+                                            (change)="updateToggle($event, row)"
+                                        >
+                                        </mat-slide-toggle></td
+                                ></ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumns;
+                                        let i = dataIndex
+                                    "
+                                    class="table-row"
+                                    [ngClass]="{
+                                        rowEven: i % 2,
+                                        rowOdd: !(i % 2)
+                                    }"
+                                ></tr>
+                            </table>
+                        </mat-tab>
+                        <mat-tab label="Dashboard Pop Up" *ngIf="groups$ | async as filters">
+                            <cimb-office-dashboard-popup></cimb-office-dashboard-popup>
+                        </mat-tab>
+                        <mat-tab label="Header Logo" *ngIf="groups$ | async as filters">
+                            <div class="block-info">
+                                <div class="block-info-left">
+                                    <h4 class="title">Custom Logo</h4>
+                                    <br />
+                                    <p class="subTitle">
+                                        Header image is what you see across the MyWealth portal
+                                        including the mobile view.
+                                    </p>
+                                    <br /><br />
+                                    <div class="input">
+                                        <img
+                                            [src]="imageSrc"
+                                            onerror="this.onerror=null; this.src='./assets/images/CIMB MyWealth Beta.png'"
+                                            alt="CIMB MyWealth"
+                                        />
+                                        <br /><br />
+                                        <div class="input-base">
+                                            <div class="input-layout">
+                                                <div class="choose-file-input">
+                                                    <input
+                                                        #pngInput
+                                                        hidden="true"
+                                                        type="file"
+                                                        onclick="this.value=null"
+                                                        (change)="onFileSelected($event)"
+                                                        accept="image/png"
+                                                    />
+                                                    <button
+                                                        mat-stroked-button
+                                                        (click)="pngInput.click()"
+                                                        type="file"
+                                                    >
+                                                        <span class="btn-text">Choose File</span>
+                                                    </button>
+                                                    <p class="choose-file-detail">
+                                                        Header image should be 220x26 px and in png
+                                                        format.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span *ngIf="showUploadHeaderError" class="headerUploadError">Failed to upload image</span>
+                                    </div>
+                                    <button mat-flat-button class="btn-custom btn-red btn-xs" type="button" [disabled]="disableSave" (click)="saveImage()">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Daily Batch Directory" *ngIf="groups$ | async as filters">
+                            <cimb-office-batch-directory></cimb-office-batch-directory>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

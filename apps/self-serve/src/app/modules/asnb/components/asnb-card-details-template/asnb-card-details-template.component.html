@@ -1,0 +1,8 @@
+<cimb-asnb-card-with-heading [heading]="heading">
+    <div class="details-section">
+        <div *ngFor="let item of items" class="details-item">
+            <p class="item-label">{{ item.label }}</p>
+            <p class="item-value">{{ item.value }}</p>
+        </div>
+    </div>
+</cimb-asnb-card-with-heading>

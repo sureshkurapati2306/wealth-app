@@ -1,0 +1,335 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button
+                    mat-flat-button
+                    class="btn-custom btn-text"
+                    routerLink="/batch-file-scheduler"
+                >
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>{{ editScreen ? 'Edit' : 'Add' }} Batch File Scheduler</h1>
+                <button
+                    mat-flat-button
+                    class="end-button"
+                    (click)="endScheduler()"
+                    *ngIf="!hideEndButton"
+                    [disabled]="disableEndButton"
+                >
+                    End
+                </button>
+            </div>
+            <div class="section-content">
+                <div class="section-content-left">
+                    <p class="desc">
+                        Setup a schedule to run TCJW Transaction Batch Files for customers’ online
+                        unit trust transactions.
+                    </p>
+                    <div class="tips">
+                        <h6>TIPS</h6>
+                        <ul>
+                            <li>
+                                Make sure there is only <strong>ONE scheduler in a day</strong>.
+                            </li>
+                            <li *ngIf="!downtime">
+                                Make sure the
+                                <strong>Start Date & Time is NOT later than 2:00PM</strong>.
+                            </li>
+                            <li>
+                                Date you entered will be considered as
+                                <strong>Malaysian time</strong>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section-content-right">
+                    <p class="desc">
+                        Setup a schedule to run TCJW Transaction Batch Files for customers' online
+                        unit trust transactions.
+                    </p>
+                    <div class="notice warning" *ngIf="notice">
+                        <mat-icon aria-hidden="false" aria-label="Error">error</mat-icon>
+                        <p>{{ notice }}</p>
+                    </div>
+                    <form [formGroup]="schedulerForm">
+                        <div class="field">
+                            <mat-form-field>
+                                <mat-label>Scheduler Name</mat-label>
+                                <input matInput maxLength="30" formControlName="schedulerName" />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                            </mat-form-field>
+                            <mat-error class="custom-error">
+                                <span *ngIf="downtime">{{ editErrmsg }}</span>
+
+                                <span
+                                    *ngIf="
+                                        schedulerForm.get('schedulerName').invalid &&
+                                        schedulerForm.get('schedulerName').touched
+                                    "
+                                >
+                                    Scheduler Name is required
+                                </span>
+                            </mat-error>
+                        </div>
+                        <div class="field">
+                            <mat-form-field
+                                [ngClass]="{
+                                    hasError: schedulerForm
+                                        .get('schedulerType')
+                                        .hasError('required')
+                                }"
+                            >
+                                <mat-label>Scheduler Type</mat-label>
+                                <mat-select
+                                    panelClass="custom-select-panel basic-select"
+                                    placeholder="Scheduler Type"
+                                    formControlName="schedulerType"
+                                    ngDefaultControl
+                                >
+                                    <mat-option value="Hourly">Hourly</mat-option>
+                                    <mat-option value="Daily">Daily</mat-option>
+                                    <mat-option value="Monthly">Monthly</mat-option>
+                                </mat-select>
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                                <mat-error
+                                    *ngIf="schedulerForm.get('schedulerType').hasError('required')"
+                                >
+                                    Scheduler type is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="field">
+                            <mat-form-field
+                                [ngClass]="{
+                                    hasError: schedulerForm.get('jobId').hasError('required')
+                                }"
+                            >
+                                <mat-label>Job Name</mat-label>
+                                <mat-select
+                                    panelClass="custom-select-panel basic-select"
+                                    placeholder="Job Name"
+                                    formControlName="jobId"
+                                    ngDefaultControl
+                                    (selectionChange)="jobNameChange($event)"
+                                >
+                                    <mat-option
+                                        *ngFor="let job of jobs$ | async"
+                                        value="{{ job.jobId }}"
+                                    >
+                                        {{ job.jobName }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                            </mat-form-field>
+                            <mat-error class="custom-error">
+                                <span *ngIf="downtime">{{ editErrmsg }}</span>
+
+                                <span
+                                    *ngIf="
+                                        schedulerForm.get('jobId').invalid &&
+                                        schedulerForm.get('jobId').touched
+                                    "
+                                >
+                                    Job name is required
+                                </span>
+                            </mat-error>
+                        </div>
+                        <div class="field">
+                            <mat-form-field [ngClass]="{ field_error: startDateTimeError }">
+                                <mat-label>Start Date & Time</mat-label>
+                                <input
+                                    matInput
+                                    [ngxMatDatetimePicker]="picker"
+                                    placeholder="Choose a date"
+                                    formControlName="startDateTime"
+                                    ngDefaultControl
+                                    [min]="now"
+                                    (dateChange)="startDateChange($event)"
+                                    [readonly]="true"
+                                    (click)="
+                                        picker._selected = convertDateToMoment(
+                                            schedulerForm.get('startDateTime')?.value
+                                        );
+                                        picker.open()
+                                    "
+                                />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                                <mat-datepicker-toggle
+                                    class="datetimepicker-icon"
+                                    matSuffix
+                                    [for]="picker"
+                                ></mat-datepicker-toggle>
+
+                                <ngx-mat-datetime-picker
+                                    #picker
+                                    [enableMeridian]="true"
+                                    [showSeconds]="false"
+                                    [defaultTime]="defaultTime"
+                                >
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                            <mat-error class="custom-error">
+                                {{ message }}
+
+                                <span
+                                    *ngIf="
+                                        schedulerForm.get('startDateTime').invalid &&
+                                        schedulerForm.get('startDateTime').touched
+                                    "
+                                >
+                                    Start date and time is required
+                                </span>
+                            </mat-error>
+                        </div>
+                        <div class="field" *ngIf="downtime">
+                            <mat-form-field [ngClass]="{ field_error: endDateError }">
+                                <mat-label>End Date & Time</mat-label>
+                                <input
+                                    matInput
+                                    [ngxMatDatetimePicker]="endDatePicker"
+                                    placeholder="Choose End Date & Time"
+                                    formControlName="endDate"
+                                    ngDefaultControl
+                                    (dateChange)="endDateChange($event)"
+                                    [min]="schedulerForm.get('startDateTime').value"
+                                    [readonly]="true"
+                                    (click)="
+                                        endDatePicker._selected = convertDateToMoment(
+                                            schedulerForm.get('endDate')?.value
+                                        );
+                                        endDatePicker.open()
+                                    "
+                                />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                                <mat-datepicker-toggle
+                                    class="datetimepicker-icon"
+                                    matSuffix
+                                    [for]="endDatePicker"
+                                >
+                                </mat-datepicker-toggle>
+
+                                <ngx-mat-datetime-picker
+                                    #endDatePicker
+                                    [defaultDate]="startDate"
+                                    [enableMeridian]="true"
+                                    [showSeconds]="false"
+                                    [defaultTime]="defaultTime"
+                                >
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                            <mat-error class="custom-error">
+                                {{ endDateMessage }}
+
+                                <span
+                                    *ngIf="
+                                        schedulerForm.get('endDate').invalid &&
+                                        schedulerForm.get('endDate').touched
+                                    "
+                                >
+                                    End date and time is required
+                                </span>
+                            </mat-error>
+                        </div>
+                        <div class="field field-radio" *ngIf="notDowntime">
+                            <mat-radio-group
+                                aria-label="Select an option"
+                                formControlName="schedulerOccurrence"
+                                ngDefaultControl
+                            >
+                                <mat-radio-button
+                                    value="O"
+                                    name="event"
+                                    (change)="radioButtonChanged($event.value)"
+                                    checked="checked"
+                                >
+                                    One-time Event</mat-radio-button
+                                >
+                                <mat-radio-button
+                                    value="R"
+                                    name="event"
+                                    (change)="radioButtonChanged($event.value)"
+                                    >Recurring Event
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="field" *ngIf="ishidden">
+                            <mat-form-field [ngClass]="{ field_error: endDateError }">
+                                <mat-label>End Date & Time</mat-label>
+                                <input
+                                    matInput
+                                    [ngxMatDatetimePicker]="picker1"
+                                    placeholder="Choose End Date & Time"
+                                    formControlName="endDate"
+                                    ngDefaultControl
+                                    [min]="minEndDate"
+                                    (dateChange)="endDateChange($event)"
+                                    [readonly]="true"
+                                    (click)="
+                                        picker1._selected = convertDateToMoment(
+                                            schedulerForm.get('endDate')?.value
+                                        );
+                                        picker1.open()
+                                    "
+                                />
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+
+                                <mat-datepicker-toggle
+                                    class="datetimepicker-icon"
+                                    matSuffix
+                                    [for]="picker1"
+                                ></mat-datepicker-toggle>
+
+                                <ngx-mat-datetime-picker
+                                    #picker1
+                                    [enableMeridian]="true"
+                                    [showSeconds]="false"
+                                    [defaultTime]="defaultTime"
+                                >
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                            <mat-error class="custom-error">
+                                {{ endDateMessage }}
+                            </mat-error>
+                        </div>
+                    </form>
+
+                    <p class="info" *ngIf="isOneTime">
+                        Event will occur on
+                        <span *ngIf="startDatetIme">{{
+                            startDatetIme | date: 'dd MMM YYYY hh:mm a'
+                        }}</span>
+                        <span *ngIf="schedulerForm.get('endDate').value && downtime === false">
+                            to {{ schedulerForm.get('endDate').value | date: 'dd MMM YYYY' }}</span
+                        >
+                        <span *ngIf="schedulerForm.get('endDate').value && downtime === true">
+                            to
+                            {{
+                                schedulerForm.get('endDate').value | date: 'dd MMM YYYY hh:mm a'
+                            }}</span
+                        >
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        (click)="createScheduler()"
+        [disabled]="
+            !schedulerForm.valid ||
+            (schedulerForm.get('startDateTime').invalid &&
+                schedulerForm.get('startDateTime').touched) ||
+            (schedulerForm.get('endDate').invalid && schedulerForm.get('endDate').touched) ||
+            startDateTimeError === true ||
+            endDateError === true ||
+            disableSave === true
+        "
+    >
+        Save
+    </button>
+</div>

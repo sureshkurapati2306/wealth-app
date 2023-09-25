@@ -1,0 +1,68 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [noProgressStep]="true"
+  [userType]="customerType"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  [noProgressStep]="noProgressStep"
+  (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-content">
+      <cimb-card-notice
+        [transactionMessage]="transactionStatusName"
+        [accountName]="accountName"
+        [unitTrustAccount]="unitTrustAccount"
+        [paymentAccount]="paymentAccount"
+        [referenceNumber]="referenceNumber"
+        [status]="status"
+        [dateTime]="dateTime"
+        [transactionStatusName]="message"
+        [flow]="flow"
+      >
+      </cimb-card-notice>
+      <cimb-card-investment-summary
+        [totalInvestmentItems]="totalInvestmentItems"
+        [cardTitle]="cardTitle"
+        [investments]="investments"
+        [cimbStaff]="cimbStaffs"
+        [showAssetClass]="false"
+        [showRiskProfile]="false"
+        [flow]="flow"
+      ></cimb-card-investment-summary>
+
+      <cimb-card-purchase-total
+        [totalFund]="totalFundsCountVal"
+        [totalNetInvestmentAmount]="totalNetInvestmentAmount"
+        [totalAmount]="totalAmountVal"
+        [totalSalesCharge]="totalSalesCharge"
+        [cardTitle]="cardTitleTotal"
+        [totalRedemptionUnits]="totalRedemptionUnits"
+        [totalRedemptionAmount]="totalRedemptionAmount"
+        [totalSwitchOutUnits]="totalSwitchOutUnits"
+        [totalSwitchInUnits]="totalSwitchInUnits"
+        [flow]="flow"
+      ></cimb-card-purchase-total>
+
+      <div class="transaction-btns">
+        <button
+          class="btn-custom mat-flat-button btn-red"
+          disableRipple="true"
+          mat-flat-button
+          (click)="goToDesiredPage('dashboard')"
+        >
+          Go to Dashboard
+        </button>
+        <button
+          class="btn-custom mat-flat-button btn-text-only"
+          disableRipple="true"
+          mat-flat-button
+          (click)="goToDesiredPage('transactionHistory')"
+        >
+          View Transaction History
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

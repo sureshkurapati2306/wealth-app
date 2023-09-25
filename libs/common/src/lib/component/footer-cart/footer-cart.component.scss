@@ -1,0 +1,28 @@
+.footer-cart-amount > h6 > sup {
+    top: -2em;
+
+    @media (max-width: 48rem) {
+        top: -0.5em;
+    }
+}
+::ng-deep {
+  .btn-add-mobile {
+    position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    z-index: 20;
+
+    @media (min-width: 37.5rem) {
+      display: none;
+    }
+  }
+  .footer-cart-visible {
+    .btn-add-mobile {
+      bottom: 11rem;
+    }
+  }
+  .mat-spinner {
+    float: right;
+    margin-left: 1rem;
+  }
+}

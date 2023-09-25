@@ -1,0 +1,37 @@
+::ng-deep .mobile-dropdown-dialog {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+
+    .mat-dialog-container {
+        margin-top: 50px;
+        overflow: hidden;
+        border-radius: 1.5rem !important;
+        padding: 0;
+    }
+}
+
+.dialog-heading {
+    background-color: #f6f6f6;
+    padding: 0px;
+    position: relative;
+
+    .close-icon {
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
+}
+
+.sub-header {
+    background-color: var(--n5);
+    color: var(--n80);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mat-list {
+    .mat-list-item:hover {
+        background: rgba(0, 0, 0, .04) !important;
+    }
+}

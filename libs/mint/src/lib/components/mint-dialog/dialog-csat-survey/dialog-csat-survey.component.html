@@ -1,0 +1,47 @@
+<div class="mat-dialog-wrapper">
+    <div class="mat-dialog-pad">
+        <button mat-icon-button class="btn-close" (click)="closeDialog()">
+            <em class="icon-close"></em>
+        </button>
+        <ng-container *ngIf="!thankyouFlag">
+            <mat-dialog-content>
+                <div class="heading">
+                    {{title}}
+                </div>
+                <div class="rating-container">
+                    <span *ngFor="let icon of maxRatingArr; let index=index" (mouseenter)="handleMouseEnter(index)"
+                        (mouseleave)="handleMouseLeave()" (click)="rating(index)">
+                        <img class="star-icon" [src]="showIcon(index)" alt="rating_stars">
+                    </span>
+                    <div class="desc">{{description}}</div>
+                </div>
+                <div class="comment-container">
+                    <form [formGroup]="commentForm">
+                        <div class="comment-text">COMMENT (OPTIONAL)</div>
+                        <div class="count-text">{{cnt}}/500</div>
+                        <textarea class="comment" formControlName="comment" maxlength="500"
+                            [placeholder]="placeHolderText" name="comment" cols="30" rows="6"></textarea>
+                    </form>
+                </div>
+            </mat-dialog-content>
+            <mat-dialog-actions align="center" class="mat-dialog-actions cart-modal-actions">
+                <button mat-flat-button class="btn-custom btn-red" disableRipple="true" (click)="submitRating()">
+                    Submit
+                </button>
+            </mat-dialog-actions>
+        </ng-container>
+        <ng-container *ngIf="thankyouFlag">
+            <div>
+                <img class="thank-you-img" src="./assets/images/feedback.svg" alt="thankyoufeedback">
+            </div>
+            <div class="thank-you-container">
+                <span class="thank-you-text">Thank you for your feedback!</span>
+            </div>
+            <mat-dialog-actions align="center" class="mat-dialog-actions cart-modal-actions">
+                <button mat-flat-button class="btn-custom btn-red" disableRipple="true" (click)="closeDialog()">
+                    Close
+                </button>
+            </mat-dialog-actions>
+        </ng-container>
+    </div>
+</div>

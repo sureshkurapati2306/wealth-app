@@ -1,0 +1,240 @@
+.funds-pagination {
+  padding-top: 1.75rem;
+
+  @media (max-width: 47.9375rem) {
+    .page-size-wrapper {
+      display: none;
+    }
+  }
+  @media (min-width: 48rem) {
+    padding-top: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.custom-paginator {
+  padding: 0;
+
+  ul {
+    display: flex;
+    margin: 0 -0.125rem;
+
+    li {
+      padding: 0 0.125rem;
+
+      a {
+        font-size: 0.875rem;
+        padding: 0;
+        border-bottom: 0.125rem solid transparent;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        height: 2.5rem;
+        line-height: 2.375rem;
+        width: 3.125rem;
+        // background: var(--n5h);
+        color: var(--n60);
+
+        @media (min-width: 48rem) {
+          width: 2.5rem;
+          height: 2rem;
+          line-height: 1.875rem;
+        }
+        em {
+          color: var(--n20);
+        }
+        &:not(.disabled) {
+          &:hover {
+            color: var(--r60);
+            border-bottom-color: var(--r60);
+            font-weight: bold;
+
+            em {
+              color: var(--n60);
+            }
+          }
+        }
+        &:active {
+          color: var(--n0);
+          background-color: var(--r100);
+        }
+        &.disabled {
+          cursor: pointer;
+        }
+      }
+      &.current {
+        a {
+          color: var(--r100);
+          font-weight: var(--bold);
+          border-bottom-color: var(--r100);
+
+          &:active {
+            background: var(--n5h);
+          }
+        }
+      }
+      &.prev {
+        a {
+          background: none;
+          width: 2rem;
+
+          &:hover {
+            border-bottom: 0;
+          }
+          &.disabled {
+            color: var(--n20);
+          }
+        }
+      }
+      &.next {
+        a {
+          background: none;
+          width: 2rem;
+
+          &:hover {
+            border-bottom: 0;
+          }
+          em {
+            &:before {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+      &.total-pages {
+        display: none;
+
+        @media (min-width: 37.5rem) {
+          display: inline-block;
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+// mat table
+.holiday {
+  .messages {
+    @media (min-width: 60rem) {
+      bottom: 5rem;
+    }
+    &.error_message {
+      @media (min-width: 60rem) {
+        bottom: 3.75rem;
+      }
+    }
+  }
+  .readonly {
+    border: 1px solid var(--n20);
+    color: var(--n20);
+
+    &:placeholder-shown {
+      color: var(--n20);
+    }
+  }
+}
+
+.fund-holiday-label {
+  background: var(--w70);
+  border-radius: 16px;
+  border: 1px solid var(--warning);
+  padding: 1px 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--n0);
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+  white-space: nowrap;
+
+  span {
+    margin-left: 5px;
+    font-size: 16px;
+    display: inline-block;
+
+    em {
+      &.show-lg {
+        @media (min-width: 62rem) {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.tab-header p a
+{
+  font-size: 0.875rem;
+}
+
+::ng-deep {
+  .mat-tab-group {
+    position: relative;
+    z-index: 0;
+  }
+  .cdk-overlay-pane {
+    .mat-select-panel-wrap {
+      .mat-select-panel {
+        padding:.5rem !important;
+  
+        &:not(.page-size-options) {
+          .mat-option {
+            padding:.5rem !important;
+            min-height: 0 !important;
+            margin:0 !important;
+    
+            &:after {
+              display: none !important;
+            }
+            &:hover {
+              background: none !important;
+            }
+            &.mat-active {
+              cursor: default;
+
+              &:hover {
+                background: var(--r60) !important;
+                color: white !important;
+              }
+            }
+          }
+          .mat-ripple {
+            display: none !important;
+          }
+          .mat-option-text {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .mat-paginator-container {
+    .mat-paginator-page-size-select {
+      .mat-select[aria-expanded="true"] {
+        font-weight: var(--regular);
+      }
+    }
+  }
+}
+
+.esg-fund{
+  padding-left: 1rem;
+  
+}
+.tooltiForEsg {
+  padding-left: 0.2rem;
+}
+.esg-fund-tooltip {
+  cursor: pointer;
+}
+
+::ng-deep .mat-select-panel-wrap .mat-select-panel:not(.page-size-options) .mat-option:hover:not(.mat-option-disabled) {
+  background: var(--r60) !important;
+  color: white !important;
+}

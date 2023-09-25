@@ -1,0 +1,3 @@
+{
+    "*": ["nx affected --target=lint --parallel=5 --base=origin/release-0.9", "npm run nx -- test self-serve --watch=false --browsers=Headless --codeCoverage=true --parallel --max-parallel=3"]
+  }

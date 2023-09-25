@@ -1,0 +1,32 @@
+
+<div class="chartData">
+  <table class="table table-legend" aria-describedby="chartLegend">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr *ngFor="let item of items; index as i">
+        <td class="tableFont table-data"> 
+          <h6
+            class="label"
+            [ngStyle]="{'border-color': item.classHexa}"
+          >
+            {{ item.name }}
+          </h6>
+        </td>
+        <td class="amount">
+
+          <ng-container *ngIf="item.amount < 0">
+            (<sup class="tableFont">MYR</sup>&nbsp;{{ (item.amount | number: '1.2-2').replace('-', '') }})
+          </ng-container>
+          <ng-container *ngIf="item.amount >= 0">
+            <sup class="tableFont">MYR</sup>&nbsp;{{ item.amount | number: '1.2-2' }}
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

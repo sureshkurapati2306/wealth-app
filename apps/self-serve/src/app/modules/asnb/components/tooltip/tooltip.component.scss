@@ -1,0 +1,35 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin';
+
+[class]:not(.mat-icon):not(.mat-error) {
+    font-family: 'Noto Sans', sans-serif !important;
+}
+
+.desktop-tooltip {
+    display: none;
+
+    @media (min-width: 768px) {
+        display: inherit; // Not putting block here to follow parent's display
+    }
+}
+
+.mobile-tooltip {
+    display: inherit; // Not putting block here to follow parent's display
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+:host ::ng-deep {
+    .desktop-tooltip {
+        white-space: pre-line;
+    }
+}
+
+.mat-tooltip,
+.tooltip-bottom-sheet {
+    white-space: pre-line;
+    @include font(0.75rem);
+    color: var(--n80);
+}

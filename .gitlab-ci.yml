@@ -1,0 +1,14 @@
+include:
+  - project: tcj/wealth/template-wl-pipelines
+    file: Nx.gitlab-ci.yml
+    ref: release-2.0
+
+variables:
+  IMAGE_TITLE: 'WL Wealth Web Apps'
+  IMAGE_DESCRIPTION: 'WL Web Applications'
+  KUBE_SERVICE_NAME: 'wealth-app'
+  KUBE_SERVICE_TITLE: 'WL Web Applications'
+  TRANSFER_METER_FREQUENCY: 5s
+  FF_USE_FASTZIP: "true"
+  CACHE_COMPRESSION_LEVEL: "fastest"
+  ARTIFACT_COMPRESSION_LEVEL: "fastest"

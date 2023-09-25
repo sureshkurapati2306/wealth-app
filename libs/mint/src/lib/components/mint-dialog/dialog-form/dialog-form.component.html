@@ -1,0 +1,104 @@
+<div class="mat-dialog-wrapper" id="update-email">
+    <div class="mat-dialog-pad">
+        <div class="dialog-title">
+            <button mat-icon-button class="btn-close" (click)="closeDialog()" mat-dialog-close>
+        <em class="icon-close"></em>
+        <em class="icon-arrow-left"></em>
+      </button>
+            <h3>{{ data.dialogHeading }}</h3>
+            <p>{{ data.dialogSubheading }}</p>
+        </div>
+        <mat-dialog-content class="form-content">
+            <form [formGroup]="requiredForm">
+                <div class="dialog-content" *ngIf="data.isAddressDialog">
+                    <div class="input-block">
+                        <cimb-input-dropdown 
+                                [dropdownForm]="requiredForm"
+                                [isDialogPanel]="'country'" 
+                                [dropdownFormControlName]="'country'"
+                                [selectOption]="data.countryList" 
+                                [dropdownPlaceholder]="selectPlaceholderCountry" 
+                                [isRequired]="true"
+                                [dropdownValue]="'countryLongName'" 
+                                [dropdownId]="'countryCode'"
+                                [dropdownLabel]="selectLabelCountry"
+                                [errorMessage]="countryErrorMessage"
+                                (optionSelectedEvent)="getSelectedCountry($event)">
+                        </cimb-input-dropdown>
+                    </div>
+                    <div class="input-block">
+                        <cimb-input-basic [inputForm]="requiredForm" [inputFormControlName]="'addrLine1'" [isRequired]="true" [maxLength]="40" [errorMessage]="checkMandatoryFieldValid('addrLine1')" [inputLabel]="inputLabelAddressLine1" [inputPlaceholder]="inputPlaceholderAddressLine1">
+                        </cimb-input-basic>
+                    </div>
+                    <div class="input-block">
+                        <cimb-input-basic [inputForm]="requiredForm" [inputFormControlName]="'addrLine2'" [isRequired]="true" [maxLength]="40" [errorMessage]="checkMandatoryFieldValid('addrLine2')" [inputLabel]="inputLabelAddressLine2" [inputPlaceholder]="inputPlaceholderAddressLine2">
+                        </cimb-input-basic>
+                    </div>
+                    <div class="input-block">
+                        <cimb-input-basic [inputForm]="requiredForm" [inputFormControlName]="'addrLine3'" [isRequired]="false" [maxLength]="40" [errorMessage]="optionalAddressError" [inputLabel]="inputLabelAddressLine3" [inputPlaceholder]="inputPlaceholderAddressLine3">
+                        </cimb-input-basic>
+                    </div>
+                    <div class="input-block">
+                        <cimb-input-basic [inputForm]="requiredForm" [inputFormControlName]="'addrLine4'" [isRequired]="false" [maxLength]="40" [errorMessage]="optionalAddressError" [inputLabel]="inputLabelAddressLine4" [inputPlaceholder]="inputPlaceholderAddressLine4">
+                        </cimb-input-basic>
+                    </div>
+                    <div class="input-row">
+                        <div class="article">
+                            <cimb-input-basic [inputForm]="requiredForm" [inputFormControlName]="'postcode'" [isRequired]="true" [emailPattern]="mobilePattern" [maxLength]="10" [errorMessage]="checkMandatoryFieldValid('postcode')" [inputLabel]="inputLabelPostCode" [inputPlaceholder]="inputPlaceholderPostCode">
+                            </cimb-input-basic>
+                        </div>
+
+                        <div class="article wrapper">
+                            <cimb-input-dropdown 
+                                *ngIf="selectedCountry === 'MY'"
+                                [dropdownForm]="requiredForm" 
+                                [isDialogPanel]="'state'"
+                                [dropdownFormControlName]="'state'"
+                                [selectOption]="stateOptions" 
+                                [dropdownPlaceholder]="inputPlaceholderState" 
+                                [isRequired]="true"
+                                [dropdownValue]="'stateShortName'" 
+                                [dropdownId]="'stateCode'"
+                                [dropdownLabel]="inputLabelState"
+                                [errorMessage]="stateError"
+                                [postCodeChangeEvent]="isPostCodeValueChnge">
+                            </cimb-input-dropdown>
+                            <cimb-input-basic *ngIf="selectedCountry !== 'MY'" 
+                                [inputForm]="requiredForm" 
+                                [inputFormControlName]="'state'" 
+                                [isRequired]="true" 
+                                [errorMessage]="checkMandatoryFieldValid('state')" 
+                                [inputLabel]="inputLabelState" 
+                                [inputPlaceholder]="inputPlaceholderState">
+                            </cimb-input-basic>
+                        </div>
+                    </div>
+                </div>
+                <div class="dialog-content" *ngIf="data.isEmailDialog">
+                    <div>
+                        <cimb-input-basic 
+                            [inputForm]="requiredForm" 
+                            [inputFormControlName]="'email'" 
+                            [isRequired]="true" 
+                            [emailPattern]="emailPattern" 
+                            [maxLength]="50" 
+                            [errorMessage]="checkMandatoryFieldValid('email')" 
+                            [inputPlaceholder]="emailPlaceholder">
+                        </cimb-input-basic>
+                    </div>
+                </div>
+            </form>
+        </mat-dialog-content>
+        <mat-dialog-actions [ngClass]="data.isEmailDialog ? 'add-mt': ''">
+            <button *ngIf="data.dialogButtonCancel" mat-flat-button [ngStyle]="{'border': data.isEmailDialog ? '1px solid black' : 'none'}" class="btn-custom btn-lg btn-white btn-cancel" (click)="closeDialog()">
+        {{ data.dialogButtonCancelText }}
+      </button>
+            <button mat-flat-button class="btn-custom btn-red" *ngIf="checkFieldHasValue()" [disabled]="requiredForm.invalid" (click)="updateDialog()">
+        {{ data.dialogButtonProceedText }}
+      </button>
+            <button mat-flat-button class="btn-custom btn-invalid" *ngIf="!checkFieldHasValue()" [disabled]="requiredForm.invalid" (click)="updateDialog()">
+        {{ data.dialogButtonProceedText }}
+      </button>
+        </mat-dialog-actions>
+    </div>
+</div>

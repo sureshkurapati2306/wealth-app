@@ -1,0 +1,202 @@
+:host ::ng-deep {
+    .mat-form-field {
+        margin-right: 1.5rem;
+
+        &.custom-dropdown-btn {
+            margin-right: 0;
+
+            @media (min-width: 75rem) {
+                margin-right: 1.5rem;
+            }
+        }
+        .mat-select {
+            padding: 0.75rem;
+
+            &[aria-expanded='true'] {
+                background: var(--n0);
+               // box-shadow: 0px 0.5rem 1rem -0.375rem rgba(24, 39, 75, 0.08);
+                border-radius: 0.5rem;
+                font-weight: var(--bold);
+                color: var(--n80);
+                box-shadow: 0px 0px 16px -2px rgba(24, 39, 75, 0.08), 0px 10px 32px -4px rgba(24, 39, 75, 0.1);
+
+                .mat-select-arrow-wrapper {
+                    .mat-select-arrow {
+                        transform: rotate(-133deg);
+                    }
+                }
+            }
+
+            .mat-select-value {
+                .mat-select-placeholder {
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                    cursor: pointer;
+                    color: var(--n100);
+                    white-space: nowrap;
+                }
+                .mat-select-value-text {
+                    line-height: initial;
+
+                    .mat-select-trigger {
+                        font-weight: 700;
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                        color: var(--100);
+                    }
+                }
+            }
+            .mat-select-arrow-wrapper {
+                .mat-select-arrow {
+                    border: solid var(--n60);
+                    border-width: 0 2px 2px 0;
+                    display: inline-block;
+                    padding: 3px;
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+}
+
+::ng-deep {
+    .mat-select-panel-wrap {
+        // position: relative;
+        max-width: 20.25rem;
+        min-width: 15rem;
+
+        .mint-multi-select.custom-multi-select-checkbox {
+            @media (min-width: 48rem) {
+                margin-top: 3.75rem;
+                position: relative;
+                overflow: visible;
+            }
+
+            &:before {
+                @media (min-width: 48rem) {
+                    width: 0;
+                    height: 0;
+                    border-top: 0.75rem solid transparent;
+                    border-right: 0.75rem solid transparent;
+                    border-bottom: 0.75rem solid var(--n0);
+                    border-left: 0.75rem solid transparent;
+                    position: absolute;
+                    top: -1.4375rem;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    content: '';
+                    display: block;
+                }
+            }
+            .mat-option-wrapper {
+                @media (min-width: 48rem) {
+                    overflow: auto;
+                    max-height: 200px;
+                }
+            }
+        }
+
+       
+        // &:before {
+        //     @media (min-width: 48rem) {
+        //         width: 0;
+        //         height: 0;
+        //         border-top: 0.75rem solid transparent;
+        //         border-right: 0.75rem solid transparent;
+        //         border-bottom: 0.75rem solid var(--n0);
+        //         border-left: 0.75rem solid transparent;
+        //         position: absolute;
+        //         top: -1.4375rem;
+        //         left: 52%;
+        //         transform: translate(-52%, 0);
+        //         content: '';
+        //         display: block;
+        //     }
+        // }
+        .mint-multi-select.mat-select-panel:not(.page-size-options) {
+            min-width: 100% !important;
+            max-width: 100%;
+            transform: none !important;
+            border-radius: 0.5rem;
+
+            .mat-option {
+                @media (min-width: 48rem) {
+                    height: auto !important;
+                    min-height: 2.5rem !important;
+                    padding-top: 0.5rem !important;
+                    padding-bottom: 0.5rem !important;
+                    line-height: 1.375rem !important;
+                    align-items: flex-start;
+                }
+                &:first-child:hover {
+                    border-top-left-radius: 0.5rem;
+                    border-top-right-radius: 0.5rem;
+                }
+                &:last-child:hover {
+                    border-bottom-left-radius: 0.5rem;
+                    border-bottom-right-radius: 0.5rem;
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 1rem;
+                    bottom: 0;
+                    //width: 88%;
+                    width: calc(100% - 2rem);
+                    border-bottom: 1px solid #d5d6d7;
+                }
+                &:last-child {
+                    &::after {
+                        border-bottom: 0;
+                    }
+                }
+                &.mat-selected:not(.mat-option-disabled) {
+                    color: var(--n80);
+                    font-weight: var(--bold);
+                }
+                .mat-pseudo-checkbox-checked {
+                    background: var(--r100);
+                }
+                &:hover:not(.mat-option-disabled) {
+                    background: var(--n100);
+                    color: var(--n0);
+
+                    .mat-pseudo-checkbox {
+                        border-color: var(--n0);
+                    }
+                    .mat-pseudo-checkbox-checked {
+                        background: var(--n0);
+                        border-color: var(--n0);
+
+                        &::after {
+                            color: var(--r100);
+                        }
+                    }
+                }
+                &.mat-active {
+                    background: none !important;
+                    color: var(--n80) !important;
+
+                    &:hover {
+                        background: var(--r60) !important;
+                        color: var(--n0) !important;
+                    }
+                }
+                .mat-option-text {
+                    text-transform: capitalize;
+                    font-size: 0.875rem;
+                    border-bottom: none;
+                    line-height: 17px;
+                    display: flex;
+                    align-items: center;
+                    padding: 0;
+                }
+                .mat-pseudo-checkbox {
+                    @media (min-width: 48rem) {
+                        margin-top: 2px;
+                    }
+                }
+            }
+        }
+    }
+}

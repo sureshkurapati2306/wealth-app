@@ -1,0 +1,47 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+::ng-deep {
+    .col-header {
+        .t-util {
+            span {
+                @media (min-width: 1200px) {
+                    display: block !important;
+                }
+            }
+        }
+    }
+}
+
+.container {
+    padding: 0 1rem;
+    margin-top: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        margin: 2rem auto 0;
+        max-width: 78rem;
+    }
+}
+
+.section-head {
+    margin-bottom: 1.5rem;
+    @include font(1rem);
+    @media (min-width: $asnbDesktop) {
+        margin-bottom: 2rem;
+        @include font(1.25rem);
+    }
+}
+
+.section-content {
+    @media (min-width: $asnbDesktop) {
+        max-width: 63rem;
+        margin: 0 auto;
+    }
+}
+
+.card-container {
+    display: grid;
+    row-gap: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        row-gap: 2rem;
+    }
+}

@@ -1,0 +1,64 @@
+.dipaly-input-content {
+    cursor: pointer;
+}
+.mobile-typeahead-input {
+    display: contents;
+}
+::ng-deep .typeahead-mobile-form-field {
+    .mat-form-field-label-wrapper {
+        overflow: visible;
+        top: -25px;
+    }
+}
+
+::ng-deep .mat-select-panel.custom-select-panel {
+    min-width: auto !important;
+    transform: translateY(25%) !important;
+}
+
+.inner-container {
+    background-color: #fff;
+    &::-webkit-scrollbar-thumb {
+        @media (min-width: 48rem) {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            min-height: 100px;
+        }
+    }
+}
+
+::ng-deep .mat-select-panel {
+    max-width: 37rem !important;
+    width: 37rem !important;
+}
+
+::ng-deep {
+    @media (max-width: 837px) {
+        .mat-select-panel-wrap
+            .mat-select-panel:not(.custom-select-panel):not(.risk-select):not(.risk-select-single)
+            .mat-option {
+            width: 100% !important;
+            text-align: left;
+        }
+        .mat-dialog-content {
+            height: 50vh !important;
+        }
+
+        .cdk-overlay-pane {
+            width: 85% !important;
+            display: block !important;
+        }
+
+        .mat-select-panel {
+            left: 2rem !important;
+            max-height: 256px !important;
+            padding-left: 24px !important;
+            max-width: 100% !important;
+        }
+
+        .mat-menu-content {
+            max-height: 200px !important;
+            overflow: scroll;
+        }
+    }
+}

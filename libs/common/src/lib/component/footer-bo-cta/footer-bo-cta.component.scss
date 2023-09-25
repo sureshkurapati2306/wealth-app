@@ -1,0 +1,30 @@
+.footer-cta {
+  margin-top: 0.75rem;
+  min-height: 4rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0rem -0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+
+  .btn-custom {
+    min-width: 10rem;
+  }
+}
+
+.footer-start-investment {
+  margin-top: 0.75rem;
+  min-height: 4rem;
+  padding: 1rem;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+
+  .btn-custom {
+    min-width: 10rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: var(--bold);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

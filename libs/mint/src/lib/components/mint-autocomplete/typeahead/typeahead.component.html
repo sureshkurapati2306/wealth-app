@@ -1,0 +1,179 @@
+<label *ngIf="isTypeaheadLabel" class="autocomplete-label" attr.aria-label="{{ typeaheadLabel }}">{{
+    typeaheadLabel
+}}</label>
+ <form [formGroup]="typeaheadForm" class="autocomplete-form">
+
+    <mat-form-field
+    *ngIf="!$XSmall"
+   
+    [class.errorborder]="isFormValid()"
+    class="example-full-width"
+    floatLabel="never"
+    >
+
+    <mat-select name="countryString" placeholder="{{typeaheadPlaceholder}}"
+    formControlName="{{ typeaheadFormControlName }}"
+
+    [ngClass]="{ 'custom-inline-select': selectInline }"
+    panelClass="custom-select-panel {{ panelClass }}"
+    
+      (selectionChange)="getSelectedOption($event)">
+        <div class="mat-menu-content" id="country-oprions">
+          
+            <div class="inner-container"> 
+                <ng-container *ngIf="!isGroupDropdown">
+                    <mat-option
+                        *ngFor="let option of typeaheadOptions"
+                        [value]="option[typeaheadId]"
+                        [id]="option[typeaheadValue]"
+                    >
+                        {{ option[typeaheadValue] }}
+                    </mat-option>
+                </ng-container>
+                <ng-container *ngIf="isGroupDropdown">
+                    <mat-optgroup
+                        *ngFor="let group of typeaheadOptions"
+                        [label]="group.letter"
+                    >
+                        <mat-option *ngFor="let name of group.names" [value]="name">
+                            {{ name }}
+                        </mat-option>
+                    </mat-optgroup>
+                </ng-container>
+           </div>
+        </div> 
+
+      </mat-select>
+    <mat-error
+    *ngIf="
+        typeaheadForm &&
+        typeaheadForm.controls &&
+        !typeaheadForm.controls[typeaheadFormControlName].valid &&
+        (typeaheadForm.controls[typeaheadFormControlName].dirty ||
+            typeaheadForm.controls[typeaheadFormControlName].touched)
+    "
+    >
+    {{ errorMessage }}
+    </mat-error>
+</mat-form-field>
+
+<!-- <form [formGroup]="typeaheadForm" class="autocomplete-form">
+    <mat-form-field
+        *ngIf="!$XSmall"
+        [class.errorborder]="isFormValid()"
+        class="example-full-width"
+        floatLabel="never"
+    >
+        <input
+            matInput
+            [matAutocomplete]="auto"
+            formControlName="{{ typeaheadFormControlName }}"
+            matAutocompletePosition="below"
+        />
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix>error_outline</mat-icon>
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-placeholder attr.aria-placeholder="{{ typeaheadPlaceholder }}" class="placeholder"
+            >{{ typeaheadPlaceholder }}
+        </mat-placeholder>
+        <mat-autocomplete
+            class="desktop-autocomplete"
+            #auto="matAutocomplete"
+            [displayWith]="displayNames.bind(this)"
+            (optionSelected)="getSelectedOption($event)"
+            (close)="aftercloseMobileDialog()"
+        >
+            <div class="inner-container">
+                <ng-container *ngIf="!isGroupDropdown">
+                    <mat-option
+                        *ngFor="let option of typeaheadOptions"
+                        [value]="option[typeaheadId]"
+                        [id]="option[typeaheadValue]"
+                    >
+                        {{ option[typeaheadValue] }}
+                    </mat-option>
+                </ng-container>
+                <ng-container *ngIf="isGroupDropdown">
+                    <mat-optgroup
+                        *ngFor="let group of typeaheadOptions"
+                        [label]="group.letter"
+                    >
+                        <mat-option *ngFor="let name of group.names" [value]="name">
+                            {{ name }}
+                        </mat-option>
+                    </mat-optgroup>
+                </ng-container>
+            </div>
+        </mat-autocomplete>
+        <mat-error
+            *ngIf="
+                typeaheadForm &&
+                typeaheadForm.controls &&
+                !typeaheadForm.controls[typeaheadFormControlName].valid &&
+                (typeaheadForm.controls[typeaheadFormControlName].dirty ||
+                    typeaheadForm.controls[typeaheadFormControlName].touched)
+            "
+        >
+            {{ errorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+        (click)="openPopup()"
+        *ngIf="$XSmall"
+        [class.errorborder]="isFormValid()"
+        class="example-full-width typeahead-mobile-form-field"
+        floatLabel="never"
+    >
+        <div class="dipaly-input-content">
+            <span>
+                {{ typeaheadForm.controls[typeaheadFormControlName].value ? getValue() : '' }}
+            </span>
+        </div>
+        <input
+            class="mobile-typeahead-input"
+            matInput
+            formControlName="{{ typeaheadFormControlName }}"
+        />
+        <mat-icon (click)="openPopup()" matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-placeholder
+            *ngIf="!typeaheadForm.controls[typeaheadFormControlName].value"
+            attr.aria-placeholder="{{ typeaheadPlaceholder }}"
+            class="placeholder"
+            >{{ typeaheadPlaceholder }}
+        </mat-placeholder>
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix>error_outline</mat-icon>
+        <mat-error>
+            {{ errorMessage }}
+        </mat-error>
+    </mat-form-field>
+</form> -->
+<mat-form-field
+        (click)="openPopup()"
+        *ngIf="$XSmall"
+        [class.errorborder]="isFormValid()"
+        class="example-full-width typeahead-mobile-form-field"
+        floatLabel="never"
+    >
+        <div class="dipaly-input-content">
+            <span>
+                {{ typeaheadForm.controls[typeaheadFormControlName].value ? getValue() : '' }}
+            </span>
+        </div>
+        <input
+            class="mobile-typeahead-input"
+            matInput
+            formControlName="{{ typeaheadFormControlName }}"
+        />
+        <mat-icon (click)="openPopup()" matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-placeholder
+            *ngIf="!typeaheadForm.controls[typeaheadFormControlName].value"
+            attr.aria-placeholder="{{ typeaheadPlaceholder }}"
+            class="placeholder"
+            >{{ typeaheadPlaceholder }}
+        </mat-placeholder>
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix>error_outline</mat-icon>
+        <mat-error>
+            {{ errorMessage }}
+        </mat-error>
+    </mat-form-field>
+</form>

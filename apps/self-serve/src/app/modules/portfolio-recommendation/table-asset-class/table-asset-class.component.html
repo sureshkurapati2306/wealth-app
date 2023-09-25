@@ -1,0 +1,20 @@
+     <!-- Copy From table-legend.component.html -->
+     <table aria-describedby="chartLegend" class="table table-legend">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col" class="my-holdings-lable">Selected</th>
+          <th scope="col">Recommended</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let assetClass of tableData">
+          <td>
+            <h6 class="label" style="border-color: {{assetClass.classHexa}}"> {{assetClass.asset_class_name}} </h6>
+          </td>
+          <td>{{assetClass.holding}}%</td>
+          <td>{{assetClass.recommended}}%</td>
+        </tr>
+      </tbody>
+    </table>

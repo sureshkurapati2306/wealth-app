@@ -1,0 +1,30 @@
+<div class="mat-dialog-wrapper">
+    <div class="mat-dialog-pad">
+        <button mat-icon-button class="btn-close" mat-dialog-close disableRipple="true">
+            <em class="icon-close"></em>
+            <em class="icon-arrow-left"></em>
+        </button>
+        <mat-dialog-content [ngStyle]="{ overflow: 'scroll' }">
+            <cimb-box-portfolio
+                [showChart]="showChart"
+                [portfoliolist]="portfoliolist"
+                [chartsData]="chartOptions"
+                [messages]="messages"
+                *ngIf="showChart"
+            ></cimb-box-portfolio>
+            <cimb-box-risk-profile
+                [rishProfile]="rishProfile"
+                [rishProfileMessage]="rishProfileMessage"
+                [riskProfileRedoAllowed]="riskProfileRedoAllowed"
+                (riskRedoClickEvent)="riskRedoClickEvent()"
+                (learnMoreClickEvent)="learnMoreClickEvent()"
+                [showRedoRiskProfile]="showRedoRiskProfile"
+                [showLearnMore]="showLearnMore"
+                [casaIndicator]="casaIndicator"
+                [solePropIndicator]="solePropIndicator"
+                [amlCheckResult]="amlCheckResult"
+            ></cimb-box-risk-profile>
+        </mat-dialog-content>
+    </div>
+</div>
+<!--<button mat-mini-fab class="more"><em class="icon-arrow-down"></em></button>-->

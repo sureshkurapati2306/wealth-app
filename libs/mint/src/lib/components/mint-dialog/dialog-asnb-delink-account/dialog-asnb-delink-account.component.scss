@@ -1,0 +1,142 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin';
+
+.asnb-delink-account {
+    p {
+        margin: 0;
+    }
+
+    max-width: 37.5rem;
+
+    @media (min-width: $asnbDesktop) {
+        width: 37.5rem;
+    }
+
+    .close-section {
+        display: flex;
+        justify-content: flex-end;
+
+        img:hover {
+            cursor: pointer;
+        }
+
+        .desktop-close {
+            display: none;
+            @media (min-width: $asnbDesktop) {
+                display: block;
+            }
+        }
+
+        .mobile-close {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 1.5rem 1rem;
+
+            @media (min-width: $asnbDesktop) {
+                display: none;
+            }
+        }
+    }
+
+    .asnb-delink-account-content {
+        text-align: center;
+        padding-top: 1.5rem !important;
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .asnb-delink-account-title {
+            @include font(1.5rem);
+            font-weight: 700;
+            margin-top: 1.5rem;
+            color: #333739;
+            @media (max-width: 60rem) {
+                @include font(1.25rem);
+            }
+        }
+
+        .asnb-delink-account-description {
+            margin-top: 0.25rem;
+
+            p {
+                @include font(1rem);
+                color: #575a5c;
+            }
+
+            span {
+                font-weight: 700;
+            }
+
+            a {
+                text-decoration: underline;
+                color: #cc0000;
+            }
+        }
+    }
+}
+
+::ng-deep .mat-dialog-actions {
+    padding: 0;
+    gap: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+
+    button {
+        width: 100%;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        @include font(1rem);
+        border-radius: 0.5rem;
+        border: 1px solid #cc0000;
+
+        &:hover {
+            background-color: #ffffff;
+        }
+
+        &.asnb-delink-account-agree {
+            background-color: #cc0000;
+            color: #ffffff;
+            margin-left: 0 !important;
+        }
+
+        &.asnb-delink-account-cancel {
+            color: #cc0000;
+
+            @media (max-width: $asnbDesktop) {
+                border: none;
+                color: var(--n80);
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+}
+
+::ng-deep .cdk-overlay-backdrop.cdk-overlay-backdrop-showing.asnb-delink-account {
+    background-color: $baseColor;
+    opacity: 0.6;
+}
+
+.show-lg {
+    @media (min-width: 60rem) {
+        display: block !important;
+    }
+
+    display: none !important;
+}
+
+.hide-lg {
+    @media (max-width: 60rem) {
+        display: block !important;
+    }
+
+    display: none !important;
+}

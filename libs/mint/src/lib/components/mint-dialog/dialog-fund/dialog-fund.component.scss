@@ -1,0 +1,37 @@
+
+.popUpWrapper{
+  margin-left:4.5rem;
+  @media (max-width: 48rem){
+    margin-left: -.435rem;
+  }
+}
+
+::ng-deep .dialog-fund .mat-dialog-container .mat-dialog-content .intro {
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  font-weight: var(--regular);
+  color: var(--emphasis-body-n-80);
+  margin-bottom: 6rem;
+
+  @media (min-width: 47.875) {
+    font-size: 0.75rem;
+    line-height: normal;
+    margin-bottom: 6rem;
+  }
+  @media (min-width: 60rem) {
+    font-size: 1rem;
+    color: var(--emphasis-body-n-80);
+    padding-left: 5.5rem;
+    padding-right: 5.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+::ng-deep {
+  @media (min-width: 48rem){
+    .card-wrapper .card .wrapper {
+      padding-left: 0;
+    }
+  }
+}

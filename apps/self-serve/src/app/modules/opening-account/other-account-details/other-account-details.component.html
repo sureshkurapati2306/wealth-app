@@ -1,0 +1,116 @@
+<form [formGroup]="otherAccountFormGroup">
+  <div class="page-wrapper">
+    <div class="container">
+      <div class="section">
+        <div class="section-head">
+          <h4>Other Personal Details</h4>
+        </div>
+        <div *ngIf="otherAccountOpeningData" class="section-content">
+          <div class="section-content-row">
+            <div *ngIf="!otherAccountOpeningData.nationality" class="input-block">
+              <cimb-input-dropdown *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.countryList"
+                [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'nationality'"
+                [selectOption]="countryList" [dropdownPlaceholder]="'Select Nationality'" [isRequired]="true"
+                [dropdownLabel]="'NATIONALITY'" [dropdownValue]="'countryLongName'" [dropdownId]="'countryCode'"
+                [errorMessage]="errorMessage">
+              </cimb-input-dropdown>
+            </div>
+            <div *ngIf="otherAccountOpeningData.nationality">
+              <label>Nationality</label>
+              <h6> {{otherAccountFormGroup.controls['nationality'].value?getNationalityName():''}}</h6>
+              <button class="btn-text" (click)="dialogUpdate('nationality')">Edit</button>
+            </div>
+          </div>
+          <div class="section-content-row">
+            <cimb-input-dropdown *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.citizenList"
+              [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'citizen'" [selectOption]="citizenList"
+              [dropdownPlaceholder]="'Select Citizen'" [isRequired]="true" [dropdownLabel]="'CITIZEN'"
+              [dropdownValue]="'citizenLongName'" [dropdownId]="'citizenCode'" [errorMessage]="errorMessage">
+            </cimb-input-dropdown>
+          </div>
+          <div class="section-content-row">
+            <cimb-button-toggle [isRequired]="true" [inputLabel]="'GENDER'" [toggles]="toggleGender"
+              [toggleFormControlName]="'gender'" [toggleForm]="otherAccountFormGroup"
+              [errorMessage]="'This field is required'">
+            </cimb-button-toggle>
+          </div>
+          <div class="section-content-row">
+            <div class="input-block">
+              <cimb-input-dropdown *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.raceList"
+                [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'race'" [selectOption]="raceList"
+                [dropdownPlaceholder]="'Select Race'" [isRequired]="true" [dropdownLabel]="'RACE'"
+                [dropdownValue]="'raceLongName'" [dropdownId]="'raceCode'" [errorMessage]="errorMessage">
+              </cimb-input-dropdown>
+            </div>
+
+          </div>
+          <div class="section-content-row">
+            <div class="input-block">
+              <cimb-input-dropdown
+                *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.religionList"
+                [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'religion'"
+                [selectOption]="religionList" [dropdownPlaceholder]="'Select Religion'" [isRequired]="true"
+                [dropdownLabel]="'RELIGION'" [dropdownValue]="'religionLongName'" [dropdownId]="'religionCode'"
+                [errorMessage]="errorMessage">
+              </cimb-input-dropdown>
+            </div>
+          </div>
+          <div class="section-content-row">
+            <div class="input-block">
+              <cimb-input-dropdown
+                *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.martialStatusList"
+                [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'maritalStatus'"
+                [selectOption]="martialStatusList" [dropdownPlaceholder]="'Select Status'" [isRequired]="true"
+                [dropdownLabel]="'MARITAL STATUS'" [dropdownValue]="'maritalLongName'" [dropdownId]="'maritalCode'"
+                [errorMessage]="errorMessage">
+              </cimb-input-dropdown>
+            </div>
+
+          </div>
+          <div class="section-content-row">
+            <div class="input-block">
+
+              <div class="section-content-row">
+                <cimb-input-dropdown
+                  *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.industryList"
+                  [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'industry'"
+                  [selectOption]="industryList" [dropdownPlaceholder]="'Select Industry'" [dropdownLabel]="'INDUSTRY'"
+                  [dropdownValue]="'employmentShortName'" [dropdownId]="'employmentCode'" [isGroupDropdown]="true"
+                  [isRequired]="true" [errorMessage]="'This field is required'">
+                </cimb-input-dropdown>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="section-content-row">
+            <cimb-input-dropdown
+              *ngIf="(accountDetails$ | async)?.userDetailFieldOptionsAPIResponseData?.professionList"
+              [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'profession'"
+              [selectOption]="professionList" [dropdownPlaceholder]="'Select Profession'" [dropdownLabel]="'PROFESSION'"
+              [isRequired]="true" [dropdownValue]="'occupationLongName'" [dropdownId]="'occupationCode'"
+              [errorMessage]="'This field is required'">
+            </cimb-input-dropdown>
+          </div>
+
+          <div class="section-content-row">
+            <cimb-input-dropdown [dropdownForm]="otherAccountFormGroup" [dropdownFormControlName]="'bankAcctNo'"
+              [selectOption]="selectSettlementAccount" [dropdownPlaceholder]="'Select Settlement Account'"
+              [dropdownLabel]="'SETTLEMENT ACCOUNT'" [errorMessage]="'This field is required'"
+              [dropdownValue]="'accountNumber'" [dropdownId]="'accountNumber'">
+            </cimb-input-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="page-nav single-btn">
+        <div class="button-wrapper">
+          <button mat-flat-button class="btn-custom btn-transparent" disableRipple="true"
+            (click)="goToPreviousPage()">Previous</button>
+          <button mat-flat-button class="btn-custom btn-red" [disabled]="!checkFormValidity()" (click)="goToNextPage()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

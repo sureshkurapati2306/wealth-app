@@ -1,0 +1,29 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin';
+
+.section {
+    padding: 0.3rem 1.2rem;
+    // margin: 0 -1rem 0 -1rem;
+    background-color: $background;
+    .title-container {
+        padding: 0.2rem 0;
+        &.fixed {
+            border-left: 0.35rem solid $fixedFunds;
+        }
+        &.variable {
+            border-left: 0.35rem solid $variableFunds;
+        }
+    }
+    .section-title {
+        color: $grey20;
+        @include font(1rem);
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.09rem;
+        padding-left: 0.5rem;
+
+        @media (max-width: 60rem) {
+            @include font(0.75rem);
+        }
+    }
+}

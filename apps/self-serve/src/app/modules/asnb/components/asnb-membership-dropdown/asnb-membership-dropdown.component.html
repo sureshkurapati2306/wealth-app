@@ -1,0 +1,50 @@
+<mat-form-field *ngIf="listItems.length" class="asnb-member">
+    <mat-label class="labelText">{{ labelText }}</mat-label>
+    <mat-select
+        [disabled]="listItems.length === 1"
+        disableRipple
+        [(value)]="selection"
+        [compareWith]="verifySelected"
+        panelClass="asnb-member-selection custom-select-panel"
+        (selectionChange)="onSelect(selection)"
+        disableOptionCentering
+    >
+        <mat-select-trigger>
+            <div class="selection">
+                <p class="selected-name">{{ selection.name }}</p>
+                <p class="selected-membership-number">
+                    {{ selection.membershipNumber }}
+                </p>
+                <img
+                    *ngIf="listItems.length > 1"
+                    class="dropdown-arrow"
+                    alt="dropdown-arrow"
+                    src="assets/images/dropdown-arrow.svg"
+                />
+            </div>
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let listItem of listItems" [value]="listItem">
+            <div class="membership-dropdown-options">
+                <p class="selected-name">{{ listItem.name }}</p>
+                <p class="selected-membership-number">{{ listItem.membershipNumber }}</p>
+            </div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div *ngIf="listItems.length" class="mobile-dropdown">
+    <p class="labelText">{{ labelText }}</p>
+    <div class="selection" (click)="openDialog()">
+        <div>
+            <p class="selected-name">{{ selection.name }}</p>
+            <p class="selected-membership-number">{{ selection.membershipNumber }}</p>
+        </div>
+        <img
+            *ngIf="listItems.length > 1"
+            class="dropdown-arrow"
+            alt="dropdown-arrow"
+            src="assets/images/dropdown-arrow.svg"
+        />
+    </div>
+</div>

@@ -1,0 +1,212 @@
+.page-wrapper {
+    background-color: #f5f7fa;
+}
+
+.section-head {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color: var(--n100);
+        margin: 0;
+    }
+}
+
+.table-filter {
+    display: flex;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+    align-self: stretch;
+    border-radius: 0.25rem;
+    background: var(--generic-white, #FFF);
+    box-shadow: 0rem 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08),
+        0rem 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12);
+}
+
+.section-table {
+    margin-top: 1rem;
+    border-radius: 0.25rem;
+    background: var(--generic-white, #FFF);
+    box-shadow: 0rem 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08), 0rem 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+    align-self: stretch;
+
+    .add-new-user {
+        display: flex;
+        width: 6.375rem;
+        height: 2.5rem;
+        font-size: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 0.25rem;
+        border: 1px solid var(--primary-scarlet, #EC1D23);
+        color: var(--primary-scarlet, #EC1D23);
+        font-feature-settings: 'clig' off, 'liga' off;
+        font-family: var(--OpenSans);
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1rem;
+        letter-spacing: 0.01875rem;
+        background: none;
+        padding: 0.75rem;
+        margin: 1.5rem 1.5rem 0.75rem auto
+    }
+
+    @media only screen and (max-width: 767px) {
+        .add-new-user {
+            margin: 1.5rem 1.5rem 0.75rem 1.5rem;
+        }
+    }
+
+    .table-delete {
+        color: var(--primary-scarlet, #EC1D23);
+        font-feature-settings: 'clig' off, 'liga' off;
+        font-family: var(--OpenSans);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1rem;
+        letter-spacing: 0.01875rem;
+        background: none;
+        border: none;
+        padding: 0
+    }
+
+    th.mat-header-cell {
+        border-top: 1px solid var(--emphasis-barely-n-20, #D5D6D7);
+        border-bottom: 1px solid var(--emphasis-barely-n-20, #D5D6D7);
+        background: #FFF;
+        height: 4rem
+    }
+
+    tr.mat-row {
+        height: 5.5rem !important;
+    }
+
+    .mat-cell {
+        vertical-align: middle;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .section-table {
+        overflow-x: auto;
+    }
+}
+
+.search {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+
+    form {
+        display: flex;
+        width: 100%;
+    }
+
+    &-block {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.625rem 1rem;
+        border: 0.0625rem solid #c1c3c3;
+        border-radius: 0.25rem;
+        flex: 1 1 auto;
+        height: 2.5rem;
+        margin-right: 0.5rem;
+
+        @media (min-width: 48rem) {
+            margin-right: 0.5rem;
+            height: 2.5rem;
+        }
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            font-size: 1rem;
+            text-align: center;
+            padding: 0.125rem 0 0 0;
+            margin-right: 0.5rem;
+        }
+
+        .mat-input-element {
+            flex: 1 1 auto;
+            font-size: 0.875rem;
+            padding: 0;
+            line-height: normal;
+            border: 0 none;
+        }
+    }
+
+    .btn-custom {
+        display: none;
+
+        @media (min-width: 48rem) {
+            display: inline-block;
+            height: 2.75rem;
+            line-height: 2.75rem;
+            min-width: 7.5rem;
+            text-align: center;
+            border-radius: 0.25rem;
+        }
+    }
+
+    .clear-search {
+        color: var(--primary-grey-n-50, #A7A9AC);
+        text-align: right;
+        font-feature-settings: 'clig' off, 'liga' off;
+        font-family: var(--OpenSans);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1rem;
+        letter-spacing: 0.01875rem;
+        margin-left: auto;
+    }
+
+    .search-button {
+        width: 6.375rem;
+        height: 2.5rem;
+        background-color: #D5D6D7;
+        color: #FFF;
+    }
+
+    .search-button.enabled {
+        width: 6.375rem;
+        height: 2.5rem;
+        color: #FFF;
+        background-color: #FF0000;
+    }
+
+    .clear-search.enabled {
+        color: #FF0000;
+    }
+}
+
+.table-paginator {
+    background: none;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+:host ::ng-deep {
+    .mat-paginator-container {
+        justify-content: center;
+    }
+
+    .mat-paginator-page-size {
+        display: none !important;
+    }
+
+    .mat-paginator-range-label {
+        display: none !important;
+    }
+}

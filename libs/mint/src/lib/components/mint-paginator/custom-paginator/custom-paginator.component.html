@@ -1,0 +1,61 @@
+<div class="custom-paginator">
+  <ul>
+    <li class="prev" *ngIf="currentPage <=5" style="pointer-events: none">
+      <a (click)="goToFirstPage()">
+        <em class="icon-arrow-left"></em>
+        <em class="icon-arrow-left"></em>
+      </a>
+    </li>
+    <li class="prev" *ngIf="currentPage === 1" style="pointer-events: none">
+      <a (click)="clickPreviousIcon()">
+        <em class="icon-arrow-left"></em>
+      </a>
+    </li>
+
+    <li class="prev" *ngIf="currentPage >5">
+      <a (click)="goToFirstPage()">
+        <em class="icon-arrow-left" style="color:currentColor"></em>
+        <em class="icon-arrow-left" style="color:currentColor"></em>
+      </a>
+    </li>
+    <li class="prev" *ngIf="currentPage !== 1">
+      <a (click)="clickPreviousIcon()">
+        <em class="icon-arrow-left"style="color:currentColor"></em>
+      </a>
+    </li>
+
+    <li
+      *ngFor="let page of pagesToShow"
+      [ngClass]="{ current: page === currentPage}"
+    >
+      <a (click)="clickPage(page)"> {{ page }} </a>
+    </li>
+
+    <li class="next" *ngIf="currentPage === pages" style="pointer-events: none">
+      <a (click)="clickNextIcon()">
+        <em class="icon-arrow-left"></em>
+      </a>
+    </li>
+
+    <li class="next" *ngIf="currentPage !== pages">
+      <a (click)="clickNextIcon()">
+        <em class="icon-arrow-left" style="color:currentColor"></em>
+      </a>
+    </li>
+
+    <li class="next" *ngIf="pagesToShowLength === totalPagesLength || pagesToShowLength > totalPagesLength" style="pointer-events: none">
+        <a (click)="goToLastPage()">
+          <em class="icon-arrow-left"></em>
+          <em class="icon-arrow-left"></em>
+        </a>
+      </li>
+      <li class="next" *ngIf="pagesToShowLength < totalPagesLength" >
+      <a (click)="goToLastPage()">
+        <em class="icon-arrow-left" style="color:currentColor"></em>
+        <em class="icon-arrow-left" style="color:currentColor"></em>
+      </a>
+    </li>
+
+    <li class="total-pages">of {{ pages }} pages</li>
+  </ul>
+</div>

@@ -1,0 +1,389 @@
+.logo {
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-top: 2.3rem;
+
+    transform: translate(-50%, -50%);
+}
+.mat-table {
+    border-radius: 8px;
+    overflow: auto;
+    //height: 16.25rem;
+
+    .mat-header-cell {
+        background: #cc0000;
+        color: #ffffff;
+    }
+    .mat-cell {
+        font-size: 0.875rem;
+    }
+}
+
+.inactivityText {
+    margin: 0 1rem;
+    font-size: 0.875rem;
+    color: var(--n80);
+}
+
+.marginBtm {
+    margin-bottom: 1rem;
+}
+
+.myWealth {
+    font-size: 0.875rem;
+    color: var(--n80);
+}
+.dateTime {
+    font-size: 0.75rem;
+    color: var(--n80);
+}
+
+.page-wrapper {
+    background-color: #f6f6f6;
+    margin-top: -3.563rem;
+}
+
+.section-content {
+    @media (min-width: 50rem) {
+        max-width: 63rem;
+        margin: 0 auto;
+    }
+
+    .column {
+        float: left;
+        //width: 33.33%;
+        margin-left: 0%;
+        //margin-top:6px;
+        @media (min-width: 50rem) {
+            padding: 0.313rem;
+            margin-left: 16%;
+            width: 3.65rem;
+            height: 9.5rem;
+        }
+    }
+    .column1 {
+        @media (min-width: 50rem) {
+            margin-left: 13%;
+            margin-top: 2.188rem;
+            width: 8.438rem;
+        }
+
+        margin-top: 4.063rem;
+        width: 8rem;
+    }
+    .column2 {
+        //float: right;
+        @media (min-width: 50rem) {
+            margin-left: 54%;
+        }
+        @media (max-width: 50rem) {
+            float: right;
+        }
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: '';
+        clear: both;
+        display: table;
+        margin-top: 4.063rem;
+        @media (min-width: 50rem) {
+            margin-top: 0rem;
+        }
+    }
+    .row {
+        margin-top: 4.063rem;
+        @media (min-width: 50rem) {
+            margin-top: 0rem;
+        }
+    }
+    h4 {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        margin-top: 5rem;
+        margin-bottom: 0.5rem;
+        color: var(--n100);
+
+        @media (min-width: 48rem) {
+            font-size: 1.75rem;
+            line-height: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    .background {
+        height: 100%;
+        background: url('../../../../../../libs/shared/assets/src/lib/images/Illustration_Background.svg');
+        background-size: 26.688rem 12.438rem;
+        @media (min-width: 48rem) {
+            padding-top: 1rem;
+            background: url('../../../../../../libs/shared/assets/src/lib/images/Illustration_Background.svg')
+                no-repeat;
+            background-size: 76.688rem 28.838rem;
+            background-position: center center;
+        }
+        .card-wrapper {
+            position: relative;
+            z-index: 1;
+            border-radius: 1rem;
+            background: var(--n0);
+            box-shadow: 0px 2px 4px -2px rgb(24 39 75 / 12%), 0px 4px 4px -2px rgb(24 39 75 / 8%);
+
+            //height:16.275rem;
+
+            @media (min-width: 48rem) {
+                // margin-top: 0rem;
+                margin-left: 14%;
+                margin-right: 14%;
+            }
+        }
+
+        .card-wrapper:not(:first-child) {
+            margin-top: 2rem;
+        }
+        .Ellipse-91 {
+            width: 14.813rem;
+            height: 8.75rem;
+            margin: 0 auto;
+            padding-top: 2rem;
+            @media (min-width: 48rem) {
+                // width: 17.063rem;
+                // height: 9.625px;
+                margin: 0 auto;
+
+                //margin-top: -45px;
+            }
+        }
+        .noTransaction {
+            margin-top: 2.6rem;
+            padding-left: 4.25rem;
+            padding-right: 4.25rem;
+            font-size: 1rem;
+            @media (min-width: 48rem) {
+                margin-top: 2rem;
+                font-size: 1.25rem;
+            }
+        }
+        .transactionActivity {
+            @media (min-width: 48rem) {
+                margin-left: 14%;
+                margin-right: 14%;
+                margin-bottom: 0.5rem !important;
+            }
+            margin-top: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 16px;
+            color: #333739;
+        }
+        .transactionActivityTable {
+            
+            mat-row {
+                align-items: flex-start;
+            }
+
+            .DateTimeCell,
+            .transactionTypeCell,
+            .detailsCell,
+            .statusCell,
+            .amountCell {
+                padding-top: 1.188rem; 
+            }
+        }
+
+    }
+    .error-msg {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+
+        // @media (min-width: 48rem) {
+        //   padding-top: 1rem;
+        // }
+
+        img {
+            max-height: 5.25rem;
+            max-width: 9.25rem;
+
+            margin: 1.75rem 0rem 0.875rem 1.688rem;
+
+            @media (min-width: 48rem) {
+                max-height: 9.625;
+                max-width: 17.063rem;
+                margin-bottom: 0.688rem;
+            }
+        }
+        h2 {
+            font-size: 1.75rem;
+            line-height: 1.75rem;
+            margin-bottom: 2rem;
+            margin-top: 2.625rem;
+
+            @media (min-width: 48rem) {
+                font-size: 2.625rem;
+                line-height: 2.4375rem;
+                margin-bottom: 4rem;
+                margin-top: 5.375rem;
+            }
+        }
+        p {
+            font-size: 0.75rem;
+            line-height: 1.3125rem;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+            max-width: 21.438rem;
+
+            color: var(--n60);
+
+            @media (min-width: 48rem) {
+                font-size: 1.25rem;
+                line-height: 1.5rem;
+
+                margin: 0 auto;
+                margin-bottom: 2rem;
+                max-width: 43.125rem;
+            }
+        }
+    }
+    .DateTime {
+        max-width: 7.625rem;
+        padding-left: 0.813rem;
+    }
+    .transactionTypeHead {
+        max-width: 11.688rem;
+    }
+    .transactionTypeCell {
+        display: initial !important;
+        padding-top: 1.188rem;
+    }
+    .detailsCell {
+        display: initial !important;
+        padding-top: 1.188rem;
+        text-transform: capitalize;
+    }
+    .details {
+        max-width: 10.25rem;
+    }
+    .status-title {
+        max-width: 7.5rem;
+        padding-left: 0.25rem;
+        border-radius: 0 !important;
+    }
+    .statusCell {
+        color: #2096d9;
+        text-transform: uppercase;
+    }
+    .amount {
+        max-width: 130px;
+    }
+    .title-block {
+        transform: none;
+        -webkit-transform: none;
+        font-family: 'wealth', serif !important;
+        border: 0 none;
+        font-weight: normal;
+        display: inline-block;
+        position: relative;
+        font-size: 1.25rem;
+        content: '' !important;
+        padding: 0;
+    }
+    .list-tab .mat-expansion-panel {
+        box-sizing: border-box;
+        box-shadow: none;
+        margin: auto;
+        border-radius: 1rem;
+    }
+    .list-tab .mat-expansion-panel .mat-expansion-panel-header-title p span {
+        font-weight: var(--medium);
+        font-size: 0.625rem;
+        line-height: 1rem;
+        color: #7b7d7e;
+        letter-spacing: 0.04rem;
+        display: inline;
+    }
+    .list-tab
+        .mat-expansion-panel
+        .mat-expansion-panel-header-title.side
+        .title-block
+        + .title-block:before {
+        border: 0 none;
+        font-family: 'wealth', serif;
+        font-style: normal;
+        font-weight: normal;
+        display: inline-block;
+        text-align: center;
+        content: '';
+        padding: 0;
+        color: var(--information);
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 1.25rem;
+    }
+    // .list-tab .mat-expansion-panel .mat-expansion-panel-header-title.side .title-block {
+
+    //   padding: 0 0.25rem;
+    // }
+    // .list-tab .mat-expansion-panel .mat-expansion-panel-header-title.side .title-block + .title-block {
+    //   padding-left: 1.75rem !important;
+    //   position: relative;
+    //   padding-top: 1.125rem;
+    // }
+    .headingStyle {
+        padding: 1rem 17.5rem 0rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 14px;
+        color: #333739;
+    }
+    .Line {
+        height: 0.063rem;
+        margin: 0.938rem 0 0;
+        background-color: #d5d6d7;
+    }
+    .row1 {
+        margin-top: 1rem;
+        @media (min-width: 50rem) {
+            margin-top: 0rem;
+        }
+    }
+    .columnright {
+        float: right;
+    }
+    .status1 {
+        text-align: left;
+        font-style: normal;
+        color: #333739;
+        font-size: 0.875rem;
+        text-transform: none;
+        padding-left: 0.45rem;
+    }
+    .units {
+        text-align: right;
+        font-style: normal;
+        color: #333739;
+        font-size: 0.875rem;
+        padding-right: 0.75rem;
+        font-weight: bold;
+    }
+    .processing {
+        color: #2096d9;
+        font-size: 0.625rem;
+        text-transform: uppercase;
+    }
+    .value {
+        font-size: 0.625rem;
+        color: #7b7d7e;
+        font-weight: 600;
+    }
+    .title-block1 {
+        flex: 1 1 50%;
+        padding: 0 0.75rem;
+    }
+    .alignSpan {
+        display: flex !important;
+        flex-direction: column;
+    }
+}

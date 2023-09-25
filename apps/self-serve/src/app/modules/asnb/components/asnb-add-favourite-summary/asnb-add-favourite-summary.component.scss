@@ -1,0 +1,19 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+
+[class] {
+    &:not(.mat-icon) {
+        font-family: $notoSans !important;
+    }
+}
+
+.container {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+    display: grid;
+    gap: 1.5rem;
+    @media (min-width: $asnbDesktop) {
+        margin: 2rem auto 0;
+        max-width: 65rem;
+        gap: 2rem;
+    }
+}

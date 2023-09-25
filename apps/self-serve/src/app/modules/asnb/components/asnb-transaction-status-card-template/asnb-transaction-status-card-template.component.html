@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-heading-container">
+        <span
+            class="card-heading-icon"
+            [ngClass]="{
+                'icon-success': status !== 'Unsuccessful',
+                'icon-cancel': status === 'Unsuccessful'
+            }"
+        ></span>
+        <h2 class="card-heading-content">{{ heading }}</h2>
+    </div>
+    <div class="section-content">
+        <div class="section-container section-container-left">
+            <p class="membership-name">{{ membershipName }}</p>
+            <div class="membership-details">
+                <p class="membership-detail" *ngFor="let item of membershipDetails">
+                    {{ item.label }} : {{ item.value }}
+                </p>
+            </div>
+        </div>
+        <hr class="divider" />
+        <div class="section-container status-details section-container-right">
+            <div class="status-details-wrapper">
+                <div class="status-details-section">
+                    <p class="status-result">
+                        <span
+                            class="status-result-icon icon-danger-1"
+                            [ngClass]="{
+                                'status-result-icon-success': status === 'Successful',
+                                'status-result-icon-fail': status === 'Unsuccessful',
+                                'status-result-icon-pending':
+                                    status === 'Pending' || status === 'Accepted For Processing'
+                            }"
+                        ></span>
+                        <span class="status-result-content">Status: {{ status }}</span>
+                    </p>
+                    <p class="status-error-code" *ngIf="errorCode">
+                        {{ getErrorCodeAndMessage() }}
+                    </p>
+                    <p class="status-disclaimer" *ngIf="status === 'Accepted For Processing'">
+                        (Usually take up to 2 working days)
+                    </p>
+                    <p class="status-result-timestamp">{{ timestamp }}</p>
+                    <p class="status-note" *ngIf="status === 'Unsuccessful'">
+                        <span class="status-note-icon icon-danger-1"></span>
+                        <span class="status-note-description"
+                            >Please take note your account has been debited, we will process the
+                            refund within 3+ Working days.</span
+                        >
+                    </p>
+                </div>
+            </div>
+            <div class="download-receipt-wrapper">
+                <div class="download-receipt-section">
+                    <div class="receipt-section">
+                        <img
+                            class="receipt-icon"
+                            src="assets/images/pdf-receipt.svg"
+                            alt="pdf-receipt-icon"
+                        />
+                        <span class="receipt-label">Download Receipt</span>
+                    </div>
+                    <a class="download-button" (click)="generatePdf()"
+                        ><em class="icon-download download-icon"></em
+                    ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

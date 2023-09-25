@@ -1,0 +1,43 @@
+.chartData {
+  background-color: var(--n5h);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 1rem;
+  
+  .table-legend {
+    margin-bottom: 0;
+  }
+  @media (min-width: 60rem) {
+    padding: 0.9375rem 1rem;
+  }
+}
+.table {
+  margin-bottom: 0;
+  
+  h6 {
+    margin-bottom: 0;
+    font-size: .75rem;
+  }
+  tr {
+    &:not(:last-child) {
+      td {
+        padding-bottom: 0.5rem;
+      }
+    }
+  }
+}
+.amount {
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  color: black !important;
+  border-top: none !important;
+  @media (min-width: 48rem) {
+    font-size: 1.125rem !important;
+  }
+}
+.tableFont {
+  font-size: 0.625rem !important;
+  color: var(--n80);
+  border-top: none !important;
+}

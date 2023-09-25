@@ -1,0 +1,230 @@
+<form class="personal-detail-form" [formGroup]="openingAccountFormGroup">
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="section">
+                <div class="section-head">
+                    <h4>Personal Detail</h4>
+                </div>
+                <div class="section-content">
+                    <div class="section-content-row">
+                        <div class="input-block margin-left-12">
+                            <cimb-input-dropdown 
+                                [dropdownForm]="openingAccountFormGroup" 
+                                [dropdownFormControlName]="'title'"
+                                [selectOption]="titleList" 
+                                [dropdownPlaceholder]="'Title'" 
+                                [isRequired]="false"
+                                [dropdownValue]="'salutationLongName'" 
+                                [dropdownId]="'salutationCode'"
+                                [dropdownLabel]="'TITLE (OPTIONAL)'">
+                            </cimb-input-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="section-content-row">
+                        <label>Name</label>
+                        <h6>{{ openingAccountFormGroup.controls['name'].value }}</h6>
+                    </div>
+                    <div class="section-content-row">
+                        <label>Mykad / Passport Number</label>
+                        <h6>{{ openingAccountFormGroup.controls['mykadNumber'].value }}</h6>
+                    </div>
+                    <div class="section-content-row">
+                        <label>Date of Birth</label>
+                        <h6>{{ openingAccountFormGroup.controls['birthDate'].value }}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-head">
+                    <h4>Contact Information</h4>
+                </div>
+
+                <div class="section-content" *ngIf="accountOpeningPersonalData">
+                    <div class="section-content-row">
+                        <div *ngIf="accountOpeningPersonalData.email">
+                            <label>{{ valueExistEmailLable }}</label>
+                            <h6>{{ openingAccountFormGroup.controls['email'].value }}</h6>
+                            <button class="btn-text" (click)="dialogUpdateEmail()">Edit</button>
+                        </div>
+
+                        <div *ngIf="!accountOpeningPersonalData.email">
+                            <label>{{ valueExistEmailLable }}</label>
+                            <cimb-input-basic
+                                [inputForm]="openingAccountFormGroup"
+                                [inputFormControlName]="'email'"
+                                [isRequired]="true"
+                                [maxLength]="50"
+                                [pattern]="emailPattern"
+                                [emailPattern]="emailPattern"
+                                [inputPlaceholder]="'Email'"
+                                [errorMessage]="checkValidation(openingAccountFormGroup.controls.email)"
+                            >
+                            </cimb-input-basic>
+                        </div>
+                    </div>
+
+                    <div class="section-content-row">
+                        <div
+                            *ngIf="!openingAccountFormGroup.controls['addrLine1'].value"
+                            class="input-block"
+                        >
+                            <label class="form-lable">{{ mailAddressLable }}</label>
+                            <div class="input-wrapper">
+                                <button
+                                    class="btn-add"
+                                    mat-flat-button
+                                    (click)="dialogUpdateAddress()"
+                                >
+                                    <em class="icon-add"></em>
+                                    <span class="btn-label">Add Address</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="openingAccountFormGroup.controls['addrLine1'].value">
+                            <label>{{ valueExistMailAddressLable }}</label>
+
+                            <span class="tips">
+                                <em
+                                    class="icon-help hide-lg"
+                                    (click)="openTooltipBottomSheet()"
+                                ></em>
+                                <em
+                                    class="icon-help show-lg"
+                                    matTooltip="This Mailing Address is solely for the unit trust product."
+                                    matTooltipPosition="right"
+                                ></em>
+                            </span>
+
+                            <h6>
+                                <span
+                                    >{{
+                                        openingAccountFormGroup.controls['addrLine1'].value
+                                    }},</span
+                                ><br />
+                                <span>
+                                    {{ openingAccountFormGroup.controls['addrLine2'].value }},</span
+                                >
+                                <span *ngIf="openingAccountFormGroup.controls['addrLine3'].value">
+                                    {{ openingAccountFormGroup.controls['addrLine3'].value }},</span
+                                >
+                                <span *ngIf="openingAccountFormGroup.controls['addrLine4'].value">
+                                    {{ openingAccountFormGroup.controls['addrLine4'].value }}</span
+                                ><br />
+                                <span>
+                                    {{ openingAccountFormGroup.controls['postcode'].value }},</span
+                                >
+                                <span
+                                    *ngIf="
+                                        openingAccountFormGroup.controls['country'].value === 'MY'
+                                    "
+                                >
+                                    {{
+                                        openingAccountFormGroup.controls['state'].value
+                                            ? callStateName()
+                                            : openingAccountFormGroup.controls['state'].value
+                                    }},
+                                </span>
+                                <span
+                                    *ngIf="
+                                        openingAccountFormGroup.controls['country'].value !== 'MY'
+                                    "
+                                >
+                                    {{ openingAccountFormGroup.controls['state'].value }},
+                                </span>
+                                <br />
+                                <span
+                                    >{{
+                                        openingAccountFormGroup.controls['country'].value
+                                            ? callCountryName()
+                                            : openingAccountFormGroup.controls['country'].value
+                                    }}.</span
+                                ><br />
+                            </h6>
+                            <button class="btn-text" (click)="dialogUpdateAddress()">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="section-content-row" [ngSwitch]="this.userPhoneNumber$">
+                        <label>Mobile Phone Number</label>
+
+                        <ng-container *ngSwitchCase="this.userPhoneNumber$">
+                            <h6>{{ this.userPhoneNumber$ }}</h6>
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                            <h6>{{ null }}</h6>
+                        </ng-container>
+
+                        <span class="hint form-lable"
+                            >(Please visit your nearest CIMB Bank's branch or ATM to change your
+                            mobile number.)</span
+                        >
+                    </div>
+
+                    <div class="section-content-row">
+                        <cimb-input-basic
+                            [inputForm]="openingAccountFormGroup"
+                            [inputFormControlName]="'houseNumber'"
+                            [isRequired]="false"
+                            [pattern]="mobilePattern"
+                            [minLength]="8"
+                            [maxLength]="20"
+                            [errorMessage]="
+                                'Please enter your valid phone number (minimum 8 and maximum 20 digits without symbols)'
+                            "
+                            [inputLabel]="'HOUSE PHONE NUMBER (OPTIONAL)'"
+                            [inputPlaceholder]="'eg. 60388881818'"
+                        >
+                        </cimb-input-basic>
+                    </div>
+                    <div class="section-content-row">
+                        <cimb-input-basic
+                            [inputForm]="openingAccountFormGroup"
+                            [inputFormControlName]="'officeNumber'"
+                            [isRequired]="false"
+                            [pattern]="mobilePattern"
+                            [minLength]="8"
+                            [maxLength]="20"
+                            [errorMessage]="
+                                'Please enter your valid phone number (minimum 8 and maximum 20 digits without symbols)'
+                            "
+                            [inputLabel]="'OFFICE PHONE NUMBER (OPTIONAL)'"
+                            [inputPlaceholder]="'eg. 60388881818'"
+                        >
+                        </cimb-input-basic>
+                    </div>
+                </div>
+            </div>
+            <div class="page-nav single-btn">
+                <div class="button-wrapper">
+                    <button
+                        mat-flat-button
+                        class="btn-custom btn-red"
+                        [disabled]="!checkFormValidity()"
+                        (click)="goToNextPage()"
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Mobile Tooltip -->
+<ng-template #toolTip>
+    <div class="action-sheet-wrapper">
+        <div class="action-sheet-header">
+            <button mat-icon-button class="btn-close" (click)="_bottomSheet.dismiss()">
+                <em class="icon-close"></em>
+            </button>
+        </div>
+        <div class="action-sheet-content">
+            <h5>Mailing Address</h5>
+            <div>
+                <p>This Mailing Address is solely for the unit trust product.</p>
+            </div>
+        </div>
+    </div>
+</ng-template>

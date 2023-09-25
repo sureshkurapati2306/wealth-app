@@ -1,0 +1,40 @@
+<div class="page-wrapper">
+  <div class="container">
+    <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+    <div class="section">
+
+      <div class="section-content">
+        <h1>Download <span>Reports</span></h1>
+        <p>What report would you like to download?</p>
+        <button
+          class="btn-custom btn btn-red"
+          mat-flat-button
+          (click)="downloadReport('authenticate/admin/report/access/matrix', 'User Access Matrix')"
+        >
+          User Access Matrix
+        </button>
+        <button
+          class="btn-custom btn btn-red"
+          mat-flat-button
+          (click)="downloadReport('authenticate/admin/report/users', 'User Listing')"
+        >
+          User Listing report
+        </button>
+        <button
+          class="btn-custom btn btn-red"
+          mat-flat-button
+          (click)="downloadReport('authenticate/admin/report/violations', 'Violations Report')"
+        >
+          Violations Report
+        </button>
+        <button
+          class="btn-custom btn btn-red"
+          mat-flat-button
+          (click)="downloadReport('authenticate/admin/report/audit', 'Audit Trail Report')"
+        >
+          Audit Trail
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<cimb-progress-sub-header
+    [pageTitle]="pageTitle"
+    [isBackButtonEnabled]="true"
+    (backButtonEvent)="backButtonEvent()"
+    [noProgressStep]="noProgressStep"
+    (redirectEvent)="onRedirectBack()"
+></cimb-progress-sub-header>
+<div class="Section page-wrapper">
+    <div class="container">
+        <cimb-fund-table
+            [data]="availableFunds"
+            [noEligibleFunds]="true"
+            [fundList]="availableFunds"
+            [eligibleFunds]="eligibleFunds"
+            [isLoading]="isLoading"
+        ></cimb-fund-table>
+    </div>
+</div>
+<cimb-asnb-footer></cimb-asnb-footer>

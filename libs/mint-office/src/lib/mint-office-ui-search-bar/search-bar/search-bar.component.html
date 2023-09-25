@@ -1,0 +1,22 @@
+<div class="search">
+    <div class="search-block">
+        <span class="icon icon-search"></span>
+        <input
+            matInput
+            [placeholder]="placeholder"
+            (keyup)="onSearchKeyup($event.target.value)"
+            [(ngModel)]="searchValue"
+        />
+    </div>
+    <button
+        *ngIf="showSearchButton"
+        disableRipple="true"
+        mat-flat-button
+        class="btn-custom btn-red"
+        type="submit"
+        (click)="onSearchClick()"
+        [disabled]="searchValue.length <= 0"
+    >
+        Search
+    </button>
+</div>

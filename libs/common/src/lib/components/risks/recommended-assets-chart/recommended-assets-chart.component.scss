@@ -1,0 +1,19 @@
+::ng-deep {
+    .google-chart {
+        path {
+            &[stroke='#636363'] {
+                display: block !important;
+            }
+        }
+        circle {
+            &[fill='#636363'] {
+                display: block !important;
+            }
+        }
+        text {
+            // fill: #333739;
+            font-weight: 500;
+            font-family: var(--OpenSans) !important;
+        }
+    }
+}

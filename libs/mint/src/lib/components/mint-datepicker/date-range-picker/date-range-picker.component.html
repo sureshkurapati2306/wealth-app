@@ -1,0 +1,67 @@
+<button class="btn-dd btn-datepicker" [matMenuTriggerFor]="menu">
+  <input readonly type="text" placeholder="30/08/2020 - 04/09/2020" [value]="startEndDate">
+  <img src="./assets/images/ic_date_range.svg" alt="date range" />
+</button>
+<mat-menu
+  #menu="matMenu"
+  class="datepicker-menu custom-menu-panel custom-datepicker"
+  backdropClass="dd-overlay"
+>
+  <div class="panel-wrapper" (click)="$event.stopPropagation()">
+    <div class="panel-header">
+      <h6>Show History From:</h6>
+      <div class="input-wrapper">
+        <input type="text" placeholder="mm/dd/yyyy" readonly class="date-readonly-input" [value]="fromDate"/>
+        <span class="to">to</span>
+        <input type="text" placeholder="mm/dd/yyyy" readonly class="date-readonly-input" [value]="toDate"/>
+      </div>
+    </div>
+    <div class="panel-content">
+      <mat-calendar
+        [selected]="selectedRangeValue"
+        (selectedChange)="selectedChange($event)"
+        [startAt]="prevMonth"
+        [maxDate]="todayDate"
+      ></mat-calendar>
+      <!-- <mat-calendar
+        [selected]="selectedRangeValue"
+        (selectedChange)="selectedChange($event)"
+        [maxDate]="todayDate"[maxDate]="todayDate"
+      ></mat-calendar> -->
+      <!-- <button mat-icon-button class="btn-controls btn-prev">
+        <em class="icon-arrow-left"></em>
+      </button>
+      <button mat-icon-button class="btn-controls btn-next">
+        <em class="icon-arrow-right"></em>
+      </button> -->
+      <!-- <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker> -->
+    </div>
+    <div class="panel-footer">
+
+      <button
+        mat-flat-button
+        class="btn-custom btn-lg btn-white"
+        disableRipple="true"
+        (click)="closeMenu()"
+      >
+        Cancel
+      </button>
+
+
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple
+        (click)="applyDateFilter()"
+        [disabled] = "!startDateSelected ||  !endDateSelected"
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+</mat-menu>

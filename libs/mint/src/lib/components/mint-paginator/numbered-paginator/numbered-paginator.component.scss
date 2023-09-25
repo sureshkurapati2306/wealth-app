@@ -1,0 +1,159 @@
+.custom-paginator {
+  padding: 0;
+  text-align: center;
+
+  ul {
+    display: inline-flex;
+    margin: 0 auto;
+
+    @media (min-width: 48rem) {
+      display: flex;
+    }
+
+    li {
+      padding: 0 0.125rem;
+
+      a {
+        font-size: 0.875rem;
+        padding: 0;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        width: 2.8125rem;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        color: var(--n60);
+
+        @media (min-width: 48rem) {
+          width: 2.5rem;
+          height: 2rem;
+          line-height: 1.875rem;
+        }
+        em {
+          // color: var(--n20);
+        }
+        &:not(.disabled) {
+          &:hover {
+            font-weight: bold;
+
+            em {
+              color: var(--n60);
+            }
+          }
+        }
+      }
+      &.disabled {
+        cursor: default;
+
+        a,
+        span {
+          color: var(--n20);
+          cursor: default;
+
+          &:hover {
+            em {
+              color: var(--n20);
+            }
+          }
+        }
+      }
+      &.prev {
+        display: none;
+
+        @media (min-width: 30rem) {
+          display: block;
+        }
+        a,
+        span {
+          background: none;
+          width: 1.5rem;
+          font-size: .8125rem;
+          display: block;
+          height: 2.25rem;
+          line-height: 2.25rem;
+
+          @media (min-width: 48rem) {
+            height: 2rem;
+            line-height: 2rem;
+          }
+          &:hover {
+            border-bottom: 0;
+          }
+        }
+      }
+      &.next {
+        display: none;
+
+        @media (min-width: 30rem) {
+          display: block;
+        }
+        a,
+        span {
+          background: none;
+          width: 1.5rem;
+          font-size: .8125rem;
+          display: block;
+          height: 2.25rem;
+          line-height: 2.25rem;
+
+          @media (min-width: 48rem) {
+            height: 2rem;
+            line-height: 2rem;
+          }
+          &:hover {
+            border-bottom: 0;
+          }
+        }
+      }
+      &.total-pages {
+        display: none;
+
+        @media (min-width: 37.5rem) {
+          display: block;
+          line-height: 2.125rem;
+          color: var(--n60);
+        }
+        @media (min-width: 48rem) {
+          line-height: 1.875rem;
+        }
+      }
+      &:not(.next):not(.prev) {
+        a {
+          line-height: 2.125rem;
+          border-bottom: 0.125rem solid transparent;
+
+          @media (min-width: 48rem) {
+            line-height: 1.875rem;
+          }
+          &:hover {
+            color: var(--r60);
+            border-bottom-color: var(--r60);
+          }
+          &:active {
+            &:hover {
+              color: var(--n0);
+              background-color: var(--r100);
+              border-bottom-color: var(--r100);
+            }
+          }
+        }
+        &.current {
+          a {
+            color: var(--r100);
+            font-weight: var(--bold);
+            border-bottom-color: var(--r100);
+
+            &:active {
+              background: var(--n5h);
+            }
+            &:hover {
+              color: var(--r100);
+              font-weight: var(--bold);
+              border-bottom-color: var(--r100);
+            }
+          }
+        }
+      }
+    }
+  }
+}

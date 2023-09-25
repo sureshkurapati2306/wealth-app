@@ -1,0 +1,65 @@
+{
+    "implicitDependencies": {
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        ".eslintrc.json": "*"
+    },
+    "affected": {
+        "defaultBase": "master"
+    },
+    "npmScope": "cimb",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/workspace/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test"],
+                "cacheDirectory": ".cache/nx"
+            }
+        }
+    },
+    "projects": {
+        "common": {
+            "tags": []
+        },
+        "core": {
+            "tags": []
+        },
+        "mint": {
+            "tags": []
+        },
+        "mint-office": {
+            "tags": []
+        },
+        "self-serve": {
+            "tags": []
+        },
+        "shared-assets": {
+            "tags": []
+        },
+        "shared-models": {
+            "tags": []
+        },
+        "shared-services": {
+            "tags": []
+        },
+        "shared-states": {
+            "tags": []
+        },
+        "shared-styles": {
+            "tags": []
+        },
+        "wealth-backoffice": {
+            "tags": []
+        }
+    },
+    "targetDependencies": {
+        "build": [
+            {
+                "target": "build",
+                "projects": "dependencies"
+            }
+        ]
+    }
+}

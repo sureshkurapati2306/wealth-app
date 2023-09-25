@@ -1,0 +1,114 @@
+// .typeahead-input {
+//     .mat-form-field-wrapper {
+//         padding: 10px 20px;
+//         .mat-form-field-flex {
+//             border: none;
+//             box-shadow: 10px 5px 10px -3px #d9d9d9;
+//             background: #fff;
+//             padding: 15px 13px;
+//         }
+//     }
+// }
+// @media (max-width: 599.98px) {
+    ::ng-deep .mobile-typeahead-dialog {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+        .mat-dialog-container {
+            margin-top: 50px;
+            overflow: hidden;
+            border-radius: 1.5rem !important;
+            padding: 0;
+        }
+    }
+    .dialog-heading {
+        background-color: #f6f6f6;
+        padding: 29px;
+        position: relative;
+        .close-icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+    
+    
+    ::ng-deep .mat-autocomplete-panel.mobile-autocomplete {
+        margin-top: 25px;
+        box-shadow: none !important;
+        max-height: 60vh;
+        // margin-left: 18px;
+        margin-left: -20px;
+        .mat-option {
+            border-bottom: 2px solid #d5d6d7;
+            padding: 0;
+            margin-right: 5px;
+        }
+        .mat-optgroup-label {
+            background-color: var(--n5);
+            color: var(--n80);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .mat-optgroup .mat-option:not(.mat-option-multiple) {
+            padding: 0 16px;
+            height: unset;
+        }
+    
+        .mat-option-text {
+            overflow: auto;
+            text-overflow: unset;
+        }
+    }
+    
+    .typeahead-dialog-content {
+        height: 100%;
+        padding: 0;
+    }
+    
+    .mobile-autocomplete {
+        height: 100px;
+    }
+    // }
+    
+    .mobile-autocomplete-form {
+        // .mat-focused .placeholder {
+        //   color: #d3d3d3;
+        // }
+        // // margin-left: -12px;
+        // .mat-autocomplete-panel{
+        //   margin-left: -12px;
+        // // }
+        // .autocomplete-label {
+        //   padding-left: 12px;
+        // }
+        .placeholder {
+            color: #d3d3d3 !important;
+        }
+        .mat-form-field {
+            display: block;
+    
+            .mat-form-field-suffix .mat-icon {
+                cursor: pointer;
+            }
+            .mat-form-field-subscript-wrapper {
+                margin-top: 0;
+            }
+    
+            input.mat-input-element {
+                caret-color: #000 !important;
+                height: 25px;
+                cursor: pointer;
+                // font-size: 16px;
+            }
+        }
+    
+        .typeahead-input {
+            padding: 0 50px !important;
+            .mat-icon {
+                font-weight: 900;
+                color: #696969;
+            }
+        }
+    }
+    

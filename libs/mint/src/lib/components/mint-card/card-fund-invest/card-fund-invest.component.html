@@ -1,0 +1,121 @@
+<div *ngIf="showProgressBar">
+    <div class="card-wrapper">
+        <div class="card">
+            <h5>Invest in this fund</h5>
+            <div class="wrapper">
+                <div class="price">
+                    <div class="inner-wrapper">
+                        <p>
+                            NAV Price
+                            <span class="tips">
+                                <em class="icon-help hide-lg" (click)="openBottomSheet()"></em>
+                                <em
+                                    class="icon-help show-lg"
+                                    matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                                    matTooltipPosition="below"
+                                ></em>
+                            </span>
+                        </p>
+                        <p>
+                            <sup>MYR</sup>
+                            <strong>{{ price }}</strong>
+                        </p>
+                    </div>
+                    <p class="latest">
+                        <small>(As of {{ closeDate }})</small>
+                    </p>
+                </div>
+    
+                <div style="padding-bottom: 1rem" class="option-block-input">
+                    <div class="option-field">
+                        <cimb-input-amount-key
+                            [inputFormControlName]="'amount'"
+                            [inputForm]="amountForm"
+                            [inputPlaceholder]="placeHolderError"
+                            [isRequired]="false"
+                            [errorMessageMinAmount]="minError"
+                            [errorMessageMaxAmount]="maxError"
+                            [minAmount]="
+                                selectedFund.current_holding === 'Y'
+                                    ? selectedFund.minimum_subsequent_subscription_amount
+                                    : selectedFund.minimum_initial_subscription_amount
+                            "
+                            [maxAmount]="
+                                selectedFund.current_holding === 'Y'
+                                    ? selectedFund.maximum_subsequent_subscription_amount
+                                    : selectedFund.maximum_initial_subscription_amount
+                            "
+                            (keyupEvent)="changeValueEvent($event)"
+                            [amountAdded]="amountAdded"
+                            [isDisabled]="!enableAddToCart"
+                            [flow]="'001'"
+                        >
+                        </cimb-input-amount-key>
+                    </div>
+    
+                    <div class="option-button">
+                        <button
+                            *ngIf="!amountAdded || soSohoFund"
+                            mat-flat-button
+                            class="btn-custom btn-red"
+                            [disabled]="
+                                !amountForm.valid ||
+                                (amountForm?.controls?.amount &&
+                                    amountForm?.controls?.amount.value === '0.00') ||
+                                (amountForm?.controls?.amount &&
+                                    !amountForm?.controls?.amount.value === '') ||
+                                amountForm?.controls?.amount.value === null ||
+                                (amountForm?.controls?.amount.value &&
+                                    amountForm?.controls?.amount.value.length === 0)
+                            "
+                            (click)="addToCartClick(indexVal)"
+                        >
+                            Add to cart
+                        </button>
+                        <button
+                            *ngIf="amountAdded && !amountEdit && !soSohoFund"
+                            mat-flat-button
+                            class="btn-custom btn-red"
+                            (click)="removeDialogModal(indexVal)"
+                            disableRipple="true"
+                        >
+                            Remove
+                        </button>
+    
+                        <button
+                            *ngIf="amountAdded && amountEdit"
+                            mat-flat-button
+                            class="btn-custom btn-red"
+                            [disabled]="
+                                !amountForm.valid ||
+                                disabled ||
+                                (amountForm?.controls?.amount &&
+                                    amountForm?.controls?.amount?.value &&
+                                    amountForm?.controls?.amount?.value?.length === 0) ||
+                                (amountForm?.controls?.amount &&
+                                    amountForm?.controls?.amount.value === null)
+                            "
+                            (click)="doneButtonClick()"
+                            disableRipple="true"
+                        >
+                            Done
+                        </button>
+                    </div>
+    
+                    <div class="option-text">
+                        <p
+                            *ngIf="
+                                amountForm.valid &&
+                                amountForm?.controls?.amount.value &&
+                                amountForm?.controls?.amount.value !== '0.00'
+                            "
+                        >
+                            Includes sales charge
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

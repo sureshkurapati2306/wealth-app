@@ -1,0 +1,39 @@
+<mat-dialog-content class="mat-typography" class="asnb-consent-error">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-consent-content">
+        <img src="assets/images/link-account.svg" alt="link-account" />
+        <p class="asnb-link-account">Unable to link account</p>
+        <div class="asnb-link-account-description">
+            <p>We’re sorry, your account’s status didn’t meet the ASNB criteria.</p>
+            <br />
+            <p>
+                Please contact ASNB Customer Service Centre by calling 03-7730 8899 to resolve this
+                issue. (Account status - INVALID)
+            </p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button
+        mat-flat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="asnb-consent-error"
+        disableRipple
+    >
+        Okay
+    </button>
+</mat-dialog-actions>

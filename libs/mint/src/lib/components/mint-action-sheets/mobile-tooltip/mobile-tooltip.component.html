@@ -1,0 +1,11 @@
+<div class="action-sheet-wrapper">
+  <div class="action-sheet-header">
+    <button mat-icon-button (click)="closeBottomSheet()" class="btn-close">
+      <em class="icon-close"></em>
+    </button>
+  </div>
+  <div class="action-sheet-content">
+    <h5>{{ actionHeading }}</h5>
+    <div [innerHtml]="actionContent"></div>
+  </div>
+</div>

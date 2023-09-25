@@ -1,0 +1,41 @@
+<section>
+    <div class="page-intro">
+        <div class="container">
+            <h4 *ngIf="!mediaQueryList.matches">Risk Profile Results</h4>
+            <p class="webDiscription" *ngIf="!mediaQueryList.matches">  Based on your answers in the risk profiling, we have calculated your results which reflect your ability and desire to take on risk. Click on other risk profiles to learn more.</p>
+        </div>
+    </div>
+
+    <div class="top-cta">
+        <div class="container">
+            <div class="card-block">
+                <cimb-risk-profile-summary-card [result]="results$ | async"></cimb-risk-profile-summary-card>
+
+            </div>
+            <p class="mobileDescription" *ngIf="mediaQueryList.matches">Based on your answers in the risk profiling, we have calculated your results which reflect your ability
+                and desire to take on risk.</p>
+            <div class="text-center cta" *ngIf="(userSoleProp$ | async) as userSoleProp">
+                <h2>Ready to start investing?</h2>
+                    <div *ngIf="customerType==='NTP'">
+                        <ng-container>
+                            <button mat-flat-button
+                                    class="btn-custom btn-red mat-flat-button"
+                                    disableRipple="true"
+                                    (click)="userSoleProp.user.sole_prop === 'Y' ? checkIfSolePropDialog() : undefined"
+                                    [routerLink]="userSoleProp.user.sole_prop=== 'Y' ? [] : ['/investment-options']">View my Investment
+                                Options</button>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="customerType==='ETP'">
+                        <ng-container>
+                            <button mat-flat-button
+                                    class="btn-custom btn-red mat-flat-button"
+                                    disableRipple="true"
+                                    (click)="openDialog()"> View my Investment
+                                Options</button>
+                        </ng-container>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>

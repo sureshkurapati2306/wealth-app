@@ -1,0 +1,66 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  [noProgressStep]="false"
+  (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-content">
+      <cimb-card-notice
+        [transactionMessage]="message"
+        [accountName]="accountName"
+        [unitTrustAccount]="unitTrustAccount"
+        [paymentAccount]="paymentAccount"
+        [referenceNumber]="referenceNumber"
+        [status]="status"
+        [dateTime]="dateTime"
+        [transactionStatusName]="transactionStatusName"
+      >
+      </cimb-card-notice>
+
+      <!-- Order Summary -->
+      <div class="mt-card">
+        <cimb-card-investment-summary
+          [cardTitle]="cardTitleForSummary"
+          [investments]="investments"
+          [redemptionUnits]="redemptionUnits"
+          [redemptionAmount]="redemptionAmount"
+          [isNeededOnPage]="isNeededOnPage"
+          [totalInvestmentItems]="orderSummary"
+        ></cimb-card-investment-summary>
+
+        <!-- Total -->
+        <cimb-card-purchase-total
+          [cardTitle]="cardTitleTotal"
+          [isForRedemption]="isForRedemption"
+          [isNeededOnPage]="isNeededOnPage"
+          [totalRedemptionUnits]="totalRedemptionUnits"
+          [totalRedemptionAmount]="totalRedemptionAmount"
+          [totalLabel]="totalLabel"
+        ></cimb-card-purchase-total>
+
+        <p class="foot-legend">
+          <span>*</span> These are indicative amount only. The actual amount may
+          differ based on NAV closing price
+        </p>
+        <div class="transaction-btns">
+          <button
+            class="btn-custom mat-flat-button btn-red"
+            disableRipple="true"
+            mat-flat-button
+          >
+            Go to Dashboard
+          </button>
+          <button
+            class="btn-custom mat-flat-button btn-text-only"
+            disableRipple="true"
+            mat-flat-button
+          >
+            View Transaction History
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

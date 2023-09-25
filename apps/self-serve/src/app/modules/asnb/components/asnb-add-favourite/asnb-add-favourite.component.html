@@ -1,0 +1,178 @@
+<cimb-progress-sub-header
+    [pageTitle]="'Add New Favourite Account'"
+    [isBackButtonEnabled]="true"
+    [noProgressStep]="false"
+    (redirectEvent)="onRedirectBack()"
+></cimb-progress-sub-header>
+<div class="container">
+    <h2 class="heading">Favourite Account Details</h2>
+    <form class="form-section" [formGroup]="addFavouriteForm">
+        <div class="section-container form-section">
+            <div class="field-container">
+                <span class="field-label">{{ 'Nickname' | uppercase }}</span>
+                <div class="input-container">
+                    <input
+                        [ngClass]="{ 'field-error': isFieldInvalid('nickname') }"
+                        placeholder="Nickname"
+                        autocomplete="off"
+                        formControlName="nickname"
+                        (input)="replaceInvalidCharacter($event, 'nickname', 'alphanumeric')"
+                    />
+                    <mat-icon
+                        class="icon-error input-error-icon"
+                        *ngIf="isFieldInvalid('nickname')"
+                        matSuffix
+                    ></mat-icon>
+                </div>
+                <mat-error class="error-message" *ngIf="isFieldInvalid('nickname')">
+                    <span>
+                        {{ isFieldInvalid('nickname') }}
+                    </span>
+                </mat-error>
+            </div>
+            <div class="field-container">
+                <span class="field-label">{{ 'ASNB Membership Number' | uppercase }}</span>
+                <div class="input-container">
+                    <input
+                        [ngClass]="{ 'field-error': isFieldInvalid('beneAsnbAcctNo') }"
+                        placeholder="eg. 1098 7654 3210"
+                        autocomplete="off"
+                        formControlName="beneAsnbAcctNo"
+                        (input)="replaceInvalidCharacter($event, 'beneAsnbAcctNo', 'number')"
+                    />
+                    <mat-icon
+                        class="icon-error input-error-icon"
+                        *ngIf="isFieldInvalid('beneAsnbAcctNo')"
+                        matSuffix
+                    ></mat-icon>
+                </div>
+                <mat-error class="error-message" *ngIf="isFieldInvalid('beneAsnbAcctNo')">
+                    <span>
+                        {{ isFieldInvalid('beneAsnbAcctNo') }}
+                    </span>
+                </mat-error>
+            </div>
+            <div class="field-container">
+                <span class="field-label">{{ 'Fund Name' | uppercase }}</span>
+                <div class="input-container">
+                    <cimb-common-dropdown
+                        [ngClass]="{ 'field-error': isFieldInvalid('beneAsnbFundCode') }"
+                        class="dropdown-field"
+                        [listItems]="fundList"
+                        placeholderText="Select fund name"
+                        formControlName="beneAsnbFundCode"
+                        (selectedDropdownItem)="onDropdownSelect($event, 'beneAsnbFundCode')"
+                        (clickWithoutSelection)="
+                            onDropdownClickWithoutSelection('beneAsnbFundCode')
+                        "
+                        [selection]="editFormDropdownData.fundTypeSelection"
+                        ngDefaultControl
+                    ></cimb-common-dropdown>
+                    <mat-icon
+                        class="icon-error input-error-icon dropdown-error-icon"
+                        *ngIf="isFieldInvalid('beneAsnbFundCode')"
+                        matSuffix
+                    ></mat-icon>
+                </div>
+                <mat-error class="error-message" *ngIf="isFieldInvalid('beneAsnbFundCode')">
+                    <span>
+                        {{ isFieldInvalid('beneAsnbFundCode') }}
+                    </span>
+                </mat-error>
+            </div>
+            <div class="id-section">
+                <div class="field-container">
+                    <span class="field-label">{{ "Member's ID Type" | uppercase }}</span>
+                    <div class="input-container">
+                        <cimb-common-dropdown
+                            [ngClass]="{ 'field-error': isFieldInvalid('beneIdType') }"
+                            class="dropdown-field"
+                            [listItems]="idTypeList"
+                            placeholderText="Select member's ID type"
+                            formControlName="beneIdType"
+                            (selectedDropdownItem)="onIdTypeSelect($event)"
+                            (clickWithoutSelection)="onDropdownClickWithoutSelection('beneIdType')"
+                            [selection]="editFormDropdownData.idTypeSelection"
+                            ngDefaultControl
+                        ></cimb-common-dropdown>
+                        <mat-icon
+                            class="icon-error input-error-icon dropdown-error-icon"
+                            *ngIf="isFieldInvalid('beneIdType')"
+                            matSuffix
+                        ></mat-icon>
+                    </div>
+                    <mat-error class="error-message" *ngIf="isFieldInvalid('beneIdType')">
+                        <span>
+                            {{ isFieldInvalid('beneIdType') }}
+                        </span>
+                    </mat-error>
+                </div>
+                <div class="field-container">
+                    <span class="field-label">{{ 'ID Number' | uppercase }}</span>
+                    <div class="input-container">
+                        <input
+                            [ngClass]="{ 'field-error': isFieldInvalid('beneIdNo') }"
+                            placeholder="ID number"
+                            autocomplete="off"
+                            formControlName="beneIdNo"
+                            (input)="
+                                addFavouriteForm.get('beneIdType').value === nricId
+                                    ? formatNricField($event)
+                                    : addFavouriteForm.get('beneIdNo').value
+                            "
+                        />
+                        <mat-icon
+                            class="icon-error input-error-icon"
+                            *ngIf="isFieldInvalid('beneIdNo')"
+                            matSuffix
+                        ></mat-icon>
+                    </div>
+                    <mat-error class="error-message" *ngIf="isFieldInvalid('beneIdNo')">
+                        <span>
+                            {{ isFieldInvalid('beneIdNo') }}
+                        </span>
+                    </mat-error>
+                </div>
+            </div>
+            <div class="field-container">
+                <span class="field-label">{{ 'Relationship' | uppercase }}</span>
+                <div class="input-container">
+                    <cimb-common-dropdown
+                        [ngClass]="{ 'field-error': isFieldInvalid('relationship') }"
+                        class="dropdown-field"
+                        [listItems]="relationshipList"
+                        placeholderText="Select relationship"
+                        formControlName="relationship"
+                        (selectedDropdownItem)="onDropdownSelect($event, 'relationship')"
+                        (clickWithoutSelection)="onDropdownClickWithoutSelection('relationship')"
+                        [selection]="editFormDropdownData.relationshipSelection"
+                        ngDefaultControl
+                    ></cimb-common-dropdown>
+                    <mat-icon
+                        class="icon-error input-error-icon dropdown-error-icon"
+                        *ngIf="isFieldInvalid('relationship')"
+                        matSuffix
+                    ></mat-icon>
+                </div>
+                <mat-error class="error-message" *ngIf="isFieldInvalid('relationship')">
+                    <span>
+                        {{ isFieldInvalid('relationship') }}
+                    </span>
+                </mat-error>
+            </div>
+        </div>
+    </form>
+    <div class="btn-container">
+        <button
+            class="btn-custom btn-red btn-validate"
+            [ngClass]="{ 'btn-disabled': !addFavouriteForm.valid }"
+            disableRipple="true"
+            mat-flat-button
+            [disabled]="!addFavouriteForm.valid"
+            (click)="onProceed()"
+        >
+            Proceed
+        </button>
+    </div>
+    <cimb-asnb-footer></cimb-asnb-footer>
+</div>

@@ -1,0 +1,58 @@
+.section-head {
+  h4 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--n100);
+
+    @media (min-width: 48rem) {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+.section-content {
+  .account-info {
+    p {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      color: var(--n60);
+
+      @media (min-width: 48rem) {
+        font-weight: var(--medium);
+      }
+
+      strong {
+        font-weight: var(--regular);
+        color: var(--n80);
+
+        @media (min-width: 48rem) {
+          display: block;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          font-weight: var(--bold);
+        }
+      }
+    }
+  }
+  @media (min-width: 75rem) {
+    max-width: 63rem;
+    margin: 0 auto;
+  }
+
+  .foot-legend {
+    font-size: 0.625rem;
+    line-height: 1rem;
+    margin-top: -0.75rem;
+    margin-bottom: 1.5rem;
+
+    @media (min-width: 48rem) {
+      font-size: 0.875rem;
+      line-height: 0.875rem;
+    }
+
+    span {
+      color: var(--r160);
+    }
+  }
+}

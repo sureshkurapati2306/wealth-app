@@ -1,0 +1,62 @@
+<label *ngIf="isDropdownLabel" class="autocomplete-label" attr.aria-label="{{dropdownLabel}}">{{dropdownLabel}}</label>
+<form [formGroup]="dropdownForm" class="autocomplete-form">
+    <mat-form-field [class.errorborder]="isFormValid()" *ngIf="!$XSmall" class="dropdown-form-field" floatLabel="never">
+        <mat-icon class="error-icon" *ngIf="isFormValid() " matSuffix>error_outline</mat-icon>
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-placeholder attr.aria-placeholder="{{dropdownPlaceholder}}" class="placeholder">{{dropdownPlaceholder}}
+        </mat-placeholder>
+        <mat-select #mySelect class="placeholder" formControlName={{dropdownFormControlName}}
+            panelClass="dropdown-panel custom-select-panel input-dropdown {{dropdownFormControlName}}"
+            (selectionChange)="getSelectedOption($event)">
+            <ng-container *ngIf="!isGroupDropdown">
+                <mat-option *ngFor="let option of selectOption" [value]="option[dropdownId]"  [id]="option[dropdownValue]">
+                    {{ option[dropdownValue] }}
+                </mat-option>
+            </ng-container>
+            <ng-container *ngIf="isGroupDropdown">
+                <mat-optgroup
+                *ngFor="let group of selectOption"
+                [label]="group.letter"
+            >
+                <mat-option *ngFor="let name of group.names" [value]="name">
+                    {{ name }}
+                </mat-option>
+            </mat-optgroup>
+            </ng-container>
+
+        </mat-select>
+        <mat-error *ngIf="dropdownForm && dropdownForm.controls && (!dropdownForm.controls[dropdownFormControlName].valid && (dropdownForm.controls[dropdownFormControlName].dirty||
+        dropdownForm.controls[dropdownFormControlName].touched ))">
+            {{errorMessage}}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field
+        *ngIf="$XSmall"
+        (click)="openPopup()"
+        [class.errorborder]="isFormValid()"
+        class="example-full-width dropdown-mobile-form-field"
+        floatLabel="never"
+    >
+        <div class="dipaly-input-content">
+            <span>
+                {{ dropdownForm.controls[dropdownFormControlName].value ? getValue() : '' }}
+            </span>
+        </div>
+        <input
+            class="mobile-dropdown-input"
+            matInput
+            formControlName="{{ dropdownFormControlName }}"
+        />
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-placeholder
+            *ngIf="!dropdownForm.controls[dropdownFormControlName].value"
+            attr.aria-placeholder="{{ dropdownPlaceholder }}"
+            class="placeholder"
+            >{{ dropdownPlaceholder }}
+        </mat-placeholder>
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix>error_outline</mat-icon>
+        <mat-error>
+            {{ errorMessage }}
+        </mat-error>
+    </mat-form-field>
+</form>

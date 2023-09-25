@@ -1,0 +1,199 @@
+<cimb-progress-sub-header [pageTitle]="'Available Funds'"
+						  [isBackButtonEnabled]="true"
+						  [noProgressStep]="!openedFromLandingPage && progressStepEnabled"
+						  (startInvestmentButtonEvent)="startInvestmentEvent()"
+                          [userType]="customerType"
+						  [enableStartInvestmentButton]="openedFromLandingPage && !showSelectInvestmentFooter">
+						  </cimb-progress-sub-header>
+<div class="page-wrapper">
+	<div class="container">
+		<h4 class="show-lg">Search Funds</h4>
+
+		<!-- Filters -->
+		<!-- <cimb-filter-fund [data]="fundNames" (optionSelected)="onOptionSelected($event)"></cimb-filter-fund> -->
+		<cimb-fund-filters [data]="fundNames"
+						   [riskCategories]="riskCategories | async"
+						   [fundHouse]="fundHouse | async"
+						   [assetsClasses]="assetsClasses | async"
+						   (applyFilters)="onSelectedFilters($event)"
+						   (optionSelected)="onOptionSelected($event)"
+						   [customerType]="customerType"></cimb-fund-filters>
+
+		<div class="desktop-btn-filters show-md">
+			<form [formGroup]="searchForm">
+				<div class="flex j-space-between flex-wrapper">
+					<div class="left-col">
+						<div class="flex align-items-md-center">
+							<div class="rc">
+								<cimb-mint-multi-select-checkbox [data]="riskCategories | async"
+																 formControlName="riskControl"
+																 [placeholder]="'Risk Category'"
+																 [checked]="riskSelected"
+																 (selected)="onRiskSelected($event)">
+								</cimb-mint-multi-select-checkbox>
+							</div>
+							<div class="fh">
+								<cimb-mint-multi-select-checkbox [data]="fundHouse | async"
+																 formControlName="fundHouseControl"
+																 [placeholder]="'Fund House'"
+																 [checked]="fundHouseSelected"
+																 (selected)="onFundHouseSelected($event)">
+								</cimb-mint-multi-select-checkbox>
+							</div>
+							<div class="ac">
+								<cimb-mint-multi-select-checkbox [data]="assetsClasses | async"
+																 formControlName="assetsClassesControl"
+																 [placeholder]="'Asset Class'"
+																 [checked]="assetClassSelected"
+																 (selected)="onAssetClassSelected($event)">
+								</cimb-mint-multi-select-checkbox>
+							</div>
+							<div class="compliance">
+								<mat-checkbox #syariahCompliantSelected (change)="changeSyariah($event, 'syariahCompliant')"
+									formControlName="syariahCompliant">Shariah Compliant
+					  			</mat-checkbox>
+							</div>
+							<div class="compliance esg-fund">
+								<mat-checkbox #esgFundSelected (change)="changeEsgFund($event, 'esgFund')"
+									formControlName="esgFund" >ESG Funds
+						  		</mat-checkbox>
+							</div>
+							<div class="tooltiForEsg">
+								<em class="icon-help show-lg esg-fund-tooltip" 
+									(keypress)="openESGFundsOnlyBottomSheet()"
+									matTooltip="The fund strategy invested in securities with a high sustainability score and would exclude companies with poor records related to ESG. The strategy will contribute to the long-term viability of our environment and way of life. It enable investors to pursue their financial goals while supporting a better future for humanity."
+									matTooltipPosition="right"
+								>
+								</em>
+							</div>
+						</div>
+					</div>
+					<div class="right-col">
+						<div class="flex">
+							<button mat-flat-button
+									type="submit"
+									(click)="onApplyFilters()"
+									class="btn-custom mat-flat-button btn-red"
+									[disabled]="!riskSelected && !fundHouseSelected && !assetClassSelected && !syariahCompliantSelected.checked && !esgFundSelected.checked"
+									disableRipple>
+								Apply Filter
+							</button>
+
+							<button mat-flat-button
+									(click)="onClearFilter(!riskSelected && !fundHouseSelected && !assetClassSelected && !syariahCompliantSelected.checked && !esgFundSelected.checked)"
+									class="btn-custom mat-flat-button btn-transparent"
+									[disabled]="isDisabled"
+									disableRipple>
+								Clear Filter
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+		<mat-tab-group class="custom-tab funds-tab curve-last"
+					   *ngIf=" enableFundTabs else noSearchFund"
+					   (selectedIndexChange)="onTabChanged($event)"
+					   [selectedIndex]="selectedIndex"
+					   [disableRipple]="true"
+					   #tabGroup>
+			<mat-tab label="CIMB Focus Funds"
+					 position="0">
+				<ng-template matTabContent>
+					<!--WJ-3236 - copy writing start-->
+					<div class="tab-header">
+						<p class="hide-md">
+							<span *ngIf="showText === 'View more'">{{
+								longText.length > firstCount
+								? (longText | slice: 0:counter) + '... '
+								: ""
+								}}</span>
+
+							<span *ngIf="showText === 'View less'">{{
+								longText
+								}}</span>
+							<a class="btn-text btn-text-underline"
+							   *ngIf="longText.length > 100"
+							   (click)="toggle($event)">{{showText}}
+							</a>
+						</p>
+						<p class="show-md">{{longText}}
+						</p>
+
+					</div>
+
+					<!--WJ-3236 - copy writing end-->
+					<cimb-fund-table *ngIf="fundList.length > 0 else noSearchFund" (removeItem)="onRemovedItem($event)"
+						(addItem)="onAddItem($event)" (updateItem)="onUpdateItem($event)" [staff]="userData.cimb_staff"
+						[currentPageNumber]="currentPageNumber" 
+						[fundList]="fundList" 
+						[cartData]="cartData"
+						[cartUTAccount]="cartUTAccount"
+						[selectedAccounts]="selectedAccounts" [hideAmountField]="openedFromLandingPage"
+						(clearAndAddNewToCart)="clearCartAndContinueDataEvent($event)"
+						[customerType]="customerType">
+					</cimb-fund-table>
+				</ng-template>
+			</mat-tab>
+			<mat-tab label="All Funds">
+				<ng-template matTabContent>
+					<cimb-fund-table *ngIf="fundList.length > 0 else noSearchFund"
+									 (removeItem)="onRemovedItem($event)"
+									 (addItem)="onAddItem($event)"
+									 (updateItem)="onUpdateItem($event)"
+									 [staff]="userData.cimb_staff"
+									 [currentPageNumber]="currentPageNumber"
+									 [fundList]="fundList"
+									 [cartData]="cartData"
+									 [cartUTAccount]="cartUTAccount"
+									 [selectedAccounts]="selectedAccounts"
+									 [hideAmountField]="openedFromLandingPage"
+									 (clearAndAddNewToCart)="clearCartAndContinueDataEvent($event)"
+									 [customerType]="customerType">
+					</cimb-fund-table>
+				</ng-template>
+			</mat-tab>
+		</mat-tab-group>
+
+		<ng-template #noSearchFund>
+			<div class="no-result">
+				<div class="image">
+					<img src="./assets/images/no-result-found.svg" alt="No Search Reuslt" />
+				</div>
+				<div class="content text-center">
+					<h4>No Results Found</h4>
+					<p>
+						We could not find any funds matching your searched or filters selected.
+						Use
+						other terms or
+						filters and try again.
+					</p>
+				</div>
+			</div>
+		</ng-template>
+
+		<!-- <div class="flex funds-pagination">
+			<div class="page-size-wrapper">
+				<span class="indicator">Showing 1-10 of 100 funds</span>
+				<div class="option-wrapper">
+					<mat-select name="item"
+								panelClass="page-size-options"
+								disableOptionCentering>
+						<mat-option *ngFor="let item of pageSizeItems"
+									[value]="item.value">{{item.value}}</mat-option>
+					</mat-select>
+				</div>
+
+				<span class="indicator">funds per page</span>
+			</div>
+		</div> -->
+
+
+		<div *ngIf="showSelectInvestmentFooter && openedFromLandingPage">
+			<cimb-footer-bo-cta btnLabel="Start Investment" [disabled]="false" (clickEvent)="startInvestmentEvent()">
+			</cimb-footer-bo-cta>
+		</div>
+
+	</div>

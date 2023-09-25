@@ -1,0 +1,66 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+.mat-dialog-wrapper {
+    .mat-dialog-pad {
+        @media (min-width: $asnbDesktop) {
+            padding: 64px 24px 32px 32px;
+        }
+
+        .mat-dialog-content {
+            p,
+            li {
+                @include font(0.875rem);
+            }
+
+            h3 {
+                @media (min-width: $asnbDesktop) {
+                    margin-bottom: 16px;
+                }
+            }
+            h5 {
+                margin-bottom: 0 !important;
+            }
+
+            h3,
+            h5,
+            p,
+            li,
+            strong {
+                font-family: $notoSans !important;
+            }
+        }
+    }
+}
+
+.content-scroller {
+    @media (max-width: $asnbDesktop) {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        overflow: hidden;
+    }
+}
+
+.asnb-service-hour {
+    display: grid;
+    row-gap: 16px;
+    @media (min-width: $asnbDesktop) {
+        margin-top: 16px;
+        row-gap: 32px;
+    }
+
+    ol li strong,
+    p {
+        color: var(--n80);
+    }
+
+    ol {
+        margin: 16px 0 0;
+        display: grid;
+        row-gap: 12px;
+    }
+
+    ol li p {
+        margin: 8px 0 0 0 !important;
+    }
+}

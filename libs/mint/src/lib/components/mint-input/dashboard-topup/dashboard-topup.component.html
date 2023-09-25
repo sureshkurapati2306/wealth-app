@@ -1,0 +1,82 @@
+<div class="option-block-input">
+    <div class="option-field">
+        <label>Amount</label>
+        <cimb-input-amount-key
+            [inputForm]="amountForm"
+            [inputFormControlName]="'amount'"
+            [isRequired]="false"
+            [showMyrPrefix]="showMyrPrefix"
+            [inputPlaceholder]="placeHolderError"
+            [minAmount]="minimumAmount"
+            [maxAmount]="maximumAmount"
+            [errorMessageMinAmount]="minError"
+            [errorMessageMaxAmount]="maxError"
+            [amountAdded]="amountAdded"
+            (keyupEvent)="changeValueEvent($event)"
+            [isDisabled]="!enableAddToCart"
+            [flow]="'001'"
+        >
+        </cimb-input-amount-key>
+    </div>
+    <div class="option-button">
+        <button
+            mat-flat-button
+            class="btn-custom btn-red"
+            (click)="addToCartClick(indexVal)"
+            [disabled]=" !enableAddToCart ||
+                !amountForm.valid ||
+                (amountForm?.controls?.amount && amountForm?.controls?.amount.value === '0.00') ||
+                (amountForm?.controls?.amount && !amountForm?.controls?.amount.value === '') ||
+                amountForm?.controls?.amount.value === null ||
+                (amountForm?.controls?.amount.value &&
+                    amountForm?.controls?.amount.value.length === 0)
+            "
+            *ngIf="!amountAdded"
+        >
+            Add to cart
+        </button>
+        <button
+            mat-flat-button
+            class="btn-custom btn-red"
+            disableRipple="true"
+            (click)="removeModal(indexVal)"
+            *ngIf="amountAdded && !amountEdit"
+        >
+            Remove
+        </button>
+        <button
+            mat-flat-button
+            class="btn-custom btn-red"
+            disableRipple="true"
+            (click)="doneButtonClick()"
+            [disabled]="
+                !amountForm.valid ||
+                disabled ||
+                (amountForm?.controls?.amount &&
+                    amountForm?.controls?.amount?.value &&
+                    amountForm?.controls?.amount?.value?.length === 0) ||
+                (amountForm?.controls?.amount && amountForm?.controls?.amount.value === null)
+            "
+            *ngIf="amountAdded && amountEdit"
+        >
+            Done
+        </button>
+    </div>
+    <div class="option-text">
+        <p
+            *ngIf="
+                amountForm.valid &&
+                amountForm?.controls?.amount.value &&
+                amountForm?.controls?.amount.value !== '0.00'
+            "
+        >
+            Includes sales charge
+        </p>
+    </div>
+    <div
+        *ngIf="amountForm.invalid || amountForm?.controls?.amount.value === null"
+        class="option-text"
+    >
+        <p style="padding-bottom: 1rem"></p>
+    </div>
+</div>

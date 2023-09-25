@@ -1,0 +1,79 @@
+<div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <button
+      mat-icon-button
+      class="btn-close"
+      mat-dialog-close
+      disableRipple="true"
+    >
+      <em class="icon-close"></em>
+      <em class="icon-arrow-left"></em>
+    </button>
+    <mat-dialog-content>
+      <div class="flex-md">
+        <div class="col1">
+          <div class="image">
+            <img src="./assets/images/open-account.svg" alt="Open account" />
+          </div>
+        </div>
+        <div class="col2 text-left">
+          <h3>Select Transaction Account</h3>
+          <p class="text-default-size">
+            Please select your Unit Trust account below to proceed:
+          </p>
+          <div class="account-wrapper">
+            <div class="dd-options">
+              <button class="btn-dd" [matMenuTriggerFor]="Account" [matMenuTriggerData]="userMenuData">
+                <strong>{{selectedAccount}}</strong> <em class="icon-arrow-down"></em>
+              </button>
+              <mat-menu
+                #Account="matMenu"
+                class="custom-menu-panel with-divider auto-width"
+                backdropClass="dd-overlay"
+                xPosition="before"
+                yPosition="below"
+              >
+                <ng-template matMenuContent let-menuWidth="menuWidth">
+                  <div class="menu-wrapper" [style.width.px]="menuWidth" *ngFor="let item of accounts; let i = index;">
+                    <div class="panel-header" *ngIf="i < 1">
+                      <button mat-icon-button class="btn-close">
+                        <em class="icon-close"></em>
+                      </button>
+                    </div>
+                    <div class="panel-content">
+                      <button mat-menu-item disableRipple="true" (click)="onSelectAccount(i)"
+                      [class.dropDownSelected]="selectedAccount === item.ut_account_no ? true : false">
+                        {{item.ut_account_no}}
+                      </button>
+
+                    </div>
+                  </div>
+                </ng-template>
+              </mat-menu>
+            </div>
+            <button
+              mat-flat-button
+              [disabled]="epfAccount"
+              [mat-dialog-close]="true"
+              class="btn-custom btn-red"
+              (click)="showWarningModal()"
+            >
+              Proceed
+            </button>
+          </div>
+
+          <ng-container *ngIf="epfAccount">
+              <mat-error class="text-padding"> For Unit Trust account type EPF transactions, <br/> please visit any CIMB Branch</mat-error>
+          </ng-container>
+
+          <p class="text-xs-size">
+            You can only transact using one Unit Trust account at a time. If the
+            fund(s) you choose are not an existing investment in the selected
+            Unit Trust account, your transaction will be considered a new
+            purchase instead of a top-up.
+          </p>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="autocomplete-block">
+
+   <em class="icon-arrow-down" (click)="openOptions($event)"></em>
+   <input
+      type="text"
+      placeholder="Select"
+      [formControl]="switch"
+      [matAutocomplete]="switchList"
+      class="input-autocomplete"
+      (click)="openOptions($event)"
+   />
+   <mat-autocomplete
+      #switchList="matAutocomplete"
+      class="custom-autocomplete mat-menu-panel custom-menu-panel with-divider filter-panel"
+      backdropClass="dd-overlay"
+      (optionSelected)="optionSelected($event)"
+   >
+      <div class="mat-menu-content">
+         <div class="panel-header">
+            <button
+               mat-icon-button
+               class="btn-close"
+               (click)="closeOptions()"
+            >
+            <em class="icon-close"></em>
+            </button>
+         </div>
+         <!-- Input within a dropdown panel - for mobile -->
+         <div class="panel-input hide-md">
+            <input type="text" placeholder="Select" [formControl]="switch" #mobileSearch />
+         </div>
+         <div class="panel-content">
+            <mat-option
+               *ngFor="let option of filteredOptions$ | async"
+               [value]="option.fundName"
+               [disableRipple]="true"
+               [disabled]="option.fundStatus === 'I'"
+            >
+               <div [innerHTML]="option.fundName | highlightText: highlightedText"></div>
+
+               <span
+                  *ngIf="option.fundStatus === 'I'"
+                  class="fund-holiday-label"
+               >
+                  Fund Holiday
+                  <span class="tips">
+                     <em
+                        class="icon-help hide-lg"
+                        (click)="openFundHolidayBottomSheet()"
+                     ></em>
+                     <em
+                        class="icon-help show-lg"
+                        matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+                        matTooltipPosition="right"
+                     ></em>
+                  </span>
+               </span>
+
+            </mat-option>
+         </div>
+      </div>
+   </mat-autocomplete>
+   
+</div>
+
+<button *ngIf="selectedSwitchToFund" 
+           class="mat-flat-button btn-custom btn-text view padding"
+           (click)="openFundDetails()"
+             >
+             <u style="font-weight: normal !important;">View Fund Details </u>
+</button>
+

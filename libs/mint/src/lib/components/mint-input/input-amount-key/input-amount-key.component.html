@@ -1,0 +1,81 @@
+<form [formGroup]="inputForm" class="amount-key-form">
+    <mat-form-field
+        [class.errorborder]="isFormValid()"
+        appearance="outline"
+        floatLabel="never"
+        class="amount-key-input"
+    >
+        <span
+            class="myr-span"
+            *ngIf="
+                (showMyrPrefix &&
+                    (this.isFocus ||
+                        (inputForm &&
+                            inputForm.controls &&
+                            inputForm.controls[inputFormControlName].value))) ||
+                isAsnbFavouritePurchase
+            "
+            matPrefix
+            >MYR &nbsp;</span
+        >
+        <input
+            (focus)="onFocus()"
+            (focusout)="onFocusOutEvent()"
+            (keypress)="acceptNumbersOnly($event)"
+            (input)="replaceInvalidCharacters($event)"
+            (paste)="onPaste($event)"
+            (keyup)="applyNumberFormatting($event)"
+            (keydown)="onKeydown($event)"
+            type="text"
+            matInput
+            placeholder="{{ inputPlaceholder }}"
+            formControlName="{{ inputFormControlName }}"
+            autocomplete="off"
+        />
+        <mat-icon class="error-icon" *ngIf="isFormValid()" matSuffix>error_outline</mat-icon>
+        <mat-error
+            *ngIf="
+                inputForm &&
+                inputForm.controls &&
+                inputForm.controls[inputFormControlName].hasError('required') &&
+                (!inputForm.controls[inputFormControlName].hasError('invalidMaxAmount') ||
+                    !inputForm.controls[inputFormControlName].hasError('invalidMinAmount'))
+            "
+        >
+            {{ errorMessageRequired }}
+        </mat-error>
+        <mat-error
+            *ngIf="
+                inputForm &&
+                inputForm.controls &&
+                !inputForm.controls[inputFormControlName].hasError('pattern') &&
+                inputForm.controls[inputFormControlName].hasError('invalidMaxAmount')
+            "
+        >
+            {{ errorMessageMaxAmount }}
+        </mat-error>
+        <mat-error
+            *ngIf="
+                inputForm &&
+                inputForm.controls &&
+                !inputForm.controls[inputFormControlName].hasError('pattern') &&
+                inputForm.controls[inputFormControlName].hasError('invalidMinAmount') &&
+                !inputForm.controls[inputFormControlName].hasError('redemptionUnitsExceed')
+            "
+        >
+            {{ errorMessageMinAmount }}
+        </mat-error>
+        <mat-error
+            *ngIf="
+                inputForm &&
+                inputForm.controls &&
+                !inputForm.controls[inputFormControlName].hasError('pattern') &&
+                inputForm.controls[inputFormControlName].hasError('redemptionUnitsExceed') &&
+                !inputForm.controls[inputFormControlName].hasError('invalidMaxAmount')
+            "
+        >
+            {{ errorMessageRedeem }}
+        </mat-error>
+        <mat-hint *ngIf="flow === '001' && isDisabled">Purchase is disabled at the moment</mat-hint>
+    </mat-form-field>
+</form>

@@ -1,0 +1,13 @@
+<label *ngIf="inputLabel" class="autocomplete-label" attr.aria-label="{{inputLabel}}">{{inputLabel}}</label>
+<form [formGroup]="toggleForm" class="autocomplete-form">
+  <mat-form-field class="toggle-form-field" floatLabel="never">
+    <mat-button-toggle-group formControlName={{toggleFormControlName}}>
+      <mat-button-toggle [class.errorButton]="isFormValid()" *ngFor="let toggle of toggles" [value]="toggle.value">{{
+        toggle.label }}</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-error class="text-danger" *ngIf="toggleForm && toggleForm.controls && (!toggleForm.controls[toggleFormControlName].valid && (toggleForm.controls[toggleFormControlName].dirty||
+    toggleForm.controls[toggleFormControlName].touched ))">
+      {{errorMessage}}
+    </mat-error>
+  </mat-form-field>
+</form>

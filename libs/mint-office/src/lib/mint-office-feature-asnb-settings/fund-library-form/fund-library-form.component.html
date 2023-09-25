@@ -1,0 +1,125 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" (click)="backHandler()">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>{{ pageTitle }}</h1>
+            </div>
+            <div class="section-body">
+                <div class="section-content">
+                    <div class="section-content-right">
+                        <form [formGroup]="fundLibraryForm">
+                            <div class="field">
+                                <div *ngIf="pageType === 'edit'; else addField">
+                                    <p class="fund-label">
+                                        <strong>Fund Code:</strong>
+                                        {{ pageFundCode }}
+                                    </p>
+                                </div>
+                                <ng-template #addField>
+                                    <mat-form-field>
+                                        <mat-label>Fund Code</mat-label>
+                                        <input
+                                            matInput
+                                            type="text"
+                                            formControlName="fundCode"
+                                            placeholder="Fund Code"
+                                            value=""
+                                            maxLength="30"
+                                        />
+                                    </mat-form-field>
+                                    <mat-error class="custom-error">
+                                        <span
+                                            *ngIf="
+                                                fundLibraryForm.get('fundCode').invalid &&
+                                                fundLibraryForm.get('fundCode').touched
+                                            "
+                                        >
+                                            Fund Code is required
+                                        </span>
+                                    </mat-error>
+                                </ng-template>
+                            </div>
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>Fund Name</mat-label>
+                                    <input
+                                        matInput
+                                        type="text"
+                                        formControlName="fundName"
+                                        placeholder="Fund Name"
+                                        value=""
+                                        maxLength="250"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            fundLibraryForm.get('fundName').invalid &&
+                                            fundLibraryForm.get('fundName').touched
+                                        "
+                                    >
+                                        Fund Name is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                            <div class="field">
+                                <mat-radio-group
+                                    formControlName="fundType"
+                                    (change)="onFundTypeChange()"
+                                >
+                                    <mat-radio-button
+                                        [value]="1"
+                                        [checked]="pageFundType === 'fixed' ? true : false"
+                                        >Fixed Price</mat-radio-button
+                                    >
+                                    <mat-radio-button
+                                        [value]="0"
+                                        [checked]="pageFundType === 'variable' ? true : false"
+                                        >Variable Price</mat-radio-button
+                                    >
+                                </mat-radio-group>
+                            </div>
+                            <div class="field" *ngIf="fundLibraryForm.get('fundType').value">
+                                <mat-form-field>
+                                    <mat-label>Bank Charges (RM)</mat-label>
+                                    <input
+                                        matInput
+                                        type="number"
+                                        formControlName="fundBankChargeAmount"
+                                        placeholder="0.00"
+                                        value=""
+                                        maxLength="30"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            fundLibraryForm.get('fundBankChargeAmount').invalid &&
+                                            fundLibraryForm.get('fundBankChargeAmount').touched
+                                        "
+                                    >
+                                        Bank Charges is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        (click)="pageType === 'edit' ? editFund(fundId) : addFund()"
+        [disabled]="!fundLibraryForm.valid"
+    >
+        Save
+    </button>
+</div>

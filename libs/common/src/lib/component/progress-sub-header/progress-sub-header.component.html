@@ -1,0 +1,63 @@
+<div class="progress-sub-header">
+    <div class="container">
+        <div class="col-header">
+            <div class="t-util">
+                <a *ngIf="isBackButtonEnabled" (click)="backClickEvent()">
+                    <em class="icon-arrow-left"></em>
+                </a>
+                <h2>{{ pageTitle }}</h2>
+                <div>
+                    <div class="investment-button">
+                        <button
+                            class="btn-custom mat-flat-button btn-red"
+                            *ngIf="enableStartInvestmentButton"
+                            (click)="startInvestment()"
+                        >
+                            Start Investment
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="b-util">
+                <!--
+          use class
+            local-equity for Local Equity
+            global-equity for Global Equity
+            regional-equity for Regional Equity
+            cash for cash
+            alternatives for Alternatives
+            fixed-income for Fixed Income
+         -->
+                <p
+                    class="tag"
+                    *ngIf="label"
+                    [ngClass]="{
+                        'local-equity': label === 'Local Equity',
+                        'global-equity': label === 'Global Equity',
+                        'regional-equity': label === 'Regional Equity',
+                        cash: label === 'Cash',
+                        alternatives: label === 'Alternatives',
+                        'fixed-income': label === 'Fixed Income'
+                    }"
+                >
+                    {{ label }}
+                </p>
+                <div class="fund-holiday-label" *ngIf="isFundHoliday">
+                    Fund Holiday
+                    <span class="tips">
+                        <em
+                            class="icon-help"
+                            matTooltip="The fund is currently not available due to the fund holiday declared by the fund house. Pricing of the fund will resume on the next business day for the fund."
+                            matTooltipPosition="below"
+                        ></em>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="userType === 'NTP'">
+            <div class="col-steps" *ngIf="noProgressStep">
+                <cimb-progress-step></cimb-progress-step>
+            </div>
+        </ng-container>
+    </div>
+</div>

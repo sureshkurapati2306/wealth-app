@@ -1,0 +1,41 @@
+table {
+    width: 100%;
+
+    td {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--n100);
+    }
+
+    th {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--n100);
+        text-transform: uppercase;
+    }
+}
+
+.btn-action {
+    font-size: 0.75rem;
+    .icon-edit {
+        font-size: 0.875rem;
+        margin-right: 0.7rem;
+    }
+    @media (min-width: 60rem) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.8rem !important;
+    }
+}
+
+.col-th-action {
+    text-align: right;
+    padding-right: 2.5rem !important;
+}
+.col-td-action {
+    text-align: right;
+    button {
+        display: inline;
+    }
+}

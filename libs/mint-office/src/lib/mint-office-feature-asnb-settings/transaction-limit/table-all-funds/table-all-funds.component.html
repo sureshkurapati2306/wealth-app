@@ -1,0 +1,35 @@
+<table
+    mat-table
+    [dataSource]="fundData"
+    class="tbl-operation-hours"
+    aria-describedby="Transaction Limit All Funds Table"
+>
+    <!-- Date Column -->
+    <ng-container matColumnDef="minAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header id="minAmount">INITIAL MIN (RM)</th>
+        <td mat-cell *matCellDef="let element">{{ element.minAmount }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="subsequentMin">
+        <th mat-header-cell *matHeaderCellDef id="subsequentMin">SUBSEQUENT MIN (RM)</th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.subsequentMin }}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef id="action" [ngClass]="'col-th-action'">ACTION</th>
+        <td mat-cell *matCellDef="let row" [ngClass]="'col-td-action'">
+            <button
+                mat-flat-button
+                class="btn-custom btn-text btn-action"
+                (click)="editAllFundLimit(row); $event.stopPropagation()"
+            >
+                <span class="icon-edit"></span> <strong>Edit</strong>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

@@ -1,0 +1,23 @@
+<mat-form-field appearance="none"
+                floatLabel="never"
+                class="custom-dropdown-btn">
+    <mat-select [formControl]="control"
+                (selectionChange)="onSelectionChange($event)"
+                placeholder="{{placeholder}}"
+                #selection
+                panelClass="custom-select-panel custom-mat-select-panel mint-multi-select custom-multi-select-checkbox"
+                multiple>
+        <mat-select-trigger class="mat-select-trigger">
+            {{selection.value ? selection.value.length : ''}}
+            <span *ngIf="control.value?.length >= 1">
+                {{placeholder}}
+            </span>
+        </mat-select-trigger>
+       <div class="mat-option-wrapper">
+        <mat-option *ngFor="let item of data"
+        color="primary"
+        (click)="handleSelectedOpt()"
+        [value]="item.name">{{lodash.capitalize(item.name)}}</mat-option>
+       </div>
+    </mat-select>
+</mat-form-field>

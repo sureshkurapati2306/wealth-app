@@ -1,0 +1,97 @@
+<!--
+  -- Ticket_WJ-189
+  /*  Pop-Up / Desktop / Clear Cart Pop-Up / Account */
+-->
+
+<div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <ng-container *ngIf="dialogButtonProceedText !== 'Back to My Cart'">
+      <button mat-icon-button class="btn-close" *ngIf="dialogShowCloseButtonCancel || (dialogButtonCancelText!=='Logout') || (dialogButtonProceedText!=='Stay on Page')" (click)="cancel()">
+        <em class="icon-close"></em>
+      </button>
+      <button mat-icon-button class="btn-close" *ngIf="(dialogButtonCancelText==='Logout') || (dialogButtonProceedText==='Stay on Page')" (click)="proceed()">
+        <em class="icon-close"></em>
+      </button> 
+    </ng-container>
+    <mat-dialog-content>
+      <div class="image padding-bottom" [innerHtml]="dialogImage" *ngIf="dialogImage"></div>
+      <h3 [innerHTML]="dialogHeading">
+
+        <small *ngIf="dialogHeadingSubText" [innerHTML]="dialogHeadingSubText"></small>
+      </h3>
+      <div *ngIf="(dialogHeading !== 'Unexpected Issue' && !hasTimeout)" [innerHtml]="dialogContent"></div>
+      <div *ngIf="(dialogHeading !== 'Unexpected Issue' && hasTimeout)">
+        <p>Due to inactivity, you will be automatically logged out in <br /><strong> {{ timer }} seconds</strong> for security. </p>
+      </div>
+      <div *ngIf="(dialogHeading === 'Unexpected Issue')">
+        <p>We have encountered an unexpected issue. Please try again later. If this issue persists, please<strong><a class="contactUs go_to_consumer_contact_centre_link"> contact us to report this issue.</a></strong></p>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="cart-modal-actions" *ngIf="((dialogButtonCancel || dialogButtonProceed)&&(dialogHeading !== 'Unexpected Issue'))">
+      <button
+        *ngIf="dialogButtonCancel"
+        mat-flat-button
+        class="btn-custom btn-lg btn-white"
+        disableRipple="true"
+        (click)="cancel()"
+      >
+        {{ dialogButtonCancelText }}
+      </button>
+      <button
+        *ngIf="dialogButtonProceed"
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="proceed()"
+      >
+        {{ dialogButtonProceedText }}
+      </button>
+    </mat-dialog-actions>
+    <mat-dialog-actions align="center" class="cart-modal-actions" *ngIf="((dialogButtonCancel || dialogButtonProceed)&&(dialogHeading === 'Unexpected Issue'))">
+
+      <button
+        *ngIf="dialogButtonCancel"
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="cancel()"
+      >
+      {{ dialogButtonCancelText }}
+      </button>
+    </mat-dialog-actions>
+
+    <mat-dialog-content  *ngIf="dialogFooter || dialogFooterSubText || dialogFooterContent">
+    <br/>
+      <h3> <span *ngIf="dialogFooter">{{ dialogFooter }}</span>
+
+      </h3>
+      <h5> <strong><small *ngIf="dialogFooterSubText">{{dialogFooterSubText}}</small></strong></h5>
+      <div [innerHtml]="dialogFooterContent"></div>
+    </mat-dialog-content>
+  </div>
+</div>
+
+<!--
+  -- Ticket_WJ-188
+  /*  Pop-Up / Desktop / Pending Transaction in Cart */
+-->
+
+<!-- <div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <button mat-icon-button class="btn-close" [mat-dialog-close]><em class="icon-close"></em></button>
+    <mat-dialog-content>
+      <div class="image danger">
+        <em class="icon-warning-bubble"></em>
+      </div>
+      <h3>Pending Transaction in Cart</h3>
+      <p>You currently have a pending <strong>switch</strong> transaction in your shopping cart. Adding a <strong>Redeem</strong> transaction to your cart will clear your cart.</p>
+      <p>Do you want to continue?</p>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="cart-modal-actions">
+       <button mat-flat-button [mat-dialog-close] class="btn-custom btn-lg btn-white btn-cancel">Cancel</button>
+      <button mat-flat-button [mat-dialog-close]="true" class="btn-custom btn-red ">Yes, clear cart and continue</button>
+    </mat-dialog-actions>
+  </div>
+
+</div> -->

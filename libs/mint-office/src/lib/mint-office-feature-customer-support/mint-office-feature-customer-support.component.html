@@ -1,0 +1,30 @@
+<div class="page-wrapper">
+  <div class="container">
+      <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+    <div class="section">
+      <div class="section-head">
+        <h1>Customer Support</h1>
+      </div>
+      <div class="section-content">
+
+        <cimb-office-cs-search-form
+          [searchParams]="(csSearchQuery$ | async)"
+          [loadingState]="(csLoadingState$ | async)"
+          (submitForm)="search($event)"
+          (clearForm)="clear()"
+        >
+        </cimb-office-cs-search-form>
+
+      </div>
+      
+      <cimb-office-cs-list-table
+        [dataSourceRows]="(csRecords$ | async)"
+        [getLoadingState]="(csLoadingState$ | async)"
+        [hasSearched]="(csHasSearched$ | async)"
+      >
+      </cimb-office-cs-list-table>
+      
+    </div>
+
+  </div>
+</div>

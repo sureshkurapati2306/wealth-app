@@ -1,0 +1,19 @@
+<div class="app-container">
+  <div class="header">
+    <div class="container">
+      <div class="inline-flex">
+        <a class="logo" routerLink="/home">
+          <img src="./assets/back-office/logo.svg" alt="CIMB" />
+        </a>
+        <a class="logo-secondary" routerLink="/home">
+          <img src="./assets/back-office/logo-islamic.svg" alt="CIMB Islamic" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+  <cimb-footer class="{{ footerClassName$ | async }}"></cimb-footer>
+</div>
+

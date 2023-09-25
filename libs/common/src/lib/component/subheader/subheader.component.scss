@@ -1,0 +1,30 @@
+.headerColor{
+    background: var(--r120)!important;
+    color: var(--n0)!important;
+    
+    .container{
+        @media (min-width: 48rem) {
+        height:11.125rem;
+        }
+        
+    }
+    p{
+        font-size: .75rem !important;
+        //font-weight: 600;
+        line-height: 1.5;
+        letter-spacing: 0.06rem;
+        font-stretch: normal;
+        font-style: normal;
+        flex-grow: 0;
+        text-transform: uppercase;
+        margin-bottom: .25rem;
+    }
+    h3{
+        font-size: 1.25rem !important;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+    }
+}

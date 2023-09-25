@@ -1,0 +1,69 @@
+<div class="tab-header-inner">
+  <div class="tab-header-left">
+    <p>Unit Trust Account</p>
+    <button class="btn-dd" [matMenuTriggerFor]="Account">
+      <strong>{{ selectedAccount }}</strong> <em class="icon-arrow-down"></em>
+    </button>
+    <mat-menu
+      #Account="matMenu"
+class="custom-menu-panel menu-modal with-header with-divider menu-account"
+      backdropClass="dd-overlay"
+    >
+      <div class="panel-header with-text">
+        <button mat-icon-button class="btn-close" disableRipple="true">
+          <em class="icon-arrow-left"></em>
+        </button>
+        <h4>Set primary or view other Unit Trust Account.</h4>
+        <p>
+          Your primary Unit Trust Account will be the default account shown in
+          your dashboard.
+        </p>
+      </div>
+      <div class="panel-content">
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="chosenItem">
+
+            <mat-radio-button *ngFor="let item of account; index as i"
+              [value]="item.ut_account_no"
+              [checked]="item.default_ind !== 'N'"
+              (click)="$event.stopPropagation()"
+              (change)="accountListChange($event);"
+              >{{ item.ut_account_no }}</mat-radio-button
+            >
+
+        </mat-radio-group>
+        <div class="panel-buttons">
+          <button mat-flat-button class="btn-custom btn-red btn-ghost"  (click)="viewAccountClick()">
+            View
+          </button>
+          <button
+            *ngIf="showMakePrimaryButton"
+            (click)="dialogSetPrimary()"
+            mat-flat-button
+            class="btn-custom btn-red"
+          >
+            Make Primary
+          </button>
+        </div>
+      </div>
+    </mat-menu>
+  </div>
+  <div class="tab-header-right floating-button" *ngIf="dashBoard !== 1">
+    <cimb-button-add *ngIf="addNewInvestmentEnabled"
+      [amlCheckResult]="amlResult"
+      [buttonLabel]="addNewInvestment"
+      [solePropIndicator]="solePropIndicator"
+      [accounts]="account"
+      [selectedAccount]="selectedAccount"
+      [casaIndicator]="casaIndicator"
+      [joinOrUtAccountIndicator]="joinOrUtAccountIndicator"
+      [joinAndUtAccountIndicator]="joinAndUtAccountIndicator"
+      (selectedAccountDialogCart) = "selectedAccountDialogCartEvent($event)"
+   ></cimb-button-add>
+  </div>
+  <div class="tab-header-right" *ngIf="dashBoard === 1">
+    <cimb-date-range-picker
+    [purchaseDetailData]="purchaseDetailData"
+    (dateFilteredPurchaseDetailData)="dateFilteredPurchaseDetailData($event)"
+    ></cimb-date-range-picker>
+  </div>
+</div>

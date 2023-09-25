@@ -1,0 +1,12 @@
+<div class="subheader" *ngIf="!currentRoute.includes('/wealthdashboard')">
+  <div class="container" >
+    <h3>Hi, {{ name }}</h3>
+    <p>Last updated {{ lastUpdated }}</p>  
+  </div>
+</div>
+<div class="subheader headerColor" *ngIf="currentRoute.includes('/wealthdashboard')">
+  <div class="container">
+    <p class="headerColor">Welcome, {{ name }}</p>
+    <h3 class="headerColor">My Wealth Dashboard</h3>
+  </div>
+</div>

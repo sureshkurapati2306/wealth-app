@@ -1,0 +1,28 @@
+<div id="FooterCart" *ngIf="totalFundsCount > 0"  [ngStyle]="{'position': (totalFundsCount >=1) ? 'sticky' : 'static'}">
+  <div class="container">
+    <div class="footer-cart">
+      <div class="footer-cart-item">
+        <p *ngIf=" flow === '001'">To Purchase: <strong>{{totalFundsCount}} Fund Selected</strong></p>
+        <p *ngIf="flow === '002'">To Redeem: <strong>{{totalFundsCount}} Fund Selected</strong></p>
+        <p *ngIf="flow === '003'">To Switch: <strong>{{totalFundsCount}} Fund Selected</strong></p>
+      </div>
+      <div class="footer-cart-amount">
+        <p *ngIf=" flow === '001'">Total Amount</p>
+        <p *ngIf="flow !== '001'">Total Units</p>
+        <h6 *ngIf=" flow === '001'"><sup>MYR</sup> {{totalAmount | number: '1.2-2':'en-US'}}</h6>
+        <h6 *ngIf="flow !== '001'">{{totalUnit | number: '1.2-2':'en-US'}}</h6>
+        <small *ngIf=" flow === '001'">Includes sales charge</small>
+      </div>
+      <div class="footer-cart-button">
+        <button
+          (click)="viewMyCartClick()"
+          mat-flat-button
+          class="btn-custom btn-lg btn-ghost btn-white"
+          disableRipple="true"
+        >
+          View My Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

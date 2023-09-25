@@ -1,0 +1,88 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+@import 'apps/self-serve/src/assets/mixin.scss';
+
+[class] {
+    font-family: $notoSans !important;
+}
+
+p {
+    margin: 0;
+}
+
+.invoice-container {
+    @media (min-width: $asnbDesktop) {
+        max-width: 50rem;
+        margin: 0 auto;
+    }
+}
+
+.fund-name {
+    margin-bottom: 0.25rem;
+    font-weight: var(--bold);
+    color: var(--n100);
+    @include font(0.875rem);
+    @media (min-width: $asnbDesktop) {
+        @include font(1rem);
+    }
+}
+
+.fund-type {
+    margin-bottom: 0;
+    font-weight: var(--medium);
+    color: var(--n60);
+    @include font(0.625rem);
+}
+
+.invoice-section {
+    margin-top: 1rem;
+    display: grid;
+    row-gap: 0.75rem;
+    @media (min-width: $asnbDesktop) {
+        margin-top: 1.25rem;
+    }
+}
+
+.invoice-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item {
+    font-weight: var(--medium);
+    color: var(--n60);
+    @include font(0.625rem);
+    @media (min-width: $asnbDesktop) {
+        @include font(0.75rem);
+    }
+}
+
+.divider {
+    border: 1px solid var(--n20);
+    margin: 0.75rem 0 1rem;
+    @media (min-width: $asnbDesktop) {
+        margin: 1.5rem 0;
+    }
+}
+
+.currency {
+    font-weight: var(--medium);
+    margin-right: 0.25rem;
+    color: var(--n100);
+    @include font(0.625rem);
+    @media (min-width: $asnbDesktop) {
+        @include font(0.75rem);
+        margin-right: 0;
+    }
+}
+
+.total-amount {
+    font-weight: var(--bold);
+    position: relative;
+    color: var(--n100);
+    display: flex;
+    align-items: flex-start;
+    @include font(1.125rem);
+    @media (min-width: $asnbDesktop) {
+        @include font(2rem);
+    }
+}

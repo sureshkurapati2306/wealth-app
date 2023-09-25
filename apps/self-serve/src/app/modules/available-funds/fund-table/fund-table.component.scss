@@ -1,0 +1,214 @@
+.action-wrapper {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+
+  .mat-form-field {
+    width: 12.1875rem;
+    max-width: 12.1875rem;
+    overflow: hidden;
+    margin-right: 0;
+
+    @media (min-width: 62rem) {
+      width: 13.125rem;
+      max-width: 13.125rem;
+      margin-right: 0.5rem;
+    }
+
+    &.mat-focused,
+    &:focus {
+      border-color: var(--information);
+
+      .mat-form-field-infix {
+        width: 6.8125rem;
+
+        @media (min-width: 62rem) {
+          width: 100%;
+        }
+      }
+      .mat-input-element {
+        width: 100%;
+      }
+    }
+    &.field-error {
+      border-color: var(--danger);
+
+      .mat-input-element {
+        caret-color: var(--n0);
+      }
+    }
+    .mat-form-field-prefix {
+      height: 2.875rem;
+      position: relative;
+      z-index: 10;
+    }
+    .show {
+      display: block;
+    }
+    .hide {
+      display: none;
+    }
+  }
+  .btn-custom {
+    &:not(.mat-button-disabled),
+    &.mat-button-disabled {
+      width: 7rem;
+      min-width: 7rem !important;
+    }
+  }
+}
+.mat-error {
+  color: var(--danger);
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: var(--regular);
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+}
+.charges {
+  font-size: 0.875rem;
+  font-weight: var(--regular);
+  line-height: 1.3125rem;
+  color: var(--n60);
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+}
+.fund-holiday-label {
+  background: var(--w70);
+  border-radius: 16px;
+  border: 1px solid var(--warning);
+  padding: 1px 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--n0);
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex: 0 0 7.4375rem;
+  width: 7.4375rem;
+  margin-top: 0.3125rem;
+  align-items: center;
+
+  @media (min-width: 62rem) {
+    margin-top: 0.75rem;
+  }
+
+  span {
+    margin-left: 5px;
+    font-size: 16px;
+  }
+}
+.custom-table {
+  mat-row {
+    &.hovered,
+    &:hover {
+      .fund-name {
+        a {
+          strong {
+            color: var(--r60);
+          }
+        }
+      }
+    }
+  }
+  .mat-cell {
+    &:last-child {
+      padding-right: 0.625rem;
+
+      @media (max-width: 37.5rem) {
+        padding-right: 0;
+      }
+    }
+  }
+}
+::ng-deep {
+  //Mobile tooltip buttonsheet
+  .action-sheet-wrapper {
+    .action-sheet-header {
+      button {
+        background: none;
+        border: 0;
+        position: absolute;
+        right: 1rem;
+        top: 1.25rem;
+
+        em {
+          font-size: 1.25rem;
+          color: var(--n100);
+        }
+      }
+    }
+    .action-sheet-content {
+      h5 {
+        color: var(--n80);
+        text-align: center;
+        margin-bottom: 0.8125rem;
+      }
+      p {
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+        color: var(--n100);
+      }
+    }
+  }
+  .mat-select-panel-wrap {
+    margin-bottom: 0;
+
+    &:before {
+      display: none;
+    }
+    .mat-select-panel {
+      &.page-size-options {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0;
+        margin-top: 0;
+        top: -100%;
+
+        .mat-option {
+          align-items: center;
+          padding: 0.5rem 0;
+          height: auto;
+          margin-bottom: 0;
+
+          span {
+            padding: 0;
+            border: none;
+            text-align: center;
+          }
+          &.mat-active {
+            background: transparent;
+            color: var(--r100);
+
+            span {
+              background: none;
+              color: var(--r100);
+              font-weight: var(--normal);
+            }
+          }
+          &:hover,
+          &:focus {
+            &:not(.mat-option-disabled) {
+              background: transparent;
+              color: var(--r100);
+              font-weight: var(--normal);
+
+              span {
+                background: none;
+                color: var(--r100);
+                font-weight: var(--normal);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+:host ::ng-deep {
+  .mat-form-field {
+    .mat-select {
+      padding: 0.75rem;
+    }
+  }
+}

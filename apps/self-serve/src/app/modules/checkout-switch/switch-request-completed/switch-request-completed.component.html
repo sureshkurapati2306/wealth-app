@@ -1,0 +1,65 @@
+<cimb-progress-sub-header
+  [pageTitle]="pageTitle"
+  [isBackButtonEnabled]="isBackButtonEnabled"
+  (backButtonEvent)="backButtonEvent()"
+></cimb-progress-sub-header>
+
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section-content">
+      <cimb-card-notice
+        [transactionMessage]="message"
+        [accountName]="accountName"
+        [unitTrustAccount]="unitTrustAccount"
+        [referenceNumber]="referenceNumber"
+        [status]="status"
+        [dateTime]="dateTime"
+        [transactionStatusName]="transactionStatusName"
+      >
+      </cimb-card-notice>
+
+      <cimb-card-switch-investment
+        [cardTitle]="cardTitleOrder"
+        [switchOutAssetType]="switchOutAssetType"
+        [switchOutFundName]="switchOutFundName"
+        [switchOutUnits]="switchOutUnits"
+        [switchOutAmount]="switchOutAmount"
+        [switchInAssetType]="switchInAssetType"
+        [switchInFundName]="switchInFundName"
+        [switchInUnits]="switchInUnits"
+        [switchInAmount]="switchInAmount"
+        [netSwitchInAmount]="netSwitchInAmount"
+        [switchingFee]="switchingFee"
+      ></cimb-card-switch-investment>
+
+      <cimb-card-switch-summary
+        [totalSwitchOutUnits]="totalSwitchOutUnits"
+        [totalSwitchInUnits]="totalSwitchInUnits"
+        [totalFund]="totalFund"
+        [totalCardTitle]="totalCardTitle"
+      ></cimb-card-switch-summary>
+
+      <p class="foot-legend">
+        <span>*</span> These are indicative amount only. The actual amount may
+        differ based on NAV closing price
+      </p>
+
+      <div class="transaction-btns">
+        <button
+          class="btn-custom mat-flat-button btn-red"
+          disableRipple="true"
+          mat-flat-button
+        >
+          Go to Dashboard
+        </button>
+        <button
+          class="btn-custom mat-flat-button btn-text-only"
+          disableRipple="true"
+          mat-flat-button
+        >
+          View Transaction History
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

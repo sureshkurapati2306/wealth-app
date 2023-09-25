@@ -1,0 +1,117 @@
+<div>
+    <div class="option-slider">
+        <div class="option-slider-left">
+            <div class="slider-container">
+                <ul class="slider-steps">
+                    <li>0.00</li>
+                    <li>{{ middleAmount | number: '1.2-2':'en-US' }}</li>
+                    <li>{{ maximumUnitSlider | number: '1.2-2':'en-US' }}</li>
+                </ul>
+                <mat-slider class="custom-slider" step="{{ sliderStep }}" min="{{ minimumUnitSlider }}" max="{{ maximumUnitSlider }}" [value]="sliderValue" [(ngModel)]="sliderValue" (input)="onSliderChange($event)" [name]="'redeem_slider_' + indexVal" [disabled]="disableSlider"></mat-slider>
+            </div>
+        </div>
+        <div class="option-slider-right">
+            <mat-checkbox
+                [checked]="value === item.units_held_number"
+                [name]="'redeem_all_checkbook_' + indexVal"
+                (change)="toggle($event)"
+                [disabled]="disabled || disableCheckbox"
+                [checked]="isRedeemAll"
+                #redeemAllCheckbox
+            >{{ checkboxLabel }}</mat-checkbox>
+        </div>
+    </div>
+
+    <div class="option-block-input">
+        <div class="option-field">
+            <label>Units</label>
+        <cimb-input-amount-key
+            [inputForm]="amountForm"
+            [inputFormControlName]="'amount'"
+            [isRequired]="false"
+            [inputPlaceholder]="minPlaceHolder"
+            [minAmount]="minimumUnit"
+            [maxAmount]="maximumUnit"
+            [errorMessageMinAmount]="minMessage"
+            [errorMessageMaxAmount]="maxMessage"
+            [amountAdded]="amountAdded"
+            (keyup)="changeValueEvent($event)"
+            [showMyrPrefix]="false"
+            [redeemAmount]="maximumUnitSlider"
+            [errorMessageRedeem]="'Exceed available units.'"
+        >
+        </cimb-input-amount-key>
+
+        <em class="icon-error" *ngIf="
+            amount.hasError('min') ||
+            amount.hasError('max') ||
+            amount.hasError('redemptionUnitsExceed')
+        "></em>
+        </div>
+        <div class="option-info">
+            <p>
+                Indicative Amount
+                <span class="tips">
+                    <em
+                        class="icon-help hide-lg"
+                        (click)="openIndicativeAmountActionSheet()"
+                    ></em>
+                    <em
+                        class="icon-help show-lg"
+                        matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+                        matTooltipPosition="right"
+                    ></em>
+                </span>
+            </p>
+            <h6>
+                <sup _ngcontent-tca-c160="">MYR</sup> {{ indicativeAmount | number: '1.2-2':'en-US' }}
+            </h6>
+            <strong>Based on {{ indicativeDate }} NAV</strong>
+        </div>
+        <div class="option-button">
+            <button mat-flat-button class="btn-custom btn-red" disableRipple="true" (click)="addToCartClick()"
+            [disabled]="!amountForm?.valid
+            || !amountForm.controls?.amount?.value
+            || amountForm.controls?.amount?.value === '0.00'
+            || amountForm.controls?.amount?.value === '0.0'
+            || amountForm.controls?.amount?.value === '0.'
+            || amountForm.controls?.amount?.value === '0'
+            || amountForm.controls?.amount?.value === '' " *ngIf="!amountAdded" [name]="'redeem_add_to_cart' + indexVal">
+                Add to cart
+            </button>
+            <button mat-flat-button class="btn-custom btn-red" disableRipple="true" (click)="removeModal()" *ngIf="amountAdded && !amountEdit" [name]="'redeem_remove_from_cart' + indexVal">Remove</button>
+
+            <button [disabled]="
+            !amountForm?.valid
+            || !amountForm.controls?.amount?.value
+            || amountForm.controls?.amount?.value === '0.00'
+            || amountForm.controls?.amount?.value === '0.0'
+            || amountForm.controls?.amount?.value === '0.'
+            || amountForm.controls?.amount?.value === '0'
+            || amountForm.controls?.amount?.value === '' "
+            mat-flat-button class="btn-custom btn-red"
+            disableRipple="true"
+            *ngIf="amountAdded && amountEdit"
+            [name]="'redeem_update_from_cart' + indexVal"
+            (click)="addToCartClick(true)">Done</button>
+        </div>
+        <div class="option-text">
+            <mat-error *ngIf="amount && (amount.invalid || amount.errors?.['min'])">
+                Minimum redemption is {{ this.minimumUnit | number: '1.2-2':'en-US' }} units.
+            </mat-error>
+            <mat-error *ngIf="
+                amount &&
+                amount.invalid &&
+                amount.errors &&
+                amount.errors.max &&
+                amount.errors.max.max
+            ">
+            {{this.maximumUnit}}
+                Maximum redemption is {{ this.maximumUnit | number: '1.2-2':'en-US' }} units.
+            </mat-error>
+            <mat-error *ngIf="amount && amount.invalid &&  amount.errors?.['redemptionUnitsExceed'] && !amount.errors?.['max']">
+                Exceed available units.
+            </mat-error>
+        </div>
+    </div>
+</div>

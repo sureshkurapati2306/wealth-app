@@ -1,0 +1,273 @@
+<div class="inner-block" [ngClass]="{'fund-is-holiday': item.fund_status === 'I' || !item.documentIndicator || !enableSwitchTransactionAtCart || switchIndicatorFlag}">
+  <div class="fund-holiday-detail top" *ngIf="switchOutFlag">
+    <h5 class="not-available-text">No Longer Available</h5>
+  </div>
+  <div class="fund-holiday-detail" *ngIf="item.fund_status === 'I' || !item.documentIndicator">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>
+      The fund is currently not available for transactions due to the fund holiday declared by the fund house. Pricing of the funds will resume on the following business day.  Please remove or replace with another fund in order to proceed with checkout
+    </p>
+  </div>
+  <div class="fund-holiday-detail" *ngIf="!enableSwitchTransactionAtCart || switchIndicatorFlag">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>Switch is disabled at the moment</p>
+    <br />
+  </div>
+  <div class="fund-holiday-detail" *ngIf="!enableSwitchTransactionAtCart">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>Only purchase is allowed for this fund at the moment</p>
+    <br />
+  </div>
+  <h2>Switch Out</h2>
+  <div class="top" [ngClass]="{ 'justify-content': switchOutFlag}">
+    
+    <div class="col" *ngIf="!switchOutFlag">
+      <p *ngIf="showRiskProfile">{{ item.class_name }}</p>
+      <h5>{{ item.fund_name }}</h5>
+      <h6 *ngIf="showAssetClass">{{ item.risk_name }}<span *ngIf="item.risk_name && item.fund_indicator === 'I'"> |
+        </span> <span *ngIf="item.fund_indicator === 'I'"> Shariah Compliant</span></h6>
+    </div>
+    
+    <div class="col show-md"
+      *ngIf="canModify"
+      >
+      <div
+        class="action" 
+        [ngClass]="{
+          'disable-spacing': item.fund_status === 'I'  || !item.documentIndicator
+        }"
+      >
+        <a class="remove-btn" (click)="remove()" [ngClass]="{ 'hide': item.canEdit, 'mr-0': switchOutFlag  }">Remove</a>
+
+        <a
+          *ngIf="!switchOutFlag && item.fund_status !== 'I'  && item.documentIndicator && enableSwitchTransactionAtCart && !switchIndicatorFlag"
+          (click)="edit()"
+          [ngClass]="{ hide: item.canEdit }"
+        >Edit</a>
+
+        <a
+          *ngIf="item.fund_status !== 'I'  || item.documentIndicator"
+          (click)="cancel()"
+          class="toggle cancel-btn"
+          [ngClass]="{ 'active show': item.canEdit }"
+        >Cancel</a>
+
+        <a
+          (click)="done()"
+          [ngClass]="{ 'update show': item.canEdit }"
+          class="toggle"
+          *ngIf="
+              item.canEdit
+              && formValid
+          "
+        >Done</a>
+
+        <a
+        attr.id="DoneSwitchInactive{{ item.index }}"
+        [ngClass]="{ 'update show': item.canEdit }"
+        *ngIf="
+        ((!formValid))
+        "
+        class="inactive-switch"
+        >Done</a
+    >
+          
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Edit view: slider -->
+  <div
+    class="redeem-section"
+    *ngIf="item.canEdit"
+  >
+    <!-- Switch slider control -->
+    <cimb-dashboard-slider
+      [minUnit]="0"
+      [maxUnit]="maximumUnit"
+      (redeemSliderValueChange)="sliderValueChangeEvent($event);"
+      checkboxLabel="Switch All"
+      [value]="updatedSwitchOutUnits"
+      [disabled]="false"
+      [isRedeemAll]="updatedSwitchOutUnits === maximumUnit"
+      [sliderStep]="maximumUnit / 10"
+    ></cimb-dashboard-slider>
+    
+    <div class="option-info">
+      <p>
+        Indicative Amount
+        <span class="tips">
+          <em
+            class="icon-help hide-lg"
+            (click)="openIndicativeAmountActionSheet()"
+          ></em>
+          <em
+            class="icon-help show-lg"
+            matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+            matTooltipPosition="right"
+          ></em>
+        </span>
+      </p>
+      <h6><sup _ngcontent-tca-c160="">MYR</sup> {{indicativeAmountDisplay | number: '1.2-2':'en-US'}}</h6>
+      <strong>(Based on {{item.close_date}} NAV)</strong>
+    </div>
+  </div>
+
+  <div class="bottom"   [ngClass]="{'disable-text': switchOutFlag }">
+    <p class="flex mb">
+      Switch Out Units
+
+      <ng-container *ngIf="!item.canEdit">
+        <span>{{ (switchOutFlag ? 0 : item.totalSwitchOut) | number: '1.2-2':'en-US' }}</span>
+      </ng-container>
+
+      <mat-form-field *ngIf="item.canEdit">
+
+        <cimb-input-amount-key
+          [inputForm]="unitForm"
+          [inputFormControlName]="'units'"
+          [isRequired]="true"
+          [isDisabled]="false"
+          [inputPlaceholder]="inputPlaceholder"
+          [minAmount]="minimumUnit"
+          [maxAmount]="maximumUnit"
+          errorMessageMinAmount="Minimum switch out is {{ minimumUnit | number: '1.2-2':'en-US' }} units."
+          errorMessageMaxAmount="Maximum switch out is {{ maximumUnit | number: '1.2-2':'en-US' }} units."
+          (keyup)="changeValueEvent($event)"
+          [showMyrPrefix]="false"
+          [redeemAmount]="maximumUnit"
+          [errorMessageMaxAmount]="'Exceed available units.'"
+          [errorMessageRedeem]="'Exceed available units.'"
+        >
+        </cimb-input-amount-key>
+
+      </mat-form-field>
+    </p>
+    <p class="flex mb">
+      <small>Switch Out Amount <span>*</span></small>
+      <span class="amount"><sup>MYR</sup>{{ (switchOutFlag ? 0 : item.switchOutAmount) | number: '1.2-2':'en-US' }}</span>
+    </p>
+  </div>
+</div>
+<div class="inner-block" [ngClass]="{'fund-is-holiday': item.fund_status === 'I' || !item.documentIndicator || item.to_fund_status === 'I' || !enableSwitchTransactionAtCart || switchIndicatorFlag || toSwitchIndicatorFlag}">
+  <div class="fund-holiday-detail" *ngIf="item.to_fund_status === 'I' && item.fund_status !== 'I'">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>
+      The fund is currently not available for transactions due to the fund holiday declared by the fund house. Pricing of the funds will resume on the following business day.  Please remove or replace with another fund in order to proceed with checkout.
+    </p>
+  </div>
+  <div class="fund-holiday-detail" *ngIf="!enableSwitchTransactionAtCart">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>Switch is disabled at the moment</p>
+    <br />
+  </div>
+  <div class="fund-holiday-detail" *ngIf="toSwitchIndicatorFlag && item.to_fund_status !== 'I' ">
+    <h5 class="not-available-text">Temporarily Not Available</h5>
+    <p>Switch is disabled at the moment</p>
+    <br />
+  </div>
+  <div class="fund-holiday-detail top" *ngIf="switchInFlag">
+    <h5 class="not-available-text">No Longer Available</h5>
+  </div>
+  <h2>Switch In</h2>
+  <div class="top"   [ngClass]="{'disable-text': switchInFlag }">
+
+    <div class="col">
+
+      <ng-container *ngIf="!item.canEdit">
+
+        <p *ngIf="showRiskProfile">{{ item.to_fund_class_name }}</p>
+        <h5>{{ item.to_fund_name }}</h5>
+        <h6 *ngIf="showAssetClass">{{ item.to_fund_risk_name }}<span
+            *ngIf="item.to_fund_risk_name && item.to_fund_indicator === 'I'"> | </span> <span
+            *ngIf="item.to_fund_indicator === 'I'"> Shariah Compliant</span></h6>
+
+      </ng-container>
+
+      <ng-container *ngIf="item.canEdit">
+
+        <div class="option-switch">
+          <h6>Switch to</h6>
+          <div class="option-outer-wrapper">
+            <div class="option-switch-list">
+              <cimb-autocomplete-switch-in-funds
+                [fundHouseCode]="fund.fund_house_code"
+                [excludeFundName]="item.fund_name"
+                [value]="item.to_fund_status ==='I' ? '' : item.toFundCode"
+                (afterOptionSelected)="optionSelected($event)"
+              ></cimb-autocomplete-switch-in-funds>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+      
+  </div>
+  <div class="bottom"  [ngClass]="{'disable-text': switchInFlag }">
+    <ng-container>
+      <p class="flex">
+        <small>Switch In Units <span>*</span></small>
+        <span>{{ (switchInFlag ? 0 : item.totalSwitchIn) | number: '1.2-2':'en-US' }}</span>
+      </p>
+      <p class="flex">
+        <small>Switch In Amount <span>*</span></small>
+        <span>MYR {{ (switchInFlag ? 0 : item.switchInAmount) | number: '1.2-2':'en-US' }}</span>
+      </p>
+      <p class="flex mb">
+        <small>Switching Fee ({{
+        (item.totalSalesPercentage) | number: '1.2-2':'en-US'
+        }}%) <span>*</span></small>
+        <span>MYR {{ (switchInFlag ? 0 : item.card_sale_charge) | number: '1.2-2':'en-US' }}</span>
+      </p>
+      <p class="flex mb">
+        <small>Net Switch In Amount <span>*</span></small>
+        <span class="amount"><sup>MYR</sup>{{ (switchInFlag ? 0 : item.card_net_amount) | number: '1.2-2':'en-US' }}</span>
+      </p>
+    </ng-container>
+  </div>
+
+  <div
+    class="action mob-action"
+    [ngClass]="{ 'disable-spacing': item.fund_status === 'I'  || !item.documentIndicator }"
+    *ngIf="canModify"
+  >
+    <a class="remove-btn" [ngClass]="{ hide: item.canEdit, 'mr-0': switchOutFlag  }" (click)="remove()">Remove</a>
+
+    <a
+      *ngIf="!switchOutFlag && item.fund_status !== 'I' && item.documentIndicator && enableSwitchTransactionAtCart && !switchIndicatorFlag"
+      [ngClass]="{ hide: item.canEdit }"
+      (click)="edit()"
+    >Edit</a>
+
+    <a
+      *ngIf="item.fund_status !== 'I'  || item.documentIndicator"
+      class="toggle cancel-btn"
+      [ngClass]="{ 'active show': item.canEdit }"
+      (click)="cancel()"
+    >Cancel</a>
+
+    <a
+    [ngClass]="{ 'update show': item.canEdit }"
+    class="toggle"
+    (click)="done()"
+      *ngIf="
+          item.canEdit
+          && formValid
+      "
+    >Done</a>
+
+    
+    <a
+      attr.id="DoneSwitchInactive{{ item.index }}"
+      [ngClass]="{ 'update show': item.canEdit }"
+      *ngIf="
+      ((!formValid))
+      "
+      class="inactive-switch"
+    >Done</a>
+    
+  </div>
+</div>

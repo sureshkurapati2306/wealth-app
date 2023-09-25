@@ -1,0 +1,108 @@
+<div class="popup-container">
+  <div class="popup-container-header">
+    <p class="popup-header">Pop Up Maker</p>
+    <div class="popup-status">
+      <span class="status-span">Status</span>
+      <mat-slide-toggle class="popup-toggle" name="status" [checked]="status" [(ngModel)]="status" (change)="updatePreview()"></mat-slide-toggle>
+    </div>
+  </div>
+  <div class="popup-container-grid">
+    <div class="popup-container-form">
+      <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+        <p Class="form-header">Pop Up Detail</p>
+        <div>
+          <div class="block-label">
+            <mat-label>Title</mat-label>
+            <div class="text-count">{{ titleComments?.length }}/{{ maxCharacterLengthTitle }}</div>
+          </div>
+          <mat-form-field appearance="none" floatLabel="never">
+            <textarea [placeholder]="textPlaceholder" matInput name="Title" [(ngModel)]="titleComments" required
+              maxlength="50" [class.error]="titleComments?.length > maxCharacterLengthTitle" rows="2"
+              (input)="updatePreview()"></textarea>
+          </mat-form-field>
+          <mat-error class="txt-error" *ngIf="titleComments?.length > (maxCharacterLengthTitle-1)">
+            You've reached the maximum characters
+          </mat-error>
+          <mat-error class="txt-error" *ngIf="myForm.controls.Title?.invalid && myForm.controls.Title?.touched">
+            Empty Error for Field
+          </mat-error>
+        </div>
+
+        <div>
+          <div class="block-label">
+            <mat-label>Subtitle</mat-label>
+            <div class="text-count">{{ subtitleComments?.length }}/{{ maxCharacterLengthSubTitle }}</div>
+          </div>
+          <mat-form-field appearance="none" floatLabel="never">
+            <textarea [placeholder]="textPlaceholder" matInput name="Subtitle" [(ngModel)]="subtitleComments" required
+              maxlength="100" [class.error]="subtitleComments?.length > maxCharacterLengthSubTitle" rows="3"
+              (input)="updatePreview()"></textarea>
+          </mat-form-field>
+          <mat-error class="txt-error" *ngIf="subtitleComments?.length > (maxCharacterLengthSubTitle-1)">
+            You've reached the maximum characters
+          </mat-error>
+          <mat-error class="txt-error" *ngIf="myForm.controls.Subtitle?.invalid && myForm.controls.Subtitle?.touched">
+            Empty Error for Field
+          </mat-error>
+        </div>
+
+        <div>
+          <div class="block-label">
+            <mat-label>Content</mat-label>
+            <div class="text-count">{{ contentComments?.length }}/{{ maxCharacterLengthContent }}</div>
+          </div>
+          <mat-form-field appearance="none" floatLabel="never">
+            <textarea [placeholder]="textPlaceholder" matInput name="Content" [(ngModel)]="contentComments" required
+              maxlength="200" [class.error]="contentComments?.length > maxCharacterLengthContent" rows="6"
+              (input)="updatePreview()"></textarea>
+          </mat-form-field>
+          <mat-error class="txt-error" *ngIf="contentComments?.length > (maxCharacterLengthContent-1)">
+            You've reached the maximum characters
+          </mat-error>
+          <mat-error class="txt-error" *ngIf="myForm.controls.Content?.invalid && myForm.controls.Content?.touched">
+            Empty Error for Field
+          </mat-error>
+        </div>
+
+        <div class="upload-image">
+          <mat-label class="text-label">Upload Image</mat-label>
+          <div class="choose-file-input">
+            <input hidden (change)="handleImageUpload($event)" #fileInput type="file" (input)="updatePreview()" />
+            <button type="button" mat-stroked-button (click)="fileInput.click()">
+              <span class="btn-text">Choose File</span>
+            </button>
+          </div>
+          <span class="error-image-upload" *ngIf="imageUploadError">{{imageUploadErrorMsg}}</span>
+          <p class="file-subs">Header image should be 536px X 300px and in png format.</p>
+        </div>
+
+        <div>
+          <button [ngClass]="disableSave ? 'save-button-disable' : 'save-button'" mat-flat-button type="submit"
+            [disabled]="disableSave">Save</button>
+        </div>
+      </form>
+    </div>
+    <div class="popup-container-preview">
+      <p class="preview-header">Preview</p>
+      <div class="preview-image" *ngIf="!closePreview">
+        <img src="./assets/images/image-preview.svg" alt="image-preview" />
+      </div>
+      {{elementHeight}}
+      <div class="preview-pane" *ngIf="closePreview" style="height:auto">
+        <button class="close-button" mat-icon-button>
+          <img src="./assets/images/ic_close_48px.svg" alt="close" />
+        </button>
+        <div>
+          <div class="popup-image" *ngIf="closePreview && imageSrc">
+            <img class="upload-preview" src="{{imageSrc}}" alt="">
+          </div>
+          <div class="content">
+            <div class="popup-title">{{ titleComments }}</div>
+            <div class="popup-subtitle">{{ subtitleComments }}</div>
+            <div class="popup-content">{{ contentComments }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

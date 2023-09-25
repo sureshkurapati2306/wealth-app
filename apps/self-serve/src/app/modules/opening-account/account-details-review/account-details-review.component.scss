@@ -1,0 +1,79 @@
+.section-head {
+  h4 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--n100);
+
+    @media (min-width: 48rem) {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+.section-content {
+  .account-info {
+    p {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      color: var(--n60);
+
+      @media (min-width: 48rem) {
+        font-weight: var(--medium);
+      }
+
+      strong {
+        font-weight: var(--regular);
+
+        @media (min-width: 48rem) {
+          display: block;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          font-weight: var(--bold);
+        }
+      }
+    }
+  }
+  @media (min-width: 75rem) {
+    max-width: 63rem;
+    margin: 0 auto;
+  }
+
+  .foot-legend {
+    @media (min-width: 37.5rem) {
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    p {
+      font-size: 0.625rem;
+      line-height: 1rem;
+      margin-top: -0.75rem;
+      margin-bottom: 1.5rem;
+
+      @media (min-width: 37.5rem) {
+        flex: 1 1 auto;
+      }
+      @media (min-width: 48rem) {
+        font-size: 0.875rem;
+        line-height: 0.875rem;
+      }
+      span {
+        color: var(--r160);
+        justify-self: flex-start;
+      }
+    }
+    .btn-custom {
+      width: 100%;
+      margin-top: 2rem;
+    
+      @media (min-width: 37.5rem) {
+        // width: 12.5rem;
+        margin-top:0;
+      }
+      @media (min-width: 48rem) {
+        width: 17.25rem;
+      }
+    }
+  }
+}

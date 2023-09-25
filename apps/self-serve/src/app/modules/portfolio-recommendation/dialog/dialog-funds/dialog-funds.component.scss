@@ -1,0 +1,714 @@
+::ng-deep {
+  .dialog-fund-list {
+    width: 100%;
+
+    .mat-dialog-container {
+      border-radius: 0 !important;
+      padding: 0;
+      background: var(--n5h);
+      height: auto;
+      max-height: 100% !important;
+
+      @media (min-width: 62.5rem) {
+        max-height: calc(100vh - 3rem) !important;
+        border-radius: 1rem !important;
+        box-shadow: 0rem 0px 1rem -0.125rem rgba(24, 39, 75, 0.08),
+          0rem 0.625rem 2rem -0.25rem rgba(24, 39, 75, 0.1);
+        background: var(--n0);
+        width: 62.5rem;
+      }
+      .mat-dialog-wrapper {
+        .mat-dialog-pad {
+          padding: 0;
+
+          .block-close {
+            text-align: right;
+            padding: 1.5rem 1rem 0.5rem 1rem;
+            background: var(--n0);
+
+            .btn-close {
+              color: var(--n100);
+              background-color: var(--n0);
+              position: static;
+            }
+          }
+          mat-dialog-content {
+            .top {
+              padding: 0;
+            }
+            .asset {
+              padding-left: 1.75rem;
+              padding-right: 1rem;
+              padding-bottom: 1rem;
+              background-color: var(--n0);
+
+              @media (min-width: 62.5rem) {
+                padding-left: 4.25rem;
+                padding-right: 4.25rem;
+              }
+              h6 {
+                height: 1.5rem;
+                line-height: 1.5rem;
+                padding-left: 0.75rem;
+                border-left-width: 0.25rem;
+                border-left-style: solid;
+                margin-bottom: 0;
+                font-size: 1rem;
+                font-weight: var(--medium);
+                letter-spacing: 0.08rem;
+                margin-left: -0.75rem;
+                color: var(--n80);
+              }
+              p {
+                font-size: 0.625rem;
+                line-height: 1rem;
+                letter-spacing: 0.04rem;
+                color: var(--n80);
+                margin: 0;
+
+                @media (min-width: 62.5rem) {
+                  font-size: 0.875rem;
+                  line-height: 1.375rem;
+                }
+              }
+            }
+            .fund-listing {
+              background: var(--r5);
+              margin-bottom: 1.5rem;
+              border-radius: 0 0 1rem 1rem;
+              overflow: hidden;
+
+              @media (min-width: 62.5rem) {
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+                margin-bottom: 3rem;
+                box-shadow: 0rem 0px 1rem -0.125rem rgba(24, 39, 75, 0.08),
+                  0rem 0.625rem 2rem -0.25rem rgba(24, 39, 75, 0.1);
+                border-radius: 1rem;
+              }
+              .fund-row {
+                padding: 1rem 1.75rem 1.5rem 1.75rem;
+                position: relative;
+                
+                @media (min-width: 62rem) {
+                  height: 6.25rem;
+                }
+                // &:before {
+                //   content: 'Select fund';
+                //   display: block;
+                //   width: 100%;
+                //   height: 106px;
+                // }
+
+                // &.selected {
+                //   &:before {
+                //     display: none;
+                //   }
+                // }
+                @media (min-width: 48rem) {
+                  display: flex;
+                  flex-direction: row;
+                }
+                @media (min-width: 62.5rem) {
+                  padding-top: 1.5rem;
+                  padding-left: 3.5rem;
+                  padding-right: 3.5rem;
+                }
+                &:not(:last-child) {
+                  &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 1rem;
+                    right: 1rem;
+                    height: 0.0625rem;
+                    border-top: 0.0625rem solid var(--n20);
+                  }
+                }
+                &.placeholder {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                  color: var(--n20);
+                  font-size: .875rem;
+                  font-weight: 700;
+                  padding: 1.5rem 1.75rem;
+                  height: 6.375rem;
+
+                  &:before {
+                    border: .125rem dashed var(--n20);
+                    content:'';
+                    position: absolute;
+                    top:1.5rem;
+                    bottom: 1.5rem;
+                    left: 1.5rem;
+                    right: 1.5rem;
+                    border-radius: 1rem;
+
+                    @media (min-width: 48rem) {
+                      border-width: .0625rem;
+                      top:.5625rem;
+                      bottom: .5625rem;
+                      left: .6563rem;
+                      right: .6563rem;
+                    }
+                  }
+                  + .placeholder {
+                    &:after {
+                      display: none;
+                    }
+                  }
+                }
+                &.hide {
+                  display: none;
+                }
+                .fund-name {
+                  @media (min-width: 48rem) {
+                    width: 16.875rem;
+                  }
+                  h6 {
+                    font-size: 0.875rem;
+                    line-height: 1.375rem;
+                    font-weight: var(--bold);
+                    text-transform: capitalize;
+                    margin-bottom: 0.25rem;
+                  }
+                  p {
+                    font-size: 0.625rem;
+                    line-height: 1rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04rem;
+                    color: var(--n60);
+                    margin: 0;
+                    font-weight: var(--medium);
+                  }
+                  .fund-holiday-label {
+                    background: var(--w70);
+                    border-radius: 16px;
+                    border: 1px solid var(--warning);
+                    padding: 1px 8px;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: var(--n0);
+                    text-align: center;
+                    font-weight: bold;
+                    display: flex;
+                    flex: 0 0 7.4375rem;
+                    width: 7.4375rem;
+                    margin-top: 0.3125rem;
+                    align-items: center;
+
+                    @media (min-width: 62.5rem) {
+                      margin-top: 0.75rem;
+                    }
+                    span {
+                      margin-left: 5px;
+                      font-size: 16px;
+                    }
+                  }
+                }
+                .fund-details {
+                  padding-top: 1rem;
+
+                  @media (min-width: 48rem) {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                  }
+                  @media (min-width: 48rem) {
+                    padding-top: 0;
+                    width: calc(100% - 16.875rem);
+                    margin-left: auto;
+                  }
+                  .row {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    margin-bottom: 0.5rem;
+
+                    @media (min-width: 48rem) {
+                      margin-bottom: 0;
+                    }
+                    &.show-desktop {
+                      display: none;
+
+                      @media (min-width: 48rem) {
+                        display: block;
+                      }
+                    }
+                    &.show-mobile {
+                      @media (min-width: 48rem) {
+                        display: none;
+                      }
+                    }
+                    &:not(.show-mobile) {
+                      @media (min-width: 48rem) {
+                        display: block;
+                      }
+                    }
+                    &:first-child {
+                      @media (min-width: 75rem) {
+                        margin-right: 1.5625rem;
+                      }
+                    }
+                    p {
+                      font-size: 0.75rem;
+                      line-height: 1.125rem;
+                      font-weight: var(--medium);
+                      color: var(--n60);
+                      margin: 0;
+
+                      @media (min-width: 48rem) {
+                        font-weight: var(--regular);
+                        font-size: 0.875rem;
+                        line-height: 1.375rem;
+                        margin-bottom: 0.25rem;
+                      }
+                      &.navPrice {
+                        @media (min-width: 48rem) {
+                          display: none;
+                        }
+                      }
+                    }
+                    h4 {
+                      text-align: right;
+                      margin-left: auto;
+                      font-size: 0.875rem;
+                      line-height: 1.375rem;
+                      margin-bottom: 0;
+
+                      @media (min-width: 48rem) {
+                        margin-left: 0;
+                      }
+                      img {
+                        display: inline-block;
+                        width: 1rem;
+                        margin-right: 0.3125rem;
+                      }
+                      sup {
+                        font-size: 0.625rem;
+                        font-weight: var(--medium);
+                        letter-spacing: 0.04rem;
+                      }
+                      + p {
+                        width: 100%;
+                        font-size: 0.625rem;
+                        line-height: 1rem;
+                        margin: 0;
+
+                        @media (min-width: 48rem) {
+                          font-size: 0.75rem;
+                          line-height: 1.125rem;
+                          color: var(--n60);
+                          font-weight: var(--medium);
+                        }
+                      }
+                    }
+                    h6 {
+                      @media (min-width: 48rem) {
+                        margin-bottom: 0.25rem;
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                      }
+                      img {
+                        @media (min-width: 48rem) {
+                          display: inline-block;
+                          width: 1rem;
+                          margin-right: 0.3125rem;
+                        }
+                      }
+                      + span {
+                        @media (min-width: 48rem) {
+                          font-size: 0.75rem;
+                          line-height: 1.125rem;
+                          color: var(--n60);
+                          font-weight: var(--medium);
+                        }
+                      }
+                    }
+                    .flex {
+                      p {
+                        @media (min-width: 48rem) {
+                          flex: 1 0 100%;
+                        }
+                      }
+                    }
+                  }
+                }
+                .action {
+                  margin-left: -0.25rem;
+                  margin-right: -0.25rem;
+                  padding-top: 1rem;
+
+                  @media (min-width: 48rem) {
+                    margin: 0;
+                    padding: 0;
+                  }
+                  .btn-custom {
+                    width: 100%;
+                    text-align: center;
+
+                    @media (min-width: 48rem) {
+                      width: auto;
+                    }
+                  }
+                }
+              }
+            }
+            .bottom {
+              background: var(--n0);
+              border-radius: 1rem;
+              padding: 0.6875rem 1rem 1.5rem;
+
+              @media (min-width: 62.5rem) {
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+                box-shadow: 0rem 0px 1rem -0.125rem rgba(24, 39, 75, 0.08),
+                  0rem 0.625rem 2rem -0.25rem rgba(24, 39, 75, 0.1);
+              }
+              .filter {
+                margin-left: -0.125rem;
+                margin-right: -0.125rem;
+                display: flex;
+                flex-direction: row;
+                border-bottom: 0.0625rem solid var(--n20);
+                margin-bottom: 0.5rem;
+
+                @media (min-width: 62.5rem) {
+                  padding-left: 2.5rem;
+                  padding-right: 2.5rem;
+                }
+                .mat-checkbox {
+                  padding: 0 0.625rem;
+
+                  .mat-checkbox-label {
+                    color: var(--n100);
+                  }
+                }
+              }
+              .custom-table {
+                .mat-table {
+                  box-shadow: none;
+                  border-radius: 0;
+                }
+                mat-header-row {
+                  @media (min-width: 60rem) {
+                    display: flex;
+                    padding-left: 0;
+                    padding-right: 0;
+                    border-bottom: 0.0625rem solid var(--n20);
+                  }
+                  @media (min-width: 62.5rem) {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                  }
+                }
+                mat-header-cell {
+                  @media (min-width: 60rem) {
+                    border: 0 none;
+                    padding-left: 0.625rem;
+                    padding-right: 0.625rem;
+                  }
+                  &:first-child {
+                    @media (min-width: 60rem) {
+                      max-width: 16.875rem;
+                    }
+                  }
+                  &:last-child {
+                    @media (min-width: 60rem) {
+                      max-width: 8.3125rem;
+                      text-align: center;
+                      justify-content: flex-start;
+                    }
+                  }
+                  &:nth-child(2) {
+                    @media (min-width: 60rem) {
+                        justify-content: flex-end;
+                    }
+                    @media (min-width: 75rem) {
+                        justify-content: flex-start;
+                    }
+                    .tips {
+                        margin-left: 0.625rem;
+        
+                        @media (min-width: 75rem) {
+                            right: 0;
+                            position: absolute;
+                        }
+                        em {
+                            font-size: 1rem;
+                        }
+                    }
+                    .mat-sort-header-container {
+                        @media (min-width: 75rem) {
+                            width: 100%;
+                            position: relative;
+                        }
+                        .mat-sort-header-arrow {
+                            @media (min-width: 75rem) {
+                                position: absolute;
+                                right: 2.0625rem;
+                            }
+                        }
+                    }
+                }
+                }
+                mat-row {
+                  padding: 1rem 0.5rem 1.5rem;
+                  border-bottom: 0.0625rem solid var(--n20);
+
+                  @media (min-width: 60rem) {
+                    flex-direction: row;
+                    padding: 0;
+                    align-items: stretch;
+                  }
+                  @media (min-width: 62.5rem) {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                  }
+                }
+                mat-cell {
+                  @media (min-width: 60rem) {
+                    border: 0 none;
+                  }
+                  &:nth-child(2) {
+                    display: flex;
+
+                    @media (min-width: 60rem) {
+                      flex-wrap: wrap;
+                    }
+                    div {
+                      @media (min-width: 60rem) {
+                        width: 100%;
+                        order: 1;
+                      }
+                    }
+                    small {
+                      @media (min-width: 60rem) {
+                        font-size: .75rem;
+                        line-height: 1.125rem;
+                      }
+                    }
+                  }
+                  &:last-child {
+                    max-width: 100%;
+                    padding-top: 1rem;
+                    margin-bottom: 0;
+
+                    @media (min-width: 60rem) {
+                      max-width: 8.3125rem;
+                      text-align: center;
+                      padding-top: 1.5rem;
+                    }
+                  }
+                  &:first-child {
+                    @media (min-width: 60rem) {
+                      max-width: 16.875rem;
+                    }
+                  }
+                }
+                .fund-name {
+                  @media (min-width: 60rem) {
+                    width: 16.875rem;
+                  }
+                  a {
+                    font-size: 0.875rem;
+                    line-height: 1.375rem;
+                    font-weight: var(--bold);
+                    text-transform: capitalize;
+                    margin-bottom: 0.25rem;
+
+                    strong {
+                      font-size: 0.875rem;
+                      line-height: 1.375rem;
+                    }
+                  }
+                  p {
+                    font-size: 0.625rem;
+                    line-height: 1rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04rem;
+                    color: var(--n60);
+                    margin: 0;
+                    font-weight: var(--medium);
+                  }
+                  .fund-holiday-label {
+                    background: var(--w70);
+                    border-radius: 16px;
+                    border: 1px solid var(--warning);
+                    padding: 1px 8px;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: var(--n0);
+                    text-align: center;
+                    font-weight: bold;
+                    display: flex;
+                    flex: 0 0 7.4375rem;
+                    width: 7.4375rem;
+                    margin-top: 0.3125rem;
+                    align-items: center;
+
+                    @media (min-width: 62.5rem) {
+                      margin-top: 0.75rem;
+                    }
+                    span {
+                      margin-left: 5px;
+                      font-size: 16px;
+                    }
+                  }
+                }
+                .btn-custom {
+                  width: 100%;
+                  text-align: center;
+
+                  @media (min-width: 60rem) {
+                    width: 7.0625rem;
+                  }
+                }
+                .empty {
+                  text-align: center;
+                  padding-top: 1rem;
+
+                  @media (min-width: 60rem) {
+                    padding-top: 1.5rem;
+                  }
+                  img {
+                    height: 6.625rem;
+                    margin-bottom: .5rem;
+                    display: inline-block;
+
+                    @media (min-width: 48rem) {
+                      height: 12.5rem;
+                    }
+                  }
+                  h2 {
+                    font-size: 1.25rem;
+                    line-height: 1.75rem;
+                    margin-bottom: .5rem;
+                    font-weight: var(--bold);
+                    color: var(--n100);
+
+                    @media (min-width: 48rem) {
+                      font-size: 1.75rem;
+                      line-height: 2.5rem;
+                    }
+                  }
+                  p {
+                    font-size: .875rem;
+                    line-height: 1.375rem;
+                    margin:0;
+
+                    @media (min-width: 48rem) {
+                      font-size: 1rem;
+                      line-height: 1.5rem;
+                    }
+                  }
+                }
+                .pager {
+                  padding: 2.0625rem 0 0 0;
+
+                  .mat-paginator {
+                    padding:0;
+                    
+                    .mat-paginator-range-label {
+                      font-size: .875rem;
+                      line-height: 1.375rem;
+                      color: var(--n60);
+                    }
+                    .mat-paginator-page-size {
+                      .mat-form-field-wrapper {
+                        border: 0 none;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .paginatorSelect {
+    .mat-select-panel-wrap {
+      .mat-select-panel {
+        .mat-option {   
+          .mat-option-text {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .action-sheet-wrapper {
+    .action-sheet-header {
+      button {
+        background: none;
+        border: 0;
+        position: absolute;
+        right: 1rem;
+        top: 1.25rem;
+  
+        em {
+          font-size: 1.25rem;
+          color: var(--n100);
+        }
+      }
+    }
+    .action-sheet-content {
+      h5 {
+        color: var(--n80);
+        text-align: center;
+        margin-bottom: 0.8125rem;
+      }
+      p {
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+        color: var(--n100);
+      }
+    }
+  }
+  .esg-fund-tooltip {
+    cursor: pointer;
+  }
+  .see-all-action-sheet-wrapper {
+    .see-all-action-sheet-header {
+      button {
+        background: none;
+        border: 0;
+        position: absolute;
+        right: 1rem;
+        top: 1.25rem;
+  
+        em {
+          font-size: 1.25rem;
+          color: var(--n100);
+        }
+      }
+    }
+    .see-all-action-sheet-content {
+      h5 {
+        color: var(--n80);
+        text-align: center;
+        margin-bottom: 0.8125rem;
+      }
+      p {
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+        color: var(--n100);
+      }
+    }
+  }
+  .esg-filter {
+    padding-left: 0.2rem;
+    font-size: 1rem;
+    color: var(--n60);
+  }
+  .focus-filter {
+    margin-left: 1rem;
+  }
+  .see-all-focus-web {
+    padding-left: 1rem;
+  }
+}

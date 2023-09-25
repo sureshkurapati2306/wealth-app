@@ -1,0 +1,79 @@
+::ng-deep {
+    .mint-filter-action-sheet {
+        padding: 0 !important;
+        border-radius: 1rem 1rem 0px 0px;
+        height: calc(100vh - 70px);
+        max-height: 100% !important;
+
+        .action-sheet-head {
+            background: var(--n5h);
+            border-radius: 1rem 1rem 0px 0px;
+            padding: 11px 1rem;
+            text-align: right;
+            border-bottom: 0.0625rem solid var(--n40);
+
+            em {
+                font-size: 1.375rem;
+            }
+        }
+
+        .mat-selection-list {
+            background: var(--n0);
+            padding-top: 0;
+
+            .mat-list-option {
+                color: var(--n80);
+                height: 3.5rem;
+                line-height: 3.5rem;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 1rem;
+                    bottom: 0;
+                    //width: 88%;
+                    width: calc(100% - 2rem);
+                    border-bottom: 1px solid #d5d6d7;
+                }
+                .mat-pseudo-checkbox-checked {
+                    background: var(--r100);
+                }
+                &:hover:not(.mat-option-disabled) {
+                    background: var(--r60);
+                    color: #fff !important;
+
+                    .mat-pseudo-checkbox {
+                        border-color: var(--n0);
+                    }
+                    .mat-pseudo-checkbox-checked {
+                        background: var(--n0);
+                        border-color: var(--n0);
+
+                        &::after {
+                            color: var(--r100);
+                        }
+                    }
+                }
+                &.mat-active {
+                    background: none !important;
+                    color: var(--n80) !important;
+
+                    &:hover {
+                        background: var(--r60) !important;
+                        color: var(--n0) !important;
+                    }
+                }
+                .mat-list-text {
+                    text-transform: capitalize;
+                    font-size: 0.875rem;
+                    border-bottom: none;
+                    line-height: 1.3125rem;
+                    padding: 0 0 0 0.6875rem !important;
+                }
+                &[aria-selected='true'] {
+                    font-weight: var(--bold);
+                }
+            }
+        }
+    }
+}

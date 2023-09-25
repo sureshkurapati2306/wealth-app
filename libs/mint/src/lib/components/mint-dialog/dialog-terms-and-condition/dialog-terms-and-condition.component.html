@@ -1,0 +1,18 @@
+<div class="dialog-terms-wrapper">
+  <button mat-icon-button class="btn-close" mat-dialog-close>
+    <em class="icon-close"></em>
+  </button>
+  <mat-tab-group
+    animationDuration="0ms"
+    class="custom-tab t-and-c-tab curve-last"
+    [disableRipple]="true"
+    [selectedIndex]="0"
+  >
+    <mat-tab label="Conventional">
+       <cimb-dialog-terms-and-condition-conventional-content></cimb-dialog-terms-and-condition-conventional-content>
+    </mat-tab>
+    <mat-tab label="Islamic">
+      <cimb-dialog-terms-and-condition-content></cimb-dialog-terms-and-condition-content>
+    </mat-tab>
+  </mat-tab-group>
+</div>

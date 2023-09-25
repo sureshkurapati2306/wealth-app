@@ -1,0 +1,61 @@
+@import 'apps/self-serve/src/assets/variables.scss';
+
+.block-table {
+    background: var(--n0);
+    box-shadow: 0rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-detail-inner {
+    > tr {
+        > th {
+            width: 10%;
+        }
+    }
+}
+th.mat-column-position {
+    text-align: right !important;
+
+    @media (min-width: 62rem) {
+        width: 5.625rem !important;
+    }
+}
+
+.table-detail-wrapper {
+    display: grid;
+    gap: 1rem;
+    grid-template: 1.6em 1.6em 1.6em / 1fr 1fr 1fr;
+    grid-template: repeat(7, 1.6em) / repeat(7, 1fr);
+
+    .col-one {
+        grid-column: 3/1;
+    }
+
+    .col-two {
+        grid-column: 3/5;
+    }
+
+    .col-three {
+        grid-column: 5/8;
+    }
+
+    .detail-card {
+        display: flex;
+        align-items: flex-start;
+
+        table {
+            width: auto;
+        }
+    }
+}
+
+.mat-column-expand {
+    flex: 0 0 8% !important;
+    width: 8% !important;
+}
+
+th.mat-header-cell {
+    border-bottom: 0.0625rem solid var(--c20)
+}

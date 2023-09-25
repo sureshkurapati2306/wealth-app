@@ -1,0 +1,391 @@
+@import 'apps/self-serve/src/assets/mixin';
+@import 'apps/self-serve/src/assets/variables';
+
+p {
+    margin: 0;
+}
+
+::ng-deep .fund-list-container {
+    user-select: none;
+
+    .mat-expansion-panel {
+        box-shadow: none;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .mat-expansion-panel-header {
+        border-radius: 0;
+        padding: 1.5rem 1.5rem 2rem 1.5rem;
+        border-bottom: 1px solid $background20;
+        height: auto;
+        -webkit-tap-highlight-color: transparent;
+
+        img {
+            transition: transform 0.225s;
+        }
+
+        &.mat-expanded {
+            background-color: #fff2f2;
+
+            .expansion-panel-toggle {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .mat-expansion-panel-header.mat-expanded:focus,
+    .mat-expansion-panel-header.mat-expanded:hover {
+        background-color: #fff2f2;
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0.5rem 0;
+        margin: 0 1rem;
+    }
+
+    .mat-expansion-panel
+        .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled='true']),
+    .mat-expansion-panel
+        .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled='true']),
+    .mat-expansion-panel:not(.mat-expanded)
+        .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
+        background: transparent;
+    }
+}
+
+::ng-deep .last-transactions-container {
+    mat-expansion-panel-header {
+        border-radius: 0;
+        padding: 1rem;
+        border-bottom: 1px solid $background20;
+        height: auto;
+        -webkit-tap-highlight-color: transparent;
+
+        &.mat-expanded {
+            background-color: $whiteBackground !important;
+        }
+
+        .title-last-transactions {
+            text-decoration: underline;
+        }
+    }
+    span.mat-expansion-indicator {
+        visibility: hidden !important;
+    }
+    .tbl-recent-transcation {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid $background20;
+
+        tbody {
+            background: none;
+            td {
+                @include font(0.875rem);
+                color: $baseColor;
+
+                &.amount {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        thead th {
+            background-color: $cimb;
+            color: $whiteBackground;
+            @include font(0.875rem);
+            font-weight: 700;
+
+            &:first-child {
+                border-top-left-radius: 1rem;
+            }
+            &:last-child {
+                border-top-right-radius: 1rem;
+            }
+        }
+
+        tr.mat-row:last-child {
+            td.mat-cell {
+                border-bottom: none;
+            }
+        }
+
+        .mat-header-row {
+            background-color: $cimb;
+        }
+    }
+    .inline-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+}
+
+.fund-list {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+        gap: 0;
+    }
+
+    .fund-header {
+        @media (max-width: 60rem) {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .fund-name {
+            @include font(1rem);
+            font-weight: 700;
+            padding-left: 1.25rem;
+            color: $baseColor;
+
+            @media (max-width: 60rem) {
+                @include font(0.875rem);
+            }
+
+            .fund-logo {
+                vertical-align: middle;
+                margin-right: 0.75rem;
+
+                @media (min-width: 768px) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .current-value {
+        flex-grow: 1;
+        text-align: right;
+        @media (max-width: 768px) {
+            order: 3;
+            flex-basis: 100%;
+            margin-top: 1.5rem;
+        }
+    }
+}
+
+.current-value {
+    .current-value-heading {
+        @include font(0.625rem);
+        font-weight: 600;
+        color: $grey;
+        text-transform: uppercase;
+    }
+
+    .current-value-price {
+        margin-top: 0.25rem;
+
+        @media (max-width: 768px) {
+            margin-top: 0;
+        }
+
+        span:first-child {
+            @include font(0.625rem);
+            margin-right: 0.25rem;
+            vertical-align: top;
+            font-weight: 600;
+        }
+
+        span:nth-child(2) {
+            @include font(1.5rem);
+            font-weight: 700;
+            color: $baseColor;
+            @media (max-width: 60rem) {
+                @include font(1.25rem);
+            }
+        }
+    }
+}
+
+.fund-list-content {
+    margin-left: 0.4rem;
+    border-left: 2px solid $background20;
+    .fund-list-breakdown {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $background20;
+        padding: 1rem 1.5rem 1.5rem;
+        gap: 4.5rem;
+
+        a {
+            color: $cimb;
+            @include font(0.75rem);
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .fund-list-breakdown-heading {
+            @include font(14px);
+            color: $grey20;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+
+            @media (max-width: 768px) {
+                @include font(0.625rem);
+                margin-bottom: 0;
+                font-weight: 600;
+            }
+
+            .tooltip {
+                margin-left: 0.25rem;
+            }
+        }
+
+        .fund-list-breakdown-data {
+            @include font(1rem);
+            font-weight: 600;
+            color: black;
+
+            @media (max-width: 768px) {
+                @include font(0.625rem);
+            }
+        }
+
+        .fund-list-breakdown-item {
+            width: 100%;
+            .current-value-price {
+                span:nth-child(2) {
+                    font-weight: 600;
+                    @include font(1rem);
+                }
+            }
+
+            @media (max-width: 768px) {
+                display: flex;
+                justify-content: space-between;
+
+                .current-value-price {
+                    span:nth-child(2) {
+                        font-weight: 600;
+                        @include font(0.6875rem);
+                    }
+                }
+            }
+        }
+
+        .hide-topup {
+            font-family: $notoSans !important;
+            color: $grey20 !important;
+
+            @media (max-width: $asnbDesktop) {
+                font-size: 0.75rem !important;
+            }
+        }
+    }
+
+    .title-last-transactions {
+        color: $cimb;
+    }
+
+    .top-up-section {
+        display: flex;
+        align-items: flex-start;
+        padding: 1rem 1.5rem 1.5rem;
+        border-bottom: 1px solid $background20;
+        flex-wrap: wrap;
+
+        .top-up-heading {
+            margin: 0 0.8rem 0.25rem 0.8rem;
+            font-weight: 600;
+            @include font(0.75rem);
+            color: $grey20;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .top-up-input {
+            display: block;
+            width: 13.75rem;
+            margin-right: 1rem;
+
+            @media (max-width: $asnbDesktop) {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .btn-topup {
+            @media (max-width: $asnbDesktop) {
+                width: 100%;
+            }
+        }
+
+        &::ng-deep .mat-form-field-invalid {
+            margin-bottom: 1.5rem;
+        }
+
+        &::ng-deep .mat-error {
+            margin-left: 0.75rem;
+        }
+    }
+    .fund-suspension-msg {
+        padding: 1rem 1.5rem 1.5rem;
+        border-bottom: 1px solid #d5d6d7;
+
+        p {
+            font-family: $notoSans !important;
+            font-size: 0.75rem;
+            color: $grey20;
+
+            @media (max-width: $asnbDesktop) {
+                font-size: 0.625rem;
+            }
+        }
+    }
+
+    .fund-maintenance-msg {
+        padding: 1.5rem;
+        border-bottom: 1px solid #d5d6d7;
+
+        p {
+            font-size: 0.875rem;
+            line-height: 1.3125rem;
+
+            strong {
+                font-weight: 600;
+                color: $grey20;
+            }
+        }
+
+        h6 {
+            margin-top: 1.25rem;
+            color: $grey20;
+            text-transform: capitalize;
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 1.3125rem;
+        }
+        .datetime {
+            span {
+                color: $cimb;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+p.transaction-error {
+    @include font(0.875rem);
+    font-weight: 400;
+    color: #ff5630;
+}

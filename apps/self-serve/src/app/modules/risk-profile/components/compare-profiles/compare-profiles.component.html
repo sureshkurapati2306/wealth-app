@@ -1,0 +1,107 @@
+<div class="section compare bg-n0">
+    <div class="container">
+        <div class="section-title">
+            <h3>Compare your Risk Profile with other profiles</h3>
+            <p>Click on other risk profiles to learn more.</p>
+        </div>
+        <div class="section-content">
+            <mat-tab-group 
+            animationDuration="0ms" 
+            class="compare-tab" 
+            [selectedIndex]="selectedRiskName"
+            >
+                <mat-tab *ngFor="let tab of tabs">
+                    <ng-template mat-tab-label>
+                        <span>{{ tab }}</span>
+                        <span *ngIf="tab === selectedTabName" class="label-text"
+                        >Your Risk Profile</span
+                        >
+                    </ng-template>
+                    <ng-template matTabContent>
+                        <div class="tab-content">
+                            <div class="compare-wrapper">
+                                <div class="compare-outer">
+                                    <div class="compare-inner">
+                                        <h6>Recommended Asset AlLocation</h6>                                        
+                                        <div class="dont-cahat">
+                                        <cimb-recommended-assets-chart
+                                            *ngIf="assetsAllocation$ | async as assetsAllocation"
+                                            [data]="assetsAllocation" 
+                                            [name]="tab"
+                                            (riskProfileAssetAllocation)="riskProfileAssetAlloaction($event)"
+                                            >
+                                        </cimb-recommended-assets-chart>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="compare-outer">
+                                    <div class="compare-inner">
+                                        <h6 *ngIf="!mediaQueryList.matches">Estimated returns and losses</h6>
+                                        <h6 *ngIf="mediaQueryList.matches">Please note that this chart is for illustrative purpose only. Actual returns and losses may differ.</h6>
+                                        <cimb-estimated-returns-graph [name]="tab">
+                                        </cimb-estimated-returns-graph>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="alert alert-warning">
+            <h6><strong>Risk Profile Asset Allocation</strong>></h6>
+            <div *ngIf="selectedTabName">
+                <p [innerHTML]="riskAllocation">
+                    {{riskAllocation}}
+                </p>
+            </div>
+                <div *ngIf="!mediaQueryList.matches">
+                    <button (click)="openSuggestionDialog()" class="mat-flat-button btn-custom btn-text">
+                        Who makes these suggestions?
+                    </button>
+                </div>
+                <div *ngIf="mediaQueryList.matches">
+                    <button (click)="openSuggestionDialog()" class="mat-flat-button btn-custom btn-text">
+                        Who Makes These Suggestions?
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- `Who makes these suggestions?` dialog component -->
+<ng-template #suggestionDialog>
+    <button 
+    class="mat-focus-indicator btn-close mat-icon-button mat-button-base" 
+    [matDialogClose]="'confirmed'"
+        *ngIf="!mediaQueryList.matches"
+        >
+        <em class="icon-close"></em>
+    </button>
+    <div *ngIf="mediaQueryList.matches">
+        <div>
+            <em class="icon-close close" [matDialogClose]="'confirmed'"></em>
+        </div>
+    </div>
+
+    <section mat-dialog-content>
+        <h3 *ngIf="!mediaQueryList.matches">Who makes these suggestions?</h3>
+        <p *ngIf="!mediaQueryList.matches" class="description">
+            The asset class allocation is determined by optimizing risk and return for each risk profile using
+                research on benchmarks such as stock markets and discussions with industry professionals, and is
+                generally updated every 6 months.
+        </p>
+    </section>
+    <div *ngIf="mediaQueryList.matches" class="overlay">
+        <div class="masterDialogMobile">
+            <h3>Who makes these suggestions?</h3>
+            <p class="cardDescription">
+                The asset class allocation is determined by optimizing risk and return for each risk profile using
+                research on benchmarks such as stock markets and discussions with industry professionals, and is
+                generally updated
+                every 6 months.
+            </p>
+        </div>
+    </div>
+</ng-template>

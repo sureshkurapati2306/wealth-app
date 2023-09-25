@@ -1,0 +1,73 @@
+<div class="option-block-input">
+  <div class="option-field">
+    <label>Units</label>
+    <input
+    *ngIf="!disabled"
+      type="number"
+      matInput
+      class="custom-input"
+      placeholder="{{minMessage}}"
+      [formControl]="amount"
+      [ngClass]="{ error: amount.hasError('min') || amount.hasError('max') }"
+      [disabled]="disabled"
+    />
+    <input
+    *ngIf="disabled"
+      type="number"
+      matInput
+      class="custom-input"
+      placeholder="{{minMessage}}"
+      [ngClass]="{ error: amount.hasError('min') || amount.hasError('max') }"
+      [disabled]="disabled"
+      disabled
+    />
+    <em
+      class="icon-error"
+      *ngIf="amount.hasError('min') || amount.hasError('max')"
+    ></em>
+  </div>
+  <div class="option-info">
+    <p>
+      Indicative Amount
+      <span class="tips">
+        <em
+          class="icon-help hide-lg"
+          (click)="openIndicativeAmountActionSheet()"
+        ></em>
+        <em
+          class="icon-help show-lg"
+          matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+          matTooltipPosition="right"
+        ></em>
+      </span>
+    </p>
+    <h6><sup _ngcontent-tca-c160="">MYR</sup> {{indicativeAmountDisplay | number: '1.2-2':'en-US'}}</h6>
+    <strong>(Based on {{indicativeDate}} NAV)</strong>
+  </div>
+  <div class="option-button">
+    <button
+      mat-flat-button
+      class="btn-custom btn-red"
+      disableRipple="true"
+      (click)="redeem()"
+      [disabled]="disabled || amount.invalid"
+      *ngIf="!amountAdded"
+    >
+      Add to cart
+    </button>
+
+    <button
+    mat-flat-button
+    class="btn-custom btn-red"
+    disableRipple="true"
+    (click)="removeUnit()"
+    [disabled]="disabled || amount.invalid"
+    *ngIf="amountAdded"
+  >
+    Remove
+  </button>
+  </div>
+  <div class="option-text">
+    <mat-error *ngIf="amount.invalid">{{ getErrorMessage() }}</mat-error>
+  </div>
+</div>

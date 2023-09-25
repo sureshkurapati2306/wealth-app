@@ -1,0 +1,87 @@
+<!-- web view -->
+<mat-form-field class="custom-multiselect risk-select-form"
+                (click)="openMultiSelectForMobile()">
+    <mat-select class="multi-select"
+                [ngClass]="{'custom-single-select' : !multiple}"
+                [formControl]="control"
+                [multiple]="checkMobile()"
+                (selectionChange)="onSelectionChange($event)"
+                panelClass="risk-select"
+                placeholder="{{placeholder}}"
+                disableOptionCentering>
+
+        <!-- multiple value -->
+        <mat-select-trigger>
+            <ng-container *ngIf="multiple">
+
+                <mat-chip-list>
+                    <mat-chip *ngFor="let selectedOption of optionNames(control.value)"
+                              [removable]="true"
+                              (removed)="onSelectedChipRemoved(selectedOption.id)">
+                        <span>{{ selectedOption?.value }}</span>
+                        <mat-icon matChipRemove><em class="icon icon-close"></em></mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+
+            </ng-container>
+
+            <!-- single value -->
+            <ng-container *ngIf="!multiple">
+
+                <span *ngFor="let selectedOption of optionNames(control.value)">
+                    {{ selectedOption?.value }}
+                </span>
+            </ng-container>
+
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let option of data"
+                    [value]="option.id">{{option.value}}</mat-option>
+
+    </mat-select>
+</mat-form-field>
+<!-- web view end -->
+
+<!-- mobile view -->
+<ng-template #multiSelectionForMobile>
+
+    <section class="action-sheet-head">
+        <div class="dismiss"
+             (click)="_bottomSheet.dismiss()">
+            <em class="icon-close"></em>
+        </div>
+    </section>
+
+    <!-- multiple value -->
+    <ng-container *ngIf="multiple">
+        <mat-selection-list class="multiple-list"
+                            name="optionSelection"
+                            [formControl]="control"
+                            (selectionChange)="onMultiSelect($event)">
+            <mat-list-option *ngFor="let item of data"
+                             checkboxPosition="before"
+                             [value]="item.id">
+                {{item.value}}
+            </mat-list-option>
+        </mat-selection-list>
+    </ng-container>
+
+    <!-- single value -->
+    <ng-container *ngIf="!multiple">
+
+        <mat-selection-list class="single-list"
+                            name="optionSelection"
+                            [formControl]="control"
+                            [multiple]="false"
+                            (selectionChange)="onSingleSelect($event)">
+            <mat-list-option *ngFor="let item of data"
+                             checkboxPosition="before"
+                             [value]="item.id">
+                {{item.value}}
+            </mat-list-option>
+        </mat-selection-list>
+
+    </ng-container>
+
+</ng-template>
+<!-- mobile view end -->

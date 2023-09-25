@@ -1,0 +1,15 @@
+<div class="crumb">
+   <a routerLink="/home">Home</a> / 
+   
+   <ng-container *ngFor="let item of paths">
+
+      <ng-container *ngIf="item?.url">
+         <a [routerLink]="item.url">{{ item.label }}</a> /
+      </ng-container>
+
+      <ng-container *ngIf="!item?.url">
+         {{ item.label }}
+      </ng-container>
+
+   </ng-container>
+</div>

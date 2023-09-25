@@ -1,0 +1,427 @@
+<div class="card-wrapper" *ngFor="let item of investments; index as i">
+    <form [formGroup]="amount">
+        <div class="card">
+            <div class="wrapper">
+                <ng-container *ngIf="flow === '001' || flow === '002'">
+                    <div class="fund-holiday-detail" *ngIf="item.fund_status === null">
+                        <h5 class="not-available-text">No Longer Available</h5>
+                        <div class="col show-md">
+                            <div class="action">
+                                <a
+                                        (click)="removeModal(i)"
+                                        [ngClass]="{ hide: item.canEdit }"
+                                        >Remove</a
+                                    >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fund-holiday-detail" *ngIf="item.fund_status === 'I'">
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>
+                            The fund is currently not available for transactions due to the fund
+                            holiday declared by the fund house. Pricing of the funds will resume on
+                            the following business day. Please remove or replace with another fund
+                            in order to proceed with checkout
+                        </p>
+                    </div>
+                    <div class="fund-holiday-detail" *ngIf="!item.documentIndicator">
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>
+                            The fund is currently not available for transactions due to the fund
+                            document unavailability. Please remove or replace with another fund in
+                            order to proceed with checkout.
+                        </p>
+                    </div>
+                    <div
+                        class="fund-holiday-detail"
+                        *ngIf="(item.fund_status === 'SO' || item.fund_status === 'SOHO') && !hasRedeemOption"
+                    >
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>Only redeem is allowed for this fund at the moment.</p>
+                    </div>
+                    <div class="fund-holiday-detail" *ngIf="item.fund_status === 'BO' && hasRedeemOption">
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>Only purchase is allowed for this fund at the moment.</p>
+                    </div>
+                    <div
+                        class="fund-holiday-detail"
+                        *ngIf="flow === '001' && !enableProceedToCheckOutInPurchaseTnx"
+                    >
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>Purchase is disabled at the moment</p>
+                        <br />
+                    </div>
+                    <div
+                        class="fund-holiday-detail"
+                        *ngIf="flow === '002' && !enableRedeemTransationAtCart"
+                    >
+                        <h5 class="not-available-text">Temporarily Not Available</h5>
+                        <p>Redeem is disabled at the moment</p>
+                        <br />
+                    </div>
+                    <div
+                        class="top"
+                        *ngIf="item.fund_status !== null"
+                        [ngClass]="{
+                            fade:
+                                item.fund_status === 'I' ||
+                                !item.documentIndicator ||
+                                (item.fund_status === 'BO' && hasRedeemOption) ||
+                               ((item.fund_status === 'SO' ||
+                               item.fund_status === 'SOHO') && !hasRedeemOption)  ||
+                                (flow === '001' && !enableProceedToCheckOutInPurchaseTnx) ||
+                                (flow === '002' && !enableRedeemTransationAtCart)
+                        }"
+                    >
+                        <div class="col">
+                            <p>{{ item.class_name | titlecase }}</p>
+                            <h5>{{ item.fund_name | titlecase }}</h5>
+                            <h6>
+                                {{ item.risk_name
+                                }}<span *ngIf="item.risk_name && item.fund_indicator === 'I'">
+                                    |
+                                </span>
+                                <span *ngIf="item.fund_indicator === 'I'"> Shariah Compliant</span>
+                                <span *ngIf="item.esgFund === 'Y'"> | Esg Fund</span>
+                            </h6>
+                        </div>
+                        <div class="col show-md">
+                            <div
+                                class="action"
+                                [ngClass]="{
+                                    'disable-spacing':
+                                        item.fund_status === 'I' ||
+                                        !item.documentIndicator ||
+                                        checkSoSoHoFund(item) ||
+                                        checkForBOfund(item) ||
+                                        (flow === '001' && !enableProceedToCheckOutInPurchaseTnx) ||
+                                        (flow === '002' && !enableRedeemTransationAtCart)
+                                }"
+                            >
+                                <a
+                                    *ngIf="
+                                        item.fund_status !== null &&
+                                        item.fund_status !== 'I' &&
+                                        !checkForBOfund(item) &&
+                                        !checkSoSoHoFund(item) &&
+                                        item.documentIndicator &&
+                                        showEditBtnRedeem &&
+                                        showEditBtn
+                                    "
+                                    (click)="edit(item, i)"
+                                    [ngClass]="{ hide: item.canEdit }"
+                                    >Edit</a
+                                >
+                                <a
+                                    class="remove-btn"
+                                    (click)="removeModal(i)"
+                                    [ngClass]="{ hide: item.canEdit }"
+                                    >Remove</a
+                                >
+
+                                <a
+                                    (click)="done(item, i, true)"
+                                    [ngClass]="{ 'update show': item.canEdit }"
+                                    class="toggle"
+                                    *ngIf="
+                                        item.canEdit &&
+                                        item.flow_text === 'topup' &&
+                                        amount.valid &&
+                                        amount?.controls?.amount.value &&
+                                        amount?.controls?.amount.value !== '0.00'
+                                    "
+                                    >Done</a
+                                >
+
+                                <a
+                                    attr.id="DonetopUpInactive{{ item.index }}"
+                                    [ngClass]="{ 'update show': item.canEdit }"
+                                    *ngIf="
+                                        item.canEdit &&
+                                        item.flow_text === 'topup' && item.flow_text !== 'redeem' &&
+                                        (!amount?.controls?.amount.value ||
+                                            amount?.controls?.amount.value === '0.00' ||
+                                            !amount.valid)
+                                    "
+                                    class="inactive-redeem"
+                                    >Done</a
+                                >
+
+                                <a
+                                    (click)="done(item, i, true)"
+                                    [ngClass]="{ 'update show': item.canEdit }"
+                                    class="toggle"
+                                    *ngIf="
+                                        item.canEdit &&
+                                        item.flow_text === 'redeem' &&
+                                        amount.valid &&
+                                        amount?.controls?.amount.value &&
+                                        amount?.controls?.amount.value !== '0.00'
+                                    "
+                                    >Done</a
+                                >
+
+                                <a
+                                    attr.id="DonetopUpInactive{{ item.index }}"
+                                    [ngClass]="{ 'update show': item.canEdit }"
+                                    *ngIf="
+                                        item.canEdit &&
+                                        item.flow_text === 'redeem' && item.flow_text !== 'topup' &&
+                                        (!amount?.controls?.amount.value ||
+                                            amount?.controls?.amount.value === '0.00' ||
+                                            !amount.valid)
+                                    "
+                                    class="inactive-redeem"
+                                    >Done</a
+                                >
+
+                                <a
+                                    *ngIf="item.fund_status !== 'I' || item.documentIndicator"
+                                    (click)="cancel(item, i)"
+                                    class="toggle cancel-btn"
+                                    [ngClass]="{ 'active show': item.canEdit }"
+                                    >Cancel</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="redeem-section"
+                        *ngIf="hasRedeemOption && item.canEdit"
+                        [ngClass]="{ show: item.canEdit }"
+                    >
+                        <cimb-dashboard-slider
+                            disabled="{{ false }}"
+                            minUnit="0"
+                            maxUnit="{{ item.holding }}"
+                            value="{{ redemptionUnits }}"
+                            (redeemSliderValueChange)="redeemSliderValueChangeEvent($event)"
+                            [checkboxLabel]="redeemAll"
+                            [holding]="item.holding"
+                            [isRedeemAll]="isRedeemAll"
+                        >
+                        </cimb-dashboard-slider>
+
+                        <div class="option-info">
+                            <p>
+                                Indicative Amount
+                                <span class="tips">
+                                    <em
+                                        class="icon-help hide-lg"
+                                        (click)="openIndicativeAmountActionSheet()"
+                                    ></em>
+                                    <em
+                                        class="icon-help show-lg"
+                                        matTooltip="The Indicative Amount comes from multiplying the number of selected units by the current NAV price and excludes any charges. However, the actual amount may differ based on the closing NAV price. If you transact after 2pm, the closing price on the next business day will be used."
+                                        matTooltipPosition="right"
+                                    ></em>
+                                </span>
+                            </p>
+                            <h6>
+                                <sup _ngcontent-tca-c160="">MYR</sup>
+                                {{ totalRedemAmount }}
+                            </h6>
+                            <strong>(Based on {{ item.close_date }} NAV)</strong>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bottom"
+                        [ngClass]="{
+                            fade:
+                                item.fund_status === null ||
+                                item.fund_status === 'I' ||
+                                !item.documentIndicator ||
+                                (item.fund_status === 'BO' && hasRedeemOption) ||
+                                ((item.fund_status === 'SO' || item.fund_status === 'SOHO') && !hasRedeemOption) ||
+                                (flow === '001' && !enableProceedToCheckOutInPurchaseTnx) ||
+                                (flow === '002' && !enableRedeemTransationAtCart)
+                        }"
+                    >
+                        <p class="flex" *ngIf="item.flow_text === 'topup'">
+                            Sales Charge ({{
+                                item.totalSalesPercentage | number: '1.2-2':'en-US'
+                            }}%)
+                            <span>MYR {{ (item.fund_status === null ? 0 : item.card_sale_charge) | number: '1.2-2':'en-US' }}</span>
+                        </p>
+                        <p class="flex" *ngIf="item.flow_text === 'topup'">
+                            Net Investment Amount
+                            <span>MYR {{ (item.fund_status === null ? 0 : item.card_net_amount) | number: '1.2-2':'en-US' }}</span>
+                        </p>
+                        <p class="flex" *ngIf="item.flow_text === 'topup'">
+                            Amount
+                            <span class="amount" [ngClass]="{ hide: item.canEdit }"
+                                ><sup>MYR</sup
+                                >{{ (item.fund_status === null ? 0 : item.card_amount) | number: '1.2-2':'en-US' }}</span
+                            >
+
+                            <mat-form-field *ngIf="item.canEdit">
+                                <cimb-input-amount-key
+                                    class="isCart"
+                                    [inputForm]="amount"
+                                    [inputFormControlName]="'amount'"
+                                    [isRequired]="false"
+                                    [minAmount]="minValue"
+                                    [maxAmount]="maxValue"
+                                    [inputPlaceholder]="placeHolderError"
+                                    [errorMessageMinAmount]="minError"
+                                    [errorMessageMaxAmount]="maxError"
+                                    [errorMessageRequired]="minError"
+                                    [ngClass]="{ isCart: true }"
+                                    (keyup)="changeValueEvent($event)"
+                                >
+                                </cimb-input-amount-key>
+                            </mat-form-field>
+                        </p>
+
+                        <p class="flex mb" *ngIf="item.flow_text === 'redeem'">
+                            Redemption Units
+                            <span [ngClass]="{ hide: item.canEdit }">{{
+                                (item.fund_status === null ? 0 : item.card_redemption_units) | number: '1.2-2':'en-US'
+                            }}</span>
+                            <mat-form-field *ngIf="item.canEdit">
+                                <cimb-input-amount-key
+                                    class="isCartredeem"
+                                    [inputForm]="amount"
+                                    [inputFormControlName]="'amount'"
+                                    [isRequired]="false"
+                                    [minAmount]="minValue"
+                                    [maxAmount]="maxValue"
+                                    [inputPlaceholder]="placeHolderErrorRedeem"
+                                    [errorMessageMinAmount]="minError"
+                                    [errorMessageMaxAmount]="maxValueRedeem"
+                                    [errorMessageRequired]="minError"
+                                    [ngClass]="{ isCart: true }"
+                                    (keyup)="changeValueEvent($event)"
+                                    [showMyrPrefix]="false"
+                                    [errorMessageRedeem]="exceedAvailableAmountRedeem"
+                                    [redeemAmount]="holding"
+                                >
+                                </cimb-input-amount-key>
+                            </mat-form-field>
+                        </p>
+                        <p class="flex mb" *ngIf="item.flow_text === 'redeem' && !item.canEdit">
+                            <small>Redemption Amount <span>*</span></small>
+                            <span class="amount"
+                                ><sup>MYR</sup
+                                >{{ (item.fund_status === null ? 0 : item.card_redemption_amount) | number: '1.2-2':'en-US' }}</span
+                            >
+                        </p>
+                        <p class="flex mb" *ngIf="item.flow_text === 'redeem' && item.canEdit">
+                            <small>Redemption Amount <span>*</span></small>
+                            <span class="amount"
+                                ><sup>MYR</sup
+                                >{{ totalRedemAmount }}</span
+                            >
+                        </p>
+                    </div>
+                    <div
+                        class="action mob-action"
+                        [ngClass]="{
+                            'disable-spacing':
+                                item.fund_status === 'I' ||
+                                !item.documentIndicator ||
+                                checkSoSoHoFund(item) ||
+                                checkForBOfund(item) ||
+                                (flow === '001' && !enableProceedToCheckOutInPurchaseTnx) ||
+                                (flow === '002' && !enableRedeemTransationAtCart)
+                        }"
+                    >
+                        <a
+                            *ngIf="
+                                (item.fund_status !== null &&
+                                item.fund_status !== 'I' &&
+                                !checkForBOfund(item) &&
+                                !checkSoSoHoFund(item) &&
+                                item.documentIndicator &&
+                                showEditBtnRedeem &&
+                                showEditBtn)
+                            "
+                            (click)="edit(item, i)"
+                            [ngClass]="{ hide: item.canEdit }"
+                            >Edit</a
+                        >
+                        <a class="edit" (click)="removeModal(i)" [ngClass]="{ 'hide': item.canEdit, 'mr_0': item.fund_status === null }">Remove</a>
+                        
+                        <a
+                            (click)="done(item, i, true)"
+                            [ngClass]="{ 'update show': item.canEdit }"
+                           
+                            *ngIf="
+                                item.canEdit &&
+                                item.flow_text === 'topup' &&
+                                amount.valid &&
+                                amount?.controls?.amount.value &&
+                                amount?.controls?.amount.value !== '0.00'
+                            "
+                            >Done</a
+                        >
+
+                        <a
+                            class="inactive"
+                            attr.id="DonetopUpInactive{{ item.index }}"
+                            [ngClass]="{ 'update show': item.canEdit }"
+                            *ngIf="
+                                item.canEdit &&
+                                item.flow_text === 'topup' && item.flow_text !== 'redeem' &&
+                                (!amount?.controls?.amount.value ||
+                                    amount?.controls?.amount.value === '0.00' ||
+                                    !amount.valid)
+                            "
+                            >Done</a
+                        >
+
+                        <a
+                            (click)="done(item, i, true)"
+                            [ngClass]="{ 'update show': item.canEdit }"
+                            
+                            *ngIf="
+                                item.canEdit &&
+                                item.flow_text === 'redeem' &&
+                                amount.valid &&
+                                amount?.controls?.amount.value &&
+                                amount?.controls?.amount.value !== '0.00'
+                            "
+                            >Done</a
+                        >
+
+                        
+                        <a
+                            attr.id="DonetopUpInactive{{ item.index }}"
+                            [ngClass]="{ 'update show': item.canEdit }"
+                            *ngIf="
+                                item.canEdit &&
+                                item.flow_text === 'redeem' && item.flow_text !== 'topup' &&
+                                (!amount?.controls?.amount.value ||
+                                    amount?.controls?.amount.value === '0.00' ||
+                                    !amount.valid)
+                            "
+                            class="inactive"
+                            >Done</a
+                        >
+                        
+                        <a
+                        *ngIf="item.fund_status !== 'I' || item.documentIndicator"
+                        (click)="cancel(item, i)"
+                        class="toggle-right"
+                        [ngClass]="{ 'active show': item.canEdit }"
+                        >Cancel</a
+                    >
+                  
+                    </div>
+                </ng-container>
+
+                <cimb-card-switch-summary
+                    *ngIf="flow === '003'"
+                    [item]="item"
+                    [canModify]="true"
+                    (removeCartItem)="removeModal(i)"
+                    (toggleEditCartItemState)="$event ? edit(item, i) : cancel(item, i)"
+                    (updateCartItem)="done($event, i, true)"
+                    [enableSwitchTransactionAtCart]="enableSwitchTransactionAtCart"
+                >
+                </cimb-card-switch-summary>
+            </div>
+        </div>
+    </form>
+</div>

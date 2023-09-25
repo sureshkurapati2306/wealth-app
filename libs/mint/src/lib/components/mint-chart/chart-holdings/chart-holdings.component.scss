@@ -1,0 +1,21 @@
+.centerLabel
+{
+    position: relative;
+    left: -1.75rem;
+    top: 7.1875rem;
+    width: 16rem;
+    text-align: center;
+    font-size: .855rem;
+    font-weight: bold;
+    z-index: 1;
+}
+.google-chart{
+    height: 7.5rem;
+    width: 7.5rem;
+
+    @media (min-width: 48rem) {
+      width: 17.5rem;
+      height: 17.5rem;
+      
+    }
+}

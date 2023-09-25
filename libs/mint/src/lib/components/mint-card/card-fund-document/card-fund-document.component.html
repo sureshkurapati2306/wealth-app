@@ -1,0 +1,41 @@
+<div class="card-wrapper {{addClass}}">
+  <div [ngClass] = "switchFundPopup === true ? 'cardPopup' : 'card'">
+    <h4>Fund Document</h4>
+    <div [ngClass] = "switchFundPopup === true ? 'wrapperPopup' : 'wrapper'">
+      <div class="downloads">
+        <ul>
+          <li *ngFor="let document of documents">
+            <div class="file-wrapper">
+              <div class="file">
+                <em class="icon-pdf"></em>
+                <span>{{ document.name }}</span>
+              </div>
+              <a class="clickCursor" (click)="checkDocAvailability(document.url)">
+                <em class="icon-download"></em>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="hide-md">
+      {{
+        disclaimer?.length > firstCount
+          ? (disclaimer | slice: 0:counter) + '...'
+          : disclaimer
+      }}
+      <a
+        class="btn-text btn-text-underline"
+        *ngIf="disclaimer?.length > 100"
+        (click)="disclaimerModal()"
+      >
+      <span style="color: #ff0000;" >{{ showText }} </span>
+
+      </a>
+    </p>
+    <p class="show-md">
+      {{ disclaimer }}
+    </p>
+  </div>
+</div>

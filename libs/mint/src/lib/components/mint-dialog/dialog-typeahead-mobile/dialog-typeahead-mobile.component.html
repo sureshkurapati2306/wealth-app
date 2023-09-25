@@ -1,0 +1,40 @@
+<h1 mat-dialog-title class="dialog-heading">
+    <button mat-button class="close-icon">
+        <mat-icon (click)="closeDialog()" matSuffix>close</mat-icon>
+    </button>
+</h1>
+
+<div mat-dialog-content class="typeahead-dialog-content">
+    <form [formGroup]="mobileTypeaheadForm" class="mobile-autocomplete-form">
+        <mat-form-field appearance="outline" floatLabel="never" class="typeahead-input">
+            <mat-icon *ngIf="isinputFocus" matPrefix>search</mat-icon>
+            <input #setFocus matInput [matAutocomplete]="automobile"
+                placeholder="{{data.mobilemobileTypeaheadPlaceholder}}"
+                formControlName={{data.mobileTypeaheadFormControlName}} />
+            <mat-icon *ngIf="!isinputFocus" matSuffix>search</mat-icon>
+            <button *ngIf="isinputFocus" (click)="clearInput()" mat-button mat-icon-button matSuffix>
+                <mat-icon>cancel</mat-icon>
+            </button>
+            <!-- (closed)="handleClose($event)" -->
+
+            <mat-autocomplete class="mobile-autocomplete" #automobile="matAutocomplete"
+                [displayWith]="displayNames.bind(this)" (optionSelected)="getSelectedOption($event)"
+                panelClass="typeahead-panel">
+
+                <ng-container *ngIf="!data.isGroupDropdown">
+                    <mat-option *ngFor="let option of filteredTypeaheadOptions | async"
+                        [value]="option[data.typeaheadId]" [id]="option[data.typeaheadValue]">
+                        {{option[data.typeaheadValue]}}
+                    </mat-option>
+                </ng-container>
+                <ng-container *ngIf="data.isGroupDropdown">
+                    <mat-optgroup *ngFor="let group of filteredTypeaheadOptions | async" [label]="group.letter">
+                        <mat-option *ngFor="let name of group.names" [value]="name">
+                            {{name}}
+                        </mat-option>
+                    </mat-optgroup>
+                </ng-container>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>

@@ -1,0 +1,3 @@
+<div [ngClass]="btnLabel === 'Start Investment'? 'footer-start-investment' : 'footer-cta'">
+  <button mat-flat-button class="btn-custom btn-red btn-xs" [disabled]="disabled" (click)="onClick()">{{ btnLabel }}</button>
+</div>

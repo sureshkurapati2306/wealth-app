@@ -1,0 +1,37 @@
+<div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <button mat-icon-button class="btn-close" (click)="cancel()" [ngClass]="buttonLabel === 'Ok' ? 'noAcknowldge' : 'acknowldge'">
+      <em class="icon-close"></em>
+    </button>
+
+    <mat-dialog-content>
+      <h6>
+        {{ riskName }}
+        <span _ngcontent-xmt-c268="" class="label-text">Your Risk Profile</span>
+      </h6>
+      <h3>Funds with higher Risk Category</h3>
+      <table class="table" aria-describedby="riskCategory" *ngIf="this.flow === 'topup'">
+        <tr *ngFor="let fund of hishRiskFundsList">
+          <th scope="row">{{ fund.fund_name }}</th>
+          <td>{{ fund.risk_name }}</td>
+        </tr>
+      </table>
+      <table class="table" aria-describedby="riskCategory" *ngIf="this.flow === 'switch'">
+        <tr *ngFor="let fund of hishRiskFundsList">
+          <th scope="row">{{ fund.to_fund_name }}</th>
+          <td>{{ fund.to_fund_risk_name }}</td>
+        </tr>
+      </table>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        disableRipple="true"
+        (click)="proceed()"
+      >
+      {{ buttonLabel }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

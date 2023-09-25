@@ -1,0 +1,21 @@
+<div class="option-slider">
+  <div class="option-slider-left">
+    <div class="slider-container">
+      <ul class="slider-steps">
+        <li>0</li>
+        <li>5.290.39</li>
+        <li>10,580.77</li>
+      </ul>
+      <mat-slider
+        class="custom-slider"
+        step="1"
+        min="0"
+        max="100"
+        [value]="value"
+      ></mat-slider>
+    </div>
+  </div>
+  <div class="option-slider-right">
+    <mat-checkbox class="" (change)="toggle()">{{checkboxLabel}}</mat-checkbox>
+  </div>
+</div>

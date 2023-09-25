@@ -1,0 +1,25 @@
+<ng-container *ngIf="name">
+    <div class="illustration-wrapper">
+        <ul class="risk-profile">
+            <li [ngClass]="{ 'active': name === 'Defensive' }">Defensive</li>
+            <li [ngClass]="{ 'active': name === 'Conservative' }">Conservative</li>
+            <li [ngClass]="{ 'active': name === 'Balanced' }">Balanced</li>
+            <li [ngClass]="{ 'active': name === 'Growth' }">Growth</li>
+            <li [ngClass]="{ 'active': name === 'Aggressive' }">Aggressive</li>
+        </ul>
+        <div class="illustration-area">
+            <div class="illustration-outer">
+                <div class="triangle-top">
+                    <strong>Estimated Returns</strong>
+                </div>
+                <hr>
+                <div class="triangle-bottom">
+                    <strong>Estimated Losses</strong>
+                </div>
+                <span class="low-risk">Low RISK</span>
+                <span class="high-risk">Higher RISK</span>
+            </div>
+        </div>
+        <p>Please note that this chart is for illustrative purpose only. Actual returns and losses may differ.</p>
+    </div>
+</ng-container>

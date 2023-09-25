@@ -1,0 +1,27 @@
+<div class="page-wrapper">
+  <div class="container">
+    <div class="section">
+      <div class="section-head">
+        <h1>Hi, {{userName$ | async | titlecase}}!</h1>
+
+      </div>
+      <div class="section-content">
+        <div class="card-container"  *ngIf="modules$ | async as modules">
+          <ng-container *ngFor="let id of modules">
+            <ng-container *ngIf="isExist(id.moduleId)">
+              <div class="card card-{{id.moduleId}}" (click)="goTo(id.moduleId)" >
+                <div class="card-inner">
+                  <div class="card-content">
+                    <img *ngIf="getVal(id.moduleId, 'img')" [src]="getVal(id.moduleId, 'img')" alt="getVal(id.moduleId,'alt')">
+                    <h2>{{ id.moduleName }}</h2>
+                    <p>{{ getVal(id.moduleId,'description') ? getVal(id.moduleId,'description') : ''}}</p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

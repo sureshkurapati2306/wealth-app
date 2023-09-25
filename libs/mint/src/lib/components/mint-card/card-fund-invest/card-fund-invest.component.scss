@@ -1,0 +1,294 @@
+.card-wrapper {
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  @media (min-width: 48rem) {
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    background: var(--n0);
+    padding: 1.5rem 1rem;
+    margin: 0 -1rem;
+
+    @media (max-width: 47.9375rem) {
+      padding: 1.5rem 1rem 4.375rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 48rem) {
+      margin-left: 0;
+      margin-right: 0;
+      box-shadow: 0px 2px 4px -2px rgba(24, 39, 75, 0.12),
+        0px 4px 4px -2px rgba(24, 39, 75, 0.08);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    h5 {
+      color: var(--n100);
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+      margin-bottom: 1.5625rem;
+
+      @media (min-width: 48rem) {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        border-bottom: 0.0625rem solid var(--n20);
+        padding-left: 0.5rem;
+        padding-bottom: 1rem;
+      }
+    }
+    .wrapper {
+      @media (min-width: 48rem) {
+        display: flex;
+        padding-left: 5.5rem;
+      }
+      .price {
+        @media (min-width: 48rem) {
+          min-width: 7.5rem;
+          margin-right: 2.5rem;
+        }
+      }
+      .inner-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        @media (min-width: 48rem) {
+          flex-direction: column;
+        }
+
+        p {
+          font-weight: var(--medium);
+          font-size: 0.75rem;
+          line-height: 1.125rem;
+          color: var(--n60);
+          margin-bottom: 0;
+
+          @media (min-width: 48rem) {
+            font-size: 0.875rem;
+            font-weight: var(--regular);
+            line-height: 1.3125rem;
+          }
+
+          span {
+            font-size: 1rem;
+            margin-left: 0.3125rem;
+            display: inline-block;
+          }
+          small {
+            display: block;
+            font-size: 0.625rem;
+            line-height: 1rem;
+          }
+
+          strong {
+            color: var(--n100);
+            font-size: 0.875rem;
+            line-height: 1.375rem;
+
+            @media (min-width: 48rem) {
+              font-size: 1.125rem;
+              line-height: 1.75rem;
+            }
+          }
+          sup {
+            font-size: 0.625rem;
+            line-height: 1rem;
+            color: var(--n100);
+            margin-right: 0.25rem;
+          }
+
+          &:last-child {
+            @media (min-width: 48rem) {
+              order: 2;
+            }
+          }
+        }
+      }
+      .latest {
+        margin-top: -0.3125rem;
+        margin-bottom: 1rem;
+        font-weight: var(--medium);
+        color: var(--n60);
+
+        @media (min-width: 48rem) {
+          font-size: 0.75rem;
+          line-height: 1.125rem;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .option-block-input {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      @media (min-width: 37.5rem) {
+        justify-content: left;
+      }
+      .option-field {
+        max-width: 13.1875rem !important;
+        position: relative;
+        @media (max-width: 37.5rem) {
+          order: 1;
+          max-width: 12.8125rem !important;
+        }
+        @media (min-width: 48rem) {
+          max-width: 13.75rem !important;
+        }
+        .custom-input {
+          padding: 0.75rem;
+          max-width: 100%;
+          color: var(--n100);
+          font-size: 1rem;
+          padding-right: 2.25rem;
+        }
+        label {
+          display: block;
+          font-size: 0.75rem;
+          font-weight: var(--medium);
+          text-transform: uppercase;
+          margin-left: 0.75rem;
+          color: var(--n80);
+          letter-spacing: 0.08rem;
+        }
+        .icon-error {
+          position: absolute;
+          right: 0.875rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--danger);
+          font-size: 1.25rem;
+        }
+        ::ng-deep .mat-form-field {
+          margin-right:0;
+        }
+      }
+      .option-info {
+        position: relative;
+        flex: 1 1 100%;
+        margin-bottom: 1.5rem;
+
+        @media (min-width: 37.5rem) {
+          flex: 1;
+          margin-left: 0.75rem;
+          margin-bottom: 0;
+          max-width: 13.75rem;
+        }
+        @media (min-width: 48rem) {
+          margin-left: 2rem;
+        }
+        h6 {
+          font-size: 0.875rem;
+          margin: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+
+          @media (min-width: 37.5rem) {
+            position: static;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+          }
+          sup {
+            font-size: 0.625rem;
+            font-weight: var(--medium);
+          }
+        }
+        p {
+          font-size: 0.75rem;
+          color: var(--n60);
+          line-height: 1.125rem;
+          font-weight: var(--medium);
+          margin-bottom: 0.125rem;
+
+          @media (min-width: 37.5rem) {
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: var(--regular);
+          }
+        }
+        strong {
+          display: block;
+          font-weight: var(--medium);
+          font-size: 0.625rem;
+          letter-spacing: 0.04rem;
+          color: var(--n60);
+
+          @media (min-width: 37.5rem) {
+            font-size: 0.75rem;
+            letter-spacing: 0;
+          }
+        }
+        span {
+          em {
+            &.show-md {
+              @media (min-width: 48rem) {
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+      .option-button {
+        align-self: flex-end;
+        order: 2;
+        margin-left: 0.75rem;
+        width: 7.5rem;
+
+        // @media (min-width: 13rem) {
+        //   margin-top: .75rem;
+        // }
+        @media (min-width: 37.5rem) {
+          margin-left: 0.75rem;
+        }
+        @media (min-width: 48rem) {
+          margin-left: 3rem;
+          width: 8rem;
+        }
+        @media (max-width: 37.5rem) {
+          margin-left:0;
+        }
+        .btn-custom {
+          padding-left: 0;
+          padding-right: 0;
+          width: 100%;
+
+          @media (max-width: 37.5rem) {
+            padding: 0 .625rem;
+          }
+        }
+      }
+      .option-error {
+        order: 3;
+      }
+      .option-text {
+        padding-top: 0.25rem;
+        padding-left: 0.75rem;
+        flex: 1 1 100%;
+        order: 3;
+
+        mat-error {
+          color: #f44336;
+        }
+
+        p {
+          color: var(--n60);
+          margin: 0;
+        }
+
+        &.error_text {
+          p {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

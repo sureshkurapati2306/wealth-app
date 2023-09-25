@@ -1,0 +1,79 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" (click)="backHandler()">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>Edit All Funds Limit</h1>
+            </div>
+            <div class="section-body">
+                <div class="section-content">
+                    <div class="section-content-right">
+                        <form [formGroup]="allFundLimitForm">
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>Initial Minimum Limit (RM)</mat-label>
+                                    <input
+                                        matInput
+                                        type="number"
+                                        maxLength="30"
+                                        formControlName="minAmount"
+                                        inputmode="numeric"
+                                        step="1"
+                                        placeholder="Minimum Limit"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            allFundLimitForm.get('minAmount').invalid &&
+                                            allFundLimitForm.get('minAmount').touched
+                                        "
+                                    >
+                                        Initial Minimum Limit is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                            <div class="field">
+                                <mat-form-field>
+                                    <mat-label>Subsequent Minimum Limit (RM)</mat-label>
+                                    <input
+                                        matInput
+                                        type="number"
+                                        maxLength="30"
+                                        formControlName="subsequentMin"
+                                        inputmode="numeric"
+                                        step="1"
+                                        placeholder="Minimum Limit"
+                                    />
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    <span
+                                        *ngIf="
+                                            allFundLimitForm.get('subsequentMin').invalid &&
+                                            allFundLimitForm.get('subsequentMin').touched
+                                        "
+                                    >
+                                        Subsequent Minimum Limit is required
+                                    </span>
+                                </mat-error>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        (click)="saveAllFundLimit()"
+        [disabled]="!allFundLimitForm.valid"
+    >
+        Save
+    </button>
+</div>

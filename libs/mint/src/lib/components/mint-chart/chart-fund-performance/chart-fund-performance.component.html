@@ -1,0 +1,55 @@
+<div class="card-wrapper {{addClass}}">
+  <div class="card">
+    <h5>Fund Performance</h5>
+    <div class="wrapper">
+      <h5>Past Performance</h5>
+      <div class="block">
+        <div class="col">
+          <p>1-Month</p>
+          <p class="value">
+            <img
+              src="./assets/images/chart-increase.svg"
+              alt="chart increase"
+            />
+            <strong>{{ past1Mnth }}%</strong>
+          </p>
+        </div>
+        <div class="col">
+          <p>3-Month</p>
+          <p class="value">
+            <img
+              src="./assets/images/chart-increase.svg"
+              alt="chart increase"
+            />
+            <strong>{{ past3Mnth }}%</strong>
+          </p>
+        </div>
+      </div>
+      <div class="pre-chart">
+        <div class="flex">
+          <h5 class="show-md">Performance Chart</h5>
+          <div class="toggle">
+            <p class="show-md">Fund Past Performance</p>
+            <mat-button-toggle-group value="1mnth">
+              <mat-button-toggle value="1mnth">1-mth</mat-button-toggle>
+              <mat-button-toggle value="3mnth">3-mth</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+      </div>
+      <div class="chart">
+        <highcharts-chart
+          class="highcharts"
+          [Highcharts]="Highcharts"
+          [options]="options"
+          style="width: 100%; display: block"
+        >
+        </highcharts-chart>
+        <p>
+          Disclaimer: Past performance of a fund is not an indication of its
+          future performance.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

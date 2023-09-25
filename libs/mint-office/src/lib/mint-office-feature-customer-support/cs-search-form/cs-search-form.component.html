@@ -1,0 +1,30 @@
+<form [formGroup]="myForm" (submit)="submit($event)" class="block-filter">
+   <div class="block-filter-input">
+      <div class="field">
+         <mat-form-field>
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput placeholder="Full Name" formControlName="fullName" />
+         </mat-form-field>
+      </div>
+      <div class="field">
+         <mat-form-field>
+            <mat-label>ID Number</mat-label>
+            <input type="text" matInput placeholder="ID Number" formControlName="idNumber" />
+         </mat-form-field>
+      </div>
+      <div class="field">
+         <mat-form-field>
+            <mat-label>CIF Number</mat-label>
+            <input type="text" matInput placeholder="CIF Number" formControlName="cifNumber" />
+         </mat-form-field>
+      </div>
+      <div class="block-filter-cta">
+         <button mat-flat-button class="btn-custom btn-text btn-xs" [disabled]="(myForm.get('fullName').value.length < 3 && myForm.get('idNumber').value.length < 3 && myForm.get('cifNumber').value.length < 3) || loadingState === 'loading'" type="button" (click)="clear()">
+            Clear
+         </button>
+         <button mat-flat-button class="btn-custom btn-red btn-xs" [disabled]="(myForm.get('fullName').value.length < 3 && myForm.get('idNumber').value.length < 3 && myForm.get('cifNumber').value.length < 3) || loadingState === 'loading'" type="submit">
+            Search
+         </button>
+      </div>
+   </div>
+</form>

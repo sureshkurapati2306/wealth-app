@@ -1,0 +1,175 @@
+<div class="page-wrapper" *ngIf="(utRecord$ | async) as item">
+  <div class="container">
+    <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+    <div class="section">
+      <div class="section-head">
+        <button mat-flat-button class="btn-custom btn-text" routerLink="/unit-trust-transactions"><em class="icon-arrow-back"></em></button>
+        <h1>Reference No: {{ item.referenceNo }}</h1>
+      </div>
+      <div class="section-content">
+        <div class="section-box">
+          <div class="section-box-head">
+            <h5>Customer Details</h5>
+          </div>
+          <div class="section-box-content">
+            <div>
+              <h6>Customer Name</h6>
+              <p>{{ item?.clientName }}</p>
+            </div>
+            <div>
+              <h6>Contact Number</h6>
+              <p>{{ item?.contactNo }}</p>
+            </div>
+            <div>
+              <h6>ID Number</h6>
+              <p>{{ item?.clientId }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Staff Indicator</h6>
+              <p>{{ item?.staffIndicator }}</p>
+            </div>
+            <div>
+              <h6>Unit Trust Account Number</h6>
+              <p>{{ item?.utAccountNo }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01' || item?.transactionType === '02'">
+              <h6>Settlement Account No.</h6>
+              <p>{{ item?.settlementAccount }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-box">
+          <div class="section-box-head">
+            <h5>Transaction Details</h5>
+          </div>
+          <div class="section-box-content">
+            <div>
+              <h6>Reference No.</h6>
+              <p>{{ item?.referenceNo }}</p>
+            </div>
+            <div>
+              <h6>E-Manager Transaction No.</h6>
+              <p>{{ item?.referenceNo }}</p>
+            </div>
+            <div>
+              <h6>Transaction Date & Time</h6>
+              <p>{{ item?.transactionDatetime | date:'dd MMM yyyy, hh:mma' }}</p>
+            </div>
+            <div>
+              <h6>Status</h6>
+              <p>{{ item?.transactionStatus }}</p>
+            </div>
+            <div>
+              <h6>Last Updated Date & Time</h6>
+              <p>
+                <ng-container *ngIf="(!item?.fileStatusDate && !item?.rejectedDate) && item?.transactionStatusDate else fileStatusDateOrRejectedDateAvailable">{{ item?.transactionStatusDate | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                <!-- ////
+                // if transactionStatus rejected display rejectedDate
+                // if transactionStatus successful or unsuccesful 
+                // if transactionStatus processing display transactionStatusDate  
+                //// -->
+                <ng-template #fileStatusDateOrRejectedDateAvailable>
+                  <ng-container *ngIf="item?.transactionStatus === 'Cancelled'">{{ item?.rejectedDate | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                  <ng-container *ngIf="item?.transactionStatus === 'Successful' || item?.transactionStatus === 'Unsuccessful'">{{ item?.transactionStatusDate | date:'dd MMM yyyy' }}</ng-container>
+                  <ng-container *ngIf="item?.transactionStatus === 'Processing'">{{ item?.transactionDatetime | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                </ng-template>
+                
+                <!-- <ng-template #fileStatusDateOrRejectedDateAvailable>
+                  <ng-container *ngIf="item?.fileStatusDate && !item?.rejectedDate">{{ item?.fileStatusDate | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                  <ng-container *ngIf="!item?.fileStatusDate && item?.rejectedDate">{{ item?.rejectedDate | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                  <ng-container *ngIf="item?.fileStatusDate && item?.rejectedDate">{{ item?.rejectedDate | date:'dd MMM yyyy, hh:mma' }}</ng-container>
+                </ng-template> -->
+                
+              </p>
+            </div>
+            
+            <div *ngIf="item?.transactionType === '01' || item?.transactionType === '02'">
+              <h6>Currency</h6>
+              <p>MYR</p>
+            </div>
+
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Total Amount Payable</h6>
+              <p>{{ item?.payableAmount | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Tax Amount</h6>
+              <p>{{ item?.taxAmount | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Net Investment Amount</h6>
+              <p>{{ item?.netInvestment | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Sales Charges (%)</h6>
+              <p>{{ item?.chargesPercentage | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '01'">
+              <h6>Sales Charges (Amount)</h6>
+              <p>{{ item?.chargesAmount | number:'1.2-2' }}</p>
+            </div>
+
+            <div *ngIf="item?.transactionType === '02'">
+              <h6>No. of Units Redeemed</h6>
+              <p>{{ item?.transactionUnit | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '02'">
+              <h6>Redemption Amount Payable (Indicative)</h6>
+              <p>{{ item?.payableAmount | number:'1.2-2' }}</p>
+            </div>
+
+            <div *ngIf="item?.transactionType === '01' || item?.transactionType === '02'">
+              <h6>Fund Name</h6>
+              <p>{{ item?.fundName }}</p>
+            </div>
+            
+            <div *ngIf="item?.transactionType === '03'">
+              <h6>Switch Out Fund</h6>
+              <p>{{ item?.fundName }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '03'">
+              <h6>Switch In Fund</h6>
+              <p>{{ item?.toFundName }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '03'">
+              <h6>No. of Units Switched</h6>
+              <p>{{ item?.transactionUnit | number:'1.2-2' }}</p>
+            </div>
+            <div *ngIf="item?.transactionType === '03'">
+              <h6>Indicative Charges (%)</h6>
+              <p>{{ item?.chargesPercentage | number:'1.2-2' }}</p>
+            </div>
+
+            <div>
+              <h6>Comments for cancelled transaction</h6>
+              <p>{{ item?.rejectedRemark || '-' }}</p>
+            </div>
+            <div>
+              <h6>Remarks</h6>
+              <p>{{item?.statusRemark || '-'}}</p>
+            </div>
+            <div>
+              <h6>Batch Date & Time</h6>
+              <p>{{ item.processingStatus === 'N' ? '-' : (item?.processingStatusDate | date:'dd MMM yyyy, hh:mma')}}</p>
+            </div>
+            <div>
+              <h6>Higher Risk Fund Acknowledgment</h6>
+              <p *ngIf="item?.transactionType !== '02'">{{item.higherFundRiskAck}}</p>
+              <p *ngIf="item?.transactionType === '02'">N/A</p>
+            </div>
+            <div>
+              <h6>Document Indicator</h6>
+              <p>{{ item.documentInd === 'Y' ? 'Yes' : 'No'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cimb-footer-bo-cta 
+  btnLabel="Cancel Transaction"
+  [disabled]="cancelButtonDisabled"
+  (clickEvent)="clickCancelTransaction()"
+></cimb-footer-bo-cta>

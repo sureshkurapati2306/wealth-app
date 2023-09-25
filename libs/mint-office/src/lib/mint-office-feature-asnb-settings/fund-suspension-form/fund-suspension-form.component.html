@@ -1,0 +1,162 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <button mat-flat-button class="btn-custom btn-text" (click)="backHandler()">
+                    <em class="icon-arrow-back"></em>
+                </button>
+                <h1>{{ editScreen ? 'Edit' : 'Add' }} Fund Suspension</h1>
+            </div>
+            <div class="section-body">
+                <div class="section-content">
+                    <div class="section-content-right">
+                        <div>
+                            <p>
+                                <span class="fund-label">Fund ID:</span>
+                                {{ selectedData.asnbFundId }}
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="fund-label">Fund Name:</span>
+                                {{ (fundTypeMap$ | async)[selectedData.asnbFundId].fundLongName }}
+                            </p>
+                        </div>
+                        <form [formGroup]="suspensionForm">
+                            <div class="field">
+                                <mat-form-field [ngClass]="{ field_error: startDateTimeError }">
+                                    <mat-label>Suspension Start Time</mat-label>
+                                    <input
+                                        matInput
+                                        [ngxMatDatetimePicker]="picker"
+                                        placeholder="Choose a date"
+                                        formControlName="startDateTime"
+                                        ngDefaultControl
+                                        [readonly]="true"
+                                        (dateChange)="startDateChange($event)"
+                                        (click)="picker.open()"
+                                    />
+                                    <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                                    <mat-datepicker-toggle
+                                        class="datetimepicker-icon"
+                                        matSuffix
+                                        [for]="picker"
+                                    ></mat-datepicker-toggle>
+
+                                    <ngx-mat-datetime-picker
+                                        #picker
+                                        [enableMeridian]="true"
+                                        [showSeconds]="false"
+                                        [defaultTime]="defaultTime"
+                                    >
+                                    </ngx-mat-datetime-picker>
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    {{ message }}
+
+                                    <span
+                                        *ngIf="
+                                            suspensionForm.get('startDateTime').invalid &&
+                                            suspensionForm.get('startDateTime').touched &&
+                                            !suspensionForm.hasError('startDateInvalid')
+                                        "
+                                    >
+                                        Start date and time is required
+                                    </span>
+                                    <span *ngIf="suspensionForm.hasError('startDateInvalid')"
+                                        >Overlapped on existing date.</span
+                                    >
+                                </mat-error>
+                            </div>
+                            <div
+                                class="field"
+                                *ngIf="!suspensionForm.get('isCheckedUntilFurtherNotice').value"
+                            >
+                                <mat-form-field [ngClass]="{ field_error: endDateTimeError }">
+                                    <mat-label>Suspension End Time</mat-label>
+                                    <input
+                                        matInput
+                                        [ngxMatDatetimePicker]="picker1"
+                                        placeholder="Choose a date"
+                                        formControlName="endDateTime"
+                                        ngDefaultControl
+                                        [min]="minEndDate"
+                                        [readonly]="true"
+                                        (click)="picker1.open()"
+                                    />
+                                    <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                                    <mat-datepicker-toggle
+                                        class="datetimepicker-icon"
+                                        matSuffix
+                                        [for]="picker1"
+                                    ></mat-datepicker-toggle>
+
+                                    <ngx-mat-datetime-picker
+                                        #picker1
+                                        [enableMeridian]="true"
+                                        [showSeconds]="false"
+                                        [defaultTime]="defaultTime"
+                                    >
+                                    </ngx-mat-datetime-picker>
+                                </mat-form-field>
+                                <mat-error class="custom-error">
+                                    {{ message }}
+
+                                    <span
+                                        *ngIf="
+                                            suspensionForm.get('endDateTime').invalid &&
+                                            suspensionForm.get('endDateTime').touched &&
+                                            !suspensionForm.hasError('endDateInvalid')
+                                        "
+                                    >
+                                        End date and time is required
+                                    </span>
+                                    <span *ngIf="suspensionForm.hasError('endDateInvalid')"
+                                        >End date entered occurs before the start date.</span
+                                    >
+                                </mat-error>
+                            </div>
+                            <div class="field">
+                                <mat-checkbox
+                                    formControlName="isCheckedUntilFurtherNotice"
+                                    class="checkbox"
+                                    (change)="handleUntilFurtherNotice($event)"
+                                ></mat-checkbox>
+                                <mat-label class="checkbox-label">Until further notice</mat-label>
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                            </div>
+                            <p class="text-subscription">Subscription Type:</p>
+                            <div class="field">
+                                <mat-checkbox
+                                    formControlName="isFullySubscribed"
+                                    class="checkbox"
+                                ></mat-checkbox>
+                                <mat-label class="checkbox-label">Fully subscribed</mat-label>
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                            </div>
+                            <div class="field">
+                                <mat-checkbox
+                                    formControlName="isFundSuspend"
+                                    class="checkbox"
+                                ></mat-checkbox>
+                                <mat-label class="checkbox-label">Suspend Fund</mat-label>
+                                <mat-icon class="mat-icon-error icon-danger-1"></mat-icon>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-cta footer-sub-page">
+    <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        (click)="createSuspension()"
+        [disabled]="!suspensionForm.valid"
+    >
+        Save
+    </button>
+</div>

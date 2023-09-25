@@ -1,0 +1,11 @@
+.option-info {
+  em {
+    font-size: 1rem;
+
+    &.show-lg {
+      @media (min-width: 62rem) {
+        display: inline-block;
+      }
+    }
+  }
+}

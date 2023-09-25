@@ -1,0 +1,187 @@
+.progress-sub-header {
+  border-radius: 0 0 1rem 1rem;
+  position: sticky;
+  left: 0;
+  top: 3.3125rem;
+  z-index: 2;
+
+  @media (min-width: 48rem) {
+    background: var(--n0);
+  }
+  .container {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (min-width: 60rem) {
+      padding: 2rem 1rem;
+      justify-content: space-between;
+    }
+  }
+  .tag {
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: var(--n80);
+    letter-spacing: 0.08em;
+    font-weight: var(--medium);
+    margin-bottom: 0;
+    border-left-width: 4px;
+    border-left-style: solid;
+    margin-top: 0.3125rem;
+    padding-left: 4px;
+
+    @media (min-width: 768px) {
+      line-height: 1.5rem;
+      font-size: 1rem;
+      padding-left: 8px;
+    }
+
+    &.local-equity {
+      border-color: var(--jg70);
+    }
+    &.regional-equity {
+      border-color: var(--ei70);
+    }
+    &.fixed-income {
+      border-color: var(--azb70);
+    }
+    &.cash {
+      border-color: var(--cg70);
+    }
+    &.global-equity {
+      border-color: var(--f70);
+    }
+    &.alternatives {
+      border-color: var(--jl70);
+    }
+  }
+  .fund-holiday-label {
+    background: var(--w70);
+    border-radius: 16px;
+    border: 1px solid var(--warning);
+    padding: 1px 8px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--n0);
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.3125rem;
+
+    @media (min-width: 60rem) {
+      margin-top: 0.75rem;
+    }
+
+    span {
+      margin-left: 5px;
+      font-size: 16px;
+    }
+  }
+}
+.col-steps {
+  order: 1;
+  flex: 1;
+  background: var(--n5h);
+
+  @media (min-width: 60rem) {
+    order: 2;
+    flex: 1 1 auto;
+    background: var(--n0);
+  }
+}
+.col-header {
+  order: 2;
+  width: 100%;
+  display: block;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--n0);
+  box-shadow: 0px 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12),
+    0px 0.25rem 0.25rem -2px rgba(24, 39, 75, 0.08);
+  border-radius: 0px 0px 1rem 1rem;
+
+  @media (min-width: 60rem) {
+    order: 1;
+    box-shadow: none;
+    width: auto;
+    flex: 1 1 auto;
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  @media (min-width: 75rem) {
+    width: 46%;
+  }
+
+  .t-util {
+    display: flex;
+
+    @media (min-width: 48rem) {
+      display: block;
+    }
+  }
+  a {
+    margin-right: 0.8125rem;
+    cursor: pointer;
+
+    @media (min-width: 48rem) {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    em {
+      color: var(--n100);
+      font-size: 0.75rem;
+
+      @media (min-width: 48rem) {
+        font-size: 0.75rem;
+        margin-right: 0.625rem;
+      }
+    }
+    span {
+      color: var(--n100);
+
+      @media (min-width: 60rem) {
+        display: inline-block;
+        color: var(--n100);
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: var(--regular);
+      }
+    }
+  }
+  h2 {
+    font-size: 1.125rem;
+    line-height: 1.625rem;
+    color: var(--n90);
+    margin-bottom: 0;
+
+    @media (min-width: 60rem) {
+      font-size: 1.75rem;
+      line-height: 2.5rem;
+    }
+  }
+  .b-util {
+    padding-left: 20px;
+
+    @media (min-width: 48rem) {
+      padding-left: 0;
+    }
+    .tag {
+      @media (min-width: 62rem) {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+}
+
+.page-title {
+  float: left;
+}
+
+.investment-button {
+  float: right;
+}

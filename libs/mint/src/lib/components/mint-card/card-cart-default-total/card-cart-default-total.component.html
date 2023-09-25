@@ -1,0 +1,90 @@
+<p>
+    <span class="Description BodySmall-Regular show-lg" *ngIf="flow === 'redeem' || flow === 'switch'">
+        <span class="BodySmall-Regular">*</span>
+        These are indicative amounts only. The actual amount may differ based on the closing NAV price.
+    </span></p>
+  <p>
+
+<div class="card-total">
+  <div class="image">
+    <img src="./assets/images/cart-checkout.svg" alt="Cart checkout" />
+  </div>
+  <div class="inner" [ngClass]="{ 'custom-flex': isForCartSwitching }">
+    <div class="top">
+      <p [ngClass]="{'switching-text-small': isForCartSwitching}">
+        Total Fund : {{ totalFund }}
+        <a (click)="highRiskClick('Ok')"  *ngIf="highRiskCount && (flow !== 'redeem' && flow === 'topup')">({{highRiskCount}} have higher Risk Category)</a>
+        <a (click)="highRiskClick('Ok')" *ngIf="switchInhighRiskCount && (flow !== 'redeem' && flow === 'switch')">({{switchInhighRiskCount}} have higher Risk Category)</a>
+      </p>
+
+      <p *ngIf="flow === 'redeem'">
+        Total Redemption Units
+        <strong>{{ totalRedemptionUnits | number: '1.2-2':'en-US' }}</strong>
+      </p>
+      <p  *ngIf="flow === 'topup'">
+        Total Sales Charges
+        <strong>MYR {{ totalSalesCharge | number: '1.2-2':'en-US' }}</strong>
+      </p>
+      <p *ngIf="flow === 'topup'">
+        Total Net Investment Amount
+        <strong
+          >MYR {{ totalNetInvestmentAmount | number: '1.2-2':'en-US' }}</strong
+        >
+      </p>
+    </div>
+    <div class="bottom" *ngIf="!isForCartSwitching">
+      <p *ngIf="flow === 'topup'">
+        Total Amount
+        <strong
+          ><sup>MYR</sup>{{ totalAmount | number: '1.2-2':'en-US' }}</strong
+        >
+      </p>
+      <p *ngIf="flow === 'redeem'">
+        Total Redemption Amount *
+        <strong
+          ><sup>MYR</sup
+          >{{ totalRedemptionAmount | number: '1.2-2':'en-US' }}</strong
+        >
+      </p>
+    </div>
+    <div class="cart-switching" *ngIf="flow === 'switch'">
+      <div class="col">
+        <p>
+          Total Switch Out Units
+          <strong>{{ totalSwitchOutUnits | number: '1.2-2':'en-US' }}</strong>
+        </p>
+      </div>
+      <div class="col-arrow">
+        <img src="./assets/images/arrow-right.svg" alt="arrow" />
+      </div>
+      <div class="col">
+        <p>
+          Total Switch In Units *<strong>{{
+            totalSwitchInUnits | number: '1.2-2':'en-US'
+          }}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cart-total-action">
+  <p class="alert">
+    <span class="Description BodySmall-Regular alert hide-lg show-mobile" *ngIf="flow === 'redeem' || flow === 'switch'">
+        <span class="BodySmall-Regular">*</span>
+        These are indicative amounts only. The actual amount may differ based on the closing NAV price.
+    </span></p>
+  <p class="alert">
+    {{schedulerMsg}}.
+  </p>
+  <span>
+  </span>
+  <button
+    class="btn-custom btn-red"
+    disableRipple="true"
+    [disabled]="enableProceedToCheckout || isFundOnHoliday"
+    mat-flat-button
+    (click)="proceedToCheckout()"
+  >
+    Proceed to Checkout
+  </button>
+</div>

@@ -1,0 +1,27 @@
+.option-slider {
+  margin-bottom: 1.125rem;
+  background-color: aquamarine;
+
+  @media (min-width: 37.5rem) {
+    display: flex;
+    margin-bottom: 0;
+  }
+  &-left {
+    @media (min-width: 37.5rem) {
+      flex: 1;
+      max-width: 29.5rem;
+    }
+  }
+  &-right {
+    @media (min-width: 37.5rem) {
+      flex: 0 0 8.625rem;
+      margin-left: 2rem;
+      margin-top: 1rem;
+
+      .mat-checkbox-label {
+        font-weight: var(--regular);
+        font-size: 1rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+<div class="mint-dialog-container">
+
+    <!-- Dismiss button -->
+    <ng-container>
+        <div class="dismissible">
+            <button mat-icon-button
+                    class="close-btn"
+                    [matDialogClose]="undefined">
+                <mat-icon><img src="./assets/images/icon-close.svg"
+                         alt="icon-close"></mat-icon>
+            </button>
+        </div>
+    </ng-container>
+
+    <!-- Icon button -->
+    <ng-container *ngIf="data.icon?.show">
+        <div class="icon">
+            <img src="./assets/images/{{data.icon.name}}"
+                 alt="{{data.icon.name}}">
+        </div>
+    </ng-container>
+
+
+    <!-- Content -->
+    <div class="content">
+
+        <ng-container *ngIf="data.title || data.message">
+            <div class="body">
+
+                <!-- Title -->
+                <ng-container *ngIf="data.title">
+                    <h3 class="title"
+                        [innerHTML]="data.title"></h3>
+                </ng-container>
+
+                <!-- Message -->
+                <ng-container *ngIf="data.message">
+                    <div class="message"
+                         [innerHTML]="data.message"></div>
+                </ng-container>
+
+                <!-- Note -->
+                <ng-container *ngIf="data.note">
+                    <div class="note"
+                         [innerHTML]="data.note"></div>
+                </ng-container>
+
+            </div>
+        </ng-container>
+
+    </div>
+
+    <!-- Actions -->
+    <ng-container *ngIf="data.actions?.confirm?.show || data.actions?.cancel?.show">
+        <div class="actions"
+            [ngClass]="{'center': data.actions?.cancel?.show === false}">
+            <!-- Cancel -->
+            <ng-container *ngIf="data.actions?.cancel?.show">
+                <button mat-stroked-button
+                        class="mint-cancel-button"
+                        (click)="this.data.actions?.cancel.click()"
+                        [matDialogClose]="'cancelled'">
+                    {{data.actions?.cancel.label}}
+                </button>
+            </ng-container>
+
+            <!-- Confirm -->
+            <ng-container *ngIf="data.actions?.confirm?.show">
+                <button mat-flat-button
+                        [color]="data.actions?.confirm?.color"
+                        (click)="this.data.actions?.confirm?.click()"
+                        [matDialogClose]="'confirmed'">
+                    {{data.actions?.confirm?.label}}
+                </button>
+            </ng-container>
+
+        </div>
+    </ng-container>
+
+</div>

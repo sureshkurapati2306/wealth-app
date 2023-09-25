@@ -1,0 +1,129 @@
+<mat-tab-group
+  #tabGroup
+  (selectedTabChange)="tabChanged($event)"
+  animationDuration="0ms"
+  class="custom-tab tab-dashboard curve-last"
+  [disableRipple]="true"
+  [selectedIndex]="selectedTabIndex"
+>
+  <mat-tab label="My Holdings">
+    <div class="tab-header">
+      <cimb-tab-header
+        [amlResult]="amlCheckResult"
+        [dashBoard]="dashboardFlow"
+        [account]="account"
+        [selectedAccount]="selectedAccount"
+        [solePropIndicator]="solePropIndicator"
+        [casaIndicator]="casaIndicator"
+        [joinOrUtAccountIndicator]="joinOrUtAccountIndicator"
+        [joinAndUtAccountIndicator]="joinAndUtAccountIndicator"
+        (accountListChangeEvent)="accountListChangeEvent($event)"
+        (selectedAccountChangeEvent)="selectedAccountChangeEvent($event)"
+        [selectedUnittrustAccountNumber]="selectedUnittrustAccountNumber"
+        (selectedAccountDialogCart)="selectedAccountDialogCartEvent($event)"
+        [addNewInvestmentEnabled]="addNewInvestmentEnabled"
+      ></cimb-tab-header>
+    </div>
+    <div class="tab-content">
+      <!-- Status: Empty -->
+      <cimb-list-holding-empty
+        *ngIf="dashBoard === 1 && myHoldingsLength === 0 && transactionProcessingIndicator !== 'Y'"
+      ></cimb-list-holding-empty>
+
+      <!-- Status = Processed -->
+      <cimb-list-holding-processed
+        *ngIf="dashBoard === 1 && myHoldingsLength === 0 && transactionProcessingIndicator === 'Y'"
+      ></cimb-list-holding-processed>
+
+      <!-- Status = Listing -->
+      <cimb-list-holding
+      [amlResult]="amlCheckResult"
+        *ngIf="dashBoard === 1"
+        [myHoldings]="myHoldings"
+        [solePropIndicator]="solePropIndicator"
+        [portfolioDatalist]="portfolioDatalist"
+        [flowText]="flowText"
+        [cartFundCount]="cartFundCount"
+        [casaIndicator]="casaIndicator"
+        [cimbStaff]="cimbStaff"
+        [joinOrUtAccountIndicator]="joinOrUtAccountIndicator"
+        [joinAndUtAccountIndicator]="joinAndUtAccountIndicator"
+        (sortingValueChangeEvent)="sortingValueChangeEvent($event)"
+        (addToCart)="addToCartEvent($event)"
+        (removeFromCart)="removeFromCartEvent($event)"
+        (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+        [selectedAccount]="selectedAccount"
+        (accountListChangeEvent)="accountListChangeEvent($event)"
+        (selectedAccountChangeEvent)="selectedAccountChangeEvent($event)"
+        [selectedUnittrustAccountNumber]="selectedUnittrustAccountNumber"
+        [flow]="flowObj"
+        [accountOptions]="accountOptions"
+        [clearAllDataHoldingLists]="clearAllDataHoldingList"
+        [cartUTAccount]="cartUTAccount"
+        (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+        (clearCartAndContinueEvent)="clearAllCart($event)"
+        (selectAccountChange)="selectedAccountChange($event)"
+        (updateAmountInCartTopUp)="updateAmountInCartTopUpEvent($event)"
+        [currentPageNumber]="currentPageNumberMyHoldings"
+        [itemsPerPage]="itemsPerPageMyHoldings"
+        [r2Enabled]="r2Enabled"
+        [foreignerInd]="foreignerInd"
+        [occupationInd]="occupationInd"
+        (updateCartDataInRedeem)="updateAmountInRedeemEvt($event)"
+        [customerType]="customerType"
+        [enableAddToCartForTopup]="enableAddToCartForTopup"
+        [enableAddToCartInRedeemTnx]="enableAddToCartInRedeemTnx"
+        [enableAddToCartInSwitchTnx]="enableAddToCartInSwitchTnx"
+        [enableRedeemAtInvestmentDashboard]="enableRedeemAtInvestmentDashboard"
+        [enableSwitchAtInvestmentDashboard]="enableSwitchAtInvestmentDashboard"
+      >
+      </cimb-list-holding>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Transaction History">
+    <div class="tab-header">
+      <cimb-tab-header
+        [dashBoard]="1"
+        [account]="account"
+        [selectedTabIndex]="selectedTabIndex"
+        [purchaseDetailData]="purchaseDetailData"
+        [selectedAccount]="selectedAccount"
+        (accountListChangeEvent)="accountListChangeEvent($event)"
+        (selectedAccountChangeEvent)="selectedAccountChangeEvent($event)"
+        (dateFilteredPurchaseDetailDataEvent)="dateFilteredPurchaseDetailDataEvent($event)"
+        [selectedUnittrustAccountNumber]="selectedUnittrustAccountNumber"
+        (selectedAccountDialogCart) = "selectedAccountDialogCartEvent($event)"
+        [isTransactionDataLoaded]="isTransactionDataLoaded"
+        [addNewInvestmentEnabled]="addNewInvestmentEnabled"
+      ></cimb-tab-header>
+    </div>
+
+    <div class="tab-content">
+
+      <cimb-list-transaction-history
+        *ngIf="dashBoard === 1"
+        [purchaseDetailData]="purchaseDetailData"
+        [selectedUnittrustAccountNumber]="selectedUnittrustAccountNumber"
+        [selectedAccount]="selectedAccount"
+        [currentPageNumber]="currentPageNumberTransHistory"
+        [itemsPerPage]="itemsPerPageTransHistory"
+        (isEmptyTransactionHistory)="isEmptyTransactionHistory = $event"
+        [isTransactionDataLoaded]="isTransactionDataLoaded"
+      ></cimb-list-transaction-history>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<div class="dashboard-paginator">
+  <cimb-numbered-paginator
+    *ngIf="selectedTabIndex === 0 && myHoldings?.length"
+    paginatorId="my-holdings"
+    (pageChange)="currentPageNumberMyHoldings = $event"
+  ></cimb-numbered-paginator>
+
+  <cimb-numbered-paginator
+    *ngIf="selectedTabIndex === 1 && !isEmptyTransactionHistory"
+    paginatorId="transaction-history"
+    (pageChange)="currentPageNumberTransHistory = $event"
+  ></cimb-numbered-paginator>
+</div>

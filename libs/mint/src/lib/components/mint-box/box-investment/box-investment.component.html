@@ -1,0 +1,323 @@
+<div class="box box-risk-profile" *ngIf="_holdingDetails">
+    <div class="heading">
+        <h6 class="label">
+            <span [ngStyle]="{ 'background-color': _holdingDetails.donutColor }"></span>
+            {{ _holdingDetails.name }}
+        </h6>
+    </div>
+    <div class="contentSection" *ngFor="let item of _holdingDetails.items">
+        <div class="subSection">
+            <span *ngIf="item.alcName === 'My Credit Cards'" class="CCType">
+                {{ item.cardAcctRel === 'P' ? 'Principal' : 'Supplementary' }}
+            </span>
+            <h4>
+                {{ item.alDesc }}
+                <span class="tips" *ngIf="item.alcName === 'My Credit Cards'">
+                    <em
+                        class="icon-help hide-lg"
+                        (click)="openBottomSheet('Disclaimer', creditCardMobileDisclaimer)"
+                    >
+                    </em>
+                    <em
+                        class="icon-help show-lg"
+                        [matTooltip]="creditCardDisclaimer | tooltipsList"
+                        matTooltipClass="tooltip-list"
+                        matTooltipPosition="right"
+                    >
+                    </em>
+                </span>
+            </h4>
+            <ng-container
+                *ngIf="
+                    hasAsnbAccount &&
+                        !isAccountStatusNormal &&
+                        item.alDesc === 'Amanah Saham Nasional Berhad';
+                    then invalidASNBAccount;
+                    else validInvestment
+                "
+            ></ng-container>
+
+            <ng-template #invalidASNBAccount>
+                <div>
+                    <p class="first-line">
+                        We’re sorry, your account’s status didn’t meet the ASNB criteria.
+                    </p>
+                    <p>
+                        Please contact ASNB Customer Service Centre by calling 03-7730 8899 to
+                        resolve this issue. (Account status - INVALID)
+                    </p>
+                </div>
+            </ng-template>
+
+            <ng-template #validInvestment>
+                <div class="flex">
+                    <div>
+                        <div class="accountNo">
+                            <span class="label">
+                                {{
+                                    item.alcName === 'My Credit Cards'
+                                        ? item.cardNumber
+                                        : item.alcName === 'My Loans/Financing'
+                                        ? (item.accountNumber | loanAccNum)
+                                        : item.accountNumber
+                                }}
+                            </span>
+                            <span class="nextpay label" *ngIf="item.nextPaymentDueDate">
+                                Next Payment Due:
+                                {{ item.nextPaymentDueDate | date: 'dd MMM y':'UTC+8' }}
+                            </span>
+                        </div>
+                        <ng-container
+                            *ngIf="item.alcName !== 'My Investment' && item.alcName !== 'My ASNB'"
+                        >
+                            <p class="dateTime">
+                                <em class="icon-clock"></em> Last updated on
+                                {{ lastUpdatedDate | async | date: 'dd MMM y, hh:mm:ss a':'UTC+8' }}
+                            </p>
+                        </ng-container>
+
+                        <p class="dateTime" *ngIf="item?.investmentLastUpdated">
+                            <em class="icon-clock"></em> Last updated on
+                            {{ item.investmentLastUpdated | date: 'dd MMM y, hh:mm:ss a':'UTC+8' }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="investmentValue">
+                            {{
+                                item.alcName === 'My Investment' || item.alcName === 'My ASNB'
+                                    ? 'Current Investment Value'
+                                    : ''
+                            }}
+                            {{ item.alcName === 'My Deposit' ? 'Current Balance' : '' }}
+                            {{
+                                item.alcName === 'My Loans/Financing'
+                                    ? 'Total Outstanding Balance'
+                                    : ''
+                            }}
+                            {{ item.alcName === 'My Credit Cards' ? 'Outstanding Balance' : '' }}
+                            <span class="tips" *ngIf="item.alcName === 'My Investment'">
+                                <em
+                                    class="icon-help hide-lg"
+                                    *ngIf="item.alcName === 'My Investment'"
+                                    (click)="
+                                        openBottomSheet(
+                                            'Disclaimer',
+                                            'Excluding foreign currency funds'
+                                        )
+                                    "
+                                >
+                                </em>
+                                <em
+                                    class="icon-help show-lg"
+                                    *ngIf="item.alDesc !== 'Amanah Saham Nasional Berhad'"
+                                    matTooltip="
+                    {{
+                                        item.alcName === 'My Investment'
+                                            ? 'Excluding foreign currency funds'
+                                            : ''
+                                    }}"
+                                    matTooltipPosition="right"
+                                >
+                                </em>
+                            </span>
+                        </p>
+                        <p *ngIf="item.currencyCode !== 'MYR'" class="amount">
+                            <sup>MYR</sup>
+                            <ng-container *ngIf="item.conversionAmt < 0">
+                                ({{ (item.conversionAmt | number: '1.2-2').replace('-', '') }})
+                            </ng-container>
+                            <ng-container *ngIf="item.conversionAmt >= 0">
+                                {{ item.conversionAmt | number: '1.2-2' }}
+                            </ng-container>
+                        </p>
+                        <span class="amount"
+                            ><sup>{{ item.currencyCode }}</sup>
+                            <ng-container *ngIf="item.amount < 0">
+                                ({{ (item.amount | number: '1.2-2').replace('-', '') }})
+                            </ng-container>
+                            <ng-container *ngIf="item.amount >= 0">
+                                {{ item.amount | number: '1.2-2' }}
+                            </ng-container>
+                        </span>
+                    </div>
+                </div>
+            </ng-template>
+
+            <div
+                class="redirectDiv"
+                *ngIf="
+                    item.alcName === 'My Investment' &&
+                    item.alDesc !== 'Amanah Saham Nasional Berhad'
+                "
+            >
+                <a
+                    class="redirect"
+                    *ngIf="canNavigateToDashboard"
+                    (click)="goToUtDashboard(item.accountNumber)"
+                    >View Account in Unit Trust Dashboard</a
+                >
+                <a
+                    class="redirect"
+                    *ngIf="!canNavigateToDashboard"
+                    (click)="openDialogUnableToProceed(event)"
+                    >View Account in Unit Trust Dashboard</a
+                >
+            </div>
+            <div
+                class="redirectDiv"
+                *ngIf="
+                    item.alcName === 'My Investment' &&
+                    item.alDesc === 'Amanah Saham Nasional Berhad' &&
+                    item.linked &&
+                    isAccountStatusNormal
+                "
+            >
+                <a
+                    class="redirect"
+                    *ngIf="canNavigateToDashboard"
+                    (click)="goToASNBDashboard(item.accountNumber)"
+                    >View Account in ASNB Dashboard</a
+                >
+                <a
+                    class="redirect"
+                    *ngIf="!canNavigateToDashboard"
+                    (click)="openDialogUnableToProceed(event)"
+                    >View Account in ASNB Dashboard</a
+                >
+            </div>
+        </div>
+    </div>
+    <div
+        class="contentSection"
+        *ngIf="_holdingDetails.name === 'My Investment' && showLinkAccountOptions | async"
+    >
+        <div class="asnb-link-account">
+            <div class="asnb-link-account-copywriting">
+                <p class="asnb-link-account-fund-name">Amanah Saham Nasional Berhad</p>
+                <p class="asnb-link-account-description">
+                    You haven’t link your ASNB account with CIMB yet.
+                </p>
+            </div>
+            <p class="asnb-link-account-cta" (click)="openDialog()">Link ASNB account</p>
+        </div>
+    </div>
+    <div
+        class="contentSection"
+        *ngIf="showAsnbPnbError && _holdingDetails.name === 'My Investment'"
+    >
+        <div class="asnb-link-account">
+            <div class="asnb-link-account-copywriting">
+                <p class="asnb-link-account-fund-name">Amanah Saham Nasional Berhad</p>
+                <p>We’re sorry, there’s a problem connecting to ASNB.</p>
+                <br />
+                <p>
+                    Please contact ASNB Customer Service Centre by calling 03-7730 8899 for more
+                    information. We apologise for any inconvenience caused.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div
+        class="contentSection"
+        *ngIf="showAsnbCimbError && _holdingDetails.name === 'My Investment'"
+    >
+        <div class="asnb-link-account">
+            <div class="asnb-link-account-copywriting">
+                <p class="asnb-link-account-fund-name">Amanah Saham Nasional Berhad</p>
+                <p>We’re sorry, there’s a problem connecting to ASNB.</p>
+                <br />
+                <p>
+                    Please contact
+                    <a
+                        class="redirection"
+                        rel="noopener"
+                        target="_blank"
+                        href="https://www.cimb.com.my/en/personal/help-support/contact-us.html"
+                        >CIMB Customer Service Centre</a
+                    >
+                    for us to assist you further. We apologise for any inconvenience caused.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- <div
+        //enable this block for future downtime
+        class="contentSection fund-maintenance-msg"
+        *ngIf="isOnScheduledMaintenance &&  _holdingDetails.name === 'My Investment'"
+    >
+        <p>
+            Sorry, we’re currently undergoing <strong>Scheduled Maintenance</strong> to provide you with a better experience. We’ll be back once the maintenance period ends. Please check back with us later.
+        </p>
+        <h6>Maintenance Period :</h6>
+        <p class="datetime">From: <span>{{maintenanceStartTime}}, {{maintenanceStartDate | date : 'd MMMM y'}}</span></p>
+        <p class="datetime">To:  <span>{{maintenanceEndTime}}, {{maintenanceEndDate | date : 'd MMMM y'}}</span></p>
+
+    </div> -->
+    <div class="contentSection" *ngIf="utDetails.length === 0">
+        <div class="content-applynow" *ngIf="_holdingDetails.name === 'My Investment'">
+            <p *ngIf="enableAccountOpening && _holdingDetails.name === 'My Investment'">
+                {{
+                    _holdingDetails.status === true
+                        ? 'You do not have Unit Trust account with CIMB yet.'
+                        : 'We couldn’t find the record right now. Please try again later.'
+                }}
+            </p>
+            <p
+                class="disableMessageApplyNow"
+                *ngIf="!enableAccountOpening && _holdingDetails.name === 'My Investment'"
+            >
+                Account opening is disabled at the moment
+            </p>
+            <span *ngIf="showApplyNow && enableAccountOpening" class="applynow-anchor">
+                <a
+                    class="redirect"
+                    (click)="
+                        applyNow(_holdingDetails.casaAvailability, _holdingDetails.haveActiveCasa)
+                    "
+                    >Apply Now</a
+                >
+            </span>
+            <span *ngIf="showApplyNow && !enableAccountOpening" class="applynow-anchor-disable">
+                <a class="redirect-disabled">Apply Now</a>
+            </span>
+        </div>
+        <p *ngIf="_holdingDetails.name === 'My Deposit/Investment'">
+            {{
+                _holdingDetails.status === true
+                    ? 'You do not have a deposit account with CIMB yet.'
+                    : 'We couldn’t find the record right now. Please try again later.'
+            }}
+        </p>
+        <p *ngIf="_holdingDetails.name === 'My Loans / Financing'">
+            {{
+                _holdingDetails.status === true
+                    ? 'You do not have a loans/financing with CIMB yet.'
+                    : 'We couldn’t find the record right now. Please try again later.'
+            }}
+        </p>
+        <p *ngIf="_holdingDetails.name === 'My Credit Cards'">
+            {{
+                _holdingDetails.status === true
+                    ? 'You do not have a credit card with CIMB yet.'
+                    : 'We couldn’t find the record right now. Please try again later.'
+            }}
+        </p>
+    </div>
+
+    <div
+        class="contentSection system-downtime"
+        *ngIf="hasASNBDowntime && _holdingDetails.name === 'My Investment'"
+    >
+        <p>
+            Sorry, we’re currently experiencing a <strong>System Downtime</strong>. Rest assured
+            that our team are working hard to resolve the issue to serve you.
+        </p>
+
+        <p>
+            <strong
+                >We apologise for any inconvenience caused and we appreciate your patience. Please
+                check back with us later.</strong
+            >
+        </p>
+    </div>
+</div>

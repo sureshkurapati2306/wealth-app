@@ -1,0 +1,93 @@
+<form
+    #searchForm="ngForm"
+    [formGroup]="favouriteForm"
+    (submit)="submit($event)"
+    class="block-filter"
+>
+    <div class="block-filter-input">
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Transaction Date *</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="favouriteStartDate" placeholder="Start date" />
+                    <input matEndDate formControlName="favouriteEndDate" placeholder="End date" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                    class="datetimepicker-icon"
+                    matSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Action</mat-label>
+                <mat-select
+                    formControlName="action"
+                    placeholder="Choose options"
+                    panelClass="custom-select-panel multi-select custom-field-adjustment"
+                >
+                    <mat-option *ngFor="let item of favouriteTypes" [value]="item.value">{{
+                        item.viewValue
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <mat-select
+                    formControlName="status"
+                    placeholder="Choose options"
+                    panelClass="custom-select-panel multi-select custom-field-adjustment"
+                >
+                    <mat-option *ngFor="let item of favouriteStatuses" [value]="item.value">{{
+                        item.viewValue
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Customer Name</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Customer Name"
+                    formControlName="favouriteCustomerName"
+                />
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-label>Customer ID</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Customer Id"
+                    formControlName="favouriteCustomerId"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="block-filter-cta">
+        <button
+            mat-flat-button
+            class="btn-custom btn-text btn-xs btn-filter-clear"
+            [disabled]="favouriteForm.invalid || loadingState === 'loading'"
+            type="button"
+            (click)="clear()"
+        >
+            Clear
+        </button>
+        <button
+            mat-flat-button
+            class="btn-custom btn-red btn-xs btn-filter-search"
+            [disabled]="favouriteForm.invalid || loadingState === 'loading'"
+            type="submit"
+        >
+            Search
+        </button>
+    </div>
+</form>

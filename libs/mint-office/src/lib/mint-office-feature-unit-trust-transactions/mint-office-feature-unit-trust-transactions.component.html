@@ -1,0 +1,82 @@
+<div class="page-wrapper">
+  <div class="container">
+    <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+    <div class="section">
+      <div class="section-head">
+        <h1>{{ titleHeader }}</h1>
+      </div>
+      <div class="section-content">
+          <cimb-office-ut-search-form
+            [searchParams]="(utSearchQuery$ | async)"
+            [loadingState]="(utLoadingState$ | async)"
+            [isSMSPage]="isSmsPage"
+            (submitForm)="search($event)"
+            (clearForm)="clear()"
+          ></cimb-office-ut-search-form>
+
+        <div class="block-tab">
+          <mat-tab-group class="bo-tab" animationDuration="0ms" [disablePagination]="true" (selectedTabChange)="tabChanged($event)">
+            <mat-tab *ngIf="utPurchaseRecords$ | async as utPurchaseRecords">
+              <ng-template mat-tab-label>
+                Purchase 
+                <span *ngIf="(utHasSearched$ | async) && (utLoadingState$ | async) !== 'pending'"><strong>{{ utPurchaseRecords.length }}</strong></span>
+              </ng-template>
+              <div class="tab-content">
+
+                <cimb-office-ut-list-table 
+                  [displayedColumns]="genericUtDisplayedColumns"
+                  [dataSourceRows]="utPurchaseRecords"
+                  [isSMSPage]="isSmsPage"
+                  [getLoadingState]="(utLoadingState$ | async)"
+                  [hasSearched]="(utHasSearched$ | async)"
+                  (cancelTransactions)="clickCancelTransactions($event)"
+                  [tabName]="tabName"
+                ></cimb-office-ut-list-table>
+
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="utRedemptionRecords$ | async as utRedemptionRecords">
+              <ng-template mat-tab-label>
+                Redemption 
+                <span *ngIf="(utHasSearched$ | async) && (utLoadingState$ | async) !== 'pending'"><strong>{{ utRedemptionRecords.length }}</strong></span>
+              </ng-template>
+              <div class="tab-content">
+                
+                <cimb-office-ut-list-table 
+                  [displayedColumns]="genericUtDisplayedColumns"
+                  [dataSourceRows]="utRedemptionRecords"
+                  [isSMSPage]="isSmsPage"
+                  [getLoadingState]="(utLoadingState$ | async)"
+                  [hasSearched]="(utHasSearched$ | async)"
+                  (cancelTransactions)="clickCancelTransactions($event)"
+                  [tabName]="tabName"
+                ></cimb-office-ut-list-table>
+                
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="utSwitchingRecords$ | async as utSwitchingRecords" >
+              <ng-template mat-tab-label>
+                Switching 
+                <span *ngIf="(utHasSearched$ | async) && (utLoadingState$ | async) !== 'pending'"><strong>{{ utSwitchingRecords.length }}</strong></span>
+              </ng-template>
+              <div class="tab-content">
+                
+                <cimb-office-ut-list-table 
+                  [displayedColumns]="switchingUtDisplayedColumns"
+                  [expandedDetail]="'expandedDetailSwitchingUtTransactions'"
+                  [dataSourceRows]="utSwitchingRecords"
+                  [isSMSPage]="isSmsPage"
+                  [getLoadingState]="(utLoadingState$ | async)"
+                  [hasSearched]="(utHasSearched$ | async)"
+                  (cancelTransactions)="clickCancelTransactions($event)"
+                  [tabName]="tabName"
+                ></cimb-office-ut-list-table>
+
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

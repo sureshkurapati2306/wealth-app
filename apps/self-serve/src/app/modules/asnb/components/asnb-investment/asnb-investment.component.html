@@ -1,0 +1,23 @@
+<div class="asnb-investment-box box-portfolio">
+    <div class="membership">
+        <p class="membership-name">{{ asnbOverallInvestment.name }}</p>
+        <p class="membership-number">{{ asnbOverallInvestment.uhId }}</p>
+    </div>
+    <div class="investment-value">
+        <p class="investment-value-wording">Current Investment Value</p>
+        <p class="value">
+            MYR
+            {{
+                (asnbOverallInvestment.currentInvestment
+                    ? asnbOverallInvestment.currentInvestment
+                    : 0
+                ) | number: '.2'
+            }}
+        </p>
+    </div>
+    <div class="investment-value hide-lg">
+        <p class="investment-desc-wording">
+            This is an overview to all your investments from your ASNB account.
+        </p>
+    </div>
+</div>

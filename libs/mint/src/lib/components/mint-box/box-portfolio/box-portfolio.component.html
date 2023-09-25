@@ -1,0 +1,26 @@
+<div class="box box-portfolio">
+  <div class="box-header">
+    <h5>Your Unit Trust Portfolio</h5>
+    <p>
+      This compares your current investments’ asset class breakdown across all
+      unit trust accounts to your risk profile's recommended percentages.
+    </p>
+  </div>
+  <div class="box-content">
+    <div class="chart portfolio-chart">
+      <div class="label1" *ngIf="showChart">
+        <img src="./assets/images/holding-pointer.svg" alt=""/>
+      </div>
+      <div class="label2" *ngIf="showChart">
+        <img src="./assets/images/recommended-pointer.svg" alt="" />
+      </div>
+      <cimb-chart-portfolio
+        [chartsListData]="chartsData"
+        [displayChart]="showChart"
+        *ngIf="showChart"
+      ></cimb-chart-portfolio>
+    </div>
+    <cimb-table-legend [items]="portfoliolist"></cimb-table-legend>
+    <cimb-alert-warning [message]="messages"></cimb-alert-warning>
+  </div>
+</div>

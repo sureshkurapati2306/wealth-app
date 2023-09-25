@@ -1,0 +1,68 @@
+<form [formGroup]="myForm" (submit)="submit($event)" class="block-filter">
+  <div class="block-filter-input">
+    <div class="field">
+      <mat-form-field>
+        <mat-label>Date Range *</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="startDate"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="endDate" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          class="datetimepicker-icon"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div class="field"> 
+      <mat-form-field>
+        <mat-label>Module</mat-label>
+        <mat-select
+          formControlName="modules"
+          multiple
+          placeholder="Choose options"
+          panelClass="custom-select-panel multi-select"
+          >
+          <mat-option *ngFor="let item of moduleOptions" [value]="item.value">{{ item.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="field">
+      <mat-form-field>
+        <mat-label>Channel</mat-label>
+        <mat-select
+          formControlName="channels"
+          multiple
+          placeholder="Choose options"
+          panelClass="custom-select-panel multi-select"
+          >
+          <mat-option *ngFor="let item of channelOptions" [value]="item.value">{{ item.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="block-filter-cta">
+      <button
+        mat-flat-button
+        class="btn-custom btn-text btn-xs"
+        [disabled]="myForm.invalid || loadingState === 'loading'"
+        type="button"
+        (click)="clear()"
+      >
+        Clear
+      </button>
+      <button
+        mat-flat-button
+        class="btn-custom btn-red btn-xs"
+        [disabled]="myForm.invalid || loadingState === 'loading'"
+        type="submit"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</form>

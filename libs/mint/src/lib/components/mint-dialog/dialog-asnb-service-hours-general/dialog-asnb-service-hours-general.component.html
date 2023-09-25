@@ -1,0 +1,42 @@
+<mat-dialog-content class="mat-typography" class="asnb-service-hours">
+    <div class="close-section">
+        <img
+            src="assets/images/close-icon.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="desktop-close"
+        />
+        <img
+            src="assets/images/close-icon-white.svg"
+            alt="close-icon"
+            mat-dialog-close
+            class="mobile-close"
+        />
+    </div>
+    <div class="asnb-service-hours-content">
+        <img src="assets/images/ic_clock.svg" alt="service-hours" />
+        <p class="asnb-service-hours-title">ASNB Service Hours</p>
+        <div class="asnb-service-hours-description">
+            <p>
+                ASNB transaction service is from
+                <span
+                    >Monday to Sunday; {{ operationHours.startTime }} to
+                    {{ operationHours.endTime }}</span
+                >. You can still browse and manage your ASNB account with us outside these hours.
+            </p>
+            <br />
+            <p>We’re happy to assist you when services is in operation again.</p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button
+        mat-flat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="asnb-service-hours-agree"
+        disableRipple
+    >
+        Okay
+    </button>
+</mat-dialog-actions>

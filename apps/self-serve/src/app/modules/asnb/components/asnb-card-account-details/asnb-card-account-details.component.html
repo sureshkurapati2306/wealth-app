@@ -1,0 +1,55 @@
+<cimb-asnb-card-with-heading [heading]="'Account Details'">
+    <div class="account-section">
+        <div class="account-item" *ngIf="accountDetails">
+            <p class="account-type">Nickname</p>
+            <p class="account-value">
+                {{ accountDetails.nickname }}
+            </p>
+        </div>
+        <div class="account-item" *ngIf="purchaseFavouriteDetails">
+            <p class="account-type">Name</p>
+            <p class="account-value">
+                {{ purchaseFavouriteDetails.beneName }}
+            </p>
+        </div>
+        <div class="account-item">
+            <p class="account-type">ASNB membership number</p>
+            <p class="account-value">
+                {{ purchaseFavouriteDetails?.asnbAccountNo || accountDetails.membershipNumber }}
+            </p>
+        </div>
+        <div class="account-item">
+            <p class="account-type">Member’s ID type</p>
+            <p class="account-value">
+                {{ purchaseFavouriteDetails?.memberIdType || getIdTypeName(accountDetails.idType) }}
+            </p>
+        </div>
+        <div class="account-item">
+            <p class="account-type">ID number</p>
+            <p class="account-value">
+                {{ purchaseFavouriteDetails?.beneClientId || accountDetails.idNumber }}
+            </p>
+        </div>
+        <div class="account-item" *ngIf="accountDetails">
+            <p class="account-type">Fund name</p>
+            <p class="account-value">
+                {{ getFundName(accountDetails.fundCode) }}
+            </p>
+        </div>
+        <div class="account-item">
+            <p class="account-type">Relationship</p>
+            <p class="account-value">
+                {{
+                    purchaseFavouriteDetails?.relationship ||
+                        getRelationshipName(accountDetails.relationship)
+                }}
+            </p>
+        </div>
+        <div class="account-item" *ngIf="purchaseReason">
+            <p class="account-type">Reason</p>
+            <p class="account-value">
+                {{ purchaseReason }}
+            </p>
+        </div>
+    </div>
+</cimb-asnb-card-with-heading>

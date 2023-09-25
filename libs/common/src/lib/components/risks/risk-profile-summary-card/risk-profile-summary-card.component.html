@@ -1,0 +1,95 @@
+<div class="card-wrapper">
+    <div class="card">
+        <ng-container *ngIf="result?.data as result">
+            <div class="flex">
+                <div class="flex-child">
+                    <h4>{{ riskProfile ? riskProfile : result.riskProfile}}<span class="label-text">Your Risk Profile</span></h4>
+                        <p>{{result.riskDescription}}</p>
+                </div>
+                <div class="flex-child">
+                    <div class="flex">
+                        <div class="flex-child">
+                            <div class="text">
+                                <h6>Potential Losses</h6>
+                                <p><strong>{{result.potentialLosses}}</strong></p>
+                            </div>
+                            <div class="text">
+                                <h6>Potential Returns</h6>
+                                <p><strong>{{result.potentialReturn}}</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex-child">
+                            <div class="text">
+                                <h6>Risk Tolerance</h6>
+                                <p><strong>{{result.riskTolerance}}</strong></p>
+                            </div>
+                            <small>{{result.riskToleranceDescription}}</small>
+                            <button class="mat-flat-button btn-custom btn-text"
+                                    (click)="openRiskCalculationDialog()">How was this calculated?</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+
+<!-- `How was this calculated?` dialog component -->
+<ng-template #riskProfileCalculationDialog>
+    <button class="mat-focus-indicator btn-close mat-icon-button mat-button-base" (click)="onClose()">
+        <em class="icon-close"></em>
+    </button>
+    <section mat-dialog-content
+             class="mat-dialog-text">
+        <h3>How was my Risk Profile calculated?</h3>
+        <p>Your Risk Profile is calculated based on the answers you gave in the Risk Profiling Assessment. It reflects
+            your ability and desire to take risk.</p>
+        <div class="comparison-wrapper">
+            <div class="item">
+                <div class="top-section">
+                    <h6>Ability to Take Risk</h6>
+                    <p>This measures your capacity to withstand investment volatility. The less you rely on investments
+                        to cover financial commitments, the greater your ability.</p>
+                </div>
+                <div class="bottom-section">
+                    <p class="heading"><strong>Indicators</strong></p>
+                    <div class="wrapper">
+                        <img src="./assets/images/icon-timer.svg"
+                             alt="icon-timer">
+                        <p><strong>Your age</strong> The younger you are, the more time you have to meet your financial
+                            goals.</p>
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/icon-money.svg"
+                             alt="icon-money">
+                        <p><strong>Disposable income</strong> Fewer monthly commitments and greater liquidity enables
+                            you to take more risk for an upside.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="top-section">
+                    <h6>Desire to take Risk</h6>
+                    <p>This indicates your risk tolerance. It is related to your ability and attitude to withstand
+                        volatility in your investment returns.</p>
+                </div>
+                <div class="bottom-section">
+                    <p class="heading"><strong>Indicators</strong></p>
+                    <div class="wrapper">
+                        <img src="./assets/images/icon-identity.svg"
+                             alt="icon-identity">
+                        <p><strong>Risk tolerance</strong> Indicates your willingness to handle variability in your
+                            investment returns. </p>
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/icon-money.svg"
+                             alt="icon-money">
+                        <p><strong>Investment period</strong> Longer periods indicate greater willingness to hold your
+                            investments until you reach your financial goals. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>

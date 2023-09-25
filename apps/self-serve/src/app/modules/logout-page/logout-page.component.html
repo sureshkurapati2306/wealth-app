@@ -1,0 +1,62 @@
+<div class="page-wrapper">
+    <div class="container">
+        <a class="logo">
+            <img
+                [src]="headerLogoUrl"
+                onerror="this.onerror=null; this.src='./assets/images/CIMB MyWealth Beta.png'"
+                alt="CIMB MyWealth"
+            />
+        </a>
+        <div class="section-content">
+            <div class="error-msg">
+                <h4>You are now logged out</h4>
+
+                <ng-container *ngIf="isTimeout">
+                    <span class="myWealth">Your session has expired due to inactivity. </span>
+                    <span class="myWealth inActivityText">
+                        Please login again through CIMB Clicks to continue.
+                    </span>
+                </ng-container>
+
+                <span class="myWealth"> Thank you for using My Wealth. </span>
+                <span class="dateTime">
+                    <!-- 04 Sep 2020, 10:35:50 AM, -->
+                    {{ dateTime | date: 'dd MMM y, hh:mm:ss a':'UTC+8' }},
+                </span>
+                <span class="dateTime"> Login session {{ LoginSession }} </span>
+            </div>
+
+            <div class="background">
+                <p class="transactionActivity show-lg">
+                    <strong>Your Transaction Activity</strong>
+                </p>
+                <div class="card-wrapper">
+                    <div class="card">
+                        <div class="Ellipse-91">
+                            <img
+                                src="./assets/images/Illustration_No Result Found.svg"
+                                class="IllustrationMaintenance"
+                                alt="No Result"
+                            />
+                        </div>
+                        <span class="error-msg noTransaction">
+                            <strong>You did not perform any transaction during the session</strong>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column column1">
+                        <img src="./assets/images/octopus.png" alt="Snow" style="width: 100%" />
+                    </div>
+                    <div class="column column2">
+                        <img
+                            src="./assets/images/Illustration_Logout.svg"
+                            alt="Mountains"
+                            style="width: 100%"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

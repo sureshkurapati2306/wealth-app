@@ -1,0 +1,14 @@
+<mat-card class="card-amount">
+  <h6>{{ title }}</h6>
+  <span class="tips" *ngIf="toolTip && toolTip.length > 0">
+    <em class="icon-help hide-lg" (click)="openBottomSheet()"></em>
+    <em
+      class="icon-help show-lg"
+      matTooltip="{{ toolTip }}"
+      matTooltipPosition="right"
+    ></em>
+  </span>
+  <p>
+    <sub>{{ currency }}</sub> {{ amount }}
+  </p>
+</mat-card>

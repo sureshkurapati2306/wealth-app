@@ -1,0 +1,30 @@
+.batch-info{
+    padding: 1.5rem 1.25rem;
+    border-bottom: 0.0625rem solid var(--c20);
+    box-shadow: 0rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    background: var(--n0);
+    .batch-incoming-container, .batch-outgoing-container{
+        .title {
+            padding: 1.5rem;
+        }
+        .mt-3{
+            margin-top: 3rem;
+        }
+        .download-icon{
+            height: 30px;
+            position: absolute;
+            display: inline;
+            right: 5rem;
+            top: 12px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .icon-row{
+            position: relative;
+        }
+        .header-title{
+            padding-right: 3rem !important;
+            text-align: right;
+        }
+    }
+}

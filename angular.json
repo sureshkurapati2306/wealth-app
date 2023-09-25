@@ -1,0 +1,586 @@
+{
+    "version": 1,
+    "cli": {
+      "analytics": "243748c6-0f5e-483c-89eb-9cc63799183d",
+        "defaultCollection": "@nrwl/angular"
+    },
+    "defaultProject": "self-serve",
+    "schematics": {
+        "@nrwl/angular": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            },
+            "storybook-configuration": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/angular:application": {
+            "style": "scss",
+            "linter": "eslint",
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/angular:library": {
+            "style": "scss",
+            "linter": "eslint",
+            "unitTestRunner": "jest"
+        },
+        "@nrwl/angular:component": {
+            "style": "scss"
+        }
+    },
+    "projects": {
+        "common": {
+            "projectType": "library",
+            "root": "libs/common",
+            "sourceRoot": "libs/common/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/common"],
+                    "options": {
+                        "jestConfig": "libs/common/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/common/src/**/*.ts", "libs/common/src/**/*.html"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                }
+            }
+        },
+        "core": {
+            "projectType": "library",
+            "root": "libs/core",
+            "sourceRoot": "libs/core/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/core"],
+                    "options": {
+                        "jestConfig": "libs/core/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/core/src/**/*.ts", "libs/core/src/**/*.html"]
+                    }
+                }
+            }
+        },
+        "mint": {
+            "projectType": "library",
+            "root": "libs/mint",
+            "sourceRoot": "libs/mint/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/mint"],
+                    "options": {
+                        "jestConfig": "libs/mint/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/mint/src/**/*.ts", "libs/mint/src/**/*.html"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                }
+            }
+        },
+        "mint-office": {
+            "projectType": "library",
+            "root": "libs/mint-office",
+            "sourceRoot": "libs/mint-office/src",
+            "prefix": "cimb-office",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/mint-office"],
+                    "options": {
+                        "jestConfig": "libs/mint-office/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/mint-office/src/**/*.ts",
+                            "libs/mint-office/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "self-serve": {
+            "projectType": "application",
+            "root": "apps/self-serve",
+            "sourceRoot": "apps/self-serve/src",
+            "prefix": "cimb",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/self-serve",
+                        "index": "apps/self-serve/src/index.html",
+                        "main": "apps/self-serve/src/main.ts",
+                        "polyfills": "apps/self-serve/src/polyfills.ts",
+                        "tsConfig": "apps/self-serve/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "apps/self-serve/src/favicon.ico",
+                            "apps/self-serve/src/assets",
+                            {
+                                "input": "libs/shared/assets/src/lib",
+                                "glob": "**/*",
+                                "output": "assets"
+                            }
+                        ],
+                        "styles": [
+                            "./node_modules/modern-normalize/modern-normalize.css",
+                            "apps/self-serve/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "5mb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/self-serve/src/environments/environment.ts",
+                                    "with": "apps/self-serve/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
+                        "test": {
+                            "buildOptimizer": true,
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/self-serve/src/environments/environment.ts",
+                                    "with": "apps/self-serve/src/environments/environment.sit.ts"
+                                }
+                            ]
+                        },
+                        "uat": {
+                            "buildOptimizer": true,
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/self-serve/src/environments/environment.ts",
+                                    "with": "apps/self-serve/src/environments/environment.uat.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "self-serve:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "self-serve:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "self-serve:build:development"
+                        },
+                        "test": {
+                            "browserTarget": "self-serve:build:test"
+                        },
+                        "uat": {
+                            "browserTarget": "self-serve:build:uat"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "self-serve:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/self-serve/src/**/*.ts",
+                            "apps/self-serve/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/self-serve"],
+                    "options": {
+                        "jestConfig": "apps/self-serve/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        },
+        "shared-assets": {
+            "projectType": "library",
+            "root": "libs/shared/assets",
+            "sourceRoot": "libs/shared/assets/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/shared/assets"],
+                    "options": {
+                        "jestConfig": "libs/shared/assets/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/shared/assets/src/**/*.ts",
+                            "libs/shared/assets/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                }
+            }
+        },
+        "shared-models": {
+            "projectType": "library",
+            "root": "libs/shared/models",
+            "sourceRoot": "libs/shared/models/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/shared/models"],
+                    "options": {
+                        "jestConfig": "libs/shared/models/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/shared/models/src/**/*.ts",
+                            "libs/shared/models/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "shared-services": {
+            "projectType": "library",
+            "root": "libs/shared/services",
+            "sourceRoot": "libs/shared/services/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/shared/services"],
+                    "options": {
+                        "jestConfig": "libs/shared/services/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/shared/services/src/**/*.ts",
+                            "libs/shared/services/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "shared-states": {
+            "projectType": "library",
+            "root": "libs/shared/states",
+            "sourceRoot": "libs/shared/states/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/shared/states"],
+                    "options": {
+                        "jestConfig": "libs/shared/states/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/shared/states/src/**/*.ts",
+                            "libs/shared/states/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "shared-styles": {
+            "projectType": "library",
+            "root": "libs/shared/styles",
+            "sourceRoot": "libs/shared/styles/src",
+            "prefix": "cimb",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/shared/styles"],
+                    "options": {
+                        "jestConfig": "libs/shared/styles/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/shared/styles/src/**/*.ts",
+                            "libs/shared/styles/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                }
+            }
+        },
+        "wealth-backoffice": {
+            "projectType": "application",
+            "root": "apps/wealth-backoffice",
+            "sourceRoot": "apps/wealth-backoffice/src",
+            "prefix": "cimb",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/wealth-backoffice",
+                        "index": "apps/wealth-backoffice/src/index.html",
+                        "main": "apps/wealth-backoffice/src/main.ts",
+                        "polyfills": "apps/wealth-backoffice/src/polyfills.ts",
+                        "tsConfig": "apps/wealth-backoffice/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "apps/wealth-backoffice/src/favicon.ico",
+                            "apps/wealth-backoffice/src/assets",
+                            {
+                                "input": "libs/shared/assets/src/lib",
+                                "glob": "**/*",
+                                "output": "assets"
+                            }
+                        ],
+                        "styles": [
+                            "./node_modules/modern-normalize/modern-normalize.css",
+                            "apps/wealth-backoffice/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "5mb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/wealth-backoffice/src/environments/environment.ts",
+                                    "with": "apps/wealth-backoffice/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
+                        "test": {
+                            "buildOptimizer": true,
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/wealth-backoffice/src/environments/environment.ts",
+                                    "with": "apps/wealth-backoffice/src/environments/environment.sit.ts"
+                                }
+                            ]
+                        },
+                        "uat": {
+                            "buildOptimizer": true,
+                            "optimization": {
+                                "scripts": true,
+                                "styles": {
+                                    "minify": true,
+                                    "inlineCritical": false
+                                },
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/wealth-backoffice/src/environments/environment.ts",
+                                    "with": "apps/wealth-backoffice/src/environments/environment.uat.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "wealth-backoffice:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "wealth-backoffice:build:development"
+                        },
+                        "test": {
+                            "browserTarget": "wealth-backoffice:build:test"
+                        },
+                        "uat": {
+                            "browserTarget": "wealth-backoffice:build:uat"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "wealth-backoffice:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/wealth-backoffice/src/**/*.ts",
+                            "apps/wealth-backoffice/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/wealth-backoffice"],
+                    "options": {
+                        "jestConfig": "apps/wealth-backoffice/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        }
+    }
+}

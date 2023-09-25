@@ -1,0 +1,105 @@
+<mat-tab-group
+    #tabGroup
+    animationDuration="250ms"
+    disableRipple="true"
+    class="custom-tab tab-dashboard curve-last tab-al"
+    (selectedTabChange)="onTabChange($event)"
+    [selectedIndex]="selectedIndex"
+>
+    <mat-tab label="My Funds">
+        <div class="tab-header section-select-account">
+            <div class="tab-header-inner tab-header-fund">
+                <div class="tab-header-left dropdown-container">
+                    <cimb-asnb-membership-dropdown
+                        labelText="ASNB Membership Number"
+                        [listItems]="asnbMemberList"
+                        (selectedDropdownItem)="onDropdownSelectedItem($event)"
+                    >
+                    </cimb-asnb-membership-dropdown>
+                </div>
+                <div
+                    class="tab-header-right add-investment-wrapper"
+                    *ngIf="enableAddNewInvestmentButton"
+                >
+                    <button
+                        class="btn-add"
+                        cdkDrag
+                        mat-flat-button
+                        disableRipple="true"
+                        (click)="onAddNewInvestment()"
+                    >
+                        <em class="icon-add"></em> <span class="btn-label">Add New Investment</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="section-my-funds">
+                <cimb-asnb-no-investment
+                    *ngIf="!fixedFunds?.length && !variableFunds?.length"
+                ></cimb-asnb-no-investment>
+                <ng-container *ngIf="fixedFunds?.length || variableFunds?.length">
+                    <div class="fixed-list fund-list-section">
+                        <cimb-asnb-fund-section
+                            title="Fixed price funds"
+                            type="fixed"
+                        ></cimb-asnb-fund-section>
+                        <ng-container *ngFor="let fixFund of fixedFunds">
+                            <cimb-asnb-fund-list
+                                [fundListData]="fixFund"
+                                [hideTopUp]="hideTopUp"
+                                fundType="fixed price"
+                                (fetchPastTransactions)="fetchPastTransactions($event)"
+                            >
+                            </cimb-asnb-fund-list>
+                        </ng-container>
+                        <div *ngIf="!fixedFunds?.length" class="no-funds">
+                            <span>You don't have any fund under fixed price</span>
+                        </div>
+                    </div>
+                    <div class="variable-list fund-list-section" *ngIf="variableFunds">
+                        <cimb-asnb-fund-section
+                            title="Variable price funds"
+                            type="variable"
+                        ></cimb-asnb-fund-section>
+                        <ng-container *ngFor="let varFund of variableFunds">
+                            <cimb-asnb-fund-list
+                                [fundListData]="varFund"
+                                [hideTopUp]="hideVpTopUp ? hideVpTopUp : hideTopUp"
+                                fundType="variable price"
+                                (fetchPastTransactions)="fetchPastTransactions($event)"
+                            ></cimb-asnb-fund-list>
+                        </ng-container>
+                        <div *ngIf="!variableFunds?.length" class="no-funds">
+                            <span>You don't have any fund under variable price</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Favourites" *ngIf="enableFavouritesTab">
+        <div class="tab-header">
+            <div class="tab-header-inner tab-header-favourite">
+                <div class="tab-header-right">
+                    <button
+                        class="btn-add"
+                        mat-flat-button
+                        disableRipple="true"
+                        [routerLink]="['/asnb-dashboard/asnb-add-favourite']"
+                    >
+                        <em class="icon-add"></em> <span class="btn-label">Add New Favourite</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <cimb-asnb-favourite-listing
+                [favouriteList]="asnbFavouritesList"
+                (pageChange)="getAsnbFavoriteList($event)"
+                [disablePurchaseNonOperation]="hideTopUp?.status"
+                [operationHours]="operationHours"
+            ></cimb-asnb-favourite-listing>
+        </div>
+    </mat-tab>
+</mat-tab-group>

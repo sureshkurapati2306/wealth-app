@@ -1,0 +1,91 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>Customer Satisfaction Modules</h1>
+            </div>
+            <div class="section-content">
+                <div class="block-tab">
+                    <form [formGroup]="myForm" #searchForm="ngForm" (submit)="saveQuestionnaire('submit')" class="block-filter">
+                        <mat-tab-group class="bo-tab" animationDuration="0ms">
+                            <mat-tab label="CSAT Report">
+                                <div class="csat-report-header">Download CSAT report</div>
+                                <mat-form-field class="csat-date-picker">
+                                    <mat-label class="csat-date-header">Date *</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker">
+                                        <input matStartDate formControlName="startDate" placeholder="Start date" />
+                                        <input matEndDate formControlName="endDate" placeholder="End date" />
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle class="datetimepicker-icon" matSuffix
+                                        [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker></mat-date-range-picker>
+                                </mat-form-field>
+                                <button mat-flat-button class="download-button" [ngClass]="{'enabled': !myForm.get('startDate').valid || !myForm.get('endDate').valid}"
+                                    [disabled]="!myForm.get('startDate').valid || !myForm.get('endDate').valid" type="button" (click)="downloadReport()">Download
+                                </button>
+                            </mat-tab>
+                            <mat-tab label="CSAT Configuration">
+                                <div class="csat-qest-header">Questionnaire Setup</div>
+                                <table class="csat-qest-table" aria-label="CSAT Questionnaire" role="presentation">
+                                    <tr class="row-1">
+                                        <td>CSAT Questionnaire prompt - Transaction Summary Page</td>
+                                        <td>
+                                            <mat-slide-toggle color="warn" [checked]="toggleSwitchStates.row1"
+                                                (change)="toggleSwitchChanged($event, 'row1')">
+                                            </mat-slide-toggle>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-2">
+                                        <td>CSAT Questionnaire prompt - Logout</td>
+                                        <td>
+                                            <mat-slide-toggle color="warn" [checked]="toggleSwitchStates.row2"
+                                                (change)="toggleSwitchChanged($event, 'row2')">
+                                            </mat-slide-toggle>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="csat-qest-prompt-frq">
+                                    <mat-form-field>
+                                        <div>CSAT Questionnaire prompt frequency</div>
+                                        <input matInput class="prompt-frq-input" formControlName="frequency" required
+                                            maxlength="3" rows="1"><span class="freq-sub-span">Day(s)</span>
+                                        <mat-error *ngIf="myForm.get('frequency').hasError('required')">
+                                            Frequency is required.
+                                        </mat-error>
+                                        <mat-error *ngIf="myForm.get('frequency').hasError('maxLength')">
+                                            Frequency must be up to 3 characters.
+                                        </mat-error>
+                                        <mat-error *ngIf="myForm.get('frequency').hasError('invalidNumber')">
+                                            Frequency must be a valid number.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="csat-qest-prompt-qes">
+                                    <div class="csat-qest-title">
+                                        <mat-label>Question1</mat-label>
+                                        <div class="text-count">{{ myForm.get('question1').value?.length }}/{{ maxCharacterLengthQuestion }}
+                                        </div>
+                                    </div>
+                                    <mat-form-field appearance="none" floatLabel="never">
+                                        <textarea matInput class="prompt-qes-input" formControlName="question1" required
+                                            maxlength="100" rows="3"></textarea>
+                                    </mat-form-field>
+                                    <mat-error
+                                        *ngIf="myForm.get('question1').invalid && (myForm.get('question1').dirty || myForm.get('question1').touched)">
+                                        Question 1 is required and must be up to 100 characters.
+                                    </mat-error>
+                                </div>
+                                <button mat-flat-button class="save-button"
+                                    [ngClass]="{'enabled': !myForm.get('frequency').valid || !myForm.get('question1').valid}"
+                                    [disabled]="!myForm.get('frequency').valid || !myForm.get('question1').valid"
+                                    type="button" (click)="saveQuestionnaire('submit')"> Save
+                                </button>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

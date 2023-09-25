@@ -1,0 +1,12 @@
+th {
+  &:last-child {
+    padding-right:0;
+    padding-left:0;
+    text-align:center;
+  }
+}
+td {
+  &:not(:first-child) {
+    text-align: center;
+  }
+}

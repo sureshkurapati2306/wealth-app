@@ -1,0 +1,388 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>Batch File Scheduler</h1>
+                <button
+                    disableRipple="true"
+                    mat-flat-button
+                    class="btn-custom btn-red"
+                    (click)="goToPage()"
+                >
+                    <em class="icon-add"></em> Add
+                </button>
+            </div>
+            <div class="section-content">
+                <div class="table-container">
+                    <div class="table-filter">
+                        <div class="search">
+                            <form [formGroup]="searchForm" (submit)="searchFilter()">
+                                <div class="search-block">
+                                    <span class="icon icon-search" (click)="searchFilter()"></span>
+                                    <input
+                                        matInput
+                                        placeholder="Type here to search"
+                                        formControlName="searchKey"
+                                        (keyup)="checkSearchKey($event.target.value)"
+                                    />
+                                </div>
+                                <button
+                                    disableRipple="true"
+                                    mat-flat-button
+                                    class="btn-custom btn-red"
+                                    [disabled]="searchForm.get('searchKey').value === ''"
+                                    type="submit"
+                                >
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                        <div class="preset-filter">
+                            <mat-chip-list aria-label="Filter selection" class="chip-custom">
+                                <mat-chip
+                                    *ngFor="let filter of filters"
+                                    [ngClass]="{ 'mat-chip-selected': filter.id === activeFilter }"
+                                    (click)="
+                                        activeFilter = filter.id; toggleFilterStatus(filter.value)
+                                    "
+                                    [selected]="filter.id === activeFilter"
+                                >
+                                    {{ filter.name }}
+                                </mat-chip>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+
+                    <table
+                        mat-table
+                        [dataSource]="filteredTableData"
+                        class="table-scheduler table-stripe table-responsive"
+                        multiTemplateDataRows
+                        summary="List of schedulers"
+                        aria-describedby="List of schedulers"
+                    >
+                        <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef scope="col">NO.</th>
+                            <td mat-cell *matCellDef="let row; let i = dataIndex">
+                                <span class="expand-icon icon-arrow-right-regular"></span>
+                                {{
+                                    this.paginator?.pageIndex === 0
+                                        ? i + 1
+                                        : 1 +
+                                          i +
+                                          this.paginator?.pageIndex * this.paginator?.pageSize
+                                }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Start Date & Time Column -->
+                        <ng-container matColumnDef="startDate">
+                            <th mat-header-cell *matHeaderCellDef scope="col">START DATE & TIME</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.schedulerDate | date: 'dd MMM y, hh:mma' }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Occurence Column -->
+                        <ng-container matColumnDef="occurence">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                OCCURENCE
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                <ng-container *ngIf="row.schedulerOccurrence === 'R'">
+                                    Recurring
+                                </ng-container>
+                                <ng-container *ngIf="row.schedulerOccurrence === 'O'">
+                                    One-time
+                                </ng-container>
+                            </td>
+                        </ng-container>
+
+                        <!-- End Date Column -->
+                        <ng-container matColumnDef="endDate">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                END DATE & TIME
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                <ng-container *ngIf="row.endDate === '' || row.endDate === null">
+                                    No Data
+                                </ng-container>
+                                <ng-container *ngIf="row.jobId !== 1003">{{
+                                    row.endDate | date: 'dd MMM yyyy, hh:mma'
+                                }}</ng-container>
+                                <ng-container *ngIf="row.jobId === 1003">{{
+                                    row.endDate | date: 'dd MMM yyyy, hh:mma'
+                                }}</ng-container>
+                            </td>
+                        </ng-container>
+
+                        <!-- Scheduler Name Column -->
+                        <ng-container matColumnDef="schedulerName">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                SCHEDULER NAME
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                {{ row.schedulerName }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Scheduler Type Column -->
+                        <ng-container matColumnDef="schedulerType">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                SCHEDULER TYPE
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                {{ row.schedulerType }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Job Name Column -->
+                        <ng-container matColumnDef="jobName">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                JOB NAME
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                {{ row.jobName }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">
+                                STATUS
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="hiddenMobile">
+                                <span
+                                    class="status"
+                                    [ngClass]="{
+                                        completed: row.schedulerStatus === 'C',
+                                        upcoming: row.schedulerStatus === 'U',
+                                        ongoing: row.schedulerStatus === 'O',
+                                        fail: row.schedulerStatus === 'F',
+                                        past: row.schedulerStatus === 'P'
+                                    }"
+                                >
+                                    <ng-container *ngIf="row.schedulerStatus === 'C'">
+                                        Completed
+                                    </ng-container>
+                                    <ng-container *ngIf="row.schedulerStatus === 'U'">
+                                        Upcoming
+                                    </ng-container>
+                                    <ng-container *ngIf="row.schedulerStatus === 'O'">
+                                        Ongoing
+                                    </ng-container>
+                                    <ng-container *ngIf="row.schedulerStatus === 'F'">
+                                        Fail
+                                    </ng-container>
+                                    <ng-container *ngIf="row.schedulerStatus === 'P'">
+                                        Past
+                                    </ng-container>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Action Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef scope="col">ACTION</th>
+                            <td mat-cell *matCellDef="let row">
+                                <button
+                                    mat-flat-button
+                                    class="btn-custom btn-text btn-action"
+                                    [disabled]="row.schedulerStatus !== 'U'"
+                                    (click)="openDialog(row); $event.stopPropagation()"
+                                >
+                                    <span class="icon-bin"></span> <strong>Delete</strong>
+                                </button>
+
+                                <button
+                                    mat-flat-button
+                                    class="btn-custom btn-text btn-action"
+                                    [disabled]="
+                                        row.schedulerStatus !== 'U' && row.schedulerStatus !== 'O'
+                                    "
+                                    (click)="editSchedulerItem(row); $event.stopPropagation()"
+                                >
+                                    <span class="icon-edit"></span> <strong>Edit</strong>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                        <ng-container matColumnDef="expandedDetail">
+                            <td
+                                mat-cell
+                                *matCellDef="let expandDetailRow"
+                                [attr.colspan]="displayedColumns.length"
+                                class="cell-detail"
+                            >
+                                <div
+                                    class="table-detail"
+                                    [@detailExpand]="
+                                        expandDetailRow === expandedRow ? 'expanded' : 'collapsed'
+                                    "
+                                >
+                                    <table
+                                        class="table-detail-inner"
+                                        aria-describedby="List of schedulers on mobile view"
+                                    >
+                                        <tr>
+                                            <th scope="col">OCCURENCE</th>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="
+                                                        expandDetailRow.schedulerOccurrence === 'R'
+                                                    "
+                                                >
+                                                    Recurring
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="
+                                                        expandDetailRow.schedulerOccurrence === 'O'
+                                                    "
+                                                >
+                                                    One-time
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">END DATE & TIME</th>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="
+                                                        expandDetailRow.endDate === '' ||
+                                                        expandDetailRow.endDate === null
+                                                    "
+                                                >
+                                                    No Data
+                                                </ng-container>
+                                                {{
+                                                    expandDetailRow.endDate
+                                                        | date: 'dd MMM yyyy, hh:mma'
+                                                }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">SCHEDULER NAME</th>
+                                            <td>{{ expandDetailRow.schedulerName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">SCHEDULER TYPE</th>
+                                            <td>{{ expandDetailRow.schedulerType }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">JOB NAME</th>
+                                            <td>{{ expandDetailRow.jobName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">STATUS</th>
+                                            <td>
+                                                <span
+                                                    class="status"
+                                                    [ngClass]="{
+                                                        completed:
+                                                            expandDetailRow.schedulerStatus === 'C',
+                                                        upcoming:
+                                                            expandDetailRow.schedulerStatus === 'U',
+                                                        ongoing:
+                                                            expandDetailRow.schedulerStatus === 'O',
+                                                        fail:
+                                                            expandDetailRow.schedulerStatus === 'F',
+                                                        past:
+                                                            expandDetailRow.schedulerStatus === 'P'
+                                                    }"
+                                                >
+                                                    <ng-container
+                                                        *ngIf="
+                                                            expandDetailRow.schedulerStatus === 'C'
+                                                        "
+                                                    >
+                                                        Completed
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            expandDetailRow.schedulerStatus === 'U'
+                                                        "
+                                                    >
+                                                        Upcoming
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            expandDetailRow.schedulerStatus === 'O'
+                                                        "
+                                                    >
+                                                        Ongoing
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            expandDetailRow.schedulerStatus === 'F'
+                                                        "
+                                                    >
+                                                        Fail
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            expandDetailRow.schedulerStatus === 'P'
+                                                        "
+                                                    >
+                                                        Past
+                                                    </ng-container>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- No Data -->
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="mat-cell cell-empty"
+                                colspan="9999"
+                                style="text-align: center"
+                            >
+                                Click <a (click)="goToPage()"><em class="icon-add"></em> Add</a> to
+                                add batch file scheduler
+                            </td>
+                        </tr>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns; let i = dataIndex"
+                            class="table-row"
+                            [class.table-expanded-row]="expandedRow === row"
+                            (click)="expandedRow = expandedRow === row ? null : row"
+                            [ngClass]="{
+                                rowEven: i % 2,
+                                rowOdd: !(i % 2)
+                            }"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: ['expandedDetail']"
+                            class="table-detail-row"
+                        ></tr>
+                    </table>
+                </div>
+
+                <div class="paginator">
+                    <mat-paginator
+                        [length]="filteredTableData.data ? filteredTableData.data.length : 0"
+                        showFirstLastButtons
+                        hidePageSize
+                        [pageSizeOptions]="[10, 20, 30, 40, 50]"
+                    >
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

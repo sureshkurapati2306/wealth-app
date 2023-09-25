@@ -1,0 +1,55 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>ASNB Reports</h1>
+            </div>
+            <div class="section-content">
+                <p class="sub-header">Download Reports</p>
+                <div class="button-group">
+                    <div
+                        class="button link-btn"
+                        (click)="
+                            downloadReport(
+                                'authenticate/asnb/report/transaction',
+                                'ASNB Transaction Report'
+                            )
+                        "
+                    >
+                        <div class="icon-img">
+                            <img
+                                src="./assets/back-office/report.svg"
+                                alt="ASNB Transaction Report"
+                            />
+                        </div>
+                        <h2>ASNB Transaction Report</h2>
+                    </div>
+                    <div
+                        class="button link-btn"
+                        (click)="
+                            downloadReport(
+                                'authenticate/asnb/report/account-link',
+                                'Link Account Report'
+                            )
+                        "
+                    >
+                        <div class="icon-img">
+                            <img src="./assets/back-office/report.svg" alt="Link Account Report" />
+                        </div>
+                        <h2>Link Account Report</h2>
+                    </div>
+                    <div class="button link-btn">
+                        <div class="icon-img">
+                            <img
+                                src="./assets/back-office/dissabled-report.svg"
+                                alt="Add Favourite Report (R2)"
+                            />
+                        </div>
+                        <h2>Add Favourite Report (R2)</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

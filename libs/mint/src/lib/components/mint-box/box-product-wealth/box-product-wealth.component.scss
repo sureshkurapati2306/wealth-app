@@ -1,0 +1,85 @@
+.box {
+  box-shadow: 0 0.125rem 0.25rem -0.125rem rgba(24, 39, 75, 0.12), 0 0.25rem 0.25rem -0.125rem rgba(24, 39, 75, 0.08);
+  background: var(--n0);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  border:solid 2px var(--r100);
+
+  @media (min-width: 60rem) {
+    padding: 1.5rem;
+  }
+  &-header {
+    margin-bottom: 1.5rem;
+
+    h5 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08rem;
+      font-weight: var(--medium);
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  &-risk-profile {
+    position: relative;
+    margin-top: 1.688rem;
+    padding: 1rem;
+
+    @media (max-width: 60rem) {
+      box-shadow: none;
+    }
+    @media (min-width: 60rem) {
+      padding: 1.5rem;
+      margin-top: none;
+    }
+    h6 {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #990000;
+      text-transform: none;
+      margin-bottom: .5rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: var(--n100);
+      margin-bottom: 0.5rem;
+      @media (min-width: 64rem) {
+        padding-right: 9.375rem;
+      }
+    }
+    .btn-text {
+      @media (min-width: 60rem) {
+        font-size: 0.875rem;
+      }
+    }
+    img {
+      height: 4.8125rem;
+      position: absolute;
+      right: 0.5rem;
+      bottom: -1.875rem;
+
+      @media (min-width: 60rem) {
+        bottom: -3.875rem;
+        height: 6.625rem;
+      }
+    }
+    button {
+      margin-right: 1.5rem;
+    }
+  }
+  .listStyle {
+    list-style: disc !important;
+    color: var(--n80);
+    font-size: 0.875rem;
+  }
+  .ulstyle {
+    margin: 0 !important;
+    padding-left: 1.25rem !important;
+    color: var(--n80);
+    font-size: 0.875rem;
+  }
+}

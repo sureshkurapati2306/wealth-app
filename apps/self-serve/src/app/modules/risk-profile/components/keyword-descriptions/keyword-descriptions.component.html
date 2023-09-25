@@ -1,0 +1,126 @@
+<!-- Page one - Keyword description -->
+<ng-container *ngIf="page === 1">
+    <!-- Web View -->
+    <div class="note" *ngIf="!mediaQueryList.matches">
+        <p>
+            <strong>Fixed income example: </strong> Malaysian Government Securities, US Treasury bonds, corporate bonds.
+        </p>
+        <p>
+            <strong>Sukuk example:</strong> Malaysian Government Investment Issue, shariah compliant corporate sukuk.
+        </p>
+        <p><strong>Equities example: </strong> Listed share issued by public listed companies.</p>
+        <p>
+            <strong>Collective Investment Scheme example: </strong> Unit Trust, Mutual fund, Private Retirement Scheme.
+        </p>
+        <p>
+            <strong>Structured Products example: </strong> Equity linked Structured Product, Interest rate linked structured products.
+        </p>
+        <p>
+            <strong>Capital Protected Investment example: </strong> Callable Range Accrual Negotiable Instrument.
+        </p>
+        <p>
+            <strong>Futures example: </strong> Currency future contracts, commodity future contracts.
+        </p>
+        <p>
+            <strong>Options example: </strong> Equity call or put option, currency call or put option.
+        </p>
+    </div>
+    <!-- Mobile View -->
+    <div *ngIf="mediaQueryList.matches">
+        <div class="note">
+            <div [ngClass]="{'show-less': showShortDesciption}">
+                <p>
+                    <strong>Fixed income example: </strong> Malaysian Government Securities, US Treasury bonds, corporate bonds.
+                </p>
+                <p>
+                    <strong>Sukuk example:</strong> Malaysian Government Investment Issue, shariah compliant corporate sukuk.
+                    <span *ngIf="showShortDesciption === true" >{{"..."}}</span>
+                </p>
+                <p>
+                    <strong>Equities example: </strong> Listed share issued by public listed companies.
+                </p>
+                <p>
+                    <strong>Collective Investment Scheme example: </strong> Unit Trust, Mutual fund, Private Retirement Scheme.
+                </p>
+                <p>
+                    <strong>Structured Products example: </strong> Equity linked Structured Product, Interest rate linked structured products.
+                </p>
+                <p>
+                    <strong>Capital Protected Investment example: </strong> Callable Range Accrual Negotiable Instrument.
+                </p>
+                <p>
+                    <strong>Futures example: </strong> Currency future contracts, commodity future contracts.
+                </p>
+                <p>
+                    <strong>Options example: </strong> Equity call or put option, currency call or put option.
+                </p>
+            </div>
+            <button class="mat-flat-button btn-custom btn-text" type="button" 
+            (click)="alterDescriptionText($event)">
+                {{ showShortDesciption ? 'View more': 'View Less' }}
+            </button>
+        </div>
+    </div>
+</ng-container>
+
+<!-- Page two - investment goal description -->
+<ng-container *ngIf="page === 2">
+    <h4>Share with us your investment goals and time horizon</h4>
+    <div class="illustration-text"><strong><u>Illustration</u></strong></div>
+    <div class="img-block">
+        <img 
+        src="./assets/images/investment-goal.svg" 
+        alt="Share with us your investment goals and time horizon"
+         />
+    </div>
+    <p class="sm-text">
+        Disclaimer: Please note that this chart is for illustrative purposes only. Actual returns
+        and losses may vary.
+    </p>
+</ng-container>
+
+<!-- Page three - Keyword description -->
+<ng-container *ngIf="page === 3">
+    <div class="note">
+        <p>
+            <strong>Monthly net income =</strong> monthly salary + allowances + rental - EPF - SOCSO
+            - PCB
+        </p>
+        <p>
+            <strong>Total monthly commitment = </strong>loans + mortgages + credit
+            card debt + PTPTN repayment
+        </p>
+        <p>
+            <strong>Net worth = </strong> savings + investments - loans - mortgages - credit
+            card debt - PTPTN repayment
+        </p>
+        <p>
+            <strong>Investments = </strong>Fixed Income + Sukuk + Equities +
+            Collective Investment Scheme + Structured Products + Capital Protected
+            Investment + Futures + Options
+        </p>
+        <a (click)="openDialog()"> Click here for the example</a>
+    </div>
+</ng-container>
+
+<ng-template #sampleCalculationDialog>
+    <div class="mat-dialog-wrapper">
+        <div class="mat-dialog-pad">
+            <button mat-icon-button (click)="closeDialog()" class="btn-close">
+                <em class="icon-close"></em>
+            </button> 
+            <mat-dialog-content class="profile-modal">
+                <section class="content">
+                    <div class="title">
+                        How to derive investment percentage out of my personal net worth?
+                    </div>
+                    <div class="desc">
+                        If my <strong>net worth is RM 100k</strong> and I currently have
+                        <strong>RM 25k invested (excluding property owned),</strong> then the percentage of
+                        <strong>my net worth that is currently invested is 25%.</strong>
+                    </div>
+                </section>
+            </mat-dialog-content>
+        </div>
+    </div>
+</ng-template>

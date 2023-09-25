@@ -1,0 +1,322 @@
+<form [formGroup]="questionsForm">
+  <cimb-stepper #cdkStepper
+                formArrayName="questionAns"
+                [linear]="false">
+
+    <cdk-step [editable]="true"
+              [stepControl]="formArray.get([0])">
+      <div class="inner-container">
+
+        <h4>Let's start with your understanding of investments</h4>
+
+        <ng-container *ngIf="(questions | async) as question">
+
+          <p>
+            {{question[0]?.questionDesc}}
+          </p>
+          <br />
+
+          <div class="inline-dropdown-wrapper">
+            <ng-container formGroupName="0">
+
+              <!-- mobile -->
+              <ng-container *ngIf="mediaQueryList.matches">
+                <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                             formControlName="options"
+                                             [multiple]="false"
+                                             [data]="question[0]?.answerOptions"></cimb-mint-multi-select-chip>
+              </ng-container>
+
+              <!-- web -->
+              <ng-container *ngIf="!mediaQueryList.matches">
+                <cimb-mint-single-select class="answer-options long"
+                                         [placeholder]="'Select your answer'"
+                                         formControlName="options"
+                                         [data]="question[0]?.answerOptions"></cimb-mint-single-select>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <div class="floated-dropdown-wrapper">
+            <div class="col col-1">
+              <ng-container formGroupName="1">
+
+                <!-- mobile -->
+                <ng-container *ngIf="mediaQueryList.matches">
+                  <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                               formControlName="options"
+                                               [multiple]="false"
+                                               [data]="question[1]?.answerOptions"></cimb-mint-multi-select-chip>
+                </ng-container>
+
+                <!-- web -->
+                <ng-container *ngIf="!mediaQueryList.matches">
+                  <cimb-mint-single-select class="answer-options long"
+                                           [placeholder]="'Select your answer'"
+                                           formControlName="options"
+                                           [data]="question[1]?.answerOptions"></cimb-mint-single-select>
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <div class="col col-2">&</div>
+
+            <div class="col col-3">
+              <ng-container formGroupName="2">
+
+                <!-- mobile -->
+                <ng-container *ngIf="mediaQueryList.matches">
+                  <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                               formControlName="options"
+                                               [multiple]="false"
+                                               [data]="question[2]?.answerOptions"></cimb-mint-multi-select-chip>
+                </ng-container>
+
+                <!-- web -->
+                <ng-container *ngIf="!mediaQueryList.matches">
+                  <cimb-mint-single-select class="answer-options long"
+                                           [placeholder]="'Select your answer'"
+                                           formControlName="options"
+                                           [data]="question[2]?.answerOptions"></cimb-mint-single-select>
+                </ng-container>
+              </ng-container>
+            </div>
+
+          </div>
+
+
+
+          <!-- <cimb-mint-multi-select-chip formControlName="options"
+                                       [multiple]="true"
+                                       [data]="question[0]?.answerOptions"
+                                       [placeholder]="'Select your answer'">
+          </cimb-mint-multi-select-chip> -->
+        </ng-container>
+
+        <cimb-keyword-descriptions [page]="1"></cimb-keyword-descriptions>
+      </div>
+      <div class="page-nav">
+        <p>Page 1 of 3</p>
+        <div class="button-wrapper">
+          <!-- <button mat-flat-button class="btn-custom mat-flat-button btn-transparent">Previous</button> -->
+          <button mat-flat-button
+                  [disabled]="formArray.get([0]).invalid || formArray.get([1]).invalid || formArray.get([2]).invalid"
+                  class="btn-custom mat-flat-button btn-red btn-next"
+                  disableRipple="true"
+                  (click)="clickToSubmitAAData('wealth:UT RP Input2','Wealth: Risk Profile Input 2')"
+                  cdkStepperNext>
+            Next
+          </button>
+        </div>
+      </div>
+    </cdk-step>
+    <cdk-step #stepAddress
+              [editable]="true"
+              [stepControl]="formArray.get([1])">
+      <div class="inner-container">
+        <cimb-keyword-descriptions [page]="2"></cimb-keyword-descriptions>
+      </div>
+      <ng-container *ngIf="(questions | async) as question">
+
+        <div class="question-wrapper step2">
+          <!-- question number two -->
+          <ng-container formGroupName="3">
+            <p>{{question[3]?.questionDesc}}</p>
+
+            <!-- mobile -->
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                           formControlName="options"
+                                           [multiple]="false"
+                                           [data]="question[3]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <!-- web -->
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options long"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[3]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+          </ng-container>
+          <br>
+          <!-- question number three -->
+          <ng-container formGroupName="5">
+            <p>{{question[5]?.questionDesc}}</p>
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                           [multiple]="false"
+                                           formControlName="options"
+                                           [data]="question[5]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[5]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </ng-container>
+      <div class="page-nav">
+        <p>Page 2 of 3</p>
+        <div class="button-wrapper">
+          <button mat-flat-button
+                  class="btn-custom mat-flat-button btn-transparent"
+                  cdkStepperPrevious>
+            Previous
+          </button>
+          <button mat-flat-button
+                  [disabled]="formArray.get([3]).invalid || formArray.get([5]).invalid"
+                  class="btn-custom mat-flat-button btn-red btn-next"
+                  disableRipple="true"
+                  (click)="clickToSubmitAAData('wealth:UT RP Input3','Wealth: Risk Profile Input 3')"
+                  cdkStepperNext>
+            Next
+          </button>
+        </div>
+      </div>
+    </cdk-step>
+    <cdk-step [editable]="true"
+              [stepControl]="formArray.get([6])">
+
+
+      <ng-container *ngIf="(questions | async) as question">
+        <div class="question-wrapper step3">
+          <!-- question number four -->
+          <h4 class="text">Now, let's complete your risk profile by sharing with us your financial position</h4>
+          <ng-container formGroupName="6">
+            <p>
+              {{question[6]?.questionDesc}}
+            </p>
+
+            <!-- mobile -->
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                           [multiple]="false"
+                                           formControlName="options"
+                                           [data]="question[6]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <!-- web -->
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[6]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+
+          </ng-container>
+
+          <!-- question number five -->
+          <ng-container formGroupName="7">
+            <p>
+              . {{question[7]?.questionDesc}}
+            </p>
+
+            <!-- mobile -->
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                           [multiple]="false"
+                                           formControlName="options"
+                                           [data]="question[7]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <!-- web -->
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[7]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+          </ng-container>
+
+          <!-- question number six -->
+          <ng-container formGroupName="8">
+            <p>
+              . {{question[8]?.questionDesc}}
+            </p>
+
+            <!-- mobile -->
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip [placeholder]="'Select your answer'"
+                                           [multiple]="false"
+                                           formControlName="options"
+                                           [data]="question[8]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <!-- web -->
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[8]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+
+          </ng-container>
+
+          <!-- question number seven -->
+          <ng-container formGroupName="9">
+            <p>
+              . {{question[9]?.questionDesc}}
+            </p>
+
+            <!-- mobile -->
+            <ng-container *ngIf="mediaQueryList.matches">
+              <cimb-mint-multi-select-chip class="answer-options"
+                                           [placeholder]="'Select your answer'"
+                                           [multiple]="false"
+                                           formControlName="options"
+                                           [data]="question[9]?.answerOptions"></cimb-mint-multi-select-chip>
+            </ng-container>
+
+            <!-- web -->
+            <ng-container *ngIf="!mediaQueryList.matches">
+              <cimb-mint-single-select class="answer-options"
+                                       [placeholder]="'Select your answer'"
+                                       formControlName="options"
+                                       [data]="question[9]?.answerOptions"></cimb-mint-single-select>
+            </ng-container>
+
+            <p>
+              {{question[10]?.questionDesc}}
+            </p>
+          </ng-container>
+        </div>
+
+      </ng-container>
+      <div class="inner-container">
+        <cimb-keyword-descriptions [page]="3"></cimb-keyword-descriptions>
+      </div>
+      <div class="page-nav">
+        <p>Page 3 of 3</p>
+        <div class="button-wrapper">
+          <button mat-flat-button
+                  class="btn-custom mat-flat-button btn-transparent"
+                  cdkStepperPrevious>
+            Previous
+          </button>
+          <button mat-flat-button
+                  type="submit"
+                  [disabled]="questionsForm.invalid || loadingSpinner$"
+                  (click)="onSubmit()"
+                  class="btn-custom mat-flat-button btn-red btn-next"
+                  disableRipple="true">
+            Submit
+          </button>
+        </div>
+      </div>
+    </cdk-step>
+  </cimb-stepper>
+</form>
+<cimb-mat-spinner-overlay
+    *ngIf="loadingSpinner$"
+    value="100"
+    diameter="100"
+    mode="indeterminate"
+    strokeWidth="10"
+    overlay="true"
+    color="primary">
+</cimb-mat-spinner-overlay>

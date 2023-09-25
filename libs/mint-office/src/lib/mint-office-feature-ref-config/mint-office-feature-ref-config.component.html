@@ -1,0 +1,29 @@
+<div class="page-wrapper">
+    <div class="container">
+      <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+      <div class="section">
+        <div class="section-head">
+          <h1>{{ titleHeader }}</h1>
+        </div>
+        <div class="section-content">
+            <cimb-office-ref-config-search-form
+              (submitForm)="search($event)"
+              (clearForm)="clear()"
+            ></cimb-office-ref-config-search-form>
+  
+          <div class="block-tab">
+                <div class="tab-content">
+  
+                  <cimb-office-ref-config-list-table
+                    [displayedColumns]="genericUtDisplayedColumns"
+                    [dataSourceRows]="(utPurchaseRecords)"
+                    [tabName]="tabName"
+                  ></cimb-office-ref-config-list-table>
+  
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

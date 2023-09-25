@@ -1,0 +1,11 @@
+<div class="mat-dialog-wrapper dialog-compute">
+  <div class="mat-dialog-pad">
+    <button mat-icon-button class="btn-close" (click)="cancel()">
+      <em class="icon-close"></em>
+    </button>
+    <mat-dialog-content>
+      <h3>{{ dialogHeading }}</h3>
+      <div [innerHtml]="dialogContent" class="dialog-note-content"></div>
+    </mat-dialog-content>
+  </div>
+</div>

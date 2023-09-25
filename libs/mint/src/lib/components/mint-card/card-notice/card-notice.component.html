@@ -1,0 +1,34 @@
+<div class="card-wrapper">
+  <div class="card">
+    <div class="card-header">
+      <!-- <em class="icon-danger-1" *ngIf="transactionStatusName === 'Processing'"></em> -->
+      <em class="icon-error" *ngIf="transactionStatusName === 'failed'"></em>
+      <em class="icon-success" *ngIf="transactionStatusName === 'Processing'"></em>
+      <p>{{ transactionMessage }}</p>
+    </div>
+    <div class="card-content">
+      <div class="col">
+        <h4>{{ accountName }}</h4>
+        <p *ngIf="unitTrustAccount">
+          <ng-container *ngIf="flow === '001' || flow === '002' || flow === '003'">Unit Trust Account</ng-container>  
+          <ng-container *ngIf="flow === 'asnb-purchase'">ASNB Membership Number</ng-container>  
+          : {{ unitTrustAccount }}
+        </p>
+        <p *ngIf="accountNric && flow === 'asnb-purchase'">NRIC : {{ accountNric }}</p>
+        <p *ngIf="paymentAccount && (flow === '001' || flow === '003') ">Payment Account : {{ paymentAccount }}</p>
+        <p *ngIf="paymentAccount && (flow === '002' || flow === 'asnb-purchase')">Settlement Account : {{ paymentAccount }}</p>
+        <p *ngIf="referenceNumber">Reference No. : [{{ referenceNumber }}]</p>
+      </div>
+      <div class="col">
+        <p class="status" *ngIf="status">
+          <em class="icon-danger-1" *ngIf="transactionStatusName === 'Processing'"></em>
+          <em class="icon-error" *ngIf="transactionStatusName === 'failed'"></em>
+          <em class="icon-success" *ngIf="transactionStatusName === 'success'"></em>
+          <strong>Status: {{ status }}</strong>
+        </p>
+        <small *ngIf="flow === '001' || flow === '002' || flow === '003'">(Usually take up to +3 working days)</small>
+        <p class="date" *ngIf="dateTime">{{ dateTime }}</p>
+      </div>
+    </div>
+  </div>
+</div>

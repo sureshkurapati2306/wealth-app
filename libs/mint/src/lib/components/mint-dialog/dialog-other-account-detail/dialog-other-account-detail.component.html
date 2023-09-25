@@ -1,0 +1,66 @@
+<div class="mat-dialog-wrapper">
+  <div class="mat-dialog-pad">
+    <div class="dialog-title">
+      <button
+        mat-icon-button
+        class="btn-close"
+        (click)="closeDialog()"
+        mat-dialog-close
+      >
+        <em class="icon-close"></em>
+        <em class="icon-arrow-left"></em>
+      </button>
+      <h3>{{ data.dialogHeading }}</h3>
+      <p>{{ data.dialogSubheading }}</p>
+    </div>
+    <mat-dialog-content>
+      <form action="" [formGroup]="oterDetailForm">
+        <div class="dialog-content">
+          <div class="input-block">
+            <cimb-input-dropdown
+              [dropdownForm]="oterDetailForm"
+              [dropdownFormControlName]="data.oterDetailFormControlName"
+              [isDropdownLabel]="false"
+              [isRequired]="data.isRequired"
+              [selectOption]="data.list"
+              [isGroupDropdown]="data.isGroupDropdown"
+              [dropdownValue]="'countryLongName'"
+              [dropdownId]="data.dropdownFormControlId"
+              [dropdownPlaceholder]="data.dialogPlaceholder"
+              [errorMessage]="data.errorMessage"
+              (optionSelectedEvent)="getValueOnOtherAccDetailDialog($event)"
+            >
+            </cimb-input-dropdown>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button
+        *ngIf="data.dialogButtonCancel"
+        mat-dialog-close
+        mat-flat-button
+        class="btn-custom btn-lg btn-white btn-cancel"
+        (click)="closeDialog()"
+      >
+        {{ data.dialogButtonCancelText }}
+      </button>
+      <button
+        mat-flat-button
+        class="btn-custom btn-red"
+        *ngIf="checkFieldHasValue()"
+        (click)="updateDialog()"
+      >
+        {{ data.dialogButtonProceedText }}
+      </button>
+      <button
+        mat-flat-button
+        class="btn-custom btn-invalid"
+        *ngIf="!checkFieldHasValue()"
+        (click)="updateDialog()"
+      >
+        {{ data.dialogButtonProceedText }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

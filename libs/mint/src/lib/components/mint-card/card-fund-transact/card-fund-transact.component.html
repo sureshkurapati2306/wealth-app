@@ -1,0 +1,204 @@
+<div class="card-wrapper">
+  <div class="card">
+    <h5>Transact <span>Last updated {{ now | date:'d MMMM y':'UTC+8' }}</span></h5>
+    <div class="wrapper">
+      <div class="list-tab">
+        <div class="expansion-panel-content">
+          <h4 class="show-md">{{accountOptions==='03'? 'Switching Out -': ''}} {{ fund?.fund_name }}</h4>
+          <ul class="list-details">
+            <li>
+              <p>Units Held</p>
+              <h6>{{ fund?.unit_held }}</h6>
+            </li>
+            <li>
+              <p>Average NAV Cost</p>
+              <h6>
+                <sup>MYR</sup> {{ fund?.average_nav_price }}
+              </h6>
+            </li>
+            <li>
+              <p>
+                NAV Price
+                <span class="tips">
+                  <em
+                    class="icon-help hide-lg"
+                    (click)="openNAVactionSheet()"
+                  ></em>
+                  <em
+                    class="icon-help show-lg-inline-block"
+                    matTooltip="Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of the stated date."
+                    matTooltipPosition="right"
+                  ></em>
+                </span>
+              </p>
+              <h6><sup>MYR </sup>{{ fund?.nav_price }}</h6>
+              <span>(As of {{ fund?.close_date }})</span>
+            </li>
+            <li>
+              <p>Total Invested</p>
+              <h6>
+                <sup>MYR</sup> {{ fund?.total_invested }}
+              </h6>
+            </li>
+            <li>
+              <p>Current Investment Value</p>
+              <h6><sup>MYR </sup>{{ fund?.current_investment }}</h6>
+            </li>
+            <li>
+              <p>Returns</p>
+              <h6>
+                <img src="{{ fund?.fundImg }}" alt="{{ fund?.fundPosition }}" />
+                {{ fund?.total_percentage }}
+                <small>
+                  {{ fund?.total_return_type }}MYR {{ fund?.total_return_value }}
+                </small>
+              </h6>
+            </li>
+          </ul>
+        </div>
+        <div class="expansion-panel-content" *ngIf="!openedFromLandingPage">
+          <h4 *ngIf="accountOptions==='03'" class="show-md">Switching In</h4>
+          <div class="options">
+            <mat-radio-group
+              [(ngModel)]="accountOptions"
+              aria-label="Select an option"
+            >
+              <mat-radio-button value="01" disableRipple="true"
+                >Top Up</mat-radio-button
+              >
+              <mat-radio-button value="02" disableRipple="true" *ngIf="enableRedeemAtFundDetail"
+
+                >Redeem</mat-radio-button
+              >
+              <mat-radio-button value="03" disableRipple="true" *ngIf="enableSwitchAtFundDetails"
+                >Switch
+                <span class="tips">
+                  <em
+                    class="icon-help hide-lg"
+                    (click)="openSwitchActionSheet()"
+                  ></em>
+                  <em
+                    class="icon-help show-lg-inline-block"
+                    matTooltip="Switch allows you to sell an existing fund’s units and buy new units from another fund in a single transaction.
+
+                  Switching is faster as you do not have to wait to receive the money from your unit trust redemption before purchasing another fund. You can only switch funds within the same fund house."
+                    matTooltipPosition="right"
+                  ></em>
+                </span>
+              </mat-radio-button>
+            </mat-radio-group>
+            <!-- Top Up Block -->
+            <div class="options-block" *ngIf="accountOptions==='01'">
+              <!-- <cimb-dashboard-topup></cimb-dashboard-topup> -->
+              <cimb-dashboard-topup
+              [amlResult]="amlCheckResult"
+              [enableAddToCart]="enableAddToCartForTopup" 
+              (addToCart)="addToCartEvent($event)"
+              (removeFromCart)="removeFromCartEvent($event)"
+              [minimumAmount]="fund.minimum_subsequent_subscription_amount"
+              [maximumAmount]="fund.maximum_subsequent_subscription_amount"
+              [card_amount]="fund.card_amount"
+              [salesCharge]="
+                cimbStaff === 2
+                  ? fund.sales_charge_nonstaff
+                  : fund.sales_charge_staff
+              "
+              [fundStatus]="fund.fund_status"
+              [indexVal]="index"
+              [item]="fund"
+              [salesChargesNonstaff]="fund.sales_charge_nonstaff"
+              [salesChargeStaff]="fund.sales_charge_staff"
+              [fundName]="fund.fund_name"
+              [cimbStaff]="cimbStaff"
+              [flowText]="flowText"
+              [redeemValue]="redeemValue"
+              [cartFundCount]="cartFundCount"
+              (clearAndAddNewToCart)="
+                clearAndAddNewToCartTopupEvent($event)
+              "
+              [clearAllData]="clearAllDataList"
+              [cartUTAccount]="cartUTAccount"
+              [selectedAccount]="selectedAccount"
+              (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+              (clearCartAndContinueEvent)="clearAllCart($event)"
+              (selectAccountChange)="selectedAccountChange($event)"
+              (updateAmountInCart)="updateAmountInCartTopUpEvent($event)"
+            ></cimb-dashboard-topup>
+            </div>
+            <!-- Redeem Block -->
+            <div class="options-block" *ngIf="accountOptions==='02' && enableRedeemAtFundDetail">
+              <!-- <cimb-dashboard-slider [checkboxLabel]="checkboxLabel"></cimb-dashboard-slider>
+              <cimb-dashboard-redeem></cimb-dashboard-redeem> -->
+              <cimb-dashboard-redeem-value
+                    [amlResult]="amlCheckResult"
+                    [enableAddToCart]="enableAddToCartInRedeemTnx"
+                    [disabled]="false"
+                    [minimumUnit]="fund.min_redem_amt"
+                    [maximumUnit]="fund.maximum_subsequent_subscription_amount"
+                    [indexVal]="index"
+                    [unit]="redeemAmount"
+                    [salesCharge]="
+                      cimbStaff === 'N'
+                        ? fund.sales_charges_nonstaff
+                        : fund.sales_charge_staff
+                    "
+                    [indicativeDate]="fund.close_date"
+                    [dataItem]="fund"
+                    [cardUnit]="cartTotalRedem"
+                    [cardIndicativeAmount]="cartTotalRedem"
+                    [averageNavPrice]="fund.average_nav_price"
+                    [navPrice]="fund.nav_price"
+                    [item]="fund"
+                    [checkboxLabel]="redeemAll"
+                    [topupValue]="topupValue"
+                    (redeemSliderValueChange)="
+                      redeemSliderValueChangeEvent($event)
+                    "
+                    (redeemSliderValueChange)="
+                      calculateIndicativeRate($event, fund)
+                    "
+                    (addToCart)="addToCartEvent($event, '002')"
+                    (removeFromCart)="removeFromCartEvent($event)"
+                    [flowText]="flowText"
+                    [cartFundCount]="cartFundCount"
+                    (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+                    [clearAllData]="clearAllDataList"
+                    [cartUTAccount]="cartUTAccount"
+                    [selectedAccount]="selectedAccount"
+                    [cartListObject]="cartListObject"
+                    (clearAndAddNewToCartCall)="clearCartAndContinueDataEvent($event)"
+                    (clearCartAndContinueEvent)="clearAllCart($event)"
+                    (selectAccountChange)="selectedAccountChange($event)"
+                    [showAmountToFund]="true"
+                    [foreignerInd]="foreignerInd"
+                    [occupationInd]="occupationInd"
+                    (updateCartDataInRedeem)="updateAmountInCartRedeemEvent($event, '002')"
+                  >
+                  </cimb-dashboard-redeem-value>
+            </div>
+            <!-- Switch Block -->
+            <div class="options-block" *ngIf="accountOptions==='03' && enableSwitchAtFundDetails">
+              <cimb-dashboard-switch
+                [amlResult]="amlCheckResult"
+                [enableAddToCart]="enableAddToCartInSwitchTnx"
+                [item]="fund"
+                [isPanelOpen]="true"
+                (addToCart)="addToCartEvent($event)"
+                (updateCart)="updateAmountInCartTopUpEvent($event)"
+                (removeFromCart)="removeFromCartEvent($event)"
+                [cartUTAccount]="cartUTAccount"
+                [selectedAccount]="selectedAccount"
+                [cartFundCount]="cartFundCount"
+                [flowText]="flowText"
+                (clearAndAddNewToCart)="clearAndAddNewToCartEvent($event)"
+                [foreignerInd]="foreignerInd"
+                [occupationInd]="occupationInd"
+                [indexVal]="index"
+              ></cimb-dashboard-switch>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

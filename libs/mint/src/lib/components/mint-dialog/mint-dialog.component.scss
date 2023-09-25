@@ -1,0 +1,137 @@
+::ng-deep {
+    .mat-dialog-container {
+        @media (min-width: 600px) {
+            padding: 30px 32px 48px;
+        }
+        @media (min-width: 48rem) {
+            width: 600px;
+        }
+    }
+    .mint-dialog-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .dismissible {
+            display: flex;
+            justify-content: flex-end;
+            .close-btn {
+                justify-content: center;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            img {
+                width: 20%;
+
+                @media (min-width: 600px) {
+                    width: 12%;
+                }
+            }
+        }
+
+        .content {
+            margin-bottom: 2.5rem;
+
+            @media (min-width: 600px) {
+                margin-bottom: 2.5rem;
+            }
+
+            .body {
+                display: flex;
+                flex-direction: column;
+                .title {
+                    margin-bottom: 1rem;
+                    font-size: 1.25rem;
+                    line-height: 1.75rem;
+                    color: var(--n100);
+
+                    @media (min-width: 600px) {
+                        font-size: 1.5rem;
+                        line-height: 2.125rem;
+                    }
+                }
+                .message {
+                    font-size: 14px;
+                    margin-bottom: 1rem;
+                    line-height: 1.3125rem;
+                    color: var(--n80);
+                    font-weight: var(--regular);
+
+                    @media (min-width: 600px) {
+                        font-size: 1rem;
+                        line-height: 24px;
+                    }
+                }
+                .note {
+                    font-weight: 600;
+                    a {
+                        color: var(--r100);
+                        text-decoration: underline;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column-reverse;
+            width: 100%;
+
+            @media (min-width: 600px) {
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                &.center {
+                    justify-content: center;
+                }
+            }
+
+            button {
+                border-radius: 8px;
+                width: 100%;
+                margin-bottom: 0.5rem;
+                height: 3rem;
+                line-height: 3rem;
+                padding: 0 .9375rem;
+
+              @media (min-width: 600px) {
+                margin-right: 15px;
+                width: 50%;
+              }
+
+              &.mat-primary {
+                    font-weight: var(--bold);
+                    font-size: 1rem;
+
+                    @media (min-width: 600px) {
+                        font-size: 1rem;
+                    }
+                }
+
+                &.mint-cancel-button {
+                    border: none;
+                    color: var(--n80);
+                    font-size: 1rem;
+                    font-weight: var(--bold);
+
+                    @media (min-width: 600px) {
+                        border: .0625rem solid var(--n80);
+                        border-radius: .5rem;
+                        color: var(--n80);
+                        font-size: 1rem;
+                        font-weight: var(--bold);
+                    }
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,10 @@
+<cimb-progress-sub-header [pageTitle]="'Risk Profiling'"
+                          [isBackButtonEnabled]="true"
+                          [noProgressStep]="true"
+                          [userType]="userType$ | async"
+                          (backButtonEvent)="backButtonEvent()"></cimb-progress-sub-header>
+<div class="page-wrapper">
+  <div class="container">
+    <cimb-question-form></cimb-question-form>
+  </div>
+</div>

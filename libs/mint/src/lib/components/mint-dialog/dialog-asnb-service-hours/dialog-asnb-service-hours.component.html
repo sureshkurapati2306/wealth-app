@@ -1,0 +1,62 @@
+<div class="mat-dialog-wrapper">
+    <div class="mat-dialog-pad">
+        <button mat-icon-button class="btn-close" (click)="onClose()">
+            <em class="icon-close"></em>
+        </button>
+        <mat-dialog-content>
+            <h3>ASNB Service Hours and Cut Off Time</h3>
+            <div class="content-scroller">
+                <div class="content">
+                    <div class="asnb-service-hour">
+                        <div class="section">
+                            <h5><strong>ASNB Service Hours:</strong></h5>
+                            <ol type="a">
+                                <li>
+                                    <strong>Non-Transactional Services :</strong>
+                                    <p>
+                                        Available 24 hours<br /><br />Non-transactional services are
+                                        non-monetary services such as account linking maintenance,
+                                        favourite account maintenance and balance enquiry are
+                                        available 24 hours a day, 7 days a week.
+                                    </p>
+                                </li>
+                                <li>
+                                    <strong>Transactional Services:</strong>
+                                    <p>02:00AM - 09:00PM Daily</p>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="section">
+                            <h5 class="heading">
+                                <strong> Transactional Services Cut Off Time : </strong>
+                            </h5>
+                            <ol type="a">
+                                <li>
+                                    <strong>Fixed Price Fund :</strong>
+                                    <p>2:00AM - 9:00PM Daily</p>
+                                </li>
+                                <li>
+                                    <strong>Variable Historical Price Fund</strong>
+                                    <p>
+                                        Any transaction after <strong>4:00pm</strong> will be
+                                        processed on the next business day.
+                                    </p>
+                                </li>
+                                <li>
+                                    <strong>Variable Forward Price Fund (Local/ Foreign)</strong>
+                                    <p>
+                                        This is a forward pricing fund in which the fund has foreign
+                                        exposure. The number of units received is determined by the
+                                        price per unit of respective funds which will be available
+                                        within 2 business days (transactions made before 04:00PM) or
+                                        up to 3 business days (transactions made after 04:00 PM).
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+    </div>
+</div>

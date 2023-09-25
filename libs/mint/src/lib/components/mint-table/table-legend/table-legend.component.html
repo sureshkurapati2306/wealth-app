@@ -1,0 +1,23 @@
+<table class="table table-legend" aria-describedby="chartLegend">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col" class="my-holdings-lable">My Holdings</th>
+      <th scope="col">Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items; index as i">
+      <td>
+        <h6
+          class="label"
+          [ngStyle]="{'border-color': item.classHexa}"
+        >
+          {{ item.name }}
+        </h6>
+      </td>
+      <td>{{ item.description1 }}</td>
+      <td>{{ item.description2 }}</td>
+    </tr>
+  </tbody>
+</table>

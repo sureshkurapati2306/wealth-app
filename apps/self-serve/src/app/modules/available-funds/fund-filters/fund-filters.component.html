@@ -1,0 +1,267 @@
+<div class="flex sb-wrapper">
+    <div class="search-block">
+        <!-- Mobile view dummy input start -->
+        <div class="hide-md">
+            <mat-form-field floatLabel="never"
+                            (click)="openSearchFilter()">
+                <input type="text"
+                       placeholder="Search"
+                       aria-label="search"
+                       [value]="selectedValue"
+                       matInput
+                       readonly>
+                <button mat-icon-button
+                        class="btn-search"
+                        disableRipple="true">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button mat-icon-button
+                        class="btn-clear"
+                        *ngIf="search.value"
+                        disableRipple="true">
+                    <em class="icon-cancel"></em>
+                </button>
+
+            </mat-form-field>
+        </div>
+        <!-- Mobile view dummy input end -->
+
+        <!-- Desktop view autocomplete start -->
+        <div class="show-md">
+            <button mat-icon-button
+                    class="btn-search"
+                    disableRipple="true"
+                    (click)="onSearch(search.value)">
+                <mat-icon>search</mat-icon>
+            </button>
+            <mat-form-field floatLabel="never">
+                <input type="text"
+                       placeholder="Search"
+                       aria-label="search"
+                       #search
+                       matInput
+                       (input)="onValueChange()"
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+               
+                <button mat-icon-button
+                        class="btn-clear"
+                        *ngIf="search.value"
+                        (click)="onClear()"
+                        disableRipple="true">
+                    <em class="icon-cancel"></em>
+                </button>
+                <div class="show-md">
+                    <mat-autocomplete autoActiveFirstOption
+                                      #auto="matAutocomplete"
+                                      (optionSelected)="onOptionSelected()"
+                                      class="fw-panel">
+                        <div class="autocomplete-options">
+                            <mat-option *ngFor="let option of filteredOptions | async"
+                                        [value]="option">
+                                <div [innerHTML]="option | highlightText: highlightedText"></div>
+                            </mat-option>
+                        </div>
+                    </mat-autocomplete>
+                </div>
+            </mat-form-field>
+        </div>
+        <!-- Desktop view autocomplete end -->
+    </div>
+    <div class="filter-mobile-wrapper hide-md">
+        <button class="btn-filter"
+                mat-raised-button
+                [matBadge]="totalFilterCount > 0 ? totalFilterCount : null"
+                (click)="openFilterModal()"
+                disableRipple="true">
+            <em class="icon-filter"></em>
+        </button>
+    </div>
+</div>
+
+<!-- Filter modal start here -->
+<ng-template #filters>
+    <a class="dismiss"
+       [matDialogClose]="'confirmed'"
+       mat-dialog-close>
+        <em class="icon-close"></em>
+    </a>
+    <mat-dialog-content>
+
+        <form #form="ngForm"
+              [formGroup]="filterForm">
+
+            <header>
+                <h2 mat-dialog-title>Filter</h2>
+            </header>
+            <div class="wrapper">
+                <section class="filters section-white-bg">
+                    <div class="filter-item">
+                        <cimb-filter-selections [placeholder]="'Select Risk Category'"
+                                                [selections]="riskCategories"
+                                                formControlName="riskControl"
+                                                [label]="'Risk Category'"></cimb-filter-selections>
+                    </div>
+                    <div class="filter-item">
+                        <cimb-filter-selections [placeholder]="'Select Fund House'"
+                                                [selections]="fundHouse"
+                                                formControlName="fundHouseControl"
+                                                [label]="'Fund House'"></cimb-filter-selections>
+                    </div>
+                    <div class="filter-item">
+                        <cimb-filter-selections [placeholder]="'Select Asset Class'"
+                                                [selections]="assetsClasses"
+                                                formControlName="assetsClassesControl"
+                                                [label]="'Asset Class'"></cimb-filter-selections>
+                    </div>
+                    <div>
+                        <mat-checkbox formControlName="syariahCompliant">Shariah Compliant
+                        </mat-checkbox>
+                    </div>
+                    <div class="filters esg-checkbox">
+                        <mat-checkbox formControlName="esgFund">ESG Funds
+                        </mat-checkbox><span class="esg-fund">
+                        <em class="icon-help"
+                        (click)="openEsgTooltipBottomSheet()"
+                        ></em>       
+                    </span>
+                    </div>
+    
+                </section>
+    
+                <header class="sort-title">
+                    <h2 mat-dialog-title>Sort By</h2>
+                </header>
+    
+                <section class="sorters section-white-bg">
+    
+                    <mat-button-toggle-group aria-label="mobile-sort"
+                                             formControlName="sort">
+                        <ng-container *ngFor="let data of sortData">
+                            <div class="sort-title">
+                                <h6>{{data.name}}</h6>
+                                <a *ngIf="data.name === 'Nav Price'"
+                                   class="sort-helper"
+                                   (click)="openTooltipBottomSheet()">
+                                    <em class="icon-help"></em>
+                                </a>
+                            </div>
+                            <div class="sort-items">
+                                <mat-button-toggle *ngFor="let item of data.values"
+                                                   [value]="item.value">{{item.name}}
+                                </mat-button-toggle>
+                            </div>
+                        </ng-container>
+                    </mat-button-toggle-group>
+                </section>
+                <section class="buttons">
+                    <button type="button"
+                            class="btn btn-clear btn-custom"
+                            [disabled]="enableClearBtn"
+                            [matDialogClose]="'confirmed'"
+                            (click)="onMobileClearFilters()"
+                            mat-flat-button>Clear
+                    </button>
+                    <button (click)="onMobileApplyFilter()"
+                            class="btn btn-red btn-custom"
+                            [disabled]="!filterForm.valid"
+                            mat-flat-button>Apply
+                    </button>
+                </section>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<!-- Search Filter -->
+<ng-template #searchFilter>
+    <section class="action-sheet-head">
+        <div class="dismiss"
+             (click)="_bottomSheet.dismiss()">
+            <em class="icon-close"></em>
+        </div>
+    </section>
+    <section class="form-wrapper">
+        <div class="search-block">
+            <mat-form-field floatLabel="never">
+                <input type="text"
+                       placeholder="Search"
+                       aria-label="Number"
+                       #search
+                       matInput
+                       (input)="onValueChange()"
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto"
+                       autofocus>
+                <button mat-icon-button
+                        class="btn-search"
+                        disableRipple="true"
+                        (click)="onMobileSearchFundName(search.value)">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button mat-icon-button
+                        class="btn-clear"
+                        *ngIf="search.value"
+                        (click)="onMobileClearFundName()"
+                        disableRipple="true">
+                    <em class="icon-cancel"></em>
+                </button>
+
+            </mat-form-field>
+        </div>
+        <div class="search-options">
+            <mat-autocomplete autoActiveFirstOption
+                              #auto="matAutocomplete"
+                              (optionSelected)="onMobileFundNameOptionSelected()"
+                              class="fw-panel">
+                <div class="autocomplete-options">
+                    <mat-option *ngFor="let option of filteredOptions | async"
+                                [value]="option">
+                        <div [innerHTML]="option | highlightText: highlightedText"></div>
+                    </mat-option>
+                </div>
+            </mat-autocomplete>
+        </div>
+    </section>
+</ng-template>
+
+<!-- Mobile Tooltip -->
+<ng-template #toolTip>
+    <div class="action-sheet-wrapper">
+        <div class="action-sheet-header">
+            <button mat-icon-button
+                    class="btn-close"
+                    (click)="_bottomSheet.dismiss()">
+                <em class="icon-close"></em>
+            </button>
+        </div>
+        <div class="action-sheet-content">
+            <h5>NAV Price</h5>
+            <div>
+                <p>Net Asset Value (NAV) price tells you how much one unit of a fund is worth as of
+                    the stated date.</p>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+
+<ng-template #esgToolTip>
+    <div class="esg-tool-tip-action-sheet-wrapper">
+        <div class="esg-action-sheet-header">
+            <button mat-icon-button
+                    class="btn-close"
+                    (click)="_bottomSheet.dismiss()">
+                <em class="icon-close"></em>
+            </button>
+        </div>
+        <div class="esg-action-sheet-content">
+            <h5>ESG Fund</h5>
+            <div>
+                <p>The fund strategy invested in securities with a high sustainability score and would exclude companies with poor records related to ESG. The strategy will contribute to the long-term viability of our environment and way of life. It enable investors to pursue their financial goals while supporting a better future for humanity.</p>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

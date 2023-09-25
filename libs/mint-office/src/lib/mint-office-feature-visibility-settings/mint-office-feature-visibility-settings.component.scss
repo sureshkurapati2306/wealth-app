@@ -1,0 +1,106 @@
+.page-wrapper {
+    background-color: #f5f7fa;
+}
+.section-head {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color: var(--n100);
+        margin: 0;
+    }
+    .btn-custom {
+        margin-left: auto;
+        border-radius: 0.25rem;
+        height: 2rem;
+        font-size: 0.75rem;
+        line-height: 0.75rem;
+    }
+}
+
+.title {
+    display: inline-flex;
+    padding: 16px;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.subTitle {
+    display: inline-flex;
+    padding: 0px 16px;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.input {
+    display: flex;
+    width: 627px;
+    // height: 53px;
+    padding: 0px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+
+    .input-base {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        align-self: stretch;
+
+        .input-layout {
+            display: flex;
+            // height: 44px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 4px;
+            flex: 1 0 0;
+
+            .choose-file-input {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                align-self: stretch;
+
+                .btn-text {
+                    color: var(--palette-charcoal-c-100, #333739);
+                    text-align: center;
+
+                    /* Button/Small/Regular */
+                    font-size: 12px;
+                    font-family: var(--OpenSans);
+                    line-height: 16px;
+                    letter-spacing: 0.32px;
+                }
+
+                .choose-file-detail {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 0 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+.btn-custom {
+    min-width: 10rem;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.headerUploadError {
+    padding-top: 1rem;
+    color: var(--palette-indicative-melon, #FF7547);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1rem;
+    letter-spacing: 0.01875rem;
+}

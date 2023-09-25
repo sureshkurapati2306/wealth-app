@@ -1,0 +1,118 @@
+<div class="box box-risk-profile" *ngIf="liabilitiesDetails">
+    <div class="heading">
+        <h6
+            class="label"
+            [ngStyle]="{ 'border-color': liabilitiesDetails.donutColor }"
+        >
+            {{ liabilitiesDetails.name }}
+        </h6>
+    </div>
+    <div
+        class="contentSection"
+        *ngFor="let item of liabilitiesDetails.myliability"
+    >
+        <div class="subSection">
+            <p class="subSection-heading" style="margin: 0px">
+                {{ item.accountName }}
+            </p>
+            <div class="show-lg">
+                <span class="accountNo">{{ item.accountNo }}</span>
+                <span class="nextPay" *ngIf="item.nextPay">
+                    {{ item.nextPay }}
+                </span>
+
+                <span class="investmentValue">{{ item.investmentValue }}</span>
+            </div>
+            <div class="hide-lg">
+                <span class="accountNo">{{ item.accountNo }}</span>
+                <div class="date-time-content-small" *ngIf="item.nextPay">
+                    <span class="nextPay">
+                        {{ item.nextPay }}
+                    </span>
+                </div>
+            </div>
+            <div class="date-time-content show-lg">
+                <span class="dateTime"> {{ item.dateTime }}</span>
+                <span class="clock">
+                    <img
+                        src="./assets/images/ic_access_time_48px.png"
+                        alt="clock"
+                    />
+                </span>
+                <span class="amount">&nbsp;{{ item.amount }}</span>
+                <span
+                    ><sup class="top">{{ item.top }}</sup></span
+                >
+            </div>
+            <div class="hide-lg">
+                <span class="dateTime"> {{ item.dateTime }}</span>
+                <span class="clock">
+                    <img
+                        src="./assets/images/ic_access_time_48px.png"
+                        alt="clock"
+                    />
+                </span>
+                <div class="investmentValueDiv">
+                    <span class="investmentValue">{{
+                        item.investmentValue
+                    }}</span>
+                </div>
+
+                <span
+                    ><sup class="top">{{ item.top }}</sup></span
+                >
+                <span class="amount">&nbsp;{{ item.amount }}</span>
+            </div>
+            <div *ngIf="liabilitiesDetails.name !== 'My Deposit'"></div>
+            <div
+                style="margin-top: 0.5rem"
+                class="show-lg"
+                *ngIf="liabilitiesDetails.name !== 'My Loans / Financing'"
+            >
+                <div class="statementDiv">
+                    <span class="commonDiv1">Statement Balance</span>
+                    <span class="commonDiv2"> MYR 20,000.00</span>
+                    <span class="commonDiv3"> Due on 03 Feb 2031</span>
+                </div>
+                <div class="paymenttDiv">
+                    <span class="commonDiv1">Minimum payment</span>
+                    <span class="commonDiv2 paymenttDiv1 show-lg">
+                        MYR 10,000.00</span
+                    >
+                    <span class="commonDiv3 paymenttDiv1">
+                        Due on 03 Feb 2031</span
+                    >
+                </div>
+                <div class="thirdDiv"></div>
+            </div>
+            <div
+                style="margin-top: 0.5rem"
+                class="hide-lg"
+                *ngIf="liabilitiesDetails.name !== 'My Loans / Financing'"
+            >
+                <div class="divMobile">
+                    <div class="commonDiv1">Statement Balance</div>
+                    <div style="display: inline-flex">
+                        <span><sup class="top">MYR</sup></span>
+                        <span class="commonDiv2">&nbsp;20,000.00</span>
+                    </div>
+                    <span class="commonDiv3"> Due on 03 Feb 2031</span>
+                </div>
+                <div class="divMobile">
+                    <div class="commonDiv1">Minimum payment</div>
+                    <div style="display: inline-flex">
+                        <span><sup class="top">MYR</sup></span>
+                        <span class="commonDiv2 paymenttDiv1"
+                            >&nbsp;10,000.00</span
+                        >
+                    </div>
+
+                    <span class="commonDiv3 paymenttDiv1">
+                        Due on 03 Feb 2031</span
+                    >
+                </div>
+                <div class="thirdDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>

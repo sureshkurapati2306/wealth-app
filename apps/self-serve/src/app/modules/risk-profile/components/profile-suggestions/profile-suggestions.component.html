@@ -1,0 +1,139 @@
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h3>How should I invest based on my risk profile?</h3>
+    </div>
+    <div class="section-content">
+      <div class="flex">
+        <div class="flex-child">
+          <h6>Asset Class Breakdown</h6>
+          <h4>Maximise returns with your risk profile’s asset class breakdown</h4>
+          <p>Your portfolio is made up of asset classes. Each asset class is a grouping of investments that
+            has its own behaviours, risks and returns. They react differently to changing markets and
+            economic conditions.</p>
+          <p>Different risk profiles have different recommended asset class breakdowns (weightages) built to
+            achieve their investment goals. Follow your risk profile suggestion to get returns that suit
+            you!</p>
+          <button class="mat-flat-button btn-custom btn-text"
+                  (click)="openAssetClassesDialog()">Learn about asset classes</button>
+        </div>
+        <div class="flex-child img">
+          <img src="./assets/images/asset-class-breakdown.svg"
+               alt="Maximise returns with your risk profile’s asset class breakdown" />
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex-child img img-right">
+          <img src="./assets/images/diversification.svg"
+               alt="Diversify to spread risk" />
+        </div>
+        <div class="flex-child">
+          <h6>Diversification</h6>
+          <h4>Diversify to spread risk</h4>
+          <p>Ever heard, “don’t put all your eggs in one basket?”</p>
+          <p>Invest in a mix of low risk, low return and high risk, high return asset classes. This will
+            optimise your profits and minimise the potential of losing value if markets and economies
+            fluctuate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="cta-bottom bg-n0">
+  <div class="container">
+    <div class="text-center cta">
+      <h2>Ready to start investing?</h2>
+      <div *ngIf="customerType==='NTP'">
+      <button class="btn-custom btn-red mat-flat-button" routerLink="/investment-options">View my Investment Options</button>
+      </div>
+      <div *ngIf="customerType==='ETP'">
+      <button class="btn-custom btn-red mat-flat-button" (click)="openDialog()" >View my Investment Options</button>
+      </div>
+    </div>
+    <img class="img-left"
+         src="./assets/images/cart-checkout-2.svg"
+         alt="" />
+    <img class="img-right hide-mobile"
+         src="./assets/images/cart-invest.svg"
+         alt="" />
+  </div>
+</div>
+
+
+<!-- `Learn about asset classes` dialog component -->
+<ng-template #assetClassesDialog>
+  <button class="mat-focus-indicator btn-close mat-icon-button mat-button-base"
+          [matDialogClose]="'confirmed'">
+    <em class="icon-close"></em>
+  </button>
+  <section mat-dialog-content>
+    <h3>Asset Classes <small>Asset classes are categories for investments. The investments within them have similar
+        behaviours, risk and returns.</small></h3>
+    <div class="content asset-content">
+      <h5>Low Risk, Low Return classes</h5>
+      <p>These provide low steady income and are unlikely to lose value. </p>
+      <div class="group">
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="fixed-income">Fixed Income</p>
+          </div>
+          <div class="asset-desc">
+            <p>Funds investing predominantly in bonds and similar fixed interest or fixed income securities. </p>
+          </div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="cash">Cash</p>
+          </div>
+          <div class="asset-desc">
+            <p>The asset class for cash includes physical currency, the balances of savings and current accounts, cash
+              ISAs,
+              premium bonds, and money market funds.</p>
+          </div>
+        </div>
+      </div>
+      <h5>Higher Risk, Higher Return classes</h5>
+      <p>These are more likely to have bigger fluctuations in value but they also have potential for bigger gains </p>
+      <div class="group">
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="fixed-income">Local Equity</p>
+          </div>
+          <div class="asset-desc">
+            <p>Funds investing primarily in Malaysian companies.</p>
+          </div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="regional-equity">Regional Equity</p>
+          </div>
+          <div class="asset-desc">
+            <p>Funds investing primarily in companies that are based in Asia Pacific countries, excluding Japan.</p>
+          </div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="global-equity">Global Equity</p>
+          </div>
+          <div class="asset-desc">
+            <p>A global equity fund typically invests in foreign companies outside of Malaysia and Asia Pacific. </p>
+          </div>
+        </div>
+      </div>
+      <h5>Portfolio Diversifier</h5>
+      <p>These are more likely to have bigger enhance return opportunities, diversification or some measure of inflation
+        protection.</p>
+      <div class="group">
+        <div class="flex-wrapper">
+          <div class="asset-type">
+            <p class="alternatives">Alternative</p>
+          </div>
+          <div class="asset-desc">
+            <p>Alternative investment assets invested in non-fixed income, non-equity asset classes such as commodities,
+              real estate, derivatives, venture capital and private equity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

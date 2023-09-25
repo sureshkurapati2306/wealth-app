@@ -1,0 +1,120 @@
+<div class="page-wrapper">
+    <div class="container">
+        <cimb-office-breadcrumbs [paths]="breadcrumbsPaths"></cimb-office-breadcrumbs>
+        <div class="section">
+            <div class="section-head">
+                <h1>User Whitelisting</h1>
+            </div>
+            <div class="section-content">
+                <div class="table-filter">
+                    <div class="search">
+                        <form [formGroup]="searchForm" (submit)="searchFilter()">
+                            <div class="search-block">
+                                <span class="icon icon-search" (click)="searchFilter()"></span>
+                                <input class="search-input" matInput placeholder="" formControlName="searchKey"
+                                    (keyup)="checkSearchKey($event.target.value)" />
+                                <span [ngClass]="{'enabled': searchForm.get('searchKey').value}" class="clear-search" (click)="clearFilter()">Clear</span>
+                            </div>
+                            <button disableRipple="true" mat-flat-button [ngClass]="{'enabled': searchForm.get('searchKey').value}" class="search-button"
+                                [disabled]="searchForm.get('searchKey').value === ''" type="submit">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="section-table">
+                    <button class="add-new-user" (click)="goToPage()">
+                            + Add New
+                    </button>
+                    <table mat-table class="table-scheduler table-stripe table-responsive"
+                        [dataSource]="filteredTableData" multiTemplateDataRows
+                        aria-describedby="List of white listed users">
+                        <!-- NO. Column -->
+                        <ng-container matColumnDef="NO.">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">NO.</th>
+                            <td mat-cell *matCellDef="let row">{{ pageIndex * pageSize + dataSource?.indexOf(row) + 1 }}</td>
+                        </ng-container>
+
+                        <!-- START DATE Column -->
+                        <ng-container matColumnDef="START DATE">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">START DATE</th>
+                            <td mat-cell *matCellDef="let row">{{ formatDate(row.startDate) }}</td>
+                        </ng-container>
+
+                        <!-- END DATE Column -->
+                        <ng-container matColumnDef="END DATE">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">END DATE</th>
+                            <td mat-cell *matCellDef="let row">{{ formatDate(row.endDate) }}</td>
+                        </ng-container>
+
+                        <!-- NAME Column -->
+                        <ng-container matColumnDef="NAME">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">NAME</th>
+                            <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                        </ng-container>
+
+                        <!-- ID TYPE Column -->
+                        <ng-container matColumnDef="ID TYPE">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">ID TYPE</th>
+                            <td mat-cell *matCellDef="let row">{{ row.idType }}</td>
+                        </ng-container>
+
+                        <!-- ID NO. Column -->
+                        <ng-container matColumnDef="ID NO.">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">ID NO.</th>
+                            <td mat-cell *matCellDef="let row">{{ row.idNo }}</td>
+                        </ng-container>
+
+                        <!-- PRODUCT(S) Column -->
+                        <ng-container matColumnDef="PRODUCT(S)">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">PRODUCT(S)</th>
+                            <td mat-cell *matCellDef="let row">{{ row.productId }}</td>
+                        </ng-container>
+
+                        <!-- PRIVILEGE Column -->
+                        <ng-container matColumnDef="PRIVILEGE">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">PRIVILEGE</th>
+                            <td mat-cell *matCellDef="let row">{{ row.privilege }}</td>
+                        </ng-container>
+
+                        <!-- LAST UPDATED Column -->
+                        <ng-container matColumnDef="LAST UPDATED">
+                            <th mat-header-cell *matHeaderCellDef class="hiddenMobile" scope="col">LAST UPDATED</th>
+                            <td mat-cell *matCellDef="let row">{{ row.lastUpdated }}</td>
+                        </ng-container>
+
+                        <!-- ACTION Column -->
+                        <ng-container matColumnDef="ACTION">
+                            <th mat-header-cell *matHeaderCellDef scope="col">ACTION</th>
+                            <td class="table-row" mat-cell *matCellDef="let row" >
+                                <button class="table-delete" (click)="openDialog(row); $event.stopPropagation()">
+                                    <span class="icon-bin"> Delete</span>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <!-- Table Content -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = dataIndex" class="table-row"
+                            [ngClass]="{
+                                rowEven: i % 2,
+                                rowOdd: !(i % 2)
+                            }"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <mat-paginator #paginator class="table-paginator" 
+                       (page)="handlePageEvent($event)" 
+                       [length]="length"
+                       [pageSize]="20"
+                       [showFirstLastButtons]="true" 
+                       [hidePageSize]="true" 
+                       [pageSize]="pageSize"
+                       [pageIndex]="pageIndex"
+                       aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
